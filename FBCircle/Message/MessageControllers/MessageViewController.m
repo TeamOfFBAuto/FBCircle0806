@@ -190,7 +190,7 @@
 {
     NSString * fullUrl =[NSString stringWithFormat:@"http://fb.fblife.com/openapi/index.php?mod=alert&code=alertnumbytype&fromtype=b5eeec0b&authkey=%@&fbtype=json",[SzkAPI getAuthkey]];
     
-    NSLog(@"私信列表页------%@",fullUrl);
+//    NSLog(@"私信列表页------%@",fullUrl);
     
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]];
     
@@ -208,7 +208,7 @@
             
             NSDictionary * alertnum_dic = [dic objectForKey:@"alertnum"];
             
-            NSLog(@"alertnum   ----   %@",alertnum_dic);
+//            NSLog(@"alertnum   ----   %@",alertnum_dic);
             for (int i = 0;i <= 16;i++)
             {
                 if (i == 6)
