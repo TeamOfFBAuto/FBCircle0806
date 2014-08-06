@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface BBSModel : NSObject
+#import "BaseModel.h"
+@interface BBSModel : BaseModel
 @property(nonatomic,retain)NSString *id;
 @property(nonatomic,retain)NSString *classname;
 @property(nonatomic,retain)NSString *classpic;
-
--(id)initWithDictionary:(NSDictionary *)dic;
 
 @end

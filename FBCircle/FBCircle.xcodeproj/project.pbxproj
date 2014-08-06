@@ -54,6 +54,8 @@
 		138EBEB41992512F005DB531 /* JoinBBSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEAA1992512F005DB531 /* JoinBBSCell.xib */; };
 		138EBEB51992512F005DB531 /* MyBBSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEAC1992512F005DB531 /* MyBBSCell.m */; };
 		138EBEB61992512F005DB531 /* MyBBSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEAD1992512F005DB531 /* MyBBSCell.xib */; };
+		138EBEB919925A25005DB531 /* BBSSubModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEB819925A25005DB531 /* BBSSubModel.m */; };
+		138EBEBC19925B4D005DB531 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEBB19925B4D005DB531 /* BaseModel.m */; };
 		190F3A121992547400D54140 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A0D1992547400D54140 /* MineViewController.m */; };
 		190F3A131992547400D54140 /* mineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A111992547400D54140 /* mineTableViewCell.m */; };
 		190F3A211992571300D54140 /* icon1024_1024@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1D1992571300D54140 /* icon1024_1024@2x.png */; };
@@ -860,6 +862,10 @@
 		138EBEAB1992512F005DB531 /* MyBBSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBBSCell.h; sourceTree = "<group>"; };
 		138EBEAC1992512F005DB531 /* MyBBSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBBSCell.m; sourceTree = "<group>"; };
 		138EBEAD1992512F005DB531 /* MyBBSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyBBSCell.xib; sourceTree = "<group>"; };
+		138EBEB719925A25005DB531 /* BBSSubModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSSubModel.h; sourceTree = "<group>"; };
+		138EBEB819925A25005DB531 /* BBSSubModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSSubModel.m; sourceTree = "<group>"; };
+		138EBEBA19925B4D005DB531 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		138EBEBB19925B4D005DB531 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		190F3A0C1992547400D54140 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		190F3A0D1992547400D54140 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
 		190F3A101992547400D54140 /* mineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mineTableViewCell.h; sourceTree = "<group>"; };
@@ -1531,6 +1537,10 @@
 			children = (
 				138EBE9F1992512F005DB531 /* BBSModel.h */,
 				138EBEA01992512F005DB531 /* BBSModel.m */,
+				138EBEB719925A25005DB531 /* BBSSubModel.h */,
+				138EBEB819925A25005DB531 /* BBSSubModel.m */,
+				138EBEBA19925B4D005DB531 /* BaseModel.h */,
+				138EBEBB19925B4D005DB531 /* BaseModel.m */,
 			);
 			path = BBSModel;
 			sourceTree = "<group>";
@@ -1750,9 +1760,9 @@
 		56A6482E198F425400451413 /* MicroBBS */ = {
 			isa = PBXGroup;
 			children = (
+				1368544C19921AFC004BBB20 /* defaultPlaceHolder.png */,
 				138EBE9E1992512F005DB531 /* BBSModel */,
 				138EBEA11992512F005DB531 /* BBSViews */,
-				1368544C19921AFC004BBB20 /* defaultPlaceHolder.png */,
 				56A6482F198F425400451413 /* BBSControllers */,
 			);
 			path = MicroBBS;
@@ -3402,6 +3412,7 @@
 				1371C56A1991DDAE00D937CD /* HotTopicViewController.m in Sources */,
 				56A648F6198F512A00451413 /* QBImagePickerController.m in Sources */,
 				56A64B18198F6AD800451413 /* LoadingIndicatorView.m in Sources */,
+				138EBEB919925A25005DB531 /* BBSSubModel.m in Sources */,
 				56A64BC2198F6CA200451413 /* UMEGORefreshTableHeaderView.m in Sources */,
 				56A64A43198F69A800451413 /* FBCirclePicturesViews.m in Sources */,
 				56A64B53198F6BC700451413 /* FbLoginView.m in Sources */,
@@ -3480,6 +3491,7 @@
 				56A64AB4198F6AD800451413 /* GmyMessageViewController.m in Sources */,
 				138EBEB51992512F005DB531 /* MyBBSCell.m in Sources */,
 				56A64E06198F7B2C00451413 /* CustomMessageCell.m in Sources */,
+				138EBEBC19925B4D005DB531 /* BaseModel.m in Sources */,
 				56A64A3B198F69A800451413 /* FBCircleCustomCell.m in Sources */,
 				56A64B1E198F6AD800451413 /* MLImageCrop.m in Sources */,
 				56A64882198F502700451413 /* SzkLoadData.m in Sources */,

@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="geren_morentouxiang126_126.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="eMY-Lq-xhn">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMY-Lq-xhn">
                                 <rect key="frame" x="12" y="10" width="53" height="53"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -86,7 +86,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="geren_morentouxiang126_126.jpg" width="16" height="16"/>
         <image name="join.png" width="43" height="29"/>
     </resources>
 </document>

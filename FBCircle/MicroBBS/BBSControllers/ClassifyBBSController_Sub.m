@@ -47,6 +47,8 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _table.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:_table];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,6 +67,28 @@
 }
 
 #pragma mark - 网络请求
+
+- (void)getDataWithClassId:(NSString *)classId
+{
+    __weak typeof(self)weakSelf = self;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:FBCIRCLE_MICROBBS_BBSCLASS isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+        for (NSDictionary *aDic in dataInfo) {
+            
+//            [arr addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+        }
+        
+//        [weakSelf createFirstViewWithTitles:arr];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+    }];
+}
+
 #pragma mark - 视图创建
 /**
  *  搜索view
