@@ -14,6 +14,7 @@
 #import "LTools.h"
 #import "LSecionView.h"
 #import "BBSTableCell.h"
+#import "SendPostsViewController.h"
 
 @interface MicroBBSViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -126,7 +127,11 @@
  */
 - (void)clickToAddBBS
 {
+    SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
     
+    UINavigationController * navc = [[UINavigationController alloc] initWithRootViewController:sendPostVC];
+    
+    [self presentViewController:navc animated:YES completion:NULL];
 }
 
 /**

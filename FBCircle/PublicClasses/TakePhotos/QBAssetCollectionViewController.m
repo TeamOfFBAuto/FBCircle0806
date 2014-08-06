@@ -14,12 +14,15 @@
 #import "QBImagePickerAssetCell.h"
 #import "QBImagePickerFooterView.h"
 #import "QBImagePickerAssetView.h"
+#import "QBSelectedImageView.h"
 
 @interface QBAssetCollectionViewController ()
 {
     UILabel * preview_label;
     UIButton * tishi_button;
     UIButton * preview_button;
+    
+    UIButton * right_button;
 }
 
 
@@ -40,6 +43,7 @@
 @implementation QBAssetCollectionViewController
 @synthesize assets = _assets;
 @synthesize selectedArray = _selectedArray;
+@synthesize assetsView_array = _assetsView_array;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +52,7 @@
     if(self)
     {
         
-  
+        
     }
     
     return self;
@@ -94,23 +98,49 @@
     
     
     
+    right_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    right_button.frame = CGRectMake(0,0,40,44);
+    
+    right_button.backgroundColor = [UIColor clearColor];
+    
+    right_button.titleLabel.font = [UIFont systemFontOfSize:15];
+    
+    [right_button setTitle:@"完成" forState:UIControlStateNormal];
+    
+    [right_button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
+    [right_button addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    
+    right_button.userInteractionEnabled = NO;
+    
+    UIBarButtonItem * right_item = [[UIBarButtonItem alloc] initWithCustomView:right_button];
+    
+    self.navigationItem.rightBarButtonItems = @[spaceBar,right_item];
+    
+    
+    
+    
     self.title = @"存储的照片";
+    
+    
+    self.view.backgroundColor = RGBCOLOR(3,3,3);
     
     
     /* Initialization */
     self.assets = [NSMutableArray array];
     self.selectedAssets = [NSMutableOrderedSet orderedSet];
     
-    self.imageSize = CGSizeMake(75, 75);
+    self.imageSize = CGSizeMake(104,104);
     
     // Table View
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,6,320,(iPhone5?568:480)-6-20-44-89/2) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-20-44) style:UITableViewStylePlain];
     tableView.dataSource = self;
     tableView.delegate = self;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.allowsSelection = YES;
+    tableView.backgroundColor = RGBCOLOR(3,3,3);
     //        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.tag = 100;
@@ -118,78 +148,81 @@
     
     
     
-    image_array = [[NSMutableArray alloc] init];
     
     
-    UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480)-64-89/2,320,89/2)];
-    
-    imageView.image = [UIImage imageNamed:@"ChoosePictureBackGroundImage.png"];
-    
-    imageView.userInteractionEnabled = YES;
-    
-    imageView.backgroundColor = [UIColor clearColor];
-    
-    [self.view addSubview:imageView];
-    
-    tishi_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    tishi_button.frame = CGRectMake(266,11,100/2,58/2);
-    
-    [tishi_button addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    [imageView addSubview:tishi_button];
-    
-    
-    
-    UILabel * finish_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100/2,58/2)];
-    
-    finish_label.text = @"完成";
-    
-    finish_label.textAlignment = NSTextAlignmentCenter;
-    
-    finish_label.backgroundColor = [UIColor clearColor];
-    
-    finish_label.textAlignment = NSTextAlignmentCenter;
-    
-    finish_label.textColor = [UIColor whiteColor];
-    
-    finish_label.font = [UIFont systemFontOfSize:14];
-    
-    [tishi_button addSubview:finish_label];
-    
-    
-    
-    preview_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    preview_button.frame = CGRectMake(4,11,100/2,58/2);
-    
-    [preview_button addTarget:self action:@selector(PreviewTap:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [imageView addSubview:preview_button];
-    
-    
-    
-    preview_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100/2,58/2)];
-    
-    preview_label.backgroundColor = [UIColor clearColor];
-    
-    preview_label.textAlignment = NSTextAlignmentCenter;
-    
-    preview_label.textColor = RGBCOLOR(153,153,153);
-    
-    preview_label.font = [UIFont systemFontOfSize:13];
-    
-    [preview_button addSubview:preview_label];
-    
-    
-    preview_label.text = @"预览";
-    
-    [preview_button setImage:[UIImage imageNamed:@"yulan-button-bukedian-100_58.png"] forState:UIControlStateNormal];
-    
-    [tishi_button setImage:[UIImage imageNamed:@"wnacheng-button-bukedian-100_58.png"] forState:UIControlStateNormal];
-    
-    
+    /*
+     image_array = [[NSMutableArray alloc] init];
+     
+     //底部导航，显示选中的照片
+     UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480)-64-89/2,320,89/2)];
+     
+     imageView.image = [UIImage imageNamed:@"ChoosePictureBackGroundImage.png"];
+     
+     imageView.userInteractionEnabled = YES;
+     
+     imageView.backgroundColor = [UIColor clearColor];
+     
+     //  [self.view addSubview:imageView];
+     
+     tishi_button = [UIButton buttonWithType:UIButtonTypeCustom];
+     
+     tishi_button.frame = CGRectMake(266,11,100/2,58/2);
+     
+     [tishi_button addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+     
+     
+     [imageView addSubview:tishi_button];
+     
+     
+     
+     UILabel * finish_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100/2,58/2)];
+     
+     finish_label.text = @"完成";
+     
+     finish_label.textAlignment = NSTextAlignmentCenter;
+     
+     finish_label.backgroundColor = [UIColor clearColor];
+     
+     finish_label.textAlignment = NSTextAlignmentCenter;
+     
+     finish_label.textColor = [UIColor whiteColor];
+     
+     finish_label.font = [UIFont systemFontOfSize:14];
+     
+     [tishi_button addSubview:finish_label];
+     
+     
+     
+     preview_button = [UIButton buttonWithType:UIButtonTypeCustom];
+     
+     preview_button.frame = CGRectMake(4,11,100/2,58/2);
+     
+     [preview_button addTarget:self action:@selector(PreviewTap:) forControlEvents:UIControlEventTouchUpInside];
+     
+     [imageView addSubview:preview_button];
+     
+     
+     
+     preview_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100/2,58/2)];
+     
+     preview_label.backgroundColor = [UIColor clearColor];
+     
+     preview_label.textAlignment = NSTextAlignmentCenter;
+     
+     preview_label.textColor = RGBCOLOR(153,153,153);
+     
+     preview_label.font = [UIFont systemFontOfSize:13];
+     
+     [preview_button addSubview:preview_label];
+     
+     
+     preview_label.text = @"预览";
+     
+     [preview_button setImage:[UIImage imageNamed:@"yulan-button-bukedian-100_58.png"] forState:UIControlStateNormal];
+     
+     [tishi_button setImage:[UIImage imageNamed:@"wnacheng-button-bukedian-100_58.png"] forState:UIControlStateNormal];
+     
+     */
     [self reloadData];
     
     
@@ -241,7 +274,7 @@
     // Reloads
     
     [self.tableView reloadData];
-   
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -272,6 +305,10 @@
     
     [_assets release];
     [_selectedAssets release];
+    
+    [_assetsView_array removeAllObjects];
+    
+    _assetsView_array = nil;
     
     [_tableView release];
     [_doneButton release];
@@ -502,9 +539,10 @@
                 if(cell == nil)
                 {
                     NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
-                    CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
+                    //                    CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / numberOfAssetsInRow+1);
                     
-                    cell = [[[QBImagePickerAssetCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier imageSize:self.imageSize numberOfAssets:numberOfAssetsInRow margin:margin indexPath:indexPath] autorelease];
+                    
+                    cell = [[[QBImagePickerAssetCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier imageSize:self.imageSize numberOfAssets:numberOfAssetsInRow margin:4 indexPath:indexPath] autorelease];
                     
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     [(QBImagePickerAssetCell *)cell setDelegate:self];
@@ -606,7 +644,8 @@
             {
                 NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
                 CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
-                heightForRow = margin + self.imageSize.height;
+                
+                heightForRow = 4 + self.imageSize.height;
             }
                 break;
         }
@@ -672,11 +711,16 @@
     ALAsset *asset = [self.assets objectAtIndex:assetIndex];
     
     
-    NSMutableDictionary *mediaInfo = [NSMutableDictionary dictionary];
-    [mediaInfo setObject:[asset valueForProperty:ALAssetPropertyType] forKey:@"UIImagePickerControllerMediaType"];
+    if (!self.assetsView_array) {
+        self.assetsView_array = [NSMutableArray array];
+    }
     
-//    UIImage * image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-    [mediaInfo setObject:[[asset valueForProperty:ALAssetPropertyURLs] valueForKey:[[[asset valueForProperty:ALAssetPropertyURLs] allKeys] objectAtIndex:0]] forKey:@"UIImagePickerControllerReferenceURL"];
+    
+    //    NSMutableDictionary *mediaInfo = [NSMutableDictionary dictionary];
+    //    [mediaInfo setObject:[asset valueForProperty:ALAssetPropertyType] forKey:@"UIImagePickerControllerMediaType"];
+    //
+    ////    UIImage * image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+    //    [mediaInfo setObject:[[asset valueForProperty:ALAssetPropertyURLs] valueForKey:[[[asset valueForProperty:ALAssetPropertyURLs] allKeys] objectAtIndex:0]] forKey:@"UIImagePickerControllerReferenceURL"];
     
     if(self.allowsMultipleSelection)
     {
@@ -691,6 +735,10 @@
                 currentPage++;
             }else
             {
+                [self.assetsView_array addObject:asset1111];
+                                
+                [asset1111.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",self.assetsView_array.count]];
+                
                 [self.selectedAssets addObject:asset];
             }
             
@@ -698,32 +746,57 @@
         {
             currentPage--;
             
-            NSLog(@"self.selected -----   %d",self.selectedAssets.count);
-            
             [self.selectedAssets removeObject:asset];
             
+            [self.assetsView_array removeObject:asset1111];
+            
+            //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+            
+            for (int i = 0;i < self.assetsView_array.count;i++)
+            {
+                QBImagePickerAssetView * assetV = (QBImagePickerAssetView *)[self.assetsView_array objectAtIndex:i];
+                
+                [assetV.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",i+1]];
+            }
+            
+            //            });
         }
-        // Set done button state
-        [self updateDoneButton];
         
-        [preview_button setImage:[UIImage imageNamed:self.selectedAssets.count?@"yulan-button-kedian-100_58.png":@"yulan-button-bukedian-100_58.png"] forState:UIControlStateNormal];
+                
         
-        
-        [tishi_button setImage:[UIImage imageNamed:self.selectedAssets.count?@"wnacheng-button-kedian-100_58.png":@"wnacheng-button-bukedian-100_58.png"] forState:UIControlStateNormal];
-        
-        if (self.selectedAssets.count == 0) {
-            preview_label.text = @"预览";
-            preview_label.textColor = RGBCOLOR(153,153,153);
-        }else
-        {
-            preview_label.textColor = RGBCOLOR(95,95,95);
-            preview_label.text = [NSString stringWithFormat:@"预览(%d)",self.selectedAssets.count];
-        }
+        /*
+         
+         // Set done button state
+         [self updateDoneButton];
+         
+         [preview_button setImage:[UIImage imageNamed:self.selectedAssets.count?@"yulan-button-kedian-100_58.png":@"yulan-button-bukedian-100_58.png"] forState:UIControlStateNormal];
+         
+         
+         [tishi_button setImage:[UIImage imageNamed:self.selectedAssets.count?@"wnacheng-button-kedian-100_58.png":@"wnacheng-button-bukedian-100_58.png"] forState:UIControlStateNormal];
+         
+         if (self.selectedAssets.count == 0) {
+         preview_label.text = @"预览";
+         preview_label.textColor = RGBCOLOR(153,153,153);
+         }else
+         {
+         preview_label.textColor = RGBCOLOR(95,95,95);
+         preview_label.text = [NSString stringWithFormat:@"预览(%d)",self.selectedAssets.count];
+         }
+         */
         
         
     } else
     {
         [self.delegate assetCollectionViewController:self didFinishPickingAsset:asset];
+    }
+    
+    
+    
+    if (self.assetsView_array.count > 0)
+    {
+        [right_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        right_button.userInteractionEnabled = YES;
     }
 }
 

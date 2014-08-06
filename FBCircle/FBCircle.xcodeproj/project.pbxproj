@@ -62,6 +62,54 @@
 		190F3A221992571300D54140 /* icon114_114@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1E1992571300D54140 /* icon114_114@2x.png */; };
 		190F3A231992571300D54140 /* icon120_120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1F1992571300D54140 /* icon120_120@2x.png */; };
 		190F3A241992571300D54140 /* icon57_57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A201992571300D54140 /* icon57_57@2x.png */; };
+		561731CD19925E47001B8574 /* Send_Image_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731C819925E47001B8574 /* Send_Image_close@2x.png */; };
+		561731CE19925E47001B8574 /* Send_Image_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731C819925E47001B8574 /* Send_Image_close@2x.png */; };
+		561731CF19925E47001B8574 /* take_photo_close_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731C919925E47001B8574 /* take_photo_close_image@2x.png */; };
+		561731D019925E47001B8574 /* take_photo_close_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731C919925E47001B8574 /* take_photo_close_image@2x.png */; };
+		561731D119925E47001B8574 /* take_photo_navigation_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731CA19925E47001B8574 /* take_photo_navigation_image@2x.png */; };
+		561731D219925E47001B8574 /* take_photo_navigation_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731CA19925E47001B8574 /* take_photo_navigation_image@2x.png */; };
+		561731D319925E47001B8574 /* take_photo_snak_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731CB19925E47001B8574 /* take_photo_snak_image@2x.png */; };
+		561731D419925E47001B8574 /* take_photo_snak_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731CB19925E47001B8574 /* take_photo_snak_image@2x.png */; };
+		561731D519925E47001B8574 /* take_photo_view_finder_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731CC19925E47001B8574 /* take_photo_view_finder_image@2x.png */; };
+		561731D619925E47001B8574 /* take_photo_view_finder_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731CC19925E47001B8574 /* take_photo_view_finder_image@2x.png */; };
+		561731D919925E75001B8574 /* sendPosts_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731D719925E75001B8574 /* sendPosts_camera@2x.png */; };
+		561731DA19925E75001B8574 /* sendPosts_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731D719925E75001B8574 /* sendPosts_camera@2x.png */; };
+		561731DB19925E75001B8574 /* sendPosts_photo_album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731D819925E75001B8574 /* sendPosts_photo_album@2x.png */; };
+		561731DC19925E75001B8574 /* sendPosts_photo_album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 561731D819925E75001B8574 /* sendPosts_photo_album@2x.png */; };
+		561731E119925E98001B8574 /* SendPostsBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731DE19925E98001B8574 /* SendPostsBottomView.m */; };
+		561731E219925E98001B8574 /* SendPostsBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731DE19925E98001B8574 /* SendPostsBottomView.m */; };
+		561731E319925E98001B8574 /* SendPostsImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731E019925E98001B8574 /* SendPostsImageScrollView.m */; };
+		561731E419925E98001B8574 /* SendPostsImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731E019925E98001B8574 /* SendPostsImageScrollView.m */; };
+		561731E719925EC2001B8574 /* SendPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731E619925EC2001B8574 /* SendPostsViewController.m */; };
+		561731E819925EC2001B8574 /* SendPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731E619925EC2001B8574 /* SendPostsViewController.m */; };
+		561731F019925F64001B8574 /* MyImagePickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731EB19925F64001B8574 /* MyImagePickViewController.m */; };
+		561731F119925F64001B8574 /* MyImagePickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731EB19925F64001B8574 /* MyImagePickViewController.m */; };
+		561731F219925F64001B8574 /* TakePhotoPreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731ED19925F64001B8574 /* TakePhotoPreViewController.m */; };
+		561731F319925F64001B8574 /* TakePhotoPreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731ED19925F64001B8574 /* TakePhotoPreViewController.m */; };
+		561731F419925F64001B8574 /* TakePhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731EF19925F64001B8574 /* TakePhotoView.m */; };
+		561731F519925F64001B8574 /* TakePhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731EF19925F64001B8574 /* TakePhotoView.m */; };
+		5617320F19926004001B8574 /* QBAssetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731F819926004001B8574 /* QBAssetCollectionViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321019926004001B8574 /* QBAssetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731F819926004001B8574 /* QBAssetCollectionViewController.m */; };
+		5617321119926004001B8574 /* QBImagePickerAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731FB19926004001B8574 /* QBImagePickerAssetCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321219926004001B8574 /* QBImagePickerAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731FB19926004001B8574 /* QBImagePickerAssetCell.m */; };
+		5617321319926004001B8574 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731FE19926004001B8574 /* QBImagePickerAssetView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321419926004001B8574 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561731FE19926004001B8574 /* QBImagePickerAssetView.m */; };
+		5617321519926004001B8574 /* QBImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5617320019926004001B8574 /* QBImagePickerController.bundle */; };
+		5617321619926004001B8574 /* QBImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5617320019926004001B8574 /* QBImagePickerController.bundle */; };
+		5617321719926004001B8574 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320219926004001B8574 /* QBImagePickerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321819926004001B8574 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320219926004001B8574 /* QBImagePickerController.m */; };
+		5617321919926004001B8574 /* QBImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320419926004001B8574 /* QBImagePickerFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321A19926004001B8574 /* QBImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320419926004001B8574 /* QBImagePickerFooterView.m */; };
+		5617321B19926004001B8574 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320619926004001B8574 /* QBImagePickerGroupCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321C19926004001B8574 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320619926004001B8574 /* QBImagePickerGroupCell.m */; };
+		5617321D19926004001B8574 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320819926004001B8574 /* QBImagePickerVideoInfoView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617321E19926004001B8574 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320819926004001B8574 /* QBImagePickerVideoInfoView.m */; };
+		5617321F19926004001B8574 /* QBSelectedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320A19926004001B8574 /* QBSelectedImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617322019926004001B8574 /* QBSelectedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320A19926004001B8574 /* QBSelectedImageView.m */; };
+		5617322119926004001B8574 /* QBShowImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320C19926004001B8574 /* QBShowImageDetailViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617322219926004001B8574 /* QBShowImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320C19926004001B8574 /* QBShowImageDetailViewController.m */; };
+		5617322319926004001B8574 /* QBShowImagesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320E19926004001B8574 /* QBShowImagesScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5617322419926004001B8574 /* QBShowImagesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617320E19926004001B8574 /* QBShowImagesScrollView.m */; };
 		56A647F5198F3A8B00451413 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A647F4198F3A8B00451413 /* Foundation.framework */; };
 		56A647F7198F3A8B00451413 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A647F6198F3A8B00451413 /* CoreGraphics.framework */; };
 		56A647F9198F3A8B00451413 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A647F8198F3A8B00451413 /* UIKit.framework */; };
@@ -147,26 +195,6 @@
 		56A648EB198F512A00451413 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648B6198F512A00451413 /* RTLabel.m */; };
 		56A648EC198F512A00451413 /* ShowImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648B9198F512A00451413 /* ShowImagesViewController.m */; };
 		56A648ED198F512A00451413 /* ShowImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648B9198F512A00451413 /* ShowImagesViewController.m */; };
-		56A648EE198F512A00451413 /* QBAssetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648BC198F512A00451413 /* QBAssetCollectionViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648EF198F512A00451413 /* QBAssetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648BC198F512A00451413 /* QBAssetCollectionViewController.m */; };
-		56A648F0198F512A00451413 /* QBImagePickerAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648BF198F512A00451413 /* QBImagePickerAssetCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648F1198F512A00451413 /* QBImagePickerAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648BF198F512A00451413 /* QBImagePickerAssetCell.m */; };
-		56A648F2198F512A00451413 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648C2198F512A00451413 /* QBImagePickerAssetView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648F3198F512A00451413 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648C2198F512A00451413 /* QBImagePickerAssetView.m */; };
-		56A648F4198F512A00451413 /* QBImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 56A648C4198F512A00451413 /* QBImagePickerController.bundle */; };
-		56A648F5198F512A00451413 /* QBImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 56A648C4198F512A00451413 /* QBImagePickerController.bundle */; };
-		56A648F6198F512A00451413 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648C6198F512A00451413 /* QBImagePickerController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648F7198F512A00451413 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648C6198F512A00451413 /* QBImagePickerController.m */; };
-		56A648F8198F512A00451413 /* QBImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648C8198F512A00451413 /* QBImagePickerFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648F9198F512A00451413 /* QBImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648C8198F512A00451413 /* QBImagePickerFooterView.m */; };
-		56A648FA198F512A00451413 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648CA198F512A00451413 /* QBImagePickerGroupCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648FB198F512A00451413 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648CA198F512A00451413 /* QBImagePickerGroupCell.m */; };
-		56A648FC198F512A00451413 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648CC198F512A00451413 /* QBImagePickerVideoInfoView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648FD198F512A00451413 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648CC198F512A00451413 /* QBImagePickerVideoInfoView.m */; };
-		56A648FE198F512A00451413 /* QBShowImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648CE198F512A00451413 /* QBShowImageDetailViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A648FF198F512A00451413 /* QBShowImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648CE198F512A00451413 /* QBShowImageDetailViewController.m */; };
-		56A64900198F512A00451413 /* QBShowImagesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648D0198F512A00451413 /* QBShowImagesScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		56A64901198F512A00451413 /* QBShowImagesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A648D0198F512A00451413 /* QBShowImagesScrollView.m */; };
 		56A64905198F517800451413 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 56A64903198F517800451413 /* pinyin.c */; };
 		56A64906198F517800451413 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 56A64903198F517800451413 /* pinyin.c */; };
 		56A64917198F55A500451413 /* FBCircleCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A64910198F55A500451413 /* FBCircleCommentModel.m */; };
@@ -874,6 +902,49 @@
 		190F3A1E1992571300D54140 /* icon114_114@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon114_114@2x.png"; sourceTree = "<group>"; };
 		190F3A1F1992571300D54140 /* icon120_120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon120_120@2x.png"; sourceTree = "<group>"; };
 		190F3A201992571300D54140 /* icon57_57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon57_57@2x.png"; sourceTree = "<group>"; };
+		561731C819925E47001B8574 /* Send_Image_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Send_Image_close@2x.png"; sourceTree = "<group>"; };
+		561731C919925E47001B8574 /* take_photo_close_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo_close_image@2x.png"; sourceTree = "<group>"; };
+		561731CA19925E47001B8574 /* take_photo_navigation_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo_navigation_image@2x.png"; sourceTree = "<group>"; };
+		561731CB19925E47001B8574 /* take_photo_snak_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo_snak_image@2x.png"; sourceTree = "<group>"; };
+		561731CC19925E47001B8574 /* take_photo_view_finder_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo_view_finder_image@2x.png"; sourceTree = "<group>"; };
+		561731D719925E75001B8574 /* sendPosts_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendPosts_camera@2x.png"; sourceTree = "<group>"; };
+		561731D819925E75001B8574 /* sendPosts_photo_album@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendPosts_photo_album@2x.png"; sourceTree = "<group>"; };
+		561731DD19925E98001B8574 /* SendPostsBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendPostsBottomView.h; sourceTree = "<group>"; };
+		561731DE19925E98001B8574 /* SendPostsBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendPostsBottomView.m; sourceTree = "<group>"; };
+		561731DF19925E98001B8574 /* SendPostsImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendPostsImageScrollView.h; sourceTree = "<group>"; };
+		561731E019925E98001B8574 /* SendPostsImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendPostsImageScrollView.m; sourceTree = "<group>"; };
+		561731E519925EC2001B8574 /* SendPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendPostsViewController.h; sourceTree = "<group>"; };
+		561731E619925EC2001B8574 /* SendPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendPostsViewController.m; sourceTree = "<group>"; };
+		561731EA19925F64001B8574 /* MyImagePickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyImagePickViewController.h; sourceTree = "<group>"; };
+		561731EB19925F64001B8574 /* MyImagePickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyImagePickViewController.m; sourceTree = "<group>"; };
+		561731EC19925F64001B8574 /* TakePhotoPreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakePhotoPreViewController.h; sourceTree = "<group>"; };
+		561731ED19925F64001B8574 /* TakePhotoPreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakePhotoPreViewController.m; sourceTree = "<group>"; };
+		561731EE19925F64001B8574 /* TakePhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakePhotoView.h; sourceTree = "<group>"; };
+		561731EF19925F64001B8574 /* TakePhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakePhotoView.m; sourceTree = "<group>"; };
+		561731F719926004001B8574 /* QBAssetCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewController.h; sourceTree = "<group>"; };
+		561731F819926004001B8574 /* QBAssetCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCollectionViewController.m; sourceTree = "<group>"; };
+		561731F919926004001B8574 /* QBAssetCollectionViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewControllerDelegate.h; sourceTree = "<group>"; };
+		561731FA19926004001B8574 /* QBImagePickerAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetCell.h; sourceTree = "<group>"; };
+		561731FB19926004001B8574 /* QBImagePickerAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerAssetCell.m; sourceTree = "<group>"; };
+		561731FC19926004001B8574 /* QBImagePickerAssetCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetCellDelegate.h; sourceTree = "<group>"; };
+		561731FD19926004001B8574 /* QBImagePickerAssetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetView.h; sourceTree = "<group>"; };
+		561731FE19926004001B8574 /* QBImagePickerAssetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerAssetView.m; sourceTree = "<group>"; };
+		561731FF19926004001B8574 /* QBImagePickerAssetViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetViewDelegate.h; sourceTree = "<group>"; };
+		5617320019926004001B8574 /* QBImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = QBImagePickerController.bundle; sourceTree = "<group>"; };
+		5617320119926004001B8574 /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
+		5617320219926004001B8574 /* QBImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerController.m; sourceTree = "<group>"; };
+		5617320319926004001B8574 /* QBImagePickerFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerFooterView.h; sourceTree = "<group>"; };
+		5617320419926004001B8574 /* QBImagePickerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerFooterView.m; sourceTree = "<group>"; };
+		5617320519926004001B8574 /* QBImagePickerGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerGroupCell.h; sourceTree = "<group>"; };
+		5617320619926004001B8574 /* QBImagePickerGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerGroupCell.m; sourceTree = "<group>"; };
+		5617320719926004001B8574 /* QBImagePickerVideoInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerVideoInfoView.h; sourceTree = "<group>"; };
+		5617320819926004001B8574 /* QBImagePickerVideoInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerVideoInfoView.m; sourceTree = "<group>"; };
+		5617320919926004001B8574 /* QBSelectedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBSelectedImageView.h; sourceTree = "<group>"; };
+		5617320A19926004001B8574 /* QBSelectedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBSelectedImageView.m; sourceTree = "<group>"; };
+		5617320B19926004001B8574 /* QBShowImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBShowImageDetailViewController.h; sourceTree = "<group>"; };
+		5617320C19926004001B8574 /* QBShowImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBShowImageDetailViewController.m; sourceTree = "<group>"; };
+		5617320D19926004001B8574 /* QBShowImagesScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBShowImagesScrollView.h; sourceTree = "<group>"; };
+		5617320E19926004001B8574 /* QBShowImagesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBShowImagesScrollView.m; sourceTree = "<group>"; };
 		56A647F1198F3A8B00451413 /* FBCircle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBCircle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56A647F4198F3A8B00451413 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		56A647F6198F3A8B00451413 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -955,28 +1026,6 @@
 		56A648B6198F512A00451413 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		56A648B8198F512A00451413 /* ShowImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowImagesViewController.h; sourceTree = "<group>"; };
 		56A648B9198F512A00451413 /* ShowImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowImagesViewController.m; sourceTree = "<group>"; };
-		56A648BB198F512A00451413 /* QBAssetCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewController.h; sourceTree = "<group>"; };
-		56A648BC198F512A00451413 /* QBAssetCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCollectionViewController.m; sourceTree = "<group>"; };
-		56A648BD198F512A00451413 /* QBAssetCollectionViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewControllerDelegate.h; sourceTree = "<group>"; };
-		56A648BE198F512A00451413 /* QBImagePickerAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetCell.h; sourceTree = "<group>"; };
-		56A648BF198F512A00451413 /* QBImagePickerAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerAssetCell.m; sourceTree = "<group>"; };
-		56A648C0198F512A00451413 /* QBImagePickerAssetCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetCellDelegate.h; sourceTree = "<group>"; };
-		56A648C1198F512A00451413 /* QBImagePickerAssetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetView.h; sourceTree = "<group>"; };
-		56A648C2198F512A00451413 /* QBImagePickerAssetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerAssetView.m; sourceTree = "<group>"; };
-		56A648C3198F512A00451413 /* QBImagePickerAssetViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetViewDelegate.h; sourceTree = "<group>"; };
-		56A648C4198F512A00451413 /* QBImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = QBImagePickerController.bundle; sourceTree = "<group>"; };
-		56A648C5198F512A00451413 /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
-		56A648C6198F512A00451413 /* QBImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerController.m; sourceTree = "<group>"; };
-		56A648C7198F512A00451413 /* QBImagePickerFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerFooterView.h; sourceTree = "<group>"; };
-		56A648C8198F512A00451413 /* QBImagePickerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerFooterView.m; sourceTree = "<group>"; };
-		56A648C9198F512A00451413 /* QBImagePickerGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerGroupCell.h; sourceTree = "<group>"; };
-		56A648CA198F512A00451413 /* QBImagePickerGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerGroupCell.m; sourceTree = "<group>"; };
-		56A648CB198F512A00451413 /* QBImagePickerVideoInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerVideoInfoView.h; sourceTree = "<group>"; };
-		56A648CC198F512A00451413 /* QBImagePickerVideoInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerVideoInfoView.m; sourceTree = "<group>"; };
-		56A648CD198F512A00451413 /* QBShowImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBShowImageDetailViewController.h; sourceTree = "<group>"; };
-		56A648CE198F512A00451413 /* QBShowImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBShowImageDetailViewController.m; sourceTree = "<group>"; };
-		56A648CF198F512A00451413 /* QBShowImagesScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBShowImagesScrollView.h; sourceTree = "<group>"; };
-		56A648D0198F512A00451413 /* QBShowImagesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBShowImagesScrollView.m; sourceTree = "<group>"; };
 		56A64903198F517800451413 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
 		56A64904198F517800451413 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		56A6490F198F55A500451413 /* FBCircleCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCircleCommentModel.h; sourceTree = "<group>"; };
@@ -1449,6 +1498,8 @@
 				136602651990A82900F2BEEC /* 01002我的论坛 */,
 				1366026E1990A82900F2BEEC /* 01004分类论坛 */,
 				136602781990A82900F2BEEC /* 01005分类论坛二级列表页 */,
+				561731C619925E31001B8574 /* 012创建帖子 */,
+				561731C719925E31001B8574 /* 013创建新微论坛 */,
 			);
 			path = MicroBBSImages;
 			sourceTree = "<group>";
@@ -1548,6 +1599,10 @@
 		138EBEA11992512F005DB531 /* BBSViews */ = {
 			isa = PBXGroup;
 			children = (
+				561731DD19925E98001B8574 /* SendPostsBottomView.h */,
+				561731DE19925E98001B8574 /* SendPostsBottomView.m */,
+				561731DF19925E98001B8574 /* SendPostsImageScrollView.h */,
+				561731E019925E98001B8574 /* SendPostsImageScrollView.m */,
 				138EBEA21992512F005DB531 /* BBSTableCell.h */,
 				138EBEA31992512F005DB531 /* BBSTableCell.m */,
 				138EBEA41992512F005DB531 /* BBSTableCell.xib */,
@@ -1608,6 +1663,71 @@
 				190F3A201992571300D54140 /* icon57_57@2x.png */,
 			);
 			path = theIcon;
+			sourceTree = "<group>";
+		};
+		561731C619925E31001B8574 /* 012创建帖子 */ = {
+			isa = PBXGroup;
+			children = (
+				561731D719925E75001B8574 /* sendPosts_camera@2x.png */,
+				561731D819925E75001B8574 /* sendPosts_photo_album@2x.png */,
+				561731C819925E47001B8574 /* Send_Image_close@2x.png */,
+				561731C919925E47001B8574 /* take_photo_close_image@2x.png */,
+				561731CA19925E47001B8574 /* take_photo_navigation_image@2x.png */,
+				561731CB19925E47001B8574 /* take_photo_snak_image@2x.png */,
+				561731CC19925E47001B8574 /* take_photo_view_finder_image@2x.png */,
+			);
+			path = "012创建帖子";
+			sourceTree = "<group>";
+		};
+		561731C719925E31001B8574 /* 013创建新微论坛 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "013创建新微论坛";
+			sourceTree = "<group>";
+		};
+		561731E919925F64001B8574 /* TakePhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				561731EA19925F64001B8574 /* MyImagePickViewController.h */,
+				561731EB19925F64001B8574 /* MyImagePickViewController.m */,
+				561731EC19925F64001B8574 /* TakePhotoPreViewController.h */,
+				561731ED19925F64001B8574 /* TakePhotoPreViewController.m */,
+				561731EE19925F64001B8574 /* TakePhotoView.h */,
+				561731EF19925F64001B8574 /* TakePhotoView.m */,
+			);
+			path = TakePhotoView;
+			sourceTree = "<group>";
+		};
+		561731F619926004001B8574 /* TakePhotos */ = {
+			isa = PBXGroup;
+			children = (
+				561731F719926004001B8574 /* QBAssetCollectionViewController.h */,
+				561731F819926004001B8574 /* QBAssetCollectionViewController.m */,
+				561731F919926004001B8574 /* QBAssetCollectionViewControllerDelegate.h */,
+				561731FA19926004001B8574 /* QBImagePickerAssetCell.h */,
+				561731FB19926004001B8574 /* QBImagePickerAssetCell.m */,
+				561731FC19926004001B8574 /* QBImagePickerAssetCellDelegate.h */,
+				561731FD19926004001B8574 /* QBImagePickerAssetView.h */,
+				561731FE19926004001B8574 /* QBImagePickerAssetView.m */,
+				561731FF19926004001B8574 /* QBImagePickerAssetViewDelegate.h */,
+				5617320019926004001B8574 /* QBImagePickerController.bundle */,
+				5617320119926004001B8574 /* QBImagePickerController.h */,
+				5617320219926004001B8574 /* QBImagePickerController.m */,
+				5617320319926004001B8574 /* QBImagePickerFooterView.h */,
+				5617320419926004001B8574 /* QBImagePickerFooterView.m */,
+				5617320519926004001B8574 /* QBImagePickerGroupCell.h */,
+				5617320619926004001B8574 /* QBImagePickerGroupCell.m */,
+				5617320719926004001B8574 /* QBImagePickerVideoInfoView.h */,
+				5617320819926004001B8574 /* QBImagePickerVideoInfoView.m */,
+				5617320919926004001B8574 /* QBSelectedImageView.h */,
+				5617320A19926004001B8574 /* QBSelectedImageView.m */,
+				5617320B19926004001B8574 /* QBShowImageDetailViewController.h */,
+				5617320C19926004001B8574 /* QBShowImageDetailViewController.m */,
+				5617320D19926004001B8574 /* QBShowImagesScrollView.h */,
+				5617320E19926004001B8574 /* QBShowImagesScrollView.m */,
+			);
+			path = TakePhotos;
 			sourceTree = "<group>";
 		};
 		56A647E8198F3A8B00451413 = {
@@ -1773,6 +1893,8 @@
 			children = (
 				56A64849198F45F500451413 /* MicroBBSViewController.h */,
 				56A6484A198F45F500451413 /* MicroBBSViewController.m */,
+				561731E519925EC2001B8574 /* SendPostsViewController.h */,
+				561731E619925EC2001B8574 /* SendPostsViewController.m */,
 				1371C5651991D9EE00D937CD /* MyBBSViewController.h */,
 				1371C5661991D9EE00D937CD /* MyBBSViewController.m */,
 				1371C5681991DDAE00D937CD /* HotTopicViewController.h */,
@@ -1966,9 +2088,10 @@
 				56A648A7198F512A00451413 /* FMDB */,
 				56A648B1198F512A00451413 /* RefreshViewOfEGO */,
 				56A648B4198F512A00451413 /* RTLabel */,
+				561731F619926004001B8574 /* TakePhotos */,
 				56A648B7198F512A00451413 /* ShowImagesControl */,
-				56A648BA198F512A00451413 /* TakePhotos */,
 				56A648D1198F512A00451413 /* TakePhotosImages */,
+				561731E919925F64001B8574 /* TakePhotoView */,
 			);
 			path = PublicClasses;
 			sourceTree = "<group>";
@@ -2048,35 +2171,6 @@
 				56A648B9198F512A00451413 /* ShowImagesViewController.m */,
 			);
 			path = ShowImagesControl;
-			sourceTree = "<group>";
-		};
-		56A648BA198F512A00451413 /* TakePhotos */ = {
-			isa = PBXGroup;
-			children = (
-				56A648BB198F512A00451413 /* QBAssetCollectionViewController.h */,
-				56A648BC198F512A00451413 /* QBAssetCollectionViewController.m */,
-				56A648BD198F512A00451413 /* QBAssetCollectionViewControllerDelegate.h */,
-				56A648BE198F512A00451413 /* QBImagePickerAssetCell.h */,
-				56A648BF198F512A00451413 /* QBImagePickerAssetCell.m */,
-				56A648C0198F512A00451413 /* QBImagePickerAssetCellDelegate.h */,
-				56A648C1198F512A00451413 /* QBImagePickerAssetView.h */,
-				56A648C2198F512A00451413 /* QBImagePickerAssetView.m */,
-				56A648C3198F512A00451413 /* QBImagePickerAssetViewDelegate.h */,
-				56A648C4198F512A00451413 /* QBImagePickerController.bundle */,
-				56A648C5198F512A00451413 /* QBImagePickerController.h */,
-				56A648C6198F512A00451413 /* QBImagePickerController.m */,
-				56A648C7198F512A00451413 /* QBImagePickerFooterView.h */,
-				56A648C8198F512A00451413 /* QBImagePickerFooterView.m */,
-				56A648C9198F512A00451413 /* QBImagePickerGroupCell.h */,
-				56A648CA198F512A00451413 /* QBImagePickerGroupCell.m */,
-				56A648CB198F512A00451413 /* QBImagePickerVideoInfoView.h */,
-				56A648CC198F512A00451413 /* QBImagePickerVideoInfoView.m */,
-				56A648CD198F512A00451413 /* QBShowImageDetailViewController.h */,
-				56A648CE198F512A00451413 /* QBShowImageDetailViewController.m */,
-				56A648CF198F512A00451413 /* QBShowImagesScrollView.h */,
-				56A648D0198F512A00451413 /* QBShowImagesScrollView.m */,
-			);
-			path = TakePhotos;
 			sourceTree = "<group>";
 		};
 		56A648D1198F512A00451413 /* TakePhotosImages */ = {
@@ -2979,7 +3073,6 @@
 				136602841990A82900F2BEEC /* right@2x.png in Resources */,
 				56A64AC4198F6AD800451413 /* fankui_down46_46-xy300_618@2x.png in Resources */,
 				56A64CD2198F72E900451413 /* fb_142_126@2x.png in Resources */,
-				56A648F4198F512A00451413 /* QBImagePickerController.bundle in Resources */,
 				56A64BCE198F6CA200451413 /* item_cancel@2x.png in Resources */,
 				56A64862198F4C6800451413 /* selected_small_bbs_icon_image@2x.png in Resources */,
 				56A64D9E198F72E900451413 /* shortSearch486_60@2x.png in Resources */,
@@ -3013,6 +3106,7 @@
 				56A64BCC198F6CA200451413 /* icon_rightArrow_selected@2x.png in Resources */,
 				56A64AEC198F6AD800451413 /* geren_zuji_up212_212@2x.png in Resources */,
 				136602811990A82900F2BEEC /* home@2x.png in Resources */,
+				561731CF19925E47001B8574 /* take_photo_close_image@2x.png in Resources */,
 				56A64DBE198F72E900451413 /* xinfeng36_24@2x.png in Resources */,
 				56A64DA4198F72E900451413 /* tuijianhaoyou-94_94@2x.png in Resources */,
 				56A64CD6198F72E900451413 /* 20130502_selected.png in Resources */,
@@ -3026,6 +3120,7 @@
 				56A64D50198F72E900451413 /* Expression_21@2x.png in Resources */,
 				56A64D70198F72E900451413 /* bg-216_216@2x.png in Resources */,
 				56A6485C198F4C6800451413 /* unselected_small_bbs_icon@2x.png in Resources */,
+				561731D919925E75001B8574 /* sendPosts_camera@2x.png in Resources */,
 				56A64D38198F72E900451413 /* Expression_10@2x.png in Resources */,
 				56A64A1E198F698B00451413 /* WriteSwitchBackImage@2x.png in Resources */,
 				56A64DEA198F72E900451413 /* touming-bg-150_150@2x.png in Resources */,
@@ -3055,6 +3150,7 @@
 				56A64DCE198F72E900451413 /* duihao-up-42_42@2x.png in Resources */,
 				56A64CE4198F72E900451413 /* fb-52_46@2x.png in Resources */,
 				56A64D1C198F72E900451413 /* tixiang-touxiang-44_44@2x.png in Resources */,
+				561731D519925E47001B8574 /* take_photo_view_finder_image@2x.png in Resources */,
 				56A6485A198F4C6800451413 /* unselected_message_icon@2x.png in Resources */,
 				56A64CC0198F72E900451413 /* bigImagesPlaceHolder@2x.png in Resources */,
 				56A64BCA198F6CA200451413 /* icon_rightArrow@2x.png in Resources */,
@@ -3071,11 +3167,14 @@
 				56A64D7A198F72E900451413 /* touxiang-126_126@2x.png in Resources */,
 				56A64D20198F72E900451413 /* wo-34_38@2x.png in Resources */,
 				56A64AF8198F6AD800451413 /* headimg_bg150_150@2x.png in Resources */,
+				5617321519926004001B8574 /* QBImagePickerController.bundle in Resources */,
 				56A64D86198F72E900451413 /* quxiao-556_92@2x.png in Resources */,
 				56A64D0A198F72E900451413 /* pinglun-xin-down-24_24@2x.png in Resources */,
+				561731DB19925E75001B8574 /* sendPosts_photo_album@2x.png in Resources */,
 				190F3A221992571300D54140 /* icon114_114@2x.png in Resources */,
 				56A64D4E198F72E900451413 /* Expression_20@2x.png in Resources */,
 				56A64DE0198F72E900451413 /* button2-down252_94@2x.png in Resources */,
+				561731CD19925E47001B8574 /* Send_Image_close@2x.png in Resources */,
 				56A64CFE198F72E900451413 /* pinglun-bg2-down-216_76@2x.png in Resources */,
 				56A64AC6198F6AD800451413 /* FB_down56_52-xy504_614@2x.png in Resources */,
 				56A64DDC198F72E900451413 /* button1-down252_94@2x.png in Resources */,
@@ -3099,6 +3198,7 @@
 				56A64D9C198F72E900451413 /* longSearch592_60@2x.png in Resources */,
 				56A6485E198F4C6800451413 /* selected_message_icon@2x.png in Resources */,
 				56A64D34198F72E900451413 /* loading640_960@2x.png in Resources */,
+				561731D319925E47001B8574 /* take_photo_snak_image@2x.png in Resources */,
 				56A64DB8198F72E900451413 /* shouji-26_38@2x.png in Resources */,
 				56A64BE6198F6CA200451413 /* nav_btn_bg.png in Resources */,
 				56A64AF0198F6AD800451413 /* gtouxiangHolderImage.png in Resources */,
@@ -3107,6 +3207,7 @@
 				56A64DE8198F72E900451413 /* duihao-doun-46_46@2x.png in Resources */,
 				136602821990A82900F2BEEC /* jiazai@2x.png in Resources */,
 				56A64B0E198F6AD800451413 /* zuj_down42_42-xy84_404@2x.png in Resources */,
+				561731D119925E47001B8574 /* take_photo_navigation_image@2x.png in Resources */,
 				56A64DCC198F72E900451413 /* duihao-42_42@2x.png in Resources */,
 				190F3A241992571300D54140 /* icon57_57@2x.png in Resources */,
 				56A64DC2198F72E900451413 /* yonghuming-icon-32_30@2x.png in Resources */,
@@ -3132,6 +3233,8 @@
 				56A64D0D198F72E900451413 /* pinglun-xin_up-24_24@2x.png in Resources */,
 				56A64DBF198F72E900451413 /* xinfeng36_24@2x.png in Resources */,
 				56A64BE1198F6CA200451413 /* messages_toolbar_background@2x.png in Resources */,
+				561731D019925E47001B8574 /* take_photo_close_image@2x.png in Resources */,
+				561731CE19925E47001B8574 /* Send_Image_close@2x.png in Resources */,
 				56A64D3B198F72E900451413 /* Expression_11@2x.png in Resources */,
 				56A64D19198F72E900451413 /* shanchu40_40@2x.png in Resources */,
 				56A64BFD198F6CA200451413 /* UMFeedbackViewController.xib in Resources */,
@@ -3174,11 +3277,13 @@
 				56A64D27198F72E900451413 /* Halfquan30_30@2x.png in Resources */,
 				56A64D1B198F72E900451413 /* shuliang-bg-30_30@2x.png in Resources */,
 				56A64AC9198F6AD800451413 /* fengmian_640_512@2x.png in Resources */,
+				561731D619925E47001B8574 /* take_photo_view_finder_image@2x.png in Resources */,
 				56A64BE3198F6CA200451413 /* nav_bar_bg@2x.png in Resources */,
 				56A64CE5198F72E900451413 /* fb-52_46@2x.png in Resources */,
 				56A64D57198F72E900451413 /* Expression_24@2x.png in Resources */,
 				56A64ACD198F6AD800451413 /* geren-jiantou.png in Resources */,
 				56A64CED198F72E900451413 /* fbquanzan@2x.png in Resources */,
+				561731DA19925E75001B8574 /* sendPosts_camera@2x.png in Resources */,
 				56A64CCD198F72E900451413 /* shurukuang_shouji528_268@2x.png in Resources */,
 				56A64CC3198F72E900451413 /* back1.png in Resources */,
 				56A64D71198F72E900451413 /* bg-216_216@2x.png in Resources */,
@@ -3241,6 +3346,7 @@
 				56A64CF9198F72E900451413 /* pinglun-bg1-down212_76@2x.jpg in Resources */,
 				56A64D7F198F72E900451413 /* zuji-42_42-xy84_404@2x.png in Resources */,
 				56A6485F198F4C6800451413 /* selected_message_icon@2x.png in Resources */,
+				561731D219925E47001B8574 /* take_photo_navigation_image@2x.png in Resources */,
 				56A64D1F198F72E900451413 /* touxiang-150_150@2x.png in Resources */,
 				56A64CF7198F72E900451413 /* Picture_default_image@2x.png in Resources */,
 				56A64D41198F72E900451413 /* Expression_14@2x.png in Resources */,
@@ -3277,6 +3383,7 @@
 				56A64D7B198F72E900451413 /* touxiang-126_126@2x.png in Resources */,
 				56A64B03198F6AD800451413 /* saoyisao_440_440@2x.png in Resources */,
 				56A64D4D198F72E900451413 /* Expression_1@2x.png in Resources */,
+				5617321619926004001B8574 /* QBImagePickerController.bundle in Resources */,
 				56A64AF5198F6AD800451413 /* guanyu_640_832@2x.png in Resources */,
 				56A64AE1198F6AD800451413 /* geren_qingchu_up212_212@2x.png in Resources */,
 				56A64BDB198F6CA200451413 /* messages_tableview_background.png in Resources */,
@@ -3303,6 +3410,7 @@
 				56A64CD9198F72E900451413 /* baocun40_48@2x.png in Resources */,
 				56A64D01198F72E900451413 /* pinglun-bg2-up-216_76@2x.jpg in Resources */,
 				56A64DCD198F72E900451413 /* duihao-42_42@2x.png in Resources */,
+				561731D419925E47001B8574 /* take_photo_snak_image@2x.png in Resources */,
 				56A64D97198F72E900451413 /* yaoqing_button-100_60@2x.png in Resources */,
 				56A64CFB198F72E900451413 /* pinglun-bg1-down212_76@2x.png in Resources */,
 				56A64DDB198F72E900451413 /* xiangqing-xin-icon-24_24@2x.png in Resources */,
@@ -3311,7 +3419,6 @@
 				56A64D1D198F72E900451413 /* tixiang-touxiang-44_44@2x.png in Resources */,
 				56A64D45198F72E900451413 /* Expression_16@2x.png in Resources */,
 				56A64863198F4C6800451413 /* selected_small_bbs_icon_image@2x.png in Resources */,
-				56A648F5198F512A00451413 /* QBImagePickerController.bundle in Resources */,
 				56A64D03198F72E900451413 /* pinglun-bg2-up-216_76@2x.png in Resources */,
 				56A64A09198F5AE400451413 /* selected_found_image@2x.png in Resources */,
 				56A64AFD198F6AD800451413 /* qingkong_40_40@2x.png in Resources */,
@@ -3340,6 +3447,7 @@
 				56A64D3D198F72E900451413 /* Expression_12@2x.png in Resources */,
 				56A64D5D198F72E900451413 /* Expression_4@2x.png in Resources */,
 				56A64D91198F72E900451413 /* jieshou_button-100_60@2x.png in Resources */,
+				561731DC19925E75001B8574 /* sendPosts_photo_album@2x.png in Resources */,
 				56A64D31198F72E900451413 /* loading320_480@2x.png in Resources */,
 				56A64D8D198F72E900451413 /* fabiao-tianjia-130_130@2x.png in Resources */,
 				56A64CDD198F72E900451413 /* biaoqing-56_56@2x.png in Resources */,
@@ -3410,20 +3518,18 @@
 				56A64B59198F6BC700451413 /* FbRegistCell.m in Sources */,
 				56A64B61198F6BC700451413 /* SuggestFriendCell.m in Sources */,
 				1371C56A1991DDAE00D937CD /* HotTopicViewController.m in Sources */,
-				56A648F6198F512A00451413 /* QBImagePickerController.m in Sources */,
 				56A64B18198F6AD800451413 /* LoadingIndicatorView.m in Sources */,
 				138EBEB919925A25005DB531 /* BBSSubModel.m in Sources */,
 				56A64BC2198F6CA200451413 /* UMEGORefreshTableHeaderView.m in Sources */,
 				56A64A43198F69A800451413 /* FBCirclePicturesViews.m in Sources */,
 				56A64B53198F6BC700451413 /* FbLoginView.m in Sources */,
 				56A64B9A198F6BD400451413 /* SuggestFriendViewController.m in Sources */,
-				56A648FE198F512A00451413 /* QBShowImageDetailViewController.m in Sources */,
 				56A64A4D198F6A1100451413 /* ChatInputView.m in Sources */,
 				56A64E04198F7B2C00451413 /* CustomChatViewCell.m in Sources */,
+				561731F019925F64001B8574 /* MyImagePickViewController.m in Sources */,
 				56A64ABC198F6AD800451413 /* GscanfViewController.m in Sources */,
 				56A6488C198F502700451413 /* NSString+Emoji.m in Sources */,
 				138EBEB31992512F005DB531 /* JoinBBSCell.m in Sources */,
-				56A648F0198F512A00451413 /* QBImagePickerAssetCell.m in Sources */,
 				138EBEAF1992512F005DB531 /* BBSTableCell.m in Sources */,
 				56A64B4B198F6BC700451413 /* FriendAttribute.m in Sources */,
 				56A64B8A198F6BD400451413 /* LoginViewController.m in Sources */,
@@ -3432,17 +3538,18 @@
 				56A64B12198F6AD800451413 /* GlocalUserImage.m in Sources */,
 				56A648E6198F512A00451413 /* FMResultSet.m in Sources */,
 				136D3AA81990C6D90052E808 /* LRefreshTableHeaderView.m in Sources */,
-				56A648FC198F512A00451413 /* QBImagePickerVideoInfoView.m in Sources */,
+				5617321F19926004001B8574 /* QBSelectedImageView.m in Sources */,
 				56A64A3F198F69A800451413 /* FBCircleDetailPraiseView.m in Sources */,
 				56A64886198F502700451413 /* FBCircleUploadData.m in Sources */,
 				56A64DF6198F7AF500451413 /* ChatViewController.m in Sources */,
 				56A64A12198F696000451413 /* WritePreviewDeleteViewController.m in Sources */,
 				56A64917198F55A500451413 /* FBCircleCommentModel.m in Sources */,
 				56A64AB2198F6AD800451413 /* GmyFootViewController.m in Sources */,
-				56A648F8198F512A00451413 /* QBImagePickerFooterView.m in Sources */,
 				136602971990AB7100F2BEEC /* UIView+Frame.m in Sources */,
 				56A64880198F502700451413 /* SzkAPI.m in Sources */,
 				56A648D6198F512A00451413 /* ChooseAreaViewController.m in Sources */,
+				561731F419925F64001B8574 /* TakePhotoView.m in Sources */,
+				5617321719926004001B8574 /* QBImagePickerController.m in Sources */,
 				56A64A41198F69A800451413 /* FBCircleMenuView.m in Sources */,
 				56A64847198F45DB00451413 /* MessageViewController.m in Sources */,
 				56A64AB0198F6AD800451413 /* GHaoYouFootViewController.m in Sources */,
@@ -3459,15 +3566,15 @@
 				56A64B22198F6AD800451413 /* GmyMessageTableViewCell.m in Sources */,
 				56A64B88198F6BD400451413 /* LeftViewController.m in Sources */,
 				56A6491D198F55A500451413 /* FBCirclePraiseModel.m in Sources */,
-				56A648FA198F512A00451413 /* QBImagePickerGroupCell.m in Sources */,
 				E3B9CAD41990AC9D00DE07F4 /* GmFoundScanViewController.m in Sources */,
 				56A64B98198F6BD400451413 /* SMSInvitationViewController.m in Sources */,
 				1366029C1990ABE300F2BEEC /* LTools.m in Sources */,
+				5617320F19926004001B8574 /* QBAssetCollectionViewController.m in Sources */,
 				56A64ABA198F6AD800451413 /* GRXX4ViewController.m in Sources */,
+				561731E719925EC2001B8574 /* SendPostsViewController.m in Sources */,
 				56A6488E198F502700451413 /* ZSNAlertView.m in Sources */,
 				56A648D4198F512A00451413 /* FullyLoaded.m in Sources */,
 				56A6488A198F502700451413 /* MyViewController.m in Sources */,
-				56A648EE198F512A00451413 /* QBAssetCollectionViewController.m in Sources */,
 				190F3A121992547400D54140 /* MineViewController.m in Sources */,
 				56A64B51198F6BC700451413 /* FbFriendListHeaderView.m in Sources */,
 				56A648DA198F512A00451413 /* ChooseCountryViewController.m in Sources */,
@@ -3479,7 +3586,6 @@
 				56A648DC198F512A00451413 /* FBCircleWebViewController.m in Sources */,
 				138EBEAE1992512F005DB531 /* BBSModel.m in Sources */,
 				56A64BF2198F6CA200451413 /* UMContactViewController.m in Sources */,
-				56A64900198F512A00451413 /* QBShowImagesScrollView.m in Sources */,
 				56A64B14198F6AD800451413 /* GlocalUserTextData.m in Sources */,
 				136D3AAB1990DB950052E808 /* LSecionView.m in Sources */,
 				56A64B5F198F6BC700451413 /* OfficalSuggestCell.m in Sources */,
@@ -3487,6 +3593,7 @@
 				56A64905198F517800451413 /* pinyin.c in Sources */,
 				56A648E2198F512A00451413 /* FMDatabase.m in Sources */,
 				56A64B4F198F6BC700451413 /* ConnectofMineView.m in Sources */,
+				5617322119926004001B8574 /* QBShowImageDetailViewController.m in Sources */,
 				56A6483C198F42F600451413 /* MainViewController.m in Sources */,
 				56A64AB4198F6AD800451413 /* GmyMessageViewController.m in Sources */,
 				138EBEB51992512F005DB531 /* MyBBSCell.m in Sources */,
@@ -3495,6 +3602,7 @@
 				56A64A3B198F69A800451413 /* FBCircleCustomCell.m in Sources */,
 				56A64B1E198F6AD800451413 /* MLImageCrop.m in Sources */,
 				56A64882198F502700451413 /* SzkLoadData.m in Sources */,
+				561731E119925E98001B8574 /* SendPostsBottomView.m in Sources */,
 				56A648D2198F512A00451413 /* AsyncImageView.m in Sources */,
 				56A64B57198F6BC700451413 /* FBQuanAlertView.m in Sources */,
 				56A649FA198F561E00451413 /* FBCirclePersonalModel.m in Sources */,
@@ -3505,16 +3613,20 @@
 				1368545019922B5A004BBB20 /* ClassifyBBSController_Sub.m in Sources */,
 				56A64B8E198F6BD400451413 /* MatchingAddressBookViewController.m in Sources */,
 				56A64A10198F696000451413 /* WriteBlogViewController.m in Sources */,
+				5617321319926004001B8574 /* QBImagePickerAssetView.m in Sources */,
 				56A64A35198F69A800451413 /* NewFaceView.m in Sources */,
+				5617321D19926004001B8574 /* QBImagePickerVideoInfoView.m in Sources */,
 				56A64A49198F69BE00451413 /* FBCircleDetailViewController.m in Sources */,
+				5617321B19926004001B8574 /* QBImagePickerGroupCell.m in Sources */,
 				136602961990AB7100F2BEEC /* UIColor+ConvertColor.m in Sources */,
 				56A64890198F502700451413 /* ZSNApi.m in Sources */,
 				56A64C00198F6E0C00451413 /* NSString+MyChatViewCell.m in Sources */,
 				56A6484B198F45F500451413 /* MicroBBSViewController.m in Sources */,
 				56A6491B198F55A500451413 /* FBCircleModel.m in Sources */,
 				56A64B90198F6BD400451413 /* MessageInvitationViewController.m in Sources */,
+				5617321919926004001B8574 /* QBImagePickerFooterView.m in Sources */,
 				56A648E8198F512A00451413 /* EGORefreshTableHeaderView.m in Sources */,
-				56A648F2198F512A00451413 /* QBImagePickerAssetView.m in Sources */,
+				5617321119926004001B8574 /* QBImagePickerAssetCell.m in Sources */,
 				56A64B94198F6BD400451413 /* RegistViewController.m in Sources */,
 				56A64B63198F6BC700451413 /* ZKingLoadingView.m in Sources */,
 				56A64ABE198F6AD800451413 /* GupData.m in Sources */,
@@ -3527,6 +3639,7 @@
 				56A648E4198F512A00451413 /* FMDatabaseAdditions.m in Sources */,
 				56A64AB8198F6AD800451413 /* GQianmingViewController.m in Sources */,
 				1366029D1990ABE300F2BEEC /* RefreshTableView.m in Sources */,
+				561731E319925E98001B8574 /* SendPostsImageScrollView.m in Sources */,
 				56A64B84198F6BD400451413 /* AddFriendViewController.m in Sources */,
 				56A64A37198F69A800451413 /* WeiBoFaceScrollView.m in Sources */,
 				56A64B1C198F6AD800451413 /* GHolderTextView.m in Sources */,
@@ -3540,7 +3653,9 @@
 				138EBEB11992512F005DB531 /* HotTopicCell.m in Sources */,
 				56A64B86198F6BD400451413 /* FriendListViewController.m in Sources */,
 				56A64B5B198F6BC700451413 /* FbSMSIVCell.m in Sources */,
+				561731F219925F64001B8574 /* TakePhotoPreViewController.m in Sources */,
 				56A64B20198F6AD800451413 /* GpersonCustomCell.m in Sources */,
+				5617322319926004001B8574 /* QBShowImagesScrollView.m in Sources */,
 				56A648EC198F512A00451413 /* ShowImagesViewController.m in Sources */,
 				56A64B26198F6AD800451413 /* GavatarView.m in Sources */,
 			);
@@ -3555,21 +3670,21 @@
 				56A64B50198F6BC700451413 /* ConnectofMineView.m in Sources */,
 				56A648D9198F512A00451413 /* ChooseCitiesViewController.m in Sources */,
 				56A648DD198F512A00451413 /* FBCircleWebViewController.m in Sources */,
-				56A648F3198F512A00451413 /* QBImagePickerAssetView.m in Sources */,
 				56A64B27198F6AD800451413 /* GavatarView.m in Sources */,
 				56A64E05198F7B2C00451413 /* CustomChatViewCell.m in Sources */,
-				56A648EF198F512A00451413 /* QBAssetCollectionViewController.m in Sources */,
 				56A64820198F3A8B00451413 /* FBCircleTests.m in Sources */,
 				56A64B1D198F6AD800451413 /* GHolderTextView.m in Sources */,
 				56A64A42198F69A800451413 /* FBCircleMenuView.m in Sources */,
 				56A6483D198F42F600451413 /* MainViewController.m in Sources */,
+				561731F319925F64001B8574 /* TakePhotoPreViewController.m in Sources */,
 				56A64B5C198F6BC700451413 /* FbSMSIVCell.m in Sources */,
 				56A648E5198F512A00451413 /* FMDatabaseAdditions.m in Sources */,
+				5617322019926004001B8574 /* QBSelectedImageView.m in Sources */,
 				56A64883198F502700451413 /* SzkLoadData.m in Sources */,
 				56A648E7198F512A00451413 /* FMResultSet.m in Sources */,
 				56A64B8F198F6BD400451413 /* MatchingAddressBookViewController.m in Sources */,
 				56A64AB7198F6AD800451413 /* GpersonallSettingViewController.m in Sources */,
-				56A648FD198F512A00451413 /* QBImagePickerVideoInfoView.m in Sources */,
+				561731E819925EC2001B8574 /* SendPostsViewController.m in Sources */,
 				56A64891198F502700451413 /* ZSNApi.m in Sources */,
 				56A64DF7198F7AF500451413 /* ChatViewController.m in Sources */,
 				56A648DF198F512A00451413 /* DataBase.m in Sources */,
@@ -3580,16 +3695,16 @@
 				56A64A36198F69A800451413 /* NewFaceView.m in Sources */,
 				56A6488F198F502700451413 /* ZSNAlertView.m in Sources */,
 				56A64B99198F6BD400451413 /* SMSInvitationViewController.m in Sources */,
-				56A648F9198F512A00451413 /* QBImagePickerFooterView.m in Sources */,
-				56A648F1198F512A00451413 /* QBImagePickerAssetCell.m in Sources */,
 				56A6484C198F45F500451413 /* MicroBBSViewController.m in Sources */,
+				561731E419925E98001B8574 /* SendPostsImageScrollView.m in Sources */,
 				56A64B1F198F6AD800451413 /* MLImageCrop.m in Sources */,
-				56A648FF198F512A00451413 /* QBShowImageDetailViewController.m in Sources */,
 				56A648D3198F512A00451413 /* AsyncImageView.m in Sources */,
+				561731E219925E98001B8574 /* SendPostsBottomView.m in Sources */,
 				56A648D5198F512A00451413 /* FullyLoaded.m in Sources */,
 				56A648D7198F512A00451413 /* ChooseAreaViewController.m in Sources */,
 				56A64B17198F6AD800451413 /* GTimeSwitch.m in Sources */,
 				56A648EB198F512A00451413 /* RTLabel.m in Sources */,
+				561731F119925F64001B8574 /* MyImagePickViewController.m in Sources */,
 				56A64BC3198F6CA200451413 /* UMEGORefreshTableHeaderView.m in Sources */,
 				56A64B97198F6BD400451413 /* RightViewController.m in Sources */,
 				56A64A38198F69A800451413 /* WeiBoFaceScrollView.m in Sources */,
@@ -3601,7 +3716,12 @@
 				56A64BF3198F6CA200451413 /* UMContactViewController.m in Sources */,
 				56A64A3C198F69A800451413 /* FBCircleCustomCell.m in Sources */,
 				56A64A46198F69A800451413 /* FBCirlcleContentView.m in Sources */,
+				5617321419926004001B8574 /* QBImagePickerAssetView.m in Sources */,
+				5617322419926004001B8574 /* QBShowImagesScrollView.m in Sources */,
+				5617321E19926004001B8574 /* QBImagePickerVideoInfoView.m in Sources */,
+				5617321C19926004001B8574 /* QBImagePickerGroupCell.m in Sources */,
 				56A64B60198F6BC700451413 /* OfficalSuggestCell.m in Sources */,
+				5617321219926004001B8574 /* QBImagePickerAssetCell.m in Sources */,
 				56A64B5E198F6BC700451413 /* FriendListCell.m in Sources */,
 				56A64906198F517800451413 /* pinyin.c in Sources */,
 				56A64B21198F6AD800451413 /* GpersonCustomCell.m in Sources */,
@@ -3613,14 +3733,13 @@
 				56A64DFF198F7B1E00451413 /* MessageModel.m in Sources */,
 				56A64B91198F6BD400451413 /* MessageInvitationViewController.m in Sources */,
 				56A64B4E198F6BC700451413 /* AddFriendCustomCell.m in Sources */,
-				56A648FB198F512A00451413 /* QBImagePickerGroupCell.m in Sources */,
 				56A64B85198F6BD400451413 /* AddFriendViewController.m in Sources */,
 				56A64E07198F7B2C00451413 /* CustomMessageCell.m in Sources */,
 				56A64A4A198F69BE00451413 /* FBCircleDetailViewController.m in Sources */,
 				56A64A40198F69A800451413 /* FBCircleDetailPraiseView.m in Sources */,
+				5617322219926004001B8574 /* QBShowImageDetailViewController.m in Sources */,
 				56A64ABF198F6AD800451413 /* GupData.m in Sources */,
 				56A64A3E198F69A800451413 /* FBCircleDetailCommentsView.m in Sources */,
-				56A648F7198F512A00451413 /* QBImagePickerController.m in Sources */,
 				56A64B4A198F6BC700451413 /* FBQuanMessageModel.m in Sources */,
 				56A64A4E198F6A1100451413 /* ChatInputView.m in Sources */,
 				56A6488B198F502700451413 /* MyViewController.m in Sources */,
@@ -3645,11 +3764,15 @@
 				56A64B83198F6BD400451413 /* AboutFBQuanViewController.m in Sources */,
 				56A64918198F55A500451413 /* FBCircleCommentModel.m in Sources */,
 				56A64A44198F69A800451413 /* FBCirclePicturesViews.m in Sources */,
+				561731F519925F64001B8574 /* TakePhotoView.m in Sources */,
 				56A64B56198F6BC700451413 /* FbmessageinvitationCell.m in Sources */,
+				5617321019926004001B8574 /* QBAssetCollectionViewController.m in Sources */,
 				56A6491A198F55A500451413 /* FBCircleExtension.m in Sources */,
+				5617321A19926004001B8574 /* QBImagePickerFooterView.m in Sources */,
 				56A64BF9198F6CA200451413 /* UMFeedbackTableViewCellRight.m in Sources */,
 				56A64B64198F6BC700451413 /* ZKingLoadingView.m in Sources */,
 				56A648ED198F512A00451413 /* ShowImagesViewController.m in Sources */,
+				5617321819926004001B8574 /* QBImagePickerController.m in Sources */,
 				56A64881198F502700451413 /* SzkAPI.m in Sources */,
 				56A64B8B198F6BD400451413 /* LoginViewController.m in Sources */,
 				56A6488D198F502700451413 /* NSString+Emoji.m in Sources */,
@@ -3663,7 +3786,6 @@
 				56A64B54198F6BC700451413 /* FbLoginView.m in Sources */,
 				56A64841198F430600451413 /* FoundViewController.m in Sources */,
 				56A64ABD198F6AD800451413 /* GscanfViewController.m in Sources */,
-				56A64901198F512A00451413 /* QBShowImagesScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

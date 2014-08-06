@@ -13,6 +13,7 @@
 
 // Delegate
 #import "QBImagePickerAssetViewDelegate.h"
+#import "QBSelectedImageView.h"
 
 @interface QBImagePickerAssetView : UIView
 {
@@ -22,7 +23,7 @@
 @property (nonatomic, retain) ALAsset *asset;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
-@property (nonatomic, retain) UIImageView *overlayImageView;
+@property (nonatomic, retain) QBSelectedImageView *overlayImageView;
 @property(nonatomic,strong)UIImageView * translucentLayer;
 
 

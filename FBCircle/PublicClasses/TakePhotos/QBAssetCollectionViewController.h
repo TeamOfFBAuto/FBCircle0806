@@ -45,4 +45,16 @@
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelection;
 @property (nonatomic, retain) NSMutableArray *assets;
 @property(nonatomic,strong)NSMutableArray * selectedArray;
+
+
+
+@property(nonatomic,strong)NSMutableArray * assetsView_array;//存放被选中的view
 @end
+
+
+
+
+
+
+
+

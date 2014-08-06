@@ -35,6 +35,9 @@
         self.numberOfAssets = numberOfAssets;
         self.margin = margin;
         
+        self.backgroundColor = RGBCOLOR(3,3,3);
+        
+        self.contentView.backgroundColor = RGBCOLOR(3,3,3);
         
     }
     
@@ -116,7 +119,7 @@
     {
         // Calculate frame
         CGFloat offset = (self.margin + self.imageSize.width) * i;
-        CGRect assetViewFrame = CGRectMake(offset + self.margin, self.margin, self.imageSize.width, self.imageSize.height);
+        CGRect assetViewFrame = CGRectMake(offset, self.margin, self.imageSize.width, self.imageSize.height);
         // Add asset view
         QBImagePickerAssetView *assetView = [[QBImagePickerAssetView alloc] initWithFrame:assetViewFrame];
         assetView.delegate = self;

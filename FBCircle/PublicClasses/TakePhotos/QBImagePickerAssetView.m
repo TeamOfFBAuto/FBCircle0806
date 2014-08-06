@@ -65,37 +65,29 @@
         
         
         // Overlay Image View
-        UIImageView *overlayImageView = [[UIImageView alloc] initWithFrame:CGRectMake(49,3,23,23)];
-//        overlayImageView.contentMode = UIViewContentModeScaleAspectFill;
-        overlayImageView.clipsToBounds = YES;
-        overlayImageView.userInteractionEnabled = YES;
-//        overlayImageView.backgroundColor = [UIColor clearColor];
-        overlayImageView.image = [UIImage imageNamed:@"duihao-up-46_46.png"];
-//        overlayImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        QBSelectedImageView * overlayImageView = [[QBSelectedImageView alloc] initWithFrame:self.bounds];
         
-        // Overlay Image View
-//        UIButton *overlayImageView = [UIButton buttonWithType:UIButtonTypeCustom];
-//        overlayImageView.frame = CGRectMake(42,3,30,30);
-//        overlayImageView.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//        overlayImageView.imageView.clipsToBounds = YES;
-//        overlayImageView.backgroundColor = [UIColor clearColor];
-//        [overlayImageView setImage:[UIImage imageNamed:@"duihaochoosePhotoMarkNo.png"] forState:UIControlStateNormal];
-//        overlayImageView.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//        [overlayImageView addTarget:self action:@selector(selectedPictures:) forControlEvents:UIControlEventTouchUpInside];
+        overlayImageView.clipsToBounds = YES;
+        
+        overlayImageView.userInteractionEnabled = NO;
+        
+        overlayImageView.hidden = YES;
+        
+        //        overlayImageView.image = [UIImage imageNamed:@"duihao-up-46_46.png"];
         
         [self addSubview:overlayImageView];
         self.overlayImageView = overlayImageView;
         [overlayImageView release];
-    
+        
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doTap:)];
         
-        [imageView addGestureRecognizer:tap];
+        //        [imageView addGestureRecognizer:tap];
         
         
         UITapGestureRecognizer * selectedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedPictures)];
         
-        [overlayImageView addGestureRecognizer:selectedTap];
+        [imageView addGestureRecognizer:selectedTap];
     }
     
     return self;
@@ -121,8 +113,8 @@
 
 - (void)setSelected:(BOOL)selected
 {
-//    [self.overlayImageView setImage:[UIImage imageNamed:selected?@"duihaochoosePhotoMarkOk.png":@"duihaochoosePhotoMarkNo.png"] forState:UIControlStateNormal];
-    self.overlayImageView.image = [UIImage imageNamed:selected?@"duihao-doun-46_46.png":@"duihao-up-46_46.png"];
+    //    [self.overlayImageView setImage:[UIImage imageNamed:selected?@"duihaochoosePhotoMarkOk.png":@"duihaochoosePhotoMarkNo.png"] forState:UIControlStateNormal];
+    self.overlayImageView.hidden = !selected;//[UIImage imageNamed:selected?@"duihao-doun-46_46.png":@"duihao-up-46_46.png"];
     self.translucentLayer.hidden = !selected;
     
 }
@@ -223,11 +215,13 @@
 {
     self.selected = !self.selected;
     
-    if(self.allowsMultipleSelection) {
-        self.imageView.image = [self thumbnail];
-    } else {
-        self.imageView.image = [self tintedThumbnail];
-    }
+    self.overlayImageView.hidden = !self.selected;
+    
+    //    if(self.allowsMultipleSelection) {
+    //        self.imageView.image = [self thumbnail];
+    //    } else {
+    //        self.imageView.image = [self tintedThumbnail];
+    //    }
     
     [self.delegate assetView:self didChangeSelectionState:self.selected];
 }
