@@ -56,6 +56,10 @@
 		138EBEB61992512F005DB531 /* MyBBSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEAD1992512F005DB531 /* MyBBSCell.xib */; };
 		190F3A121992547400D54140 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A0D1992547400D54140 /* MineViewController.m */; };
 		190F3A131992547400D54140 /* mineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A111992547400D54140 /* mineTableViewCell.m */; };
+		190F3A211992571300D54140 /* icon1024_1024@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1D1992571300D54140 /* icon1024_1024@2x.png */; };
+		190F3A221992571300D54140 /* icon114_114@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1E1992571300D54140 /* icon114_114@2x.png */; };
+		190F3A231992571300D54140 /* icon120_120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1F1992571300D54140 /* icon120_120@2x.png */; };
+		190F3A241992571300D54140 /* icon57_57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A201992571300D54140 /* icon57_57@2x.png */; };
 		56A647F5198F3A8B00451413 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A647F4198F3A8B00451413 /* Foundation.framework */; };
 		56A647F7198F3A8B00451413 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A647F6198F3A8B00451413 /* CoreGraphics.framework */; };
 		56A647F9198F3A8B00451413 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A647F8198F3A8B00451413 /* UIKit.framework */; };
@@ -860,6 +864,10 @@
 		190F3A0D1992547400D54140 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
 		190F3A101992547400D54140 /* mineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mineTableViewCell.h; sourceTree = "<group>"; };
 		190F3A111992547400D54140 /* mineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mineTableViewCell.m; sourceTree = "<group>"; };
+		190F3A1D1992571300D54140 /* icon1024_1024@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1024_1024@2x.png"; sourceTree = "<group>"; };
+		190F3A1E1992571300D54140 /* icon114_114@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon114_114@2x.png"; sourceTree = "<group>"; };
+		190F3A1F1992571300D54140 /* icon120_120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon120_120@2x.png"; sourceTree = "<group>"; };
+		190F3A201992571300D54140 /* icon57_57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon57_57@2x.png"; sourceTree = "<group>"; };
 		56A647F1198F3A8B00451413 /* FBCircle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBCircle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56A647F4198F3A8B00451413 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		56A647F6198F3A8B00451413 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1581,6 +1589,17 @@
 			path = MineViews;
 			sourceTree = "<group>";
 		};
+		190F3A1C1992571300D54140 /* theIcon */ = {
+			isa = PBXGroup;
+			children = (
+				190F3A1D1992571300D54140 /* icon1024_1024@2x.png */,
+				190F3A1E1992571300D54140 /* icon114_114@2x.png */,
+				190F3A1F1992571300D54140 /* icon120_120@2x.png */,
+				190F3A201992571300D54140 /* icon57_57@2x.png */,
+			);
+			path = theIcon;
+			sourceTree = "<group>";
+		};
 		56A647E8198F3A8B00451413 = {
 			isa = PBXGroup;
 			children = (
@@ -1925,6 +1944,7 @@
 		56A64896198F512A00451413 /* PublicClasses */ = {
 			isa = PBXGroup;
 			children = (
+				190F3A1C1992571300D54140 /* theIcon */,
 				136602AF1990C3B200F2BEEC /* EGORefresh */,
 				136602901990AB7100F2BEEC /* UIColor_ConvertColor */,
 				136602931990AB7100F2BEEC /* UIView+Frame */,
@@ -2856,9 +2876,11 @@
 				138EBEB21992512F005DB531 /* HotTopicCell.xib in Resources */,
 				56A64BC8198F6CA200451413 /* blueArrow@2x.png in Resources */,
 				56A64AE2198F6AD800451413 /* geren_sao_down212_212@2x.png in Resources */,
+				190F3A211992571300D54140 /* icon1024_1024@2x.png in Resources */,
 				56A64BD0198F6CA200451413 /* item_cancel_selected@2x.png in Resources */,
 				56A64AE4198F6AD800451413 /* geren_sao_up212_212@2x.png in Resources */,
 				56A64CF2198F72E900451413 /* headimg150_150@2x.png in Resources */,
+				190F3A231992571300D54140 /* icon120_120@2x.png in Resources */,
 				56A64B06198F6AD800451413 /* tixiang-jiantou-16_26@2x.png in Resources */,
 				1366027A1990A82900F2BEEC /* +@2x.png in Resources */,
 				56A64BC4198F6CA200451413 /* background@2x.png in Resources */,
@@ -3041,6 +3063,7 @@
 				56A64AF8198F6AD800451413 /* headimg_bg150_150@2x.png in Resources */,
 				56A64D86198F72E900451413 /* quxiao-556_92@2x.png in Resources */,
 				56A64D0A198F72E900451413 /* pinglun-xin-down-24_24@2x.png in Resources */,
+				190F3A221992571300D54140 /* icon114_114@2x.png in Resources */,
 				56A64D4E198F72E900451413 /* Expression_20@2x.png in Resources */,
 				56A64DE0198F72E900451413 /* button2-down252_94@2x.png in Resources */,
 				56A64CFE198F72E900451413 /* pinglun-bg2-down-216_76@2x.png in Resources */,
@@ -3075,6 +3098,7 @@
 				136602821990A82900F2BEEC /* jiazai@2x.png in Resources */,
 				56A64B0E198F6AD800451413 /* zuj_down42_42-xy84_404@2x.png in Resources */,
 				56A64DCC198F72E900451413 /* duihao-42_42@2x.png in Resources */,
+				190F3A241992571300D54140 /* icon57_57@2x.png in Resources */,
 				56A64DC2198F72E900451413 /* yonghuming-icon-32_30@2x.png in Resources */,
 				56A64CEA198F72E900451413 /* FBCircleNavBackGroundImage@2x.png in Resources */,
 				56A64D74198F72E900451413 /* FB-56_52-xy504_614@2x.png in Resources */,
@@ -3744,6 +3768,7 @@
 			baseConfigurationReference = EFC5F1F3A29F440FB92E1246 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = armv7;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBCircle/FBCircle-Prefix.pch";
 				INFOPLIST_FILE = "FBCircle/FBCircle-Info.plist";
@@ -3762,6 +3787,7 @@
 			baseConfigurationReference = EFC5F1F3A29F440FB92E1246 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = armv7;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBCircle/FBCircle-Prefix.pch";
 				INFOPLIST_FILE = "FBCircle/FBCircle-Info.plist";
