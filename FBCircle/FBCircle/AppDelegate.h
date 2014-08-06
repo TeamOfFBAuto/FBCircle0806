@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#import "BMapKit.h"
 
+//@interface BaiduMapApiDemoAppDelegate : NSObject <UIApplicationDelegate>
+//
+//@end
+
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    BMKMapManager* _mapManager;
+}
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
