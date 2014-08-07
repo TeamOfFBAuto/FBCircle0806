@@ -9,13 +9,14 @@
 
 //用车服务
 #import <UIKit/UIKit.h>
-@interface GuseCarViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate>
+@interface GuseCarViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate>
 {
     BMKMapView *_mapView;//地图
     BMKLocationService *_locService;//定位服务
     
     
     //定位相关
+    BMKUserLocation *_guserLocation;
     BMKCircle* circle;
     BMKPolygon* polygon;
     BMKPolygon* polygon2;
@@ -25,6 +26,10 @@
     BMKPointAnnotation* pointAnnotation;
     BMKAnnotationView* newAnnotation;
     
+    //检索相关
+    BMKNearbySearchOption *_option;
+    BMKPoiSearch *_searcher;
+    int curPage;
 }
 
 @property(nonatomic,strong)NSMutableArray *btnArray;//上面三个按钮的数组
