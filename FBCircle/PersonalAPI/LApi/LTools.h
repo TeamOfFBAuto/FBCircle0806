@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 #import "LButtonView.h"
 
+#define PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
@@ -45,6 +46,12 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
                          superView:(UIView *)superView
                             target:(id)target
                             action:(SEL)action;
+
++ (UILabel *)createLabelFrame:(CGRect)aFrame
+                        title:(NSString *)title
+                         font:(CGFloat)size
+                        align:(NSTextAlignment)align
+                    textColor:(UIColor *)textColor;
 
 #pragma mark - 小工具
 

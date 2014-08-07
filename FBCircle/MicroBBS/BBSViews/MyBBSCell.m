@@ -7,6 +7,7 @@
 //
 
 #import "MyBBSCell.h"
+#import "BBSSubModel.h"
 
 @implementation MyBBSCell
 
@@ -20,6 +21,20 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)setCellWithModel:(BBSSubModel *)aModel
+{
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    self.nameLabel.text = aModel.name;
+    self.numLabel.text = aModel.newthread_num;
+    NSString *numText = @"0";
+    if ([aModel.newthread_num intValue] < 10) {
+        numText = aModel.newthread_num;
+    }else
+    {
+        numText = [NSString stringWithFormat:@"%d+",[aModel.newthread_num intValue]/10 * 10];
+    }
 }
 
 @end

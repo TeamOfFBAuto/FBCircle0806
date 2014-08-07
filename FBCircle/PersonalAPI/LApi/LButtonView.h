@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    Line_No = 0, //没有
+    Line_Up, //线在上
+    Line_Down //线在下
+}Line_Direction;
+
 @interface LButtonView : UIView
 
 @property(nonatomic,retain)UIImageView *imageView;
@@ -19,5 +25,19 @@
               title:(NSString *)title
              target:(id)target
              action:(SEL)action;
+
+- (id)initWithFrame:(CGRect)frame
+           leftImage:(UIImage*)aImage
+              title:(NSString *)title
+             target:(id)target
+             action:(SEL)action;
+
+- (id)initWithFrame:(CGRect)frame
+          leftImage:(UIImage *)leftImage
+         rightImage:(UIImage *)rightImage
+              title:(NSString *)title
+             target:(id)target
+             action:(SEL)action
+      lineDirection:(Line_Direction)direction;
 
 @end

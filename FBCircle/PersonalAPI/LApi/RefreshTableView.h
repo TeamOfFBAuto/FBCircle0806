@@ -34,6 +34,9 @@
 @property (nonatomic,assign)BOOL                        isLoadMoreData;    //是否是载入更多
 @property (nonatomic,assign)BOOL                        isHaveMoreData;    //是否还有更多数据,决定是否有更多view
 
+@property (nonatomic,assign)int pageNum;//页数
+@property (nonatomic,retain)NSMutableArray *dataArray;//数据源
+
 @property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic,retain)UILabel *normalLabel;
 @property(nonatomic,retain)UILabel *loadingLabel;
@@ -44,5 +47,8 @@
 -(void)beginToReloadData:(EGORefreshPos)aRefreshPos;
 -(void)showRefreshHeader:(BOOL)animated;//代码出发刷新
 - (void)finishReloadigData;
+
+- (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据
+- (void)loadFail;//请求数据失败
 
 @end

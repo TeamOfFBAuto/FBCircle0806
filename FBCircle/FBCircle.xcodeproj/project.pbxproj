@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		134164491993582100189A46 /* BBSListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 134164481993582100189A46 /* BBSListViewController.m */; };
+		1341645819935A0B00189A46 /* jiaruluntan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644C19935A0B00189A46 /* jiaruluntan@2x.png */; };
+		1341645919935A0B00189A46 /* jing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644D19935A0B00189A46 /* jing@2x.png */; };
+		1341645A19935A0B00189A46 /* qi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644E19935A0B00189A46 /* qi@2x.png */; };
+		1341645B19935A0B00189A46 /* new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341645019935A0B00189A46 /* new@2x.png */; };
+		1341645C19935A0B00189A46 /* pen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341645119935A0B00189A46 /* pen@2x.png */; };
+		1341645D19935A0B00189A46 /* dele@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341645319935A0B00189A46 /* dele@2x.png */; };
+		1341645E19935A0B00189A46 /* tankuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341645419935A0B00189A46 /* tankuang@2x.png */; };
+		1341645F19935A0B00189A46 /* zhiding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341645519935A0B00189A46 /* zhiding@2x.png */; };
+		1341646019935A0B00189A46 /* quxiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341645719935A0B00189A46 /* quxiao@2x.png */; };
+		134164641993731E00189A46 /* BBSListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 134164621993731E00189A46 /* BBSListCell.m */; };
+		134164651993731E00189A46 /* BBSListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 134164631993731E00189A46 /* BBSListCell.xib */; };
+		1341646819937B1F00189A46 /* BBSTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1341646719937B1F00189A46 /* BBSTopicController.m */; };
 		1366027A1990A82900F2BEEC /* +@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602611990A82900F2BEEC /* +@2x.png */; };
 		1366027B1990A82900F2BEEC /* jiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602621990A82900F2BEEC /* jiantou@2x.png */; };
 		1366027C1990A82900F2BEEC /* search-kuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602631990A82900F2BEEC /* search-kuang@2x.png */; };
@@ -828,6 +841,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		134164471993582100189A46 /* BBSListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSListViewController.h; sourceTree = "<group>"; };
+		134164481993582100189A46 /* BBSListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSListViewController.m; sourceTree = "<group>"; };
+		1341644C19935A0B00189A46 /* jiaruluntan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiaruluntan@2x.png"; sourceTree = "<group>"; };
+		1341644D19935A0B00189A46 /* jing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jing@2x.png"; sourceTree = "<group>"; };
+		1341644E19935A0B00189A46 /* qi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qi@2x.png"; sourceTree = "<group>"; };
+		1341645019935A0B00189A46 /* new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new@2x.png"; sourceTree = "<group>"; };
+		1341645119935A0B00189A46 /* pen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pen@2x.png"; sourceTree = "<group>"; };
+		1341645319935A0B00189A46 /* dele@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dele@2x.png"; sourceTree = "<group>"; };
+		1341645419935A0B00189A46 /* tankuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tankuang@2x.png"; sourceTree = "<group>"; };
+		1341645519935A0B00189A46 /* zhiding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhiding@2x.png"; sourceTree = "<group>"; };
+		1341645719935A0B00189A46 /* quxiao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quxiao@2x.png"; sourceTree = "<group>"; };
+		134164611993731E00189A46 /* BBSListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSListCell.h; sourceTree = "<group>"; };
+		134164621993731E00189A46 /* BBSListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSListCell.m; sourceTree = "<group>"; };
+		134164631993731E00189A46 /* BBSListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BBSListCell.xib; sourceTree = "<group>"; };
+		1341646619937B1F00189A46 /* BBSTopicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSTopicController.h; sourceTree = "<group>"; };
+		1341646719937B1F00189A46 /* BBSTopicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSTopicController.m; sourceTree = "<group>"; };
 		136602611990A82900F2BEEC /* +@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "+@2x.png"; sourceTree = "<group>"; };
 		136602621990A82900F2BEEC /* jiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou@2x.png"; sourceTree = "<group>"; };
 		136602631990A82900F2BEEC /* search-kuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-kuang@2x.png"; sourceTree = "<group>"; };
@@ -1539,6 +1568,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1341644A19935A0B00189A46 /* 011微论坛主题帖 */ = {
+			isa = PBXGroup;
+			children = (
+				1341644B19935A0B00189A46 /* 01101微论坛列表页（未加入论坛前） */,
+				1341644F19935A0B00189A46 /* 01102微论坛列表页（加入论坛后） */,
+				1341645219935A0B00189A46 /* 0110301帖子置顶（坛主） */,
+				1341645619935A0B00189A46 /* 0110302取消置顶（坛主） */,
+			);
+			path = "011微论坛主题帖";
+			sourceTree = "<group>";
+		};
+		1341644B19935A0B00189A46 /* 01101微论坛列表页（未加入论坛前） */ = {
+			isa = PBXGroup;
+			children = (
+				1341644C19935A0B00189A46 /* jiaruluntan@2x.png */,
+				1341644D19935A0B00189A46 /* jing@2x.png */,
+				1341644E19935A0B00189A46 /* qi@2x.png */,
+			);
+			path = "01101微论坛列表页（未加入论坛前）";
+			sourceTree = "<group>";
+		};
+		1341644F19935A0B00189A46 /* 01102微论坛列表页（加入论坛后） */ = {
+			isa = PBXGroup;
+			children = (
+				1341645019935A0B00189A46 /* new@2x.png */,
+				1341645119935A0B00189A46 /* pen@2x.png */,
+			);
+			path = "01102微论坛列表页（加入论坛后）";
+			sourceTree = "<group>";
+		};
+		1341645219935A0B00189A46 /* 0110301帖子置顶（坛主） */ = {
+			isa = PBXGroup;
+			children = (
+				1341645319935A0B00189A46 /* dele@2x.png */,
+				1341645419935A0B00189A46 /* tankuang@2x.png */,
+				1341645519935A0B00189A46 /* zhiding@2x.png */,
+			);
+			path = "0110301帖子置顶（坛主）";
+			sourceTree = "<group>";
+		};
+		1341645619935A0B00189A46 /* 0110302取消置顶（坛主） */ = {
+			isa = PBXGroup;
+			children = (
+				1341645719935A0B00189A46 /* quxiao@2x.png */,
+			);
+			path = "0110302取消置顶（坛主）";
+			sourceTree = "<group>";
+		};
 		1366025E1990A3D900F2BEEC /* LApi */ = {
 			isa = PBXGroup;
 			children = (
@@ -1559,6 +1636,7 @@
 		1366025F1990A82900F2BEEC /* MicroBBSImages */ = {
 			isa = PBXGroup;
 			children = (
+				1341644A19935A0B00189A46 /* 011微论坛主题帖 */,
 				1371C5631991D63E00D937CD /* daohanglan_bg_640_88@2x.png */,
 				136602601990A82900F2BEEC /* 01001微论坛主页 */,
 				136602651990A82900F2BEEC /* 01002我的论坛 */,
@@ -1681,6 +1759,9 @@
 				138EBEAB1992512F005DB531 /* MyBBSCell.h */,
 				138EBEAC1992512F005DB531 /* MyBBSCell.m */,
 				138EBEAD1992512F005DB531 /* MyBBSCell.xib */,
+				134164611993731E00189A46 /* BBSListCell.h */,
+				134164621993731E00189A46 /* BBSListCell.m */,
+				134164631993731E00189A46 /* BBSListCell.xib */,
 			);
 			path = BBSViews;
 			sourceTree = "<group>";
@@ -1970,6 +2051,10 @@
 				1368544419920D84004BBB20 /* ClassifyBBSController.m */,
 				1368544E19922B5A004BBB20 /* ClassifyBBSController_Sub.h */,
 				1368544F19922B5A004BBB20 /* ClassifyBBSController_Sub.m */,
+				134164471993582100189A46 /* BBSListViewController.h */,
+				134164481993582100189A46 /* BBSListViewController.m */,
+				1341646619937B1F00189A46 /* BBSTopicController.h */,
+				1341646719937B1F00189A46 /* BBSTopicController.m */,
 			);
 			path = BBSControllers;
 			sourceTree = "<group>";
@@ -3135,6 +3220,7 @@
 				136602851990A82900F2BEEC /* yiliao@2x.png in Resources */,
 				136602801990A82900F2BEEC /* fly@2x.png in Resources */,
 				56A64DBA198F72E900451413 /* xiayibu-bukedian-up-568_88@2x.png in Resources */,
+				1341645B19935A0B00189A46 /* new@2x.png in Resources */,
 				56A648E0198F512A00451413 /* FBCircle.sqlite in Resources */,
 				56A64BF0198F6CA200451413 /* umeng_logo.png in Resources */,
 				56A64A1C198F698B00451413 /* WriteChoosePictures@2x.png in Resources */,
@@ -3153,6 +3239,7 @@
 				56A64DD0198F72E900451413 /* youjiantou-16_26@2x.png in Resources */,
 				56A64B0A198F6AD800451413 /* tuichudenglu_up_532_80@2x.png in Resources */,
 				56A64CDC198F72E900451413 /* biaoqing-56_56@2x.png in Resources */,
+				1341645819935A0B00189A46 /* jiaruluntan@2x.png in Resources */,
 				56A64BD8198F6CA200451413 /* messages_right_bubble@2x.png in Resources */,
 				56A64DA8198F72E900451413 /* tianjia-150_150@2x.png in Resources */,
 				56A64CEE198F72E900451413 /* fengmian-640_512@2x.png in Resources */,
@@ -3172,6 +3259,7 @@
 				56A64DEE198F72E900451413 /* wnacheng-button-kedian-100_58@2x.png in Resources */,
 				56A64A0A198F5AE400451413 /* unselected_found_image@2x.png in Resources */,
 				56A64D30198F72E900451413 /* loading320_480@2x.png in Resources */,
+				1341645919935A0B00189A46 /* jing@2x.png in Resources */,
 				56A64D66198F72E900451413 /* Expression_9@2x.png in Resources */,
 				56A64DD6198F72E900451413 /* xiangqing-pinglun-icon-24_24@2x.png in Resources */,
 				56A64DC6198F72E900451413 /* duanxin-icon-94_94@2x.png in Resources */,
@@ -3206,6 +3294,7 @@
 				56A64AE8198F6AD800451413 /* geren_xiaoxi_up212_212@2x.png in Resources */,
 				56A64D78198F72E900451413 /* qichu-46_48-xy84_614@2x.png in Resources */,
 				1366028C1990A82900F2BEEC /* shuxian@2x.png in Resources */,
+				1341645F19935A0B00189A46 /* zhiding@2x.png in Resources */,
 				1366028D1990A82900F2BEEC /* traval@2x.png in Resources */,
 				1366027D1990A82900F2BEEC /* search@2x.png in Resources */,
 				56A64D54198F72E900451413 /* Expression_23@2x.png in Resources */,
@@ -3214,6 +3303,7 @@
 				56A64DA2198F72E900451413 /* toujxiang-moren-94_94@2x.png in Resources */,
 				56A64AC8198F6AD800451413 /* fengmian_640_512@2x.png in Resources */,
 				56A64B0C198F6AD800451413 /* xiaoxi_down46_40-xy510_404@2x.png in Resources */,
+				1341646019935A0B00189A46 /* quxiao@2x.png in Resources */,
 				136602841990A82900F2BEEC /* right@2x.png in Resources */,
 				56A64AC4198F6AD800451413 /* fankui_down46_46-xy300_618@2x.png in Resources */,
 				56A64CD2198F72E900451413 /* fb_142_126@2x.png in Resources */,
@@ -3271,6 +3361,7 @@
 				56A64D40198F72E900451413 /* Expression_14@2x.png in Resources */,
 				56A64CE8198F72E900451413 /* FBCircle_picture_default_new_image@2x.png in Resources */,
 				56A64D0C198F72E900451413 /* pinglun-xin_up-24_24@2x.png in Resources */,
+				1341645A19935A0B00189A46 /* qi@2x.png in Resources */,
 				56A64BD4198F6CA200451413 /* item_ok_selected@2x.png in Resources */,
 				56A64D98198F72E900451413 /* duihua1-66_82@2x.png in Resources */,
 				1366028A1990A82900F2BEEC /* jignsai@2x.png in Resources */,
@@ -3290,8 +3381,10 @@
 				56A64CC2198F72E900451413 /* back1.png in Resources */,
 				56A64CE2198F72E900451413 /* fanhui-daohanglan-20_38@2x.png in Resources */,
 				56A64D6A198F72E900451413 /* xiaoxi_80_80@2x.png in Resources */,
+				1341645E19935A0B00189A46 /* tankuang@2x.png in Resources */,
 				56A64D02198F72E900451413 /* pinglun-bg2-up-216_76@2x.png in Resources */,
 				56A64DCE198F72E900451413 /* duihao-up-42_42@2x.png in Resources */,
+				1341645D19935A0B00189A46 /* dele@2x.png in Resources */,
 				56A64CE4198F72E900451413 /* fb-52_46@2x.png in Resources */,
 				56A64D1C198F72E900451413 /* tixiang-touxiang-44_44@2x.png in Resources */,
 				561731D519925E47001B8574 /* take_photo_view_finder_image@2x.png in Resources */,
@@ -3339,6 +3432,7 @@
 				1366028F1990A82900F2BEEC /* join@2x.png in Resources */,
 				1366027B1990A82900F2BEEC /* jiantou@2x.png in Resources */,
 				56A64D6C198F72E900451413 /* yaoqing-button-100_60@2x.png in Resources */,
+				1341645C19935A0B00189A46 /* pen@2x.png in Resources */,
 				56A64D9C198F72E900451413 /* longSearch592_60@2x.png in Resources */,
 				56A6485E198F4C6800451413 /* selected_message_icon@2x.png in Resources */,
 				56A64D34198F72E900451413 /* loading640_960@2x.png in Resources */,
@@ -3350,6 +3444,7 @@
 				56A64BE4198F6CA200451413 /* nav_bg.png in Resources */,
 				56A64DE8198F72E900451413 /* duihao-doun-46_46@2x.png in Resources */,
 				136602821990A82900F2BEEC /* jiazai@2x.png in Resources */,
+				134164651993731E00189A46 /* BBSListCell.xib in Resources */,
 				56A64B0E198F6AD800451413 /* zuj_down42_42-xy84_404@2x.png in Resources */,
 				561731D119925E47001B8574 /* take_photo_navigation_image@2x.png in Resources */,
 				56A64DCC198F72E900451413 /* duihao-42_42@2x.png in Resources */,
@@ -3657,10 +3752,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				134164491993582100189A46 /* BBSListViewController.m in Sources */,
 				56A64B65198F6BC700451413 /* ZkingSearchView.m in Sources */,
 				56A64A39198F69A800451413 /* FBCircleCommentView.m in Sources */,
 				56A64B49198F6BC700451413 /* FBQuanMessageModel.m in Sources */,
 				56A64B59198F6BC700451413 /* FbRegistCell.m in Sources */,
+				1341646819937B1F00189A46 /* BBSTopicController.m in Sources */,
 				56A64B61198F6BC700451413 /* SuggestFriendCell.m in Sources */,
 				1371C56A1991DDAE00D937CD /* HotTopicViewController.m in Sources */,
 				56A64B18198F6AD800451413 /* LoadingIndicatorView.m in Sources */,
@@ -3775,6 +3872,7 @@
 				56A64B94198F6BD400451413 /* RegistViewController.m in Sources */,
 				56A64B63198F6BC700451413 /* ZKingLoadingView.m in Sources */,
 				56A64ABE198F6AD800451413 /* GupData.m in Sources */,
+				134164641993731E00189A46 /* BBSListCell.m in Sources */,
 				56A64840198F430600451413 /* FoundViewController.m in Sources */,
 				56A64A3D198F69A800451413 /* FBCircleDetailCommentsView.m in Sources */,
 				56A64B82198F6BD400451413 /* AboutFBQuanViewController.m in Sources */,

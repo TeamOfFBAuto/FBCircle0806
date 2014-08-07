@@ -8,16 +8,19 @@
 
 #import "ClassifyBBSController.h"
 #import "ClassifyBBSController_Sub.h"
+#import "SendPostsViewController.h"
 #import "BBSModel.h"
 
 @interface ClassifyBBSController ()<UISearchBarDelegate>
 {
-    NSArray *_dataArray;
-    NSArray *_titles;
+    NSArray *_first_DataArr;//第一部分
+    NSArray *_second_DataArray;//第二部分
     UIView *search_bgview;
     UIScrollView *bgScroll;
     
     UIView *second_bgView;//第二部分背景view
+    
+    BOOL finish;//判断两个接口完成数
 }
 
 @end
@@ -43,6 +46,7 @@
     
     self.rightImageName = @"+";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+    [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     
     //搜索
     [self createSearchView];
@@ -73,9 +77,27 @@
 
 - (void)clickToSubClassifyBBS:(UIButton *)sender
 {
+    NSString *title = nil;
+    NSString *class_id = nil;
+    if (sender.tag <= 1000) {
+        //上部分 100开始
+        
+        BBSModel *aModel = [_first_DataArr objectAtIndex:sender.tag - 100];
+        title = aModel.classname;
+        class_id = aModel.id;
+        
+    }else
+    {
+        //下部分 1000开始
+        BBSModel *aModel = [_second_DataArray objectAtIndex:sender.tag - 1000];
+        title = aModel.classname;
+        class_id = aModel.id;
+        
+    }
     ClassifyBBSController_Sub *sub = [[ClassifyBBSController_Sub alloc]init];
-    sub.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:sub animated:YES];
+    sub.navigationTitle = title;
+    sub.class_id = class_id;
+    [self PushToViewController:sub WithAnimation:YES];
 }
 
 /**
@@ -83,7 +105,8 @@
  */
 - (void)clickToAddBBS
 {
-    
+    SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
+    [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 
 /**
@@ -139,7 +162,7 @@
 
 - (void)createFirstViewWithTitles:(NSArray *)titles
 {
-    _titles = titles;
+    _first_DataArr = titles;
     
     int k = 0;
     int line = 0;
@@ -155,11 +178,13 @@
         
         [bgScroll addSubview:lBtn];
     }
+    
+    [self createSecondViewWithDataArray:@[@"赛事",@"汽车",@"竞技",@"体育",@"赛跑"]];
 }
 
 - (void)createSecondViewWithDataArray:(NSArray *)array
 {
-    CGFloat aY = [bgScroll viewWithTag:(_titles.count + 100 - 1)].bottom + 15;
+    CGFloat aY = [bgScroll viewWithTag:(_first_DataArr.count + 100 - 1)].bottom + 15;
     int k = 0;
     int line = 0;
     for (int i = 0; i < array.count; i ++) {
@@ -191,28 +216,6 @@
 }
 
 #pragma mark - delegate
-
-#pragma - mark UICollection
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return _dataArray.count;
-}
-
--(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UICollectionViewCell*cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    
-    cell.backgroundColor = [UIColor orangeColor];
-    
-    return  cell;
-}
-
-
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake(100,130);
-}
 
 #pragma - mark UISearchBarDelegate
 

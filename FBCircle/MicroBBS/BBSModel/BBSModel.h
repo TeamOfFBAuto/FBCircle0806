@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseModel.h"
+/**
+ *  论坛分类
+ */
 @interface BBSModel : BaseModel
 @property(nonatomic,retain)NSString *id;
 @property(nonatomic,retain)NSString *classname;

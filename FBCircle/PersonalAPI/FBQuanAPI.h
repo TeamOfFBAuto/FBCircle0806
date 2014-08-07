@@ -167,3 +167,9 @@ alpha:(a)]
 #define FBCIRCLE_MICROBBS_BBSCLASS @"http://quan.fblife.com/index.php?c=forum&a=getforumclass"//官方论坛分类
 
 #define FBCIRCLE_CLSSIFYBBS_SUB @"http://quan.fblife.com/index.php?c=forum&a=getclassforum&authkey=%@&page=%d&ps=%d&class=%@" //单个分类下所有论坛
+
+#define FBCIRCLE_BBS_MINE @"http://quan.fblife.com/index.php?c=forum&a=myjoinforum&authkey=%@&page=%d&ps=%d"//我的论坛(加入，创建)
+
+//微论坛成员部分
+
+#define FBCIRCLE_BBS_MEMBER_JOIN @"http://quan.fblife.com/index.php?c=forum&a=joinforum&authkey=%@&fid=%@"//加入论坛
