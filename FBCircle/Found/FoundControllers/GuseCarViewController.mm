@@ -136,7 +136,7 @@
         coor.latitude = 39.915;
         coor.longitude = 116.404;
         
-        circle = [BMKCircle circleWithCenterCoordinate:coor radius:5000];
+        circle = [BMKCircle circleWithCenterCoordinate:coor radius:3000];
         [_mapView addOverlay:circle];
     }
 //    // 添加多边形覆盖物
