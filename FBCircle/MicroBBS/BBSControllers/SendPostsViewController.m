@@ -58,6 +58,19 @@
 }
 
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+}
+
 
 - (void)viewDidLoad
 {
@@ -67,25 +80,16 @@
     
     self.title = @"新帖子";
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    self.rightString = @"发表";
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     
-    UIButton * right_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.my_right_button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     
-    right_button.frame = CGRectMake(0,0,40,44);
+    self.my_right_button.userInteractionEnabled = NO;
     
-    right_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    
-    [right_button setTitle:@"发表" forState:UIControlStateNormal];
-    
-    [right_button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    
-    [right_button addTarget:self action:@selector(sendTap:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem * right_item = [[UIBarButtonItem alloc] initWithCustomView:right_button];
-    
-    self.navigationItem.rightBarButtonItem = right_item;
-    
+    [self.my_right_button addTarget:self action:@selector(sendTap:) forControlEvents:UIControlEventTouchUpInside];
     
     
     allImageArray = [NSMutableArray array];
@@ -570,6 +574,8 @@
         }else
         {
             title_place_label.text = @"";
+            self.my_right_button.userInteractionEnabled = YES;
+            [self.my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }else
     {

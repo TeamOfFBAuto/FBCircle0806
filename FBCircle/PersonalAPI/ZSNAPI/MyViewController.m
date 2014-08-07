@@ -48,15 +48,22 @@
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];//返回按钮颜色
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     UIColor * cc = RGBCOLOR(91,138,59);
     
     NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
     
-    
     self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+}
 
 
 - (void)viewDidLoad
@@ -268,6 +275,16 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+-(void)PushToViewController:(UIViewController *)controller WithAnimation:(BOOL)animation
+{
+    self.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:controller animated:animation];
+}
+
+
 
 
 @end

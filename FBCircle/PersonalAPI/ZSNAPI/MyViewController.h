@@ -58,4 +58,8 @@ typedef enum
 -(void)setMyViewControllerLeftButtonType:(MyViewControllerLeftbuttonType)theType WithRightButtonType:(MyViewControllerRightbuttonType)rightType;
 
 
+///push到下一界面,包含隐藏tabbar
+-(void)PushToViewController:(UIViewController *)controller WithAnimation:(BOOL)animation;
+
+
 @end
