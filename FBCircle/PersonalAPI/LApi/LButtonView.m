@@ -100,9 +100,11 @@
         _target = target;
         _action = action;
         
-        self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, (self.height-leftImage.size.height)/2.f, leftImage.size.width, leftImage.size.height)];
-        [_imageView setImage:leftImage];
-        [self addSubview:_imageView];
+        if (leftImage) {
+            self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, (self.height-leftImage.size.height)/2.f, leftImage.size.width, leftImage.size.height)];
+            [_imageView setImage:leftImage];
+            [self addSubview:_imageView];
+        }
         
         if (rightImage) {
             UIImageView *rightImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.width - 10 - rightImage.size.width, (self.height-rightImage.size.height)/2.f, rightImage.size.width, rightImage.size.height)];
@@ -110,7 +112,7 @@
             [self addSubview:rightImageV];
         }
         
-        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10, _imageView.top - 1, 260, 16) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10,0, 260, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         [self addSubview:_titleLabel];
         
         if (direction == Line_No) {

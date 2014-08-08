@@ -13,6 +13,8 @@
 #import "UIView+Frame.h"
 #import "UIImageView+WebCache.h"
 #import "LButtonView.h"
+#import "LNineImagesView.h"
+#import "LInputView.h"
 
 #define PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
@@ -52,6 +54,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
                          font:(CGFloat)size
                         align:(NSTextAlignment)align
                     textColor:(UIColor *)textColor;
+
+#pragma mark - 计算宽度、高度
+
++ (CGFloat)widthForText:(NSString *)text font:(CGFloat)size;
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size;
 
 #pragma mark - 小工具
 

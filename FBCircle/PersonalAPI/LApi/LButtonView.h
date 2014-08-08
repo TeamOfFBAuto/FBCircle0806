@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  自定义可点击 横条
+ */
 typedef enum {
     Line_No = 0, //没有
     Line_Up, //线在上

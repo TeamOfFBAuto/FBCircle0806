@@ -10,6 +10,7 @@
 #import "MyBBSViewController.h"
 #import "HotTopicViewController.h"
 #import "ClassifyBBSController.h"
+#import "MicroBBSInfoController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
@@ -67,6 +68,13 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - 事件处理
+
+//论坛信息页
+- (void)clickToBBSInfo:(UIGestureRecognizer *)tap
+{
+    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+    [self PushToViewController:bbsInfo WithAnimation:YES];
+}
 
 //进入我的论坛
 
@@ -170,6 +178,10 @@
     UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:@"1666666" font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
     [basic_view addSubview:topicLabel_num];
     
+    UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(320 - 12 - 8, basic_view.height/2.f - 13/2.f, 8, 13)];
+    arrow_image.image = [UIImage imageNamed:@"jiantou"];
+    [basic_view addSubview:arrow_image];
+    
     return basic_view;
 }
 
@@ -208,6 +220,9 @@
     
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(0, 0, 320, 75)];
     [headerView addSubview:basic_view];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToBBSInfo:)];
+    [basic_view addGestureRecognizer:tap];
+    
     
     UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304, 80)];
     [headerView addSubview:recommed_view];

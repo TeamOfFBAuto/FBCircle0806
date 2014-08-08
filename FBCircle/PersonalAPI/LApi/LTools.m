@@ -165,6 +165,23 @@
     return titleLabel;
 }
 
+/**
+ *  计算宽度
+ */
++ (CGFloat)widthForText:(NSString *)text font:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};
+    CGSize aSize = [text sizeWithAttributes:attributes];
+    return aSize.width;
+}
+
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};
+    CGSize aSize = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
+    return aSize.height;
+}
+
 #pragma - mark 验证邮箱、电话等有效性
 
 /*匹配正整数*/
