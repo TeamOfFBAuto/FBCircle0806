@@ -7,13 +7,18 @@
 //
 
 #import "MyBBSViewController.h"
+#import "SendPostsViewController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
+#import "BBSSubModel.h"
 
 @interface MyBBSViewController ()<RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
-    NSArray *_dataArray;
+    NSArray *joinArray;//加入的论坛
+    NSArray *createArray;//创建的论坛
+    int createNum;
+    int joinNum;
 }
 
 @end
@@ -37,6 +42,7 @@
     
     self.rightImageName = @"+";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+    [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
@@ -45,6 +51,8 @@
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
+    
+    [_table showRefreshHeader:YES];
     
 }
 
@@ -68,11 +76,88 @@
  */
 - (void)clickToAddBBS
 {
-    
+    SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
+    [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 
 
 #pragma mark - 网络请求
+
+- (void)getDataWithClass
+{
+    __weak typeof(_table)weakTable = _table;
+    __weak typeof(self)weakSelf = self;
+//    @"BDBWMVMwUTUFOgNvVi1TPVYkBnsPMVtnCWtZew8+AG9WOQ=="
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],_table.pageNum,PAGE_SIZE];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            int total = [[dataInfo objectForKey:@"total"]integerValue];
+            createNum = [[dataInfo objectForKey:@"createnum" ]integerValue];
+            joinNum = [[dataInfo objectForKey:@"joinnum" ]integerValue];
+            
+            NSArray *join = [dataInfo objectForKey:@"join"];
+            NSArray *create = [dataInfo objectForKey:@"create"];
+            
+            NSMutableArray *arr_join = [NSMutableArray arrayWithCapacity:join.count];
+            NSMutableArray *arr_create = [NSMutableArray arrayWithCapacity:create.count];
+            for (NSDictionary *aDic in join) {
+                
+                [arr_join addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+            }
+            
+            for (NSDictionary *aDic in create) {
+                
+                [arr_create addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+            }
+            
+            [weakSelf reloadDataWithCreateArr:arr_create joinArr:arr_join total:total];
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+        [weakTable loadFail];
+    }];
+}
+
+//成功加载
+- (void)reloadDataWithCreateArr:(NSArray *)arr_create joinArr:(NSArray *)arr_join total:(int)totalPage
+{
+    if (_table.pageNum < totalPage) {
+        
+        _table.isHaveMoreData = YES;
+    }else
+    {
+        _table.isHaveMoreData = NO;
+    }
+    
+    if (_table.isReloadData) {
+        
+        createArray = arr_create;
+        joinArray = arr_join;
+        
+    }else
+    {
+        NSMutableArray *newArr_create = [NSMutableArray arrayWithArray:createArray];
+        [newArr_create addObjectsFromArray:arr_create];
+        createArray = newArr_create;
+        
+        NSMutableArray *newArr_join = [NSMutableArray arrayWithArray:joinArray];
+        [newArr_join addObjectsFromArray:arr_join];
+        joinArray = newArr_join;
+    }
+    
+    [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+}
+
 #pragma mark - 视图创建
 
 
@@ -83,11 +168,14 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    
+    [self getDataWithClass];
 }
 
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
+    [self getDataWithClass];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -109,11 +197,14 @@
     UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 32)];
     header.backgroundColor = [UIColor colorWithHexString:@"f6f7f9"];
     
-    NSString *title = [NSString stringWithFormat:@"%@(%d)",(section == 0) ? @"我创建的论坛":@"我加入的论坛",50];
+    NSString *title1 = [NSString stringWithFormat:@"%@(%d)",@"我创建的论坛",createNum];
+    NSString *title2 = [NSString stringWithFormat:@"%@(%d)",@"我加入的论坛",joinNum];
+    
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 0, 150, header.height)];
-    titleLabel.text = title;
+    titleLabel.text = (section == 0) ? title1 : title2;
     titleLabel.font = [UIFont boldSystemFontOfSize:12];
     titleLabel.textColor = [UIColor lightGrayColor];
+    titleLabel.tag = 100 + section;
     [header addSubview:titleLabel];
     
     return header;
@@ -132,9 +223,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 5;
+        return createArray.count;
     }
-    return 10;
+    return joinArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,6 +237,19 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MyBBSCell" owner:self options:nil]objectAtIndex:0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    BBSSubModel *aModel;
+    if (indexPath.section == 0) {
+        
+        aModel = [createArray objectAtIndex:indexPath.row];
+        
+    }else
+    {
+        aModel = [joinArray objectAtIndex:indexPath.row];
+    }
+    
+    [cell setCellWithModel:aModel];
+    
     return cell;
     
 }

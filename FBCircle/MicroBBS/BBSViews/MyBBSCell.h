@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  我的论坛
+ */
+@class BBSSubModel;
 @interface MyBBSCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *aImageView;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *numLabel;
+
+-(void)setCellWithModel:(BBSSubModel *)aModel;
+
 @end

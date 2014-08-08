@@ -10,6 +10,8 @@
 #import "MyBBSViewController.h"
 #import "HotTopicViewController.h"
 #import "ClassifyBBSController.h"
+#import "BBSListViewController.h"
+#import "BBSTopicController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
@@ -135,6 +137,14 @@
     
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
+/**
+ *  论坛帖子列表
+ */
+- (void)clickToBBSList
+{
+    BBSListViewController *list = [[BBSListViewController alloc]init];
+    [self PushToViewController:list WithAnimation:YES];
+}
 
 /**
  *  搜索页
@@ -146,25 +156,6 @@
 
 #pragma mark - 网络请求
 #pragma mark - 视图创建
-
-- (void)createLeftBtn
-{
-    UIButton *leftButton =[[UIButton alloc]initWithFrame:CGRectMake(0,8,60,21.5)];
-    [leftButton addTarget:self action:@selector(clickToClassifyBBS) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton setTitle:@"分类论坛" forState:UIControlStateNormal];
-    [leftButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    UIBarButtonItem *left_item=[[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = left_item;
-}
-
-- (void)createRightBtn
-{
-    UIButton *rightButton =[[UIButton alloc]initWithFrame:CGRectMake(0,12,19,19)];
-    [rightButton addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton setImage:[UIImage imageNamed:@"+"] forState:UIControlStateNormal];
-    UIBarButtonItem *right_item=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = right_item;
-}
 
 /**
  *  搜索view
@@ -189,7 +180,6 @@
     
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(8, 20, 304, 80)];
     bgView.layer.cornerRadius = 3.f;
-//    bgView.layer.borderWidth = 10;
     bgView.clipsToBounds = YES;
     [headerView addSubview:bgView];
     
@@ -208,6 +198,7 @@
         btn.frame = CGRectMake(100 * i, 0, 100, 40);
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [secondBgView addSubview:btn];
+        [btn addTarget:self action:@selector(clickToBBSList) forControlEvents:UIControlEventTouchUpInside];
         
         if (i != 2) {
             UIView *line = [[UIView alloc]initWithFrame:CGRectMake(btn.right, 10, 1, 20)];
@@ -245,7 +236,9 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    topic.hidesBottomBarWhenPushed = YES;
+    [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
@@ -264,6 +257,13 @@
         return 40;
     }
     return 75;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    topic.hidesBottomBarWhenPushed = YES;
+    [self PushToViewController:topic WithAnimation:YES];
 }
 
 #pragma mark - UITableViewDataSource

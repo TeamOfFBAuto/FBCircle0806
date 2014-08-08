@@ -67,7 +67,7 @@
     
     NSLog(@"requestUrl %@",newStr);
     NSURL *urlS = [NSURL URLWithString:newStr];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
     
     
     if (isPostRequest) {
@@ -149,6 +149,20 @@
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:btn];
     return btn;
+}
+
++ (UILabel *)createLabelFrame:(CGRect)aFrame
+                        title:(NSString *)title
+                         font:(CGFloat)size
+                        align:(NSTextAlignment)align
+                    textColor:(UIColor *)textColor
+{
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:aFrame];
+    titleLabel.text = title;
+    titleLabel.font = [UIFont systemFontOfSize:size];
+    titleLabel.textAlignment = align;
+    titleLabel.textColor = textColor;
+    return titleLabel;
 }
 
 #pragma - mark 验证邮箱、电话等有效性

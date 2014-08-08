@@ -13,5 +13,6 @@
 @interface ClassifyBBSController_Sub : MyViewController
 
 @property(nonatomic,retain)NSString *navigationTitle;
+@property(nonatomic,retain)NSString *class_id;
 
 @end

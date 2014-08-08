@@ -8,10 +8,12 @@
 
 #import "ClassifyBBSController_Sub.h"
 #import "JoinBBSCell.h"
+#import "BBSSubModel.h"
 
 @interface ClassifyBBSController_Sub ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
+    NSArray *_dataArray;
 }
 
 @end
@@ -48,7 +50,7 @@
     _table.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:_table];
     
-    
+    [_table showRefreshHeader:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,24 +72,67 @@
 
 - (void)getDataWithClassId:(NSString *)classId
 {
-    __weak typeof(self)weakSelf = self;
+    __weak typeof(_table)weakTable = _table;
     
-    LTools *tool = [[LTools alloc]initWithUrl:FBCIRCLE_MICROBBS_BBSCLASS isPost:NO postData:nil];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_CLSSIFYBBS_SUB,[SzkAPI getAuthkey],_table.pageNum,PAGE_SIZE,classId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSArray *dataInfo = [result objectForKey:@"datainfo"];
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
-        for (NSDictionary *aDic in dataInfo) {
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-//            [arr addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+            int total = [[dataInfo objectForKey:@"total"]integerValue];
+            NSArray *data = [dataInfo objectForKey:@"data"];
+            
+            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            for (NSDictionary *aDic in data) {
+                
+                [arr addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+            }
+            
+            [weakTable reloadData:arr total:total];
         }
         
-//        [weakSelf createFirstViewWithTitles:arr];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+        [weakTable loadFail];
     }];
 }
+
+/**
+ *  加入论坛
+ *
+ *  @param bbsId 论坛id
+ */
+- (void)JoinBBSId:(NSString *)bbsId
+{
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            [LTools showMBProgressWithText:[result objectForKey:@"ERRO_INFO"] addToView:self.view];
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+    }];
+    
+}
+
 
 #pragma mark - 视图创建
 /**
@@ -121,11 +166,15 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    
+    //请求单个分类下所有论坛
+    [self getDataWithClassId:self.class_id];
 }
 
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
+    [self getDataWithClassId:self.class_id];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,7 +197,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return [_table.dataArray count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,6 +210,15 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(JoinBBSCell *)weakCell = cell;
+    BBSSubModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    [cell setCellDataWithModel:aModel cellBlock:^(NSString *topicId) {
+        NSLog(@"join topic id %@",topicId);
+        [weakSelf JoinBBSId:topicId];
+        
+        weakCell.joinButton.selected = YES;
+    }];
     return cell;
     
 }

@@ -62,14 +62,6 @@
     
 }
 
-/**
- *  添加论坛
- */
-- (void)clickToAddBBS
-{
-    
-}
-
 
 #pragma mark - 网络请求
 #pragma mark - 视图创建

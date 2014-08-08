@@ -148,7 +148,12 @@
     if (indexPath.row == 0 && indexPath.section == 2) {//扫一扫
         [self.navigationController pushViewController:[[GmFoundScanViewController alloc]init] animated:YES];
     }else if (indexPath.row == 0 && indexPath.section == 1){//用车服务
-        [self.navigationController pushViewController:[[GuseCarViewController alloc]init] animated:YES];
+        
+        
+        [self presentViewController:[[GuseCarViewController alloc]init] animated:YES completion:^{
+            
+        }];
+        
     }
     
     

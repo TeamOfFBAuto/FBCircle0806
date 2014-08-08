@@ -67,7 +67,7 @@
                                 <state key="normal" image="join.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="selected" title="已加入"/>
+                                <state key="selected" image="button1-down252_94.png"/>
                                 <connections>
                                     <action selector="clickToJoin:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Nca-2g-fzr"/>
                                 </connections>
@@ -79,13 +79,15 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aImageView" destination="eMY-Lq-xhn" id="bPD-z1-4fG"/>
+                <outlet property="aTitleLabel" destination="Wz4-qa-Vyk" id="pPu-ih-fmd"/>
+                <outlet property="joinButton" destination="MdW-yn-aVh" id="Q6u-BJ-7MU"/>
                 <outlet property="memeberLabel" destination="QSK-0f-71z" id="ti4-Mb-G0g"/>
-                <outlet property="titleLabel" destination="Wz4-qa-Vyk" id="dop-kF-ZAW"/>
                 <outlet property="topicLabel" destination="QEW-1G-Ozw" id="xLP-jH-Rat"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="button1-down252_94.png" width="126" height="47"/>
         <image name="join.png" width="43" height="29"/>
     </resources>
 </document>

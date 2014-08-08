@@ -21,13 +21,15 @@
     if (self) {
         // Initialization code
         
+        self.pageNum = 1;
+        self.dataArray = [NSMutableArray array];
+        
         [self createHeaderView];
         [self createFooterView];
         self.delegate = self;
     }
     return self;
 }
-
 
 -(void)createHeaderView
 {
@@ -99,7 +101,10 @@
     if (aRefreshPos ==  EGORefreshHeader)
     {
         _isReloadData = YES;
+        
         if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewData)]) {
+            
+            self.pageNum = 1;
             [_refreshDelegate performSelector:@selector(loadNewData)];
         }
     }
@@ -107,10 +112,44 @@
     // overide, the actual loading data operation is done in the subclass
 }
 
+//成功加载
+- (void)reloadData:(NSArray *)data total:(int)totalPage
+{
+    if (self.pageNum < totalPage) {
+        
+        self.isHaveMoreData = YES;
+    }else
+    {
+        self.isHaveMoreData = NO;
+    }
+    
+    if (self.isReloadData) {
+        
+        [self.dataArray removeAllObjects];
+        
+    }
+    [self.dataArray addObjectsFromArray:data];
+    
+    [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+}
+
+//请求数据失败
+
+- (void)loadFail
+{
+    if (self.isLoadMoreData) {
+        self.pageNum --;
+    }
+    [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+
+}
+
 //完成数据加载
+
 - (void)finishReloadigData
 {
     NSLog(@"finishReloadigData完成加载");
+
     _reloading = NO;
     if (_refreshHeaderView) {
         [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self];
@@ -161,6 +200,8 @@
             [self startLoading];
             
             _isLoadMoreData = YES;
+            
+            self.pageNum ++;
             [_refreshDelegate performSelector:@selector(loadMoreData)];
         }
     }
