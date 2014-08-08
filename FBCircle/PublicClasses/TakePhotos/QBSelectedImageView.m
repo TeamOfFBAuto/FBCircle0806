@@ -12,7 +12,6 @@
 @synthesize label = _label;
 
 
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -24,9 +23,9 @@
         
         _label.backgroundColor = [UIColor clearColor];
         
-        _label.text = @"1";
-        
         _label.font = [UIFont systemFontOfSize:14];
+        
+        _label.text = @"";
         
         _label.textColor = [UIColor whiteColor];
         
@@ -41,10 +40,8 @@
 
 -(void)setNumberLabel:(NSString *)theText
 {
-    
-    
-    
     _label.text = theText;
+    
 }
 
 

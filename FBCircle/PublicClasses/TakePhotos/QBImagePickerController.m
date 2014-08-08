@@ -53,10 +53,7 @@
         
         //        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"FBCircleNavagationImage.png"] forBarMetrics: UIBarMetricsDefault];
         
-        self.title = @"相册";
-        
-        
-        
+        self.titleLabel.text = @"相册";
         
         self.filterType = QBImagePickerFilterTypeAllPhotos;
         self.showsCancelButton = YES;
@@ -97,6 +94,7 @@
 {
     [super viewDidLoad];
     
+    self.titleLabel.text = @"相册";
     
     void (^assetsGroupsEnumerationBlock)(ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *assetsGroup, BOOL *stop) {
         if(assetsGroup) {

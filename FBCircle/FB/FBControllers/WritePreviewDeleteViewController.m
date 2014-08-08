@@ -54,25 +54,25 @@
     [navImageView addSubview:daohangView];
     
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
+//    
+//    [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [button_back setBackgroundImage:[UIImage imageNamed:@"FBQuanBackImage.png"] forState:UIControlStateNormal];
+//    
+//    button_back.center = CGPointMake(20,42);
+//    
+//    [daohangView addSubview:button_back];
     
-    [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    title_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,150,64)];
     
-    [button_back setBackgroundImage:[UIImage imageNamed:@"FBQuanBackImage.png"] forState:UIControlStateNormal];
-    
-    button_back.center = CGPointMake(20,42);
-    
-    [daohangView addSubview:button_back];
-    
-    title_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,64)];
-    
-    title_label.text = [NSString stringWithFormat:@"%d/%d",_currentPage+1,self.AllImagesArray.count];
+    title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",_currentPage+1,self.AllImagesArray.count];
     
     title_label.font = TITLEFONT;
     
     title_label.textAlignment = NSTextAlignmentCenter;
     
-    title_label.textColor = RGBCOLOR(91,138,59);
+    title_label.textColor = [UIColor whiteColor];//RGBCOLOR(91,138,59);
     
     title_label.center = CGPointMake(160,42);
     
@@ -82,9 +82,11 @@
     
     chooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    chooseButton.frame = CGRectMake(0,0,30,30);
+    chooseButton.frame = CGRectMake(0,0,50,30);
     
-    [chooseButton setImage:[UIImage imageNamed:@"shanchu40_40.png"] forState:UIControlStateNormal];
+    [chooseButton setTitle:@"完成" forState:UIControlStateNormal];
+    
+    [chooseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [chooseButton addTarget:self action:@selector(PreviewChooseTap:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -158,9 +160,18 @@
 -(void)PreviewChooseTap:(UIButton *)sender
 {
     
+    ///图片预览完成
+    
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    
+/*删除这张照片
+    
     UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"要删除这张照片吗?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" otherButtonTitles:nil,nil];
     
     [actionSheet showInView:self.view];
+ */
 }
 
 #pragma mark-UIScrollViewDelegate
@@ -171,7 +182,7 @@
     // 根据当前的x坐标和页宽度计算出当前页数
     _currentPage = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
-    title_label.text = [NSString stringWithFormat:@"%d/%lu",_currentPage+1,(unsigned long)self.AllImagesArray.count];
+    title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",_currentPage+1,self.AllImagesArray.count];
 }
 
 
@@ -231,7 +242,7 @@
             
             [self loadAllViews];
             
-            title_label.text = [NSString stringWithFormat:@"%d/%lu",_currentPage+1,(unsigned long)self.AllImagesArray.count];
+            title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",_currentPage+1,self.AllImagesArray.count];
             
             _myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
         }

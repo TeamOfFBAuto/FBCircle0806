@@ -39,6 +39,5 @@
 
 -(void)theIndexPath:(NSIndexPath *)indexPath;
 
-- (void)setAssets:(NSArray *)assets WithSelected:(NSMutableOrderedSet *)theSelected;
-
+- (void)setAssets:(NSArray *)assets WithSelected:(NSMutableOrderedSet *)theSelected withRow:(int)row WithSelectedViews:(NSMutableArray *)selectedViews;
 @end

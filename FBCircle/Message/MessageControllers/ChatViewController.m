@@ -73,7 +73,7 @@
 {
     [super viewDidLoad];
     
-    self.title = self.messageInfo.othername;
+    self.titleLabel.text = self.messageInfo.othername;
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     

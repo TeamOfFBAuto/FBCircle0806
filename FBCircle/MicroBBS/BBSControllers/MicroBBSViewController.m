@@ -128,7 +128,11 @@
 - (void)clickToAddBBS
 {
     SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
-        
+    
+//    UINavigationController * navc = [[UINavigationController alloc] initWithRootViewController:sendPostVC];
+//    
+//    [self presentViewController:navc animated:YES completion:NULL];
+    
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 

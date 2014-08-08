@@ -72,7 +72,7 @@ alpha:(a)]
 
 #define FBCIRCLE_BACK_IMAGE [UIImage imageNamed:@"fanhui-daohanglan-20_38.png"]
 
-#define FBCIRCLE_NAVIGATION_IMAGE [UIImage imageNamed:@"FBCircleNavBackGroundImage.png"]
+#define FBCIRCLE_NAVIGATION_IMAGE [UIImage imageNamed:@"daohanglan_bg_640_88"]
 
 
 //朋友列表做个缓存

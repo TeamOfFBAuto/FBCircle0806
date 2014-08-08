@@ -46,7 +46,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"我的消息";
+    self.titleLabel.text = @"我的消息";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     

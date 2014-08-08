@@ -13,7 +13,7 @@
 typedef void(^PreViewDeleteBlock)(int currentPage);
 
 
-@interface WritePreviewDeleteViewController : UIViewController<QBShowImagesScrollViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate>
+@interface WritePreviewDeleteViewController : MyViewController<QBShowImagesScrollViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate>
 {
     UIView * navgationBar;
         

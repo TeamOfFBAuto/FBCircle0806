@@ -26,6 +26,7 @@
 @implementation QBImagePickerAssetView
 @synthesize overlayImageView = _overlayImageView;
 @synthesize translucentLayer = _translucentLayer;
+@synthesize number_string = _number_string;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -80,7 +81,7 @@
         [overlayImageView release];
         
         
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doTap:)];
+//        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doTap:)];
         
         //        [imageView addGestureRecognizer:tap];
         
@@ -88,6 +89,13 @@
         UITapGestureRecognizer * selectedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedPictures)];
         
         [imageView addGestureRecognizer:selectedTap];
+        
+        
+        UILongPressGestureRecognizer * longPressTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressTap:)];
+        
+        [imageView addGestureRecognizer:longPressTap];
+        
+        
     }
     
     return self;
@@ -211,6 +219,9 @@
     }
 }
 
+
+///选择图片
+
 -(void)selectedPictures
 {
     self.selected = !self.selected;
@@ -227,6 +238,32 @@
 }
 
 
+///长按预览界面
+
+
+-(void)longPressTap:(UILongPressGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateBegan)
+    {
+        if (_delegate && [_delegate respondsToSelector:@selector(pushToPreViewControllerWith:)])
+        {
+            [_delegate pushToPreViewControllerWith:self];
+        }
+
+    }
+}
+
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+

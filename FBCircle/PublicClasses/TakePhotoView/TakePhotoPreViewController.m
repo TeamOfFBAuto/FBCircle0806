@@ -111,12 +111,12 @@
 
 -(void)useTap:(UIButton *)sender
 {
-    if (take_preView_block)
-    {
-        take_preView_block();
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
+//    [self dismissViewControllerAnimated:YES completion:^{
+        if (take_preView_block)
+        {
+            take_preView_block();
+        }
+//    }];
 }
 
 

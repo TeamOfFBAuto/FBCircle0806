@@ -23,6 +23,8 @@
     UIButton * preview_button;
     
     UIButton * right_button;
+    
+    UIAlertView * show_remind_alert;//弹出提示框（长按手势）
 }
 
 
@@ -75,26 +77,42 @@
 {
     [super viewDidLoad];
     
+    BOOL isHaveShow = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowed"];
+    
+    if (!isHaveShow)
+    {
+        show_remind_alert = [[UIAlertView alloc] initWithTitle:@"长按图片以预览" message:@"" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        
+        [show_remind_alert show];
+    }
+    
+    
+    if (!self.assetsView_array)
+    {
+        self.assetsView_array = [NSMutableArray array];
+    }
+    
+    
     [self.navigationController.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
     
     UIBarButtonItem * spaceBar = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
     spaceBar.width = -5;
     
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,10,19)];
-    
-    [button_back addTarget:self action:@selector(backH) forControlEvents:UIControlEventTouchUpInside];
-    
-    [button_back setBackgroundImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
-    
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    
-    self.navigationItem.leftBarButtonItems=@[spaceBar,back_item];
-    
-    [back_item release];
-    
-    [button_back release];
+//
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,10,19)];
+//    
+//    [button_back addTarget:self action:@selector(backH) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [button_back setBackgroundImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
+//    
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+//    
+//    self.navigationItem.leftBarButtonItems=@[spaceBar,back_item];
+//    
+//    [back_item release];
+//    
+//    [button_back release];
     
     
     
@@ -119,9 +137,7 @@
     self.navigationItem.rightBarButtonItems = @[spaceBar,right_item];
     
     
-    
-    
-    self.title = @"存储的照片";
+    self.titleLabel.text = @"存储的照片";
     
     
     self.view.backgroundColor = RGBCOLOR(3,3,3);
@@ -273,7 +289,7 @@
     
     // Reloads
     
-    [self.tableView reloadData];
+ //   [self.tableView reloadData];
     
 }
 
@@ -301,17 +317,20 @@
 
 - (void)dealloc
 {
-    [_assetsGroup release];
     
-    [_assets release];
-    [_selectedAssets release];
+    _assetsGroup = nil;
+
+    _assets = nil;
+    _selectedAssets = nil;
     
     [_assetsView_array removeAllObjects];
     
     _assetsView_array = nil;
     
-    [_tableView release];
-    [_doneButton release];
+    _tableView = nil;
+    _doneButton = nil;
+    
+    _delegate = nil;
     
     [super dealloc];
 }
@@ -568,7 +587,7 @@
                     [assets addObject:asset];
                 }
                 
-                [(QBImagePickerAssetCell *)cell setAssets:assets WithSelected:self.selectedAssets];
+                [(QBImagePickerAssetCell *)cell setAssets:assets WithSelected:self.selectedAssets withRow:indexPath.row WithSelectedViews:self.assetsView_array];
             }
                 break;
         }
@@ -711,17 +730,6 @@
     ALAsset *asset = [self.assets objectAtIndex:assetIndex];
     
     
-    if (!self.assetsView_array) {
-        self.assetsView_array = [NSMutableArray array];
-    }
-    
-    
-    //    NSMutableDictionary *mediaInfo = [NSMutableDictionary dictionary];
-    //    [mediaInfo setObject:[asset valueForProperty:ALAssetPropertyType] forKey:@"UIImagePickerControllerMediaType"];
-    //
-    ////    UIImage * image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-    //    [mediaInfo setObject:[[asset valueForProperty:ALAssetPropertyURLs] valueForKey:[[[asset valueForProperty:ALAssetPropertyURLs] allKeys] objectAtIndex:0]] forKey:@"UIImagePickerControllerReferenceURL"];
-    
     if(self.allowsMultipleSelection)
     {
         if(selected)
@@ -735,8 +743,8 @@
                 currentPage++;
             }else
             {
-                [self.assetsView_array addObject:asset1111];
-                                
+                [self.assetsView_array addObject:[NSString stringWithFormat:@"%d",assetIndex+1]];
+                
                 [asset1111.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",self.assetsView_array.count]];
                 
                 [self.selectedAssets addObject:asset];
@@ -748,18 +756,16 @@
             
             [self.selectedAssets removeObject:asset];
             
-            [self.assetsView_array removeObject:asset1111];
+            [self.assetsView_array removeObject:[NSString stringWithFormat:@"%d",assetIndex+1]];
             
-            //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+//            for (int i = 0;i < self.assetsView_array.count;i++)
+//            {
+//                QBImagePickerAssetView * assetV = (QBImagePickerAssetView *)[self.assetsView_array objectAtIndex:i];
+//                
+//                [assetV.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",i+1]];
+//            }
             
-            for (int i = 0;i < self.assetsView_array.count;i++)
-            {
-                QBImagePickerAssetView * assetV = (QBImagePickerAssetView *)[self.assetsView_array objectAtIndex:i];
-                
-                [assetV.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",i+1]];
-            }
-            
-            //            });
+            [self reloadData];
         }
         
                 
@@ -791,13 +797,7 @@
     }
     
     
-    
-    if (self.assetsView_array.count > 0)
-    {
-        [right_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        
-        right_button.userInteractionEnabled = YES;
-    }
+    [self compliteButton];
 }
 
 
@@ -816,7 +816,7 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:assetCell];
     
-    int page = indexPath.row*4 + index;
+    int page = indexPath.row*3 + index;
     
     QBShowImageV.currentPage = page;
     
@@ -826,14 +826,42 @@
 
 
 
--(void)returnSelectedImagesWith:(NSMutableOrderedSet *)assets
+-(void)returnSelectedImagesWith:(NSMutableOrderedSet *)assets WithCurrentPage:(int)thePage
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(assetCollectionViewController:didFinishPickingAssets:)]) {
-        [_delegate assetCollectionViewController:self didFinishPickingAssets:assets.array];
+//    if (_delegate && [_delegate respondsToSelector:@selector(assetCollectionViewController:didFinishPickingAssets:)]) {
+//        [_delegate assetCollectionViewController:self didFinishPickingAssets:assets.array];
+//    }
+    
+    [self.assetsView_array addObject:[NSString stringWithFormat:@"%d",thePage+1]];
+    
+    [self compliteButton];
+    
+    [self.tableView reloadData];
+    
+    
+}
+
+
+#pragma mark - 判断完成按钮能不能点
+
+-(void)compliteButton
+{
+    if (self.assetsView_array.count > 0)
+    {
+        [right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        right_button.userInteractionEnabled = YES;
     }
 }
 
 
+#pragma mark - AlertView Delegate
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isShowed"];
+}
 
 
 @end
