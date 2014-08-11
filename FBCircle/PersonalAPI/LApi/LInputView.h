@@ -17,7 +17,7 @@ typedef void(^ FrameBlock) (id inputView,CGRect frame,BOOL isEnd);//frame变化
 typedef void(^ InputTextBlock)(NSString *inputText);//输入内容
 
 
-@interface LInputView : UIView<UITextViewDelegate>
+@interface LInputView : UIView<UITextViewDelegate,UIGestureRecognizerDelegate>
 {
     CGFloat initFrameY;//最开始的frame y
     CGFloat current_FrameY;//inputView当前坐标Y

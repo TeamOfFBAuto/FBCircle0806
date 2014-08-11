@@ -32,6 +32,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignFirstResponder)];
+        tap.delegate = self;
         [superView addGestureRecognizer:tap];
         
         self.backgroundColor = [UIColor colorWithHexString:@"f3f4f6"];
@@ -53,6 +54,13 @@
     return self;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isKindOfClass:[LButtonView class]]) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)setFrame:(CGRect)frame
 {

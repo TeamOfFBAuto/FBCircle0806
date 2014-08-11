@@ -64,6 +64,10 @@
 		138336751994BFED00F73194 /* PraiseMemberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 138336741994BFED00F73194 /* PraiseMemberController.m */; };
 		138336781994C4DA00F73194 /* PraiseMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138336771994C4DA00F73194 /* PraiseMemberCell.m */; };
 		1383367B1994C7DC00F73194 /* MicroBBSInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1383367A1994C7DC00F73194 /* MicroBBSInfoController.m */; };
+		13877F6E19985B5E0058DED6 /* BBSMembersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13877F6D19985B5E0058DED6 /* BBSMembersController.m */; };
+		13877F7119986A5E0058DED6 /* LActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 13877F7019986A5E0058DED6 /* LActionSheet.m */; };
+		13877F73199897F10058DED6 /* zhankaijiantou22_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877F72199897F10058DED6 /* zhankaijiantou22_10@2x.png */; };
+		13877F7519989FA70058DED6 /* jiantou_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877F7419989FA70058DED6 /* jiantou_down@2x.png */; };
 		138EBEAE1992512F005DB531 /* BBSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEA01992512F005DB531 /* BBSModel.m */; };
 		138EBEAF1992512F005DB531 /* BBSTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEA31992512F005DB531 /* BBSTableCell.m */; };
 		138EBEB01992512F005DB531 /* BBSTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEA41992512F005DB531 /* BBSTableCell.xib */; };
@@ -931,6 +935,12 @@
 		138336771994C4DA00F73194 /* PraiseMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PraiseMemberCell.m; sourceTree = "<group>"; };
 		138336791994C7DC00F73194 /* MicroBBSInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MicroBBSInfoController.h; sourceTree = "<group>"; };
 		1383367A1994C7DC00F73194 /* MicroBBSInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MicroBBSInfoController.m; sourceTree = "<group>"; };
+		13877F6C19985B5E0058DED6 /* BBSMembersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSMembersController.h; sourceTree = "<group>"; };
+		13877F6D19985B5E0058DED6 /* BBSMembersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSMembersController.m; sourceTree = "<group>"; };
+		13877F6F19986A5E0058DED6 /* LActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LActionSheet.h; sourceTree = "<group>"; };
+		13877F7019986A5E0058DED6 /* LActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LActionSheet.m; sourceTree = "<group>"; };
+		13877F72199897F10058DED6 /* zhankaijiantou22_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhankaijiantou22_10@2x.png"; sourceTree = "<group>"; };
+		13877F7419989FA70058DED6 /* jiantou_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou_down@2x.png"; sourceTree = "<group>"; };
 		138EBE9F1992512F005DB531 /* BBSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSModel.h; sourceTree = "<group>"; };
 		138EBEA01992512F005DB531 /* BBSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSModel.m; sourceTree = "<group>"; };
 		138EBEA21992512F005DB531 /* BBSTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSTableCell.h; sourceTree = "<group>"; };
@@ -1641,6 +1651,7 @@
 		1341645619935A0B00189A46 /* 0110302取消置顶（坛主） */ = {
 			isa = PBXGroup;
 			children = (
+				13877F72199897F10058DED6 /* zhankaijiantou22_10@2x.png */,
 				1341645719935A0B00189A46 /* quxiao@2x.png */,
 			);
 			path = "0110302取消置顶（坛主）";
@@ -1663,6 +1674,8 @@
 				13833668199469B200F73194 /* LNineImagesView.m */,
 				1383367019949DDD00F73194 /* LInputView.h */,
 				1383367119949DDD00F73194 /* LInputView.m */,
+				13877F6F19986A5E0058DED6 /* LActionSheet.h */,
+				13877F7019986A5E0058DED6 /* LActionSheet.m */,
 			);
 			path = LApi;
 			sourceTree = "<group>";
@@ -1685,6 +1698,7 @@
 		136602601990A82900F2BEEC /* 01001微论坛主页 */ = {
 			isa = PBXGroup;
 			children = (
+				13877F7419989FA70058DED6 /* jiantou_down@2x.png */,
 				136602611990A82900F2BEEC /* +@2x.png */,
 				136602621990A82900F2BEEC /* jiantou@2x.png */,
 				136602631990A82900F2BEEC /* search-kuang@2x.png */,
@@ -2102,6 +2116,8 @@
 				138336741994BFED00F73194 /* PraiseMemberController.m */,
 				138336791994C7DC00F73194 /* MicroBBSInfoController.h */,
 				1383367A1994C7DC00F73194 /* MicroBBSInfoController.m */,
+				13877F6C19985B5E0058DED6 /* BBSMembersController.h */,
+				13877F6D19985B5E0058DED6 /* BBSMembersController.m */,
 			);
 			path = BBSControllers;
 			sourceTree = "<group>";
@@ -3279,6 +3295,7 @@
 				56A64AD2198F6AD800451413 /* geren_guanyu_up460_148@2x.jpg in Resources */,
 				56A64D84198F72E900451413 /* paizhao-button-556_88@2x.png in Resources */,
 				56A64AD6198F6AD800451413 /* geren_haoyou_up212_212@2x.png in Resources */,
+				13877F7519989FA70058DED6 /* jiantou_down@2x.png in Resources */,
 				56A64D3C198F72E900451413 /* Expression_12@2x.png in Resources */,
 				56A64ACA198F6AD800451413 /* geren_morentouxiang126_126@2x.png in Resources */,
 				56A64BDE198F6CA200451413 /* messages_toolbar_background.png in Resources */,
@@ -3381,6 +3398,7 @@
 				56475E5319931B190099760F /* qbasset_collection_chose@2x.png in Resources */,
 				56A64AD4198F6AD800451413 /* geren_haoyou_down212_212@2x.png in Resources */,
 				56A64D16198F72E900451413 /* pinglunkuang-640_208@2x.png in Resources */,
+				13877F73199897F10058DED6 /* zhankaijiantou22_10@2x.png in Resources */,
 				56A64DF0198F72E900451413 /* yulan-button-bukedian-100_58@2x.png in Resources */,
 				56A64DAA198F72E900451413 /* shurukuang-504_164@2x.png in Resources */,
 				56A64D7C198F72E900451413 /* xiaoxi-46_40-xy510_404@2x.png in Resources */,
@@ -3875,6 +3893,7 @@
 				56A64B51198F6BC700451413 /* FbFriendListHeaderView.m in Sources */,
 				56A648DA198F512A00451413 /* ChooseCountryViewController.m in Sources */,
 				138336751994BFED00F73194 /* PraiseMemberController.m in Sources */,
+				13877F7119986A5E0058DED6 /* LActionSheet.m in Sources */,
 				56A64DFE198F7B1E00451413 /* MessageModel.m in Sources */,
 				56A64B55198F6BC700451413 /* FbmessageinvitationCell.m in Sources */,
 				136602AE1990B6D600F2BEEC /* LBaseViewController.m in Sources */,
@@ -3940,6 +3959,7 @@
 				56A648E4198F512A00451413 /* FMDatabaseAdditions.m in Sources */,
 				56A64AB8198F6AD800451413 /* GQianmingViewController.m in Sources */,
 				1366029D1990ABE300F2BEEC /* RefreshTableView.m in Sources */,
+				13877F6E19985B5E0058DED6 /* BBSMembersController.m in Sources */,
 				561731E319925E98001B8574 /* SendPostsImageScrollView.m in Sources */,
 				56A64B84198F6BD400451413 /* AddFriendViewController.m in Sources */,
 				56A64A37198F69A800451413 /* WeiBoFaceScrollView.m in Sources */,
@@ -4163,7 +4183,6 @@
 					"$(SRCROOT)/pods/baidumapsdk",
 					"$(SRCROOT)/",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "7761733C-A5E0-4A17-930B-15841082DF77";
 				SDKROOT = iphoneos;
@@ -4204,7 +4223,6 @@
 					"$(SRCROOT)/pods/baidumapsdk",
 					"$(SRCROOT)/",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "7761733C-A5E0-4A17-930B-15841082DF77";
 				SDKROOT = iphoneos;

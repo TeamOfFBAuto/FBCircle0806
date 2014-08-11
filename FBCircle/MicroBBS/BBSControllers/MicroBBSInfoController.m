@@ -7,6 +7,7 @@
 //
 
 #import "MicroBBSInfoController.h"
+#import "BBSMembersController.h"
 
 @interface MicroBBSInfoController ()
 
@@ -55,13 +56,18 @@
 //成员列表
 - (void)clickToMember:(LButtonView *)sender
 {
-    
+    BBSMembersController *bbsMember = [[BBSMembersController alloc]init];
+    [self PushToViewController:bbsMember WithAnimation:YES];
 }
 
 //退出论坛
 - (void)clickToLeave:(UIButton *)sender
 {
-    
+    NSString *title = @"确定退出\"车\"";
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title,@"退出",@"取消"] images:nil sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
+        
+    }];
+    [sheet showFromView:sender];
 }
 
 #pragma mark - 网络请求

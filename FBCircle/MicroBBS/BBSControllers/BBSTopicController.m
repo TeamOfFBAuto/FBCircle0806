@@ -72,6 +72,11 @@
 }
 #pragma mark - 事件处理
 
+- (void)clickTo
+{
+    NSLog(@"clickTo");
+}
+
 //进入称赞者页
 - (void)clickTOPraiseMember:(UIGestureRecognizer *)tap
 {
@@ -84,6 +89,17 @@
 - (void)clickToZan:(UIButton *)sender
 {
     NSLog(@"zan");
+    
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"赞",@"评论"] images:@[[UIImage imageNamed:@"zhiding"],[UIImage imageNamed:@"zhiding"]] sheetStyle:Style_SideBySide action:^(NSInteger buttonIndex) {
+        
+        if (buttonIndex == 0) {
+            NSLog(@"取消置顶");
+        }else if (buttonIndex == 1)
+        {
+            NSLog(@"删除");
+        }
+    }];
+    [sheet showFromView:sender];
 }
 //进入我的论坛
 
@@ -129,11 +145,21 @@
 }
 
 /**
- *  进入置顶帖子
+ *  进入置顶帖子\删除
  */
 - (void)clickToRecommend:(LButtonView *)btn
 {
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"取消置顶",@"删除"] images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
+        if (buttonIndex == 0) {
+            NSLog(@"取消置顶");
+        }else if (buttonIndex == 1)
+        {
+            NSLog(@"删除");
+        }
+
+    }];
     
+    [sheet showFromView:btn];
 }
 
 - (void)clickJoinBBS:(UIButton *)sender
@@ -191,7 +217,7 @@
         
         NSString *title = [titles objectAtIndex:i];
 
-        LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 + 40 * i, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:[UIImage imageNamed:@"jiantou"] title:title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+        LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 + 40 * i, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:[UIImage imageNamed:@"jiantou_down"] title:title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
         [basic_view addSubview:btnV];
     }
     
