@@ -68,6 +68,7 @@
 		13877F7119986A5E0058DED6 /* LActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 13877F7019986A5E0058DED6 /* LActionSheet.m */; };
 		13877F73199897F10058DED6 /* zhankaijiantou22_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877F72199897F10058DED6 /* zhankaijiantou22_10@2x.png */; };
 		13877F7519989FA70058DED6 /* jiantou_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13877F7419989FA70058DED6 /* jiantou_down@2x.png */; };
+		13877F781998CC1B0058DED6 /* LBBSCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13877F771998CC1B0058DED6 /* LBBSCellView.m */; };
 		138EBEAE1992512F005DB531 /* BBSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEA01992512F005DB531 /* BBSModel.m */; };
 		138EBEAF1992512F005DB531 /* BBSTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEA31992512F005DB531 /* BBSTableCell.m */; };
 		138EBEB01992512F005DB531 /* BBSTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEA41992512F005DB531 /* BBSTableCell.xib */; };
@@ -941,6 +942,8 @@
 		13877F7019986A5E0058DED6 /* LActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LActionSheet.m; sourceTree = "<group>"; };
 		13877F72199897F10058DED6 /* zhankaijiantou22_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhankaijiantou22_10@2x.png"; sourceTree = "<group>"; };
 		13877F7419989FA70058DED6 /* jiantou_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou_down@2x.png"; sourceTree = "<group>"; };
+		13877F761998CC1B0058DED6 /* LBBSCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBBSCellView.h; sourceTree = "<group>"; };
+		13877F771998CC1B0058DED6 /* LBBSCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBBSCellView.m; sourceTree = "<group>"; };
 		138EBE9F1992512F005DB531 /* BBSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSModel.h; sourceTree = "<group>"; };
 		138EBEA01992512F005DB531 /* BBSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSModel.m; sourceTree = "<group>"; };
 		138EBEA21992512F005DB531 /* BBSTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSTableCell.h; sourceTree = "<group>"; };
@@ -1814,6 +1817,8 @@
 				1383366E19947E6F00F73194 /* BBSRecommendCell.m */,
 				138336761994C4DA00F73194 /* PraiseMemberCell.h */,
 				138336771994C4DA00F73194 /* PraiseMemberCell.m */,
+				13877F761998CC1B0058DED6 /* LBBSCellView.h */,
+				13877F771998CC1B0058DED6 /* LBBSCellView.m */,
 			);
 			path = BBSViews;
 			sourceTree = "<group>";
@@ -3957,6 +3962,7 @@
 				1368544B19921170004BBB20 /* LButtonView.m in Sources */,
 				56A64888198F502700451413 /* GrayPageControl.m in Sources */,
 				56A648E4198F512A00451413 /* FMDatabaseAdditions.m in Sources */,
+				13877F781998CC1B0058DED6 /* LBBSCellView.m in Sources */,
 				56A64AB8198F6AD800451413 /* GQianmingViewController.m in Sources */,
 				1366029D1990ABE300F2BEEC /* RefreshTableView.m in Sources */,
 				13877F6E19985B5E0058DED6 /* BBSMembersController.m in Sources */,

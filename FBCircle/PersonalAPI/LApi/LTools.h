@@ -17,7 +17,7 @@
 #import "LInputView.h"
 #import "LActionSheet.h"
 
-#define PAGE_SIZE 10 //每页条数
+//#define PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
