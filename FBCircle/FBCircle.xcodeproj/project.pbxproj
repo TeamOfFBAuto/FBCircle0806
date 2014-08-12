@@ -88,6 +88,8 @@
 		13B85B0D1999F376000072FB /* seach@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B85B051999F376000072FB /* seach@2x.png */; };
 		13B85B0E1999F376000072FB /* di@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B85B071999F376000072FB /* di@2x.png */; };
 		13B85B0F1999F376000072FB /* chuangjian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B85B091999F376000072FB /* chuangjian@2x.png */; };
+		13B85B12199A16A5000072FB /* LMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B85B11199A16A5000072FB /* LMoveView.m */; };
+		13B85B14199A1A14000072FB /* BBS-kuang-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B85B13199A1A14000072FB /* BBS-kuang-up@2x.png */; };
 		13CCD73A1999B45B00E38ECC /* BBSInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CCD7391999B45B00E38ECC /* BBSInfoModel.m */; };
 		13CCD73D1999C12E00E38ECC /* BBSMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CCD73C1999C12E00E38ECC /* BBSMemberModel.m */; };
 		190F3A121992547400D54140 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A0D1992547400D54140 /* MineViewController.m */; };
@@ -982,6 +984,9 @@
 		13B85B051999F376000072FB /* seach@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seach@2x.png"; sourceTree = "<group>"; };
 		13B85B071999F376000072FB /* di@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "di@2x.png"; sourceTree = "<group>"; };
 		13B85B091999F376000072FB /* chuangjian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chuangjian@2x.png"; sourceTree = "<group>"; };
+		13B85B10199A16A5000072FB /* LMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMoveView.h; sourceTree = "<group>"; };
+		13B85B11199A16A5000072FB /* LMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMoveView.m; sourceTree = "<group>"; };
+		13B85B13199A1A14000072FB /* BBS-kuang-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BBS-kuang-up@2x.png"; sourceTree = "<group>"; };
 		13CCD7381999B45B00E38ECC /* BBSInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSInfoModel.h; sourceTree = "<group>"; };
 		13CCD7391999B45B00E38ECC /* BBSInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSInfoModel.m; sourceTree = "<group>"; };
 		13CCD73B1999C12E00E38ECC /* BBSMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSMemberModel.h; sourceTree = "<group>"; };
@@ -1705,6 +1710,8 @@
 				13877F7019986A5E0058DED6 /* LActionSheet.m */,
 				13B85AFD1999EE7D000072FB /* LSearchView.h */,
 				13B85AFE1999EE7D000072FB /* LSearchView.m */,
+				13B85B10199A16A5000072FB /* LMoveView.h */,
+				13B85B11199A16A5000072FB /* LMoveView.m */,
 			);
 			path = LApi;
 			sourceTree = "<group>";
@@ -1867,6 +1874,7 @@
 		13B85B011999F376000072FB /* 01401搜索界面 */ = {
 			isa = PBXGroup;
 			children = (
+				13B85B13199A1A14000072FB /* BBS-kuang-up@2x.png */,
 				13B85B021999F376000072FB /* BBS-kuang@2x.png */,
 				13B85B031999F376000072FB /* BBS-seach-kuang@2x.png */,
 				13B85B041999F376000072FB /* line@2x.png */,
@@ -3505,6 +3513,7 @@
 				561731D919925E75001B8574 /* sendPosts_camera@2x.png in Resources */,
 				56A64D38198F72E900451413 /* Expression_10@2x.png in Resources */,
 				56A64A1E198F698B00451413 /* WriteSwitchBackImage@2x.png in Resources */,
+				13B85B14199A1A14000072FB /* BBS-kuang-up@2x.png in Resources */,
 				56A64DEA198F72E900451413 /* touming-bg-150_150@2x.png in Resources */,
 				56A64D40198F72E900451413 /* Expression_14@2x.png in Resources */,
 				56A64CE8198F72E900451413 /* FBCircle_picture_default_new_image@2x.png in Resources */,
@@ -3943,6 +3952,7 @@
 				56A64880198F502700451413 /* SzkAPI.m in Sources */,
 				56A648D6198F512A00451413 /* ChooseAreaViewController.m in Sources */,
 				561731F419925F64001B8574 /* TakePhotoView.m in Sources */,
+				13B85B12199A16A5000072FB /* LMoveView.m in Sources */,
 				5617321719926004001B8574 /* QBImagePickerController.m in Sources */,
 				56A64A41198F69A800451413 /* FBCircleMenuView.m in Sources */,
 				56A64847198F45DB00451413 /* MessageViewController.m in Sources */,

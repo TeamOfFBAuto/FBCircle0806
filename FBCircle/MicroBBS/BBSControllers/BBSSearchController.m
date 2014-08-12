@@ -14,6 +14,10 @@
     NSArray *_dataArray;
     UIView *navigationView;
     LSearchView *searchView;
+    
+    NSString *keyword;
+    
+    int search_tag;// 1 搜索论坛 2 搜索帖子
 }
 
 @end
@@ -68,8 +72,9 @@
     _table.separatorInset = UIEdgeInsetsMake(0, 1, 0, 0);
     [self.view addSubview:_table];
     
+    //创建清空按钮
     
-    
+    [self createMoveView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,16 +104,59 @@
         NSLog(@"微论坛");
         LButtonView *btn = (LButtonView *)[self.view viewWithTag:101];
         btn.selected = NO;
+        search_tag = 1;
         
     }else
     {
         NSLog(@"搜帖子");
         LButtonView *btn = (LButtonView *)[self.view viewWithTag:100];
         btn.selected = NO;
+        search_tag = 2;
     }
+    //只要切换 pageNum置为 1
+    _table.pageNum = 1;
+}
+
+- (void)clickToClearHistory:(UIButton *)sender
+{
+    NSLog(@"clear");
 }
 
 #pragma mark - 网络请求
+
+- (void)searchKeyword:(NSString *)aKeyword
+{
+    keyword = aKeyword;
+    
+    NSString *url;
+    if (search_tag == 1) {
+        NSLog(@"论坛");
+        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,PAGE_SIZE];
+    }else
+    {
+        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,PAGE_SIZE];
+        NSLog(@"帖子");
+    }
+    
+    __weak typeof(self)weakSelf = self;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+//        for (NSDictionary *aDic in dataInfo) {
+//            
+//            [arr addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+//        }
+//        
+//        [weakSelf createFirstViewWithTitles:arr];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+    }];
+}
+
 #pragma mark - 视图创建
 
 - (void)createSearchView
@@ -118,10 +166,12 @@
     
     [self.navigationController.navigationBar addSubview:navigationView];
     
+    __weak typeof(self)weakSelf = self;
     //搜索
     searchView = [[LSearchView alloc]initWithFrame:CGRectMake(10, (44 - 30)/2.0, 530/2.f, 30) placeholder:@"请输入关键词搜索微论坛" logoImage:[UIImage imageNamed:@"search"] maskViewShowInView:nil searchBlock:^(SearchStyle actionStyle, NSString *searchText) {
-        
-//        [self searchStyle:actionStyle searchText:searchText];
+        if (actionStyle == Search_Search) {
+            [weakSelf searchKeyword:searchText];
+        }
         
     }];
     
@@ -142,6 +192,8 @@
     btn.selcted_TitleColor = [UIColor colorWithHexString:@"627bbd"];
     btn.selected = YES;
     
+    search_tag = 1;//默认初始值
+    
     
     btn.tag = 100;
     
@@ -157,6 +209,27 @@
     btn2.titleLabel.textAlignment = NSTextAlignmentCenter;
     btn2.tag = 101;
     btn2.selcted_TitleColor = [UIColor colorWithHexString:@"627bbd"];
+}
+
+- (void)createMoveView
+{
+    LMoveView *move = [[LMoveView alloc]initWithFrame:CGRectMake(0, self.view.height - 45 - 20 - 44, 320, 44)];
+    [self.view addSubview:move];
+    
+    UIImageView *bgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    bgView.image = [UIImage imageNamed:@"BBS-kuang-up"];
+    [move addSubview:bgView];
+    
+    LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 1, move.width, move.height - 1) leftImage:Nil rightImage:Nil title:@"清空历史记录" target:self action:@selector(clickToClearHistory:) lineDirection:Line_Up];
+    btn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    btn.backgroundColor = [UIColor clearColor];
+    
+    [move addSubview:btn];
+    btn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [btn.titleLabel setTextColor:[UIColor colorWithHexString:@"b7b7b7"]];
+    
+    [searchView.searchField becomeFirstResponder];
+    
 }
 
 #pragma mark - delegate

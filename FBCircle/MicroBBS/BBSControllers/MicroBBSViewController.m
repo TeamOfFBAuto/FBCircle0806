@@ -43,6 +43,8 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
+    NSLog(@"auteykey %@",[SzkAPI getAuthkey]);
 }
 
 -(void)viewDidDisappear:(BOOL)animated

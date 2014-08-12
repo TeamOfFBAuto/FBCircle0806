@@ -178,3 +178,9 @@ alpha:(a)]
 #define FBCIRCLE_BBS_MEMBER_LEAVER @"http://quan.fblife.com/index.php?c=forum&a=quitforum&authkey=%@&fid=%@"//退出论坛
 #define FBCIRCLE_BBS_MEMBER_NUMBER @"http://quan.fblife.com/index.php?c=forum&a=forumuser&fid=%@&page=%d&ps=%d"//论坛成员数
 
+//搜索
+
+#define FBCIRCLE_SEARCH_BBS @"http://quan.fblife.com/index.php?c=forum&a=searchforum&keyword=%@&page=%d&ps=%d" //搜论坛
+
+#define FBCIRCLE_SEARCH_TOPIC @"" //搜帖子
+
