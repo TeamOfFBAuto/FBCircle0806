@@ -9,7 +9,12 @@
 #import "MicroBBSInfoController.h"
 #import "BBSMembersController.h"
 
+#import "BBSInfoModel.h"
+
 @interface MicroBBSInfoController ()
+{
+    BBSInfoModel *infoModel;
+}
 
 @end
 
@@ -29,17 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIView *first = [self createFirstViewFrame:CGRectMake(18, 15, 320 - 18 * 2, 0)];
-    [self.view addSubview:first];
-    
-    UIView *second = [self createSecondViewFrame:CGRectMake(18, first.bottom + 15, first.width, 0)];
-    [self.view addSubview:second];
-    
-    UIView *third = [self createThirdViewFrame:CGRectMake(18, second.bottom + 15, first.width, 0)];
-    [self.view addSubview:third];
-    
-    UIButton *btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛" backgroudImage:nil superView:self.view target:self action:@selector(clickToLeave:)];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self getBBSInfoId:self.bbsId];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,21 +52,93 @@
 - (void)clickToMember:(LButtonView *)sender
 {
     BBSMembersController *bbsMember = [[BBSMembersController alloc]init];
+    bbsMember.bbs_id = infoModel.id;
     [self PushToViewController:bbsMember WithAnimation:YES];
 }
 
 //退出论坛
 - (void)clickToLeave:(UIButton *)sender
 {
-    NSString *title = @"确定退出\"车\"";
-    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title,@"退出",@"取消"] images:nil sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
+     __weak typeof(self)weakSelf = self;
+    NSString *title1 = [NSString stringWithFormat:@"确定退出\"%@\"",infoModel.name];
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title1,@"退出",@"取消"] images:nil sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
+        
+        if (buttonIndex == 1) {
+            [weakSelf leaveBBS];
+        }
         
     }];
     [sheet showFromView:sender];
 }
 
 #pragma mark - 网络请求
+
+- (void)getBBSInfoId:(NSString *)bbsId
+{
+    __weak typeof(self)weakSelf = self;
+
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            infoModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
+            
+            [weakSelf prepareViews];
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+    }];
+}
+
+/**
+ *  退出论坛
+ */
+- (void)leaveBBS
+{
+     __weak typeof(self)weakSelf = self;
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_LEAVER,[SzkAPI getAuthkey],infoModel.id];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSString *errinfo = [result objectForKey:@"errinfo"];
+        
+        [LTools showMBProgressWithText:errinfo addToView:weakSelf.view];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
+        
+    }];
+}
+
+
 #pragma mark - 视图创建
+
+- (void)prepareViews
+{
+    self.titleLabel.text = infoModel.name;
+    
+    UIView *first = [self createFirstViewFrame:CGRectMake(18, 15, 320 - 18 * 2, 0)];
+    [self.view addSubview:first];
+    
+    UIView *second = [self createSecondViewFrame:CGRectMake(18, first.bottom + 15, first.width, 0)];
+    [self.view addSubview:second];
+    
+    UIView *third = [self createThirdViewFrame:CGRectMake(18, second.bottom + 15, first.width, 0)];
+    [self.view addSubview:third];
+    
+    UIButton *btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛" backgroudImage:nil superView:self.view target:self action:@selector(clickToLeave:)];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+}
 
 - (UIView *)createFirstViewFrame:(CGRect)aFrame
 {
@@ -81,13 +148,15 @@
     firstView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     firstView.backgroundColor = [UIColor whiteColor];
     
-    LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, firstView.width, 75) leftImage:[UIImage imageNamed:@"jignsai"] rightImage:Nil title:@"车子" target:Nil action:Nil lineDirection:Line_Down];
+    UIImage *defaultImage = [UIImage imageNamed:@"Picture_default_image"];
+    LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, firstView.width, 75) leftImage:[LTools scaleToSizeWithImage:defaultImage size:CGSizeMake(35, 35)] rightImage:Nil title:infoModel.name target:Nil action:Nil lineDirection:Line_Down];
     [firstView addSubview:btn];
     
-    //简介
-    NSString *text = @"论坛信息简介，写好多字，阿克苏见大家开始看卡卡是大家阿卡丽按时间段可垃圾深刻了解阿喀琉斯就打开啦几十块来得及阿喀琉斯就打开啦就SD卡辣椒水快乐到家阿喀琉斯就打开啦";
+    [btn.imageView sd_setImageWithURL:[NSURL URLWithString:infoModel.headpic] placeholderImage:defaultImage];
     
-    UILabel *descripL = [LTools createLabelFrame:CGRectMake(10, btn.bottom + 10, aFrame.size.width - 20, [LTools heightForText:text width:aFrame.size.width - 20 font:14]) title:text font:14 align:NSTextAlignmentLeft textColor:[UIColor darkGrayColor]];
+    //简介
+    
+    UILabel *descripL = [LTools createLabelFrame:CGRectMake(10, btn.bottom + 10, aFrame.size.width - 20, [LTools heightForText:infoModel.intro width:aFrame.size.width - 20 font:14]) title:infoModel.intro font:14 align:NSTextAlignmentLeft textColor:[UIColor darkGrayColor]];
     descripL.numberOfLines = 0;
     [firstView addSubview:descripL];
     
@@ -108,7 +177,9 @@
     LButtonView *btn1 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:@"添加成员" target:self action:@selector(clickToAddMember:) lineDirection:Line_Down];
     [firstView addSubview:btn1];
     
-    LButtonView *btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(0, btn1.bottom, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:@"2名成员" target:self action:@selector(clickToMember:) lineDirection:Line_Down];
+    NSString *title = [NSString stringWithFormat:@"%@名成员",infoModel.member_num];
+    
+    LButtonView *btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(0, btn1.bottom, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:title target:self action:@selector(clickToMember:) lineDirection:Line_Down];
     [firstView addSubview:btn2];
     
     aFrame.size.height = btn2.bottom;
@@ -141,5 +212,10 @@
 #pragma mark - delegate
 
 #pragma mark - UITableViewDelegate
+
+-(void)dealloc
+{
+    NSLog(@"-----%@",self);
+}
 
 @end

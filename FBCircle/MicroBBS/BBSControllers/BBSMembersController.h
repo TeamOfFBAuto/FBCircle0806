@@ -13,4 +13,6 @@
  */
 @interface BBSMembersController : MyViewController
 
+@property(nonatomic,retain)NSString *bbs_id;
+
 @end

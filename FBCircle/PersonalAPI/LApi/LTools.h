@@ -16,6 +16,7 @@
 #import "LNineImagesView.h"
 #import "LInputView.h"
 #import "LActionSheet.h"
+#import "LSearchView.h"
 
 //#define PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
@@ -87,6 +88,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 + (BOOL)isValidateName:(NSString *)userName;
 + (BOOL)isValidatePwd:(NSString *)pwdString;
 + (BOOL)isValidateMobile:(NSString *)mobileNum;
+
+/**
+ *  切图
+ */
++(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size;
 
 
 #pragma mark - CoreData管理

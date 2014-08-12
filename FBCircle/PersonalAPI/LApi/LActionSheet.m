@@ -109,6 +109,7 @@
                 {
                     UIButton *btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(22, 10 + 45 + 10 + (15 + 45) * (i - 1), self.width - 22 * 2, 45) normalTitle:title backgroudImage:Nil superView:bgView target:self action:@selector(actionToDo:)];
                     btn.layer.cornerRadius = 3.f;
+                    btn.tag = 100 + i;
                     
                     if (i == 1) {
                         btn.backgroundColor = [UIColor colorWithHexString:@"06be04"];

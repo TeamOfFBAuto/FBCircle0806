@@ -7,6 +7,8 @@
 //
 
 #import "ClassifyBBSController_Sub.h"
+#import "MicroBBSInfoController.h"
+#import "BBSSearchController.h"
 #import "JoinBBSCell.h"
 #import "BBSSubModel.h"
 
@@ -66,6 +68,8 @@
 - (void)clickToSearch:(UIButton *)sender
 {
     NSLog(@"searchPage");
+    BBSSearchController *search = [[BBSSearchController alloc]init];
+    [self PushToViewController:search WithAnimation:YES];
 }
 
 #pragma mark - 网络请求
@@ -179,7 +183,11 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    BBSSubModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+
+    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+    bbsInfo.bbsId = aModel.id;
+    [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

@@ -170,6 +170,11 @@ alpha:(a)]
 
 #define FBCIRCLE_BBS_MINE @"http://quan.fblife.com/index.php?c=forum&a=myjoinforum&authkey=%@&page=%d&ps=%d"//我的论坛(加入，创建)
 
+#define FBCIRCLE_BBS_INFO @"http://quan.fblife.com/index.php?c=forum&a=getforum&fid=%@"//论坛基本信息
+
 //微论坛成员部分
 
 #define FBCIRCLE_BBS_MEMBER_JOIN @"http://quan.fblife.com/index.php?c=forum&a=joinforum&authkey=%@&fid=%@"//加入论坛
+#define FBCIRCLE_BBS_MEMBER_LEAVER @"http://quan.fblife.com/index.php?c=forum&a=quitforum&authkey=%@&fid=%@"//退出论坛
+#define FBCIRCLE_BBS_MEMBER_NUMBER @"http://quan.fblife.com/index.php?c=forum&a=forumuser&fid=%@&page=%d&ps=%d"//论坛成员数
+

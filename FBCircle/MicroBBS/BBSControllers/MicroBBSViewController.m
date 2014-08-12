@@ -12,6 +12,7 @@
 #import "ClassifyBBSController.h"
 #import "BBSListViewController.h"
 #import "BBSTopicController.h"
+#import "BBSSearchController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
@@ -96,8 +97,7 @@
 - (void)clickToMyBBS:(UIButton *)sender
 {
     MyBBSViewController *myBBS = [[MyBBSViewController alloc]init];
-    myBBS.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:myBBS animated:YES];
+    [self PushToViewController:myBBS WithAnimation:YES];
 }
 
 - (void)clickToMore:(UIButton *)sender
@@ -112,8 +112,7 @@
     }
     HotTopicViewController *hotTopic = [[HotTopicViewController alloc]init];
     hotTopic.navigationTitle = title;
-    hotTopic.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:hotTopic animated:YES];
+    [self PushToViewController:hotTopic WithAnimation:YES];
 }
 /**
  *  进入分类论坛
@@ -121,8 +120,7 @@
 - (void)clickToClassifyBBS
 {
     ClassifyBBSController *classify = [[ClassifyBBSController alloc]init];
-    classify.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:classify animated:YES];
+    [self PushToViewController:classify WithAnimation:YES];
 }
 
 /**
@@ -131,7 +129,6 @@
 - (void)clickToAddBBS
 {
     SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
-    
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 /**
@@ -149,7 +146,6 @@
 - (void)clickToTopicInfo:(LBBSCellView *)sender
 {
     BBSTopicController *topic = [[BBSTopicController alloc]init];
-    topic.hidesBottomBarWhenPushed = YES;
     [self PushToViewController:topic WithAnimation:YES];
 }
 
@@ -159,6 +155,8 @@
 - (void)clickToSearch:(UIButton *)sender
 {
     NSLog(@"searchPage");
+    BBSSearchController *search = [[BBSSearchController alloc]init];
+    [self PushToViewController:search WithAnimation:YES];
 }
 
 #pragma mark - 网络请求
@@ -224,13 +222,14 @@
     bgView2.clipsToBounds = YES;
     [headerView addSubview:bgView2];
     
-    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:@"热门推荐" target:self action:@selector(clickToTopicInfo:)];
+    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:@"热门推荐" target:self action:@selector(clickToMore:)];
+    section2.rightBtn.tag = 101;
     [bgView2 addSubview:section2];
     
     
     //推荐列表
     for (int i = 0; i < 2; i ++) {
-        LBBSCellView *cell_view = [[LBBSCellView alloc]initWithFrame:CGRectMake(0, section2.bottom + 75 * i, 320, 75) target:self action:@selector(clickToBBSList)];
+        LBBSCellView *cell_view = [[LBBSCellView alloc]initWithFrame:CGRectMake(0, section2.bottom + 75 * i, 320, 75) target:self action:@selector(clickToTopicInfo:)];
         cell_view.backgroundColor = [UIColor whiteColor];
         [bgView2 addSubview:cell_view];
         
@@ -273,7 +272,6 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BBSTopicController *topic = [[BBSTopicController alloc]init];
-    topic.hidesBottomBarWhenPushed = YES;
     [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
@@ -294,7 +292,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BBSTopicController *topic = [[BBSTopicController alloc]init];
-    topic.hidesBottomBarWhenPushed = YES;
     [self PushToViewController:topic WithAnimation:YES];
 }
 

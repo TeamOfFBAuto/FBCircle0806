@@ -354,6 +354,16 @@
     return text;
 }
 
+#pragma - mark 切图
+
++(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
 #pragma - mark CoreData数据管理
 
 @synthesize managedObjectContext = _managedObjectContext;

@@ -167,13 +167,6 @@
     
 }
 
-/**
- *  搜索页
- */
-- (void)clickToSearch:(UIButton *)sender
-{
-    NSLog(@"searchPage");
-}
 
 #pragma mark - 网络请求
 
@@ -379,14 +372,6 @@
 
 
 #pragma mark - delegate
-
-#pragma - mark UISearchBarDelegate
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    [self clickToSearch:nil];
-    return NO;
-}
 
 #pragma - mark RefreshDelegate <NSObject>
 

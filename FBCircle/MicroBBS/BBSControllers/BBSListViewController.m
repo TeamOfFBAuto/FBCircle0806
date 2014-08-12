@@ -73,6 +73,7 @@
 - (void)clickToBBSInfo:(UIGestureRecognizer *)tap
 {
     MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+    bbsInfo.bbsId = @"1";
     [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 
@@ -106,8 +107,7 @@
 - (void)clickToClassifyBBS
 {
     ClassifyBBSController *classify = [[ClassifyBBSController alloc]init];
-    classify.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:classify animated:YES];
+    [self PushToViewController:classify WithAnimation:YES];
 }
 
 /**
@@ -132,13 +132,6 @@
     
 }
 
-/**
- *  搜索页
- */
-- (void)clickToSearch:(UIButton *)sender
-{
-    NSLog(@"searchPage");
-}
 
 #pragma mark - 网络请求
 #pragma mark - 视图创建
@@ -237,13 +230,6 @@
 
 #pragma mark - delegate
 
-#pragma - mark UISearchBarDelegate
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    [self clickToSearch:nil];
-    return NO;
-}
 
 #pragma - mark RefreshDelegate <NSObject>
 

@@ -284,7 +284,10 @@
     [self.navigationController pushViewController:controller animated:animation];
 }
 
-
+-(void)dealloc
+{
+    NSLog(@"-----%@",self);
+}
 
 
 @end
