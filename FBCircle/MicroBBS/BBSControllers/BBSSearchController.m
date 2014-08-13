@@ -7,17 +7,28 @@
 //
 
 #import "BBSSearchController.h"
+#import "MicroBBSInfoController.h"
+#import "BBSTopicController.h"
+#import "BBSInfoModel.h"
+#import "SearchBBSCell.h"
 
-@interface BBSSearchController ()<UITableViewDataSource,RefreshDelegate>
+#define SEARCH_HISTORY @"search_history"//搜索历史词
+
+@interface BBSSearchController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate>
 {
     RefreshTableView *_table;
-    NSArray *_dataArray;
+    UITableView *_historyTable;//显示历史搜索词
+    
+    NSArray *_historyArray;
     UIView *navigationView;
     LSearchView *searchView;
+    
+    LMoveView *move;
     
     NSString *keyword;
     
     int search_tag;// 1 搜索论坛 2 搜索帖子
+    BOOL push_tiezi;//是否帖子
 }
 
 @end
@@ -69,10 +80,21 @@
     _table.refreshDelegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 1, 0, 0);
+    _table.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:_table];
     
-    //创建清空按钮
+    //数据展示table
+    _historyTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 20) style:UITableViewStylePlain];
+    _historyTable.delegate = self;
+    _historyTable.dataSource = self;
+    _historyTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _historyTable.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.view addSubview:_historyTable];
+    
+    
+    _historyArray = [self getHistory];
+    
+    //创建清空历史记录按钮
     
     [self createMoveView];
 }
@@ -120,40 +142,109 @@
 - (void)clickToClearHistory:(UIButton *)sender
 {
     NSLog(@"clear");
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"是否确定清空历史搜索词" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"清空", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self clearHistory];
+        
+        _historyArray = nil;
+        [_historyTable reloadData];
+    }
 }
 
 #pragma mark - 网络请求
 
-- (void)searchKeyword:(NSString *)aKeyword
+- (NSArray *)getHistory
+{
+    return  [[NSUserDefaults standardUserDefaults] arrayForKey:SEARCH_HISTORY];
+}
+
+- (void)recordHistoryKeyword:(NSString *)aKeyword
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:[defaults arrayForKey:SEARCH_HISTORY]];
+    
+    if ([arr containsObject:aKeyword]) {
+        [arr removeObject:aKeyword];
+    }
+    [arr insertObject:aKeyword atIndex:0];
+    
+    [defaults setObject:arr forKey:SEARCH_HISTORY];
+    [defaults synchronize];
+}
+
+- (void)clearHistory
+{
+    [[NSUserDefaults standardUserDefaults]setObject:nil forKey:SEARCH_HISTORY];
+}
+
+
+/**
+ *  搜索
+ *
+ *  @param aKeyword 关键词
+ *  @param isClear  是否清空dataArray 每次重新搜索的时、刷新时
+ */
+- (void)searchKeyword:(NSString *)aKeyword isClear:(BOOL)isClear
 {
     keyword = aKeyword;
+    
+    [self recordHistoryKeyword:aKeyword];
     
     NSString *url;
     if (search_tag == 1) {
         NSLog(@"论坛");
+        
+        push_tiezi = NO;
         url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,PAGE_SIZE];
     }else
     {
         url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,PAGE_SIZE];
         NSLog(@"帖子");
+        
+        push_tiezi = YES;
     }
     
     __weak typeof(self)weakSelf = self;
+    __weak typeof(RefreshTableView *)weakTable = _table;
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSArray *dataInfo = [result objectForKey:@"datainfo"];
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
-//        for (NSDictionary *aDic in dataInfo) {
-//            
-//            [arr addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-//        }
-//        
-//        [weakSelf createFirstViewWithTitles:arr];
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        int total = [[dataInfo objectForKey:@"total"]integerValue];
+        NSArray *data = [dataInfo objectForKey:@"data"];
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
+        for (NSDictionary *aDic in data) {
+            [arr addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+        }
+        
+        if (isClear) {
+            [_table.dataArray removeAllObjects];
+        }
+        
+        [weakTable reloadData:arr total:total];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
+        
+        [weakTable loadFail];
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+        int erroCode = [[failDic objectForKey:@"errcode"]integerValue];
+        if (erroCode == 2) {
+            
+            [_table.dataArray removeAllObjects];
+            [weakTable reloadData:nil total:0];
+        }
+        
     }];
 }
 
@@ -170,7 +261,16 @@
     //搜索
     searchView = [[LSearchView alloc]initWithFrame:CGRectMake(10, (44 - 30)/2.0, 530/2.f, 30) placeholder:@"请输入关键词搜索微论坛" logoImage:[UIImage imageNamed:@"search"] maskViewShowInView:nil searchBlock:^(SearchStyle actionStyle, NSString *searchText) {
         if (actionStyle == Search_Search) {
-            [weakSelf searchKeyword:searchText];
+            
+            //清空按钮hidden
+            
+            [move removeFromSuperview];
+            
+            //历史搜索词table 消失
+            
+            [_historyTable removeFromSuperview];
+            
+            [weakSelf searchKeyword:searchText isClear:YES];
         }
         
     }];
@@ -213,7 +313,7 @@
 
 - (void)createMoveView
 {
-    LMoveView *move = [[LMoveView alloc]initWithFrame:CGRectMake(0, self.view.height - 45 - 20 - 44, 320, 44)];
+    move = [[LMoveView alloc]initWithFrame:CGRectMake(0, self.view.height - 45 - 20 - 44, 320, 44)];
     [self.view addSubview:move];
     
     UIImageView *bgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -239,16 +339,29 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    
+    [self searchKeyword:keyword isClear:YES];
 }
 
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
+    [self searchKeyword:keyword isClear:NO];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (push_tiezi == NO) {
+        
+        MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+        bbsInfo.bbsId = @"1";
+        [self PushToViewController:bbsInfo WithAnimation:YES];
+        
+    }else
+    {
+        BBSTopicController *topic = [[BBSTopicController alloc]init];
+        [self PushToViewController:topic WithAnimation:YES];
+    }
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
@@ -257,6 +370,41 @@
 
 
 #pragma mark - UITableViewDelegate
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.f;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *keyword_ = [_historyArray objectAtIndex:indexPath.row];
+    NSLog(@"搜搜 %@",keyword_);
+    
+    searchView.searchField.text = keyword_;
+    [searchView.searchField resignFirstResponder];
+    
+    //清空按钮hidden
+    
+    [move removeFromSuperview];
+    
+    //历史搜索词table 消失
+    
+    [_historyTable removeFromSuperview];
+    
+    [self searchKeyword:keyword_ isClear:YES];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -268,20 +416,39 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    if (tableView == _historyTable) {
+        return _historyArray.count;
+    }
+    return [_table.dataArray count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString * identifier = @"HotTopicCell";
-//    
-//    HotTopicCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    if (cell == nil) {
-//        cell = [[[NSBundle mainBundle]loadNibNamed:@"HotTopicCell" owner:self options:nil]objectAtIndex:0];
-//    }
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    
-    return nil;
+    if (tableView == _historyTable) {
+        static NSString *identifier = @"history";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        
+        cell.textLabel.text = [_historyArray objectAtIndex:indexPath.row];
+        
+        return cell;
+    }
+    
+    static NSString * identifier = @"SearchBBSCell";
+    
+    SearchBBSCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"SearchBBSCell" owner:self options:nil]objectAtIndex:0];
+        
+        NSLog(@"cell %@",cell);
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    [cell setCellDataWithModel:aModel];
+    
+    return cell;
     
 }
 
