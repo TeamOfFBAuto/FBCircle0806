@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CreateBBSChooseIconViewController.h"
 
-@interface CreateNewBBSViewController : MyViewController<UITextViewDelegate>
+
+@interface CreateNewBBSViewController : MyViewController<UITextViewDelegate,CreateBBSChooseIconViewControllerDelegate>
 {
     
 }

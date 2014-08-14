@@ -7,6 +7,8 @@
 //
 
 #import "CreateNewBBSViewController.h"
+#import "BBSAddMemberViewController.h"
+#import "CreateBBSChooseTypeViewController.h"
 
 #define MAX_NAME_NUMBER 8
 #define MAX_INTRODUCTION_NUMBWE 50
@@ -28,6 +30,12 @@
     ///名称默认文字
     
     UILabel * name_placeHolder;
+    
+    ///展示图标
+    UIImageView * iconImage;
+    
+    ///展示分类
+    UILabel * sub_label;
 }
 
 @end
@@ -112,7 +120,9 @@
 
 -(void)createBBS:(UIButton *)button
 {
+    BBSAddMemberViewController * addMember = [[BBSAddMemberViewController alloc] init];
     
+    [self PushToViewController:addMember WithAnimation:YES];
     
     
 }
@@ -204,13 +214,13 @@
     
     if (theType == 0)///加载图片icon
     {
-        UIImageView * iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(256,9.5,25,25)];
-        iconImage.backgroundColor = [UIColor redColor];
+        iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(256,9.5,25,25)];
+        iconImage.image = [UIImage imageNamed:@"brid"];//张少南  这里需要修改下默认图片
         [inputView addSubview:iconImage];
         
     }else
     {
-        UILabel * sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
+        sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
         sub_label.text = @"必选";
         sub_label.textAlignment = NSTextAlignmentLeft;
         sub_label.backgroundColor = [UIColor clearColor];
@@ -240,11 +250,20 @@
         case 0://跳转到选择图标界面
         {
             NSLog(@"跳转到选择图标界面");
+            
+            CreateBBSChooseIconViewController * chooseIcon = [[CreateBBSChooseIconViewController alloc] init];
+            
+            chooseIcon.delegate = self;
+            
+            [self PushToViewController:chooseIcon WithAnimation:YES];
+            
         }
             break;
         case 1://跳转到选择分类界面
         {
-            NSLog(@"跳转到选择分类界面");
+            CreateBBSChooseTypeViewController * chooseType = [[CreateBBSChooseTypeViewController alloc] init];
+            chooseType.name_Label = sub_label;
+            [self PushToViewController:chooseType WithAnimation:YES];
         }
             break;
             
@@ -340,6 +359,17 @@
     
     [alert show];
 }
+
+
+
+#pragma mark - 选取图标 完成代理
+
+-(void)completeChooseIconWithImageName:(NSString *)imageName
+{
+    iconImage.image = [UIImage imageNamed:imageName];
+}
+
+
 
 
 
