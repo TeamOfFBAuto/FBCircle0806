@@ -16,8 +16,11 @@
 #import "LNineImagesView.h"
 #import "LInputView.h"
 #import "LActionSheet.h"
+#import "LSearchView.h"
+#import "LMoveView.h"
+#import "FBHelper.h"
 
-//#define PAGE_SIZE 10 //每页条数
+#define L_PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
@@ -69,6 +72,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 +(NSString *)timechange2:(NSString *)placetime;
 +(NSString *)timechange3:(NSString *)placetime;
 
++(NSString *)timechangeToDateline;//转换为时间戳
+
 + (NSString *)currentTime;//当前时间 yyyy-mm-dd
 
 + (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
@@ -87,6 +92,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 + (BOOL)isValidateName:(NSString *)userName;
 + (BOOL)isValidatePwd:(NSString *)pwdString;
 + (BOOL)isValidateMobile:(NSString *)mobileNum;
+
+/**
+ *  切图
+ */
++(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size;
 
 
 #pragma mark - CoreData管理

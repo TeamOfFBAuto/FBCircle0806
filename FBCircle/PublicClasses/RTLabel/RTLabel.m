@@ -330,7 +330,7 @@ void RunDelegateDeallocCallback(void* refCon);
 	
     // Initialize a rectangular path.
 	CGMutablePathRef path = CGPathCreateMutable();
-	CGRect bounds = CGRectMake(0.0,0.0, self.frame.size.width, self.frame.size.height);
+	CGRect bounds = CGRectMake(0.0,-3, self.frame.size.width, self.frame.size.height);
 	CGPathAddRect(path, NULL, bounds);
 	
 	// Create the frame and draw it into the graphics context
@@ -1241,6 +1241,7 @@ void RunDelegateDeallocCallback(void* refCon);
     
     for (int i = 0; i < CFArrayGetCount(lines); i++)
     {
+        
         CTLineRef line = CFArrayGetValueAtIndex(lines, i);
         CGFloat lineAscent;
         CGFloat lineDescent;
@@ -1266,7 +1267,7 @@ void RunDelegateDeallocCallback(void* refCon);
             runRect.size.width = (CGFloat)CTRunGetTypographicBounds(run, CFRangeMake(0,0), &runAscent, &runDescent, NULL);
             //            NSLog(@"width = %f",runRect.size.width);
             
-            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent, runRect.size.width, runAscent + runDescent);
+            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent - _lineSpacing, runRect.size.width, runAscent + runDescent);
             
             NSString *imageName = [attributes objectForKey:@"imageName"];
             
@@ -1280,7 +1281,8 @@ void RunDelegateDeallocCallback(void* refCon);
                     CGRect imageDrawRect;
                     imageDrawRect.size = CGSizeMake(self.imageWidth?self.imageWidth:17,self.imageHeight?self.imageHeight:17);
                     imageDrawRect.origin.x = runRect.origin.x + lineOrigin.x;
-                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:0) - (lineOrigin.y<10?_lineSpacing:0);
+                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:_lineSpacing) - (lineOrigin.y<10?_lineSpacing:0);
+                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:-_lineSpacing) - (lineOrigin.y<10?_lineSpacing:0);
                 
                     CGContextDrawImage(context,imageDrawRect,image.CGImage);
                 }

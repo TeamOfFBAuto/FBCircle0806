@@ -8,6 +8,7 @@
 
 #import "MyBBSViewController.h"
 #import "SendPostsViewController.h"
+#import "MicroBBSInfoController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
 #import "BBSSubModel.h"
@@ -88,7 +89,7 @@
     __weak typeof(_table)weakTable = _table;
     __weak typeof(self)weakSelf = self;
 //    @"BDBWMVMwUTUFOgNvVi1TPVYkBnsPMVtnCWtZew8+AG9WOQ=="
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],_table.pageNum,PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
@@ -180,7 +181,18 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    BBSSubModel *aModel;
+    if (indexPath.section == 0) {
+        
+        aModel = [createArray objectAtIndex:indexPath.row];
+        
+    }else
+    {
+        aModel = [joinArray objectAtIndex:indexPath.row];
+    }
+    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+    bbsInfo.bbsId = aModel.id;
+    [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

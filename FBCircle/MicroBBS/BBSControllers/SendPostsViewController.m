@@ -42,7 +42,7 @@
 @implementation SendPostsViewController
 @synthesize title_textView = _title_textView;
 @synthesize content_textView = _content_textView;
-
+@synthesize fid = _fid;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -62,15 +62,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 
@@ -99,41 +99,28 @@
     allAssesters = [NSMutableArray array];
     
     
-    _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,33)];
-    
+    _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,40)];
     _title_textView.textAlignment = NSTextAlignmentLeft;
-    
     _title_textView.textColor = RGBCOLOR(3,3,3);
-    
+    _title_textView.scrollEnabled = YES;
     _title_textView.backgroundColor = [UIColor clearColor];
-    
     _title_textView.returnKeyType = UIReturnKeyDone;
-    
     _title_textView.delegate = self;
-    
     _title_textView.font = [UIFont systemFontOfSize:16];
-    
     [self.view addSubview:_title_textView];
 
     
     title_place_label = [[UILabel alloc] initWithFrame:CGRectMake(10,0,300,33)];
-    
     title_place_label.font = [UIFont systemFontOfSize:16];
-    
     title_place_label.textColor = RGBCOLOR(173,173,173);
-    
     title_place_label.text = @"输入标题(必填)不超过30个字";
-    
     title_place_label.textAlignment = NSTextAlignmentLeft;
-    
     title_place_label.backgroundColor = [UIColor clearColor];
-    
     title_place_label.userInteractionEnabled = NO;
-    
     [_title_textView addSubview:title_place_label];
     
     
-    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15.5,43,320,0.5)];
+    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15.5,50,320,0.5)];
     
     lineView.backgroundColor = RGBCOLOR(188,191,195);
     
@@ -141,7 +128,7 @@
     
     
     
-    _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,43.5,300,80)];
+    _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,50.5,300,80)];
     
     _content_textView.textAlignment = NSTextAlignmentLeft;
     
@@ -217,6 +204,145 @@
     [self addNotificationObserVer];
     
 }
+
+#pragma mark - 发表帖子
+
+-(void)submitData:(UIButton *)sender
+{
+    if (_title_textView.text.length == 0)
+    {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"请输入标题" message:@""delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
+        [alertView show];
+        
+        return;
+    }
+    
+    if (allImageArray.count > 0)
+    {
+        [self upDataImages];
+    }else
+    {
+        [self uploadNewBBSPostsHaveImages:NO WithImageID:nil];
+    }
+}
+
+///上传图片
+#define TT_CACHE_EXPIRATION_AGE_NEVER     (1.0 / 0.0)   // inf
+
+-(void)upDataImages
+{
+    
+    NSString* fullURL = [NSString stringWithFormat:BBS_UPLOAD_IMAGES_URL,[SzkAPI getAuthkey]];
+    
+    NSLog(@"上传图片的url  ——--  %@",fullURL);
+    
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
+    //    request.delegate = self;
+    request.tag = 1;
+    
+    [request setRequestMethod:@"POST"];
+    
+    request.timeOutSeconds = 30;
+    
+    request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
+    
+    request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+    
+    [request setPostFormat:ASIMultipartFormDataPostFormat];
+    
+    NSLog(@"imagearray -----  %@",allImageArray);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        
+        //得到图片的data
+        NSData* data;
+        //获取图片质量
+        //  NSString *tupianzhiliang=[[NSUserDefaults standardUserDefaults] objectForKey:TUPIANZHILIANG];
+        
+        NSMutableData *myRequestData=[NSMutableData data];
+        
+        for (int i = 0;i < allImageArray.count; i++)
+        {
+            UIImage *image=[allImageArray objectAtIndex:i];
+            
+            //  UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
+            
+            data = UIImageJPEGRepresentation(image,0.5);
+            
+            [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [myRequestData length]]];
+            
+            //设置http body
+            
+            [request addData:data withFileName:[NSString stringWithFormat:@"forum_img[%d].png",i] andContentType:@"image/PNG" forKey:@"forum_img[]"];
+            
+            //  [request addData:myRequestData forKey:[NSString stringWithFormat:@"boris%d",i]];
+            
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // 更新界面
+            
+            [request startAsynchronous];
+        });
+    });
+    
+    
+    __block ASIHTTPRequest * finishedRequest = request;
+    
+    [finishedRequest setCompletionBlock:^{
+        
+        @try {
+            __weak typeof(self) bself=self;
+            
+            NSDictionary * allDic = [request.responseString objectFromJSONString];
+            
+            NSLog(@"allDic ----   %@",allDic);
+            
+                if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
+                    
+                    NSArray * imageArray = [allDic objectForKey:@"datainfo"];
+                    
+                    NSMutableArray * id_array = [NSMutableArray array];
+                    
+                    for (NSDictionary * dic in imageArray) {
+                        [id_array addObject:[dic objectForKey:@"imageid"]];
+                    }
+                    
+                    NSString * ids = [id_array componentsJoinedByString:@","];
+                    
+                    [bself uploadNewBBSPostsHaveImages:YES WithImageID:ids];
+                    
+                }else
+                {
+                    //                [bself sendErrorWith:[allDic objectForKey:@"errinfo"]];
+                }
+        }
+        @catch (NSException *exception) {
+            NSLog(@"exception -----  %@",exception);
+        }
+        @finally {
+            
+        }
+    }];
+    
+    [finishedRequest setFailedBlock:^{
+        
+    }];
+}
+
+
+///发表帖子
+
+-(void)uploadNewBBSPostsHaveImages:(BOOL)haveImage WithImageID:(NSString *)images
+{
+    NSString * fullUrl = [NSString stringWithFormat:BBS_UPLOAD_POSTS_URL,[SzkAPI getAuthkey],@"id",_title_textView.text,_content_textView.text,images,@""];
+    
+    
+    
+}
+
+
+
 
 //添加观察者
 -(void)addNotificationObserVer
@@ -294,23 +420,6 @@
                      completion:^(BOOL finished) {
                      }];
 }
-
-
-#pragma mark - 发表
-
-
--(void)sendTap:(UIButton *)sender
-{
-    NSLog(@"self.count -=-----  %@",allImageArray);
-    
-    
-    CreateNewBBSViewController * createBBS = [[CreateNewBBSViewController alloc] init];
-    
-    [self PushToViewController:createBBS WithAnimation:YES];
-    
-}
-
-
 
 
 #pragma mark - 拍照
@@ -620,6 +729,36 @@
             self.my_right_button.userInteractionEnabled = YES;
             [self.my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
+        
+        
+        NSString *toBeString = textView.text;
+        NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
+        if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+            UITextRange *selectedRange = [textView markedTextRange];
+            //获取高亮部分
+            UITextPosition *position = [textView positionFromPosition:selectedRange.start offset:0];
+            // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+            if (!position)
+            {
+                if (toBeString.length > 30)
+                {
+                    textView.text = [toBeString substringToIndex:30];
+                }
+            }
+            // 有高亮选择的字符串，则暂不对文字进行统计和限制
+            else{
+                
+            }
+        }
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        else
+        {
+            if (toBeString.length > 30)
+            {
+                textView.text = [toBeString substringToIndex:30];
+            }
+        }
+        
     }else
     {
         if (textView.text.length == 0)

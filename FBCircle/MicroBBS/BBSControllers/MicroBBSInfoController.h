@@ -12,4 +12,6 @@
  */
 @interface MicroBBSInfoController : MyViewController
 
+@property(nonatomic,retain)NSString *bbsId;
+
 @end

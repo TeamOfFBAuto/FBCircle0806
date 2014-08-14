@@ -20,6 +20,11 @@ typedef enum {
 
 @property(nonatomic,retain)UIImageView *imageView;
 @property(nonatomic,retain)UILabel *titleLabel;
+@property(nonatomic,assign)BOOL selected;
+@property(nonatomic,retain)UIColor *selcted_TitleColor;
+
+@property(nonatomic,weak)id target;
+
 
 - (id)initWithFrame:(CGRect)frame
            imageUrl:(NSString *)url

@@ -103,7 +103,7 @@
             
             _content_label.font = [UIFont systemFontOfSize:14];
             
-            _content_label.backgroundColor = [UIColor clearColor];
+            _content_label.backgroundColor = [UIColor redColor];
             
             [self addSubview:_content_label];
         }

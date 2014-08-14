@@ -20,8 +20,8 @@
 @property(nonatomic,strong)UITextView * title_textView;
 
 @property(nonatomic,strong)UITextView * content_textView;
-
-
+///论坛id
+@property(nonatomic,strong)NSString * fid;
 
 
 

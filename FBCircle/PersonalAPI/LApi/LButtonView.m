@@ -10,7 +10,7 @@
 
 @implementation LButtonView
 {
-    id _target;
+//    id _target;
     SEL _action;
 }
 
@@ -106,13 +106,14 @@
             [self addSubview:_imageView];
         }
         
+        UIImageView *rightImageV;
         if (rightImage) {
-            UIImageView *rightImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.width - 10 - rightImage.size.width, (self.height-rightImage.size.height)/2.f, rightImage.size.width, rightImage.size.height)];
+            rightImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.width - 10 - rightImage.size.width, (self.height-rightImage.size.height)/2.f, rightImage.size.width, rightImage.size.height)];
             [rightImageV setImage:rightImage];
             [self addSubview:rightImageV];
         }
         
-        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10,0, 260, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10,0, self.width - _imageView.width - rightImageV.width - 10, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         [self addSubview:_titleLabel];
         
         if (direction == Line_No) {
@@ -125,6 +126,14 @@
         }
     }
     return self;
+}
+
+-(void)setSelected:(BOOL)selected
+{
+    if (_selcted_TitleColor) {
+        
+        self.titleLabel.textColor = selected ? _selcted_TitleColor : [UIColor blackColor];
+    }
 }
 
 
@@ -151,13 +160,6 @@
     
     self.alpha = 1.0;
 
-    
-//    if (self.normalColor) {
-//        self.backgroundColor = [UIColor colorWithHexString:self.normalColor];
-//    }else
-//    {
-//        self.backgroundColor = [UIColor clearColor];
-//    }
 
 }
 
@@ -166,5 +168,8 @@
    self.alpha = 1.0;
 }
 
-
+- (void)dealloc
+{
+//    NSLog(@"---%@",self);
+}
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "CreateNewBBSViewController.h"
+#import "CreateBBSChooseTypeViewController.h"
+#import "FBQuanAlertView.h"
 
 #define MAX_NAME_NUMBER 8
 #define MAX_INTRODUCTION_NUMBWE 50
@@ -28,6 +30,25 @@
     ///名称默认文字
     
     UILabel * name_placeHolder;
+    
+    ///展示图标
+    UIImageView * iconImage;
+    
+    ///展示分类
+    UILabel * sub_label;
+    
+    ///论坛图标对应的数字
+    int icon_num;
+    
+    ///论坛分类对应的数字
+    int type_num;
+    
+    ///创建请求
+    AFHTTPRequestOperation * create_request;
+    
+    ///提示框
+    FBQuanAlertView * myAlertView;
+    
 }
 
 @end
@@ -82,7 +103,17 @@
         [self.view addSubview:select_view];
     }
     
+    
+    
+    
+    myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
+    myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
+    myAlertView.hidden = YES;
+    [self.view addSubview:myAlertView];
+    
+    
     [self addNotification];
+
 }
 
 
@@ -112,10 +143,79 @@
 
 -(void)createBBS:(UIButton *)button
 {
+    if (name_tf.text.length == 0)
+    {
+        [self showAlertViewWithText:@"微论坛名称不能为空" WithType:FBQuanAlertViewTypeNoJuhua];
+        return;
+    }else if (name_tf.text.length > 8)
+    {
+        [self showAlertViewWithText:@"微论坛名称不能超过8个字" WithType:FBQuanAlertViewTypeNoJuhua];
+        
+        return;
+    }else if (introduction_tf.text.length > 50)
+    {
+        [self showAlertViewWithText:@"论坛简介不能超过50个字" WithType:FBQuanAlertViewTypeNoJuhua];
+        
+        return;
+    }else
+    {
+        [self showAlertViewWithText:@"正在创建" WithType:FBQuanAlertViewTypeHaveJuhua];
+    }
     
     
     
+    NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],name_tf.text,introduction_tf.text,icon_num,type_num];
+    NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
+    
+    create_request = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    
+    __weak typeof(self) bself = self;
+    
+    [create_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [bself hiddenAlertView];
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        
+        NSLog(@"创建微论坛 ---  %@ ----  %@",allDic,[allDic objectForKey:@"errinfo"]);
+        
+        if ([[allDic objectForKey:@"errcode"] intValue] == 0)//创建成功返回
+        {
+            [bself.navigationController popViewControllerAnimated:YES];
+        }else
+        {
+            [bself showAlertViewWith:[allDic objectForKey:@"errinfo"]];
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [bself hiddenAlertView];
+        
+        [bself showAlertViewWith:@"创建失败，请重试"];
+    }];
+    
+    [create_request start];
 }
+
+#pragma mark - 展示弹出框
+
+-(void)showAlertViewWithText:(NSString *)text WithType:(FBQuanAlertViewType)theType
+{
+    [myAlertView setType:theType thetext:text];
+    myAlertView.hidden = NO;
+    
+    [self performSelector:@selector(hiddenAlertView) withObject:self afterDelay:1];
+}
+
+#pragma mark - 消失弹出框
+
+-(void)hiddenAlertView
+{
+    myAlertView.hidden = YES;
+}
+
 
 
 #pragma mark - 加载输入框视图
@@ -204,13 +304,13 @@
     
     if (theType == 0)///加载图片icon
     {
-        UIImageView * iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(256,9.5,25,25)];
-        iconImage.backgroundColor = [UIColor redColor];
+        iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(256,9.5,25,25)];
+        iconImage.image = [UIImage imageNamed:@"brid"];//张少南  这里需要修改下默认图片
         [inputView addSubview:iconImage];
         
     }else
     {
-        UILabel * sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
+        sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
         sub_label.text = @"必选";
         sub_label.textAlignment = NSTextAlignmentLeft;
         sub_label.backgroundColor = [UIColor clearColor];
@@ -240,11 +340,20 @@
         case 0://跳转到选择图标界面
         {
             NSLog(@"跳转到选择图标界面");
+            
+            CreateBBSChooseIconViewController * chooseIcon = [[CreateBBSChooseIconViewController alloc] init];
+            
+            chooseIcon.delegate = self;
+            
+            [self PushToViewController:chooseIcon WithAnimation:YES];
+            
         }
             break;
         case 1://跳转到选择分类界面
         {
-            NSLog(@"跳转到选择分类界面");
+            CreateBBSChooseTypeViewController * chooseType = [[CreateBBSChooseTypeViewController alloc] init];
+            chooseType.name_Label = sub_label;
+            [self PushToViewController:chooseType WithAnimation:YES];
         }
             break;
             
@@ -343,6 +452,17 @@
 
 
 
+#pragma mark - 选取图标 完成代理
+
+-(void)completeChooseIconWithImageName:(NSString *)imageName
+{
+    iconImage.image = [UIImage imageNamed:imageName];
+}
+
+
+
+
+
 #pragma mark - dealloc
 
 
@@ -359,6 +479,12 @@
     name_placeHolder = nil;
     
     content_array = nil;
+    
+    myAlertView = nil;
+    
+    [create_request cancel];
+    
+    create_request = nil;
 }
 
 

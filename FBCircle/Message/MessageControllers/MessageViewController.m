@@ -48,7 +48,7 @@
     
     self.titleLabel.text = @"我的消息";
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
     
@@ -58,7 +58,7 @@
     //        isnewfbnotification = YES;
     //    }
     
-    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,6,320,(iPhone5?568:480)-20-44-6) style:UITableViewStylePlain];
+    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-20-44-49) style:UITableViewStylePlain];
     
     self.myTableView.delegate = self;
     
@@ -167,7 +167,8 @@
         
         isnewfbnotification = NO;
         
-        [self.navigationController pushViewController:messageVC animated:YES];
+//        [self.navigationController pushViewController:messageVC animated:YES];
+        [self PushToViewController:messageVC WithAnimation:YES];
     }else
     {
         MessageModel * model = [self.data_array objectAtIndex:indexPath.row-1];
@@ -178,7 +179,8 @@
         
         chatViewController.otherHeaderImage = model.otherFaceImage;
         
-        [self.navigationController pushViewController:chatViewController animated:YES];
+//        [self.navigationController pushViewController:chatViewController animated:YES];
+        [self PushToViewController:chatViewController WithAnimation:YES];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
