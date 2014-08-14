@@ -181,6 +181,22 @@
     CGSize aSize = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
     return aSize.height;
 }
+/**
+ *  更改指定frame值
+ *
+ */
++ (void)updateFrame:(UIView *)aView
+            originX:(CGFloat)x
+            originY:(CGFloat)y
+              width:(CGFloat)width
+             height:(CGFloat)height
+{
+    CGRect aFrame = aView.frame;
+    aFrame.origin.x = x;
+    aFrame.origin.y = y;
+    aFrame.size.width = width;
+    aFrame.size.height = height;
+}
 
 #pragma - mark 验证邮箱、电话等有效性
 

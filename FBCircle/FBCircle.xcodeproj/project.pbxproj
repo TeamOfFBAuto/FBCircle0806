@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		1320A7D4199AFCFB00EB955B /* SearchBBSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7D2199AFCFB00EB955B /* SearchBBSCell.m */; };
 		1320A7D5199AFCFB00EB955B /* SearchBBSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1320A7D3199AFCFB00EB955B /* SearchBBSCell.xib */; };
+		1320A7D8199B46A900EB955B /* BBSSearchNoResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7D7199B46A900EB955B /* BBSSearchNoResultController.m */; };
+		1320A7E6199B698000EB955B /* emotion.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1320A7DA199B698000EB955B /* emotion.plist */; };
+		1320A7E7199B698000EB955B /* emotionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1320A7DB199B698000EB955B /* emotionImage.plist */; };
+		1320A7E8199B698000EB955B /* FBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7DD199B698000EB955B /* FBHelper.m */; };
+		1320A7E9199B698000EB955B /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7DF199B698000EB955B /* MarkupParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1320A7EA199B698000EB955B /* NSAttributedString+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7E1199B698000EB955B /* NSAttributedString+Attributes.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1320A7EB199B698000EB955B /* OHAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7E3199B698000EB955B /* OHAttributedLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1320A7EC199B698000EB955B /* SCGIFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7E5199B698000EB955B /* SCGIFImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1320A7F4199B6A0800EB955B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7F1199B6A0800EB955B /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1320A7F6199B6B6200EB955B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1320A7F5199B6B6200EB955B /* libicucore.dylib */; };
 		134164491993582100189A46 /* BBSListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 134164481993582100189A46 /* BBSListViewController.m */; };
 		1341645819935A0B00189A46 /* jiaruluntan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644C19935A0B00189A46 /* jiaruluntan@2x.png */; };
 		1341645919935A0B00189A46 /* jing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644D19935A0B00189A46 /* jing@2x.png */; };
@@ -875,6 +885,23 @@
 		1320A7D1199AFCFB00EB955B /* SearchBBSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBBSCell.h; sourceTree = "<group>"; };
 		1320A7D2199AFCFB00EB955B /* SearchBBSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBBSCell.m; sourceTree = "<group>"; };
 		1320A7D3199AFCFB00EB955B /* SearchBBSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBBSCell.xib; sourceTree = "<group>"; };
+		1320A7D6199B46A900EB955B /* BBSSearchNoResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSSearchNoResultController.h; sourceTree = "<group>"; };
+		1320A7D7199B46A900EB955B /* BBSSearchNoResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSSearchNoResultController.m; sourceTree = "<group>"; };
+		1320A7DA199B698000EB955B /* emotion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emotion.plist; sourceTree = "<group>"; };
+		1320A7DB199B698000EB955B /* emotionImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emotionImage.plist; sourceTree = "<group>"; };
+		1320A7DC199B698000EB955B /* FBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBHelper.h; sourceTree = "<group>"; };
+		1320A7DD199B698000EB955B /* FBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBHelper.m; sourceTree = "<group>"; };
+		1320A7DE199B698000EB955B /* MarkupParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkupParser.h; sourceTree = "<group>"; };
+		1320A7DF199B698000EB955B /* MarkupParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupParser.m; sourceTree = "<group>"; };
+		1320A7E0199B698000EB955B /* NSAttributedString+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Attributes.h"; sourceTree = "<group>"; };
+		1320A7E1199B698000EB955B /* NSAttributedString+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Attributes.m"; sourceTree = "<group>"; };
+		1320A7E2199B698000EB955B /* OHAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHAttributedLabel.h; sourceTree = "<group>"; };
+		1320A7E3199B698000EB955B /* OHAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHAttributedLabel.m; sourceTree = "<group>"; };
+		1320A7E4199B698000EB955B /* SCGIFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGIFImageView.h; sourceTree = "<group>"; };
+		1320A7E5199B698000EB955B /* SCGIFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGIFImageView.m; sourceTree = "<group>"; };
+		1320A7EF199B6A0800EB955B /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		1320A7F1199B6A0800EB955B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		1320A7F5199B6B6200EB955B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		134164471993582100189A46 /* BBSListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSListViewController.h; sourceTree = "<group>"; };
 		134164481993582100189A46 /* BBSListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSListViewController.m; sourceTree = "<group>"; };
 		1341644C19935A0B00189A46 /* jiaruluntan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiaruluntan@2x.png"; sourceTree = "<group>"; };
@@ -1605,6 +1632,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1320A7F6199B6B6200EB955B /* libicucore.dylib in Frameworks */,
 				56A647F7198F3A8B00451413 /* CoreGraphics.framework in Frameworks */,
 				E3E2FBB61990D4DB0062A4F2 /* SystemConfiguration.framework in Frameworks */,
 				56A64C09198F6ED100451413 /* CoreLocation.framework in Frameworks */,
@@ -1645,6 +1673,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1320A7D9199B698000EB955B /* RichViewAndGif */ = {
+			isa = PBXGroup;
+			children = (
+				1320A7ED199B6A0800EB955B /* RegexKitLite */,
+				1320A7DA199B698000EB955B /* emotion.plist */,
+				1320A7DB199B698000EB955B /* emotionImage.plist */,
+				1320A7DC199B698000EB955B /* FBHelper.h */,
+				1320A7DD199B698000EB955B /* FBHelper.m */,
+				1320A7DE199B698000EB955B /* MarkupParser.h */,
+				1320A7DF199B698000EB955B /* MarkupParser.m */,
+				1320A7E0199B698000EB955B /* NSAttributedString+Attributes.h */,
+				1320A7E1199B698000EB955B /* NSAttributedString+Attributes.m */,
+				1320A7E2199B698000EB955B /* OHAttributedLabel.h */,
+				1320A7E3199B698000EB955B /* OHAttributedLabel.m */,
+				1320A7E4199B698000EB955B /* SCGIFImageView.h */,
+				1320A7E5199B698000EB955B /* SCGIFImageView.m */,
+			);
+			path = RichViewAndGif;
+			sourceTree = "<group>";
+		};
+		1320A7ED199B6A0800EB955B /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				1320A7EF199B6A0800EB955B /* RegexKitLite.h */,
+				1320A7F1199B6A0800EB955B /* RegexKitLite.m */,
+			);
+			path = RegexKitLite;
+			sourceTree = "<group>";
+		};
 		1341644A19935A0B00189A46 /* 011微论坛主题帖 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1697,6 +1754,7 @@
 		1366025E1990A3D900F2BEEC /* LApi */ = {
 			isa = PBXGroup;
 			children = (
+				1320A7D9199B698000EB955B /* RichViewAndGif */,
 				136602981990ABE300F2BEEC /* LTools.h */,
 				136602991990ABE300F2BEEC /* LTools.m */,
 				1366029A1990ABE300F2BEEC /* RefreshTableView.h */,
@@ -2051,6 +2109,7 @@
 		56A647F3198F3A8B00451413 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1320A7F5199B6B6200EB955B /* libicucore.dylib */,
 				E3D313901990DCAC00EE1B9C /* libPods-BaiduMapSDK.a */,
 				E3E2FBB51990D4DB0062A4F2 /* SystemConfiguration.framework */,
 				E3E2FBB31990D4980062A4F2 /* OpenGLES.framework */,
@@ -2209,6 +2268,8 @@
 				13877F6D19985B5E0058DED6 /* BBSMembersController.m */,
 				13B85AFA1999ED5F000072FB /* BBSSearchController.h */,
 				13B85AFB1999ED5F000072FB /* BBSSearchController.m */,
+				1320A7D6199B46A900EB955B /* BBSSearchNoResultController.h */,
+				1320A7D7199B46A900EB955B /* BBSSearchNoResultController.m */,
 			);
 			path = BBSControllers;
 			sourceTree = "<group>";
@@ -3341,6 +3402,7 @@
 				136602891990A82900F2BEEC /* huwai@2x.png in Resources */,
 				56A64CF8198F72E900451413 /* pinglun-bg1-down212_76@2x.jpg in Resources */,
 				56A64D18198F72E900451413 /* shanchu40_40@2x.png in Resources */,
+				1320A7E6199B698000EB955B /* emotion.plist in Resources */,
 				56A64AC0198F6AD800451413 /* 33.png in Resources */,
 				56A64BE0198F6CA200451413 /* messages_toolbar_background@2x.png in Resources */,
 				56A64CD0198F72E900451413 /* duihao-doun-46_46@2x.png in Resources */,
@@ -3566,6 +3628,7 @@
 				56A64CFA198F72E900451413 /* pinglun-bg1-down212_76@2x.png in Resources */,
 				56A64D72198F72E900451413 /* fankui-46_46-xy300_618@2x.png in Resources */,
 				56A64DDA198F72E900451413 /* xiangqing-xin-icon-24_24@2x.png in Resources */,
+				1320A7E7199B698000EB955B /* emotionImage.plist in Resources */,
 				56A64D14198F72E900451413 /* pinglun_28_28@2x.png in Resources */,
 				136602B81990C3B200F2BEEC /* bluedown@2x.png in Resources */,
 				56A64D7A198F72E900451413 /* touxiang-126_126@2x.png in Resources */,
@@ -3959,12 +4022,14 @@
 				56A64AB2198F6AD800451413 /* GmyFootViewController.m in Sources */,
 				136602971990AB7100F2BEEC /* UIView+Frame.m in Sources */,
 				56A64880198F502700451413 /* SzkAPI.m in Sources */,
+				1320A7D8199B46A900EB955B /* BBSSearchNoResultController.m in Sources */,
 				56A648D6198F512A00451413 /* ChooseAreaViewController.m in Sources */,
 				561731F419925F64001B8574 /* TakePhotoView.m in Sources */,
 				13B85B12199A16A5000072FB /* LMoveView.m in Sources */,
 				5617321719926004001B8574 /* QBImagePickerController.m in Sources */,
 				56A64A41198F69A800451413 /* FBCircleMenuView.m in Sources */,
 				56A64847198F45DB00451413 /* MessageViewController.m in Sources */,
+				1320A7EC199B698000EB955B /* SCGIFImageView.m in Sources */,
 				56A64AB0198F6AD800451413 /* GHaoYouFootViewController.m in Sources */,
 				56A648DE198F512A00451413 /* DataBase.m in Sources */,
 				56A64BF8198F6CA200451413 /* UMFeedbackTableViewCellRight.m in Sources */,
@@ -3981,6 +4046,8 @@
 				E3A73FDE199863E100C49CC6 /* GnearbyPersonViewController.m in Sources */,
 				56A64B88198F6BD400451413 /* LeftViewController.m in Sources */,
 				56A6491D198F55A500451413 /* FBCirclePraiseModel.m in Sources */,
+				1320A7E9199B698000EB955B /* MarkupParser.m in Sources */,
+				1320A7E8199B698000EB955B /* FBHelper.m in Sources */,
 				E3B9CAD41990AC9D00DE07F4 /* GmFoundScanViewController.m in Sources */,
 				56A64B98198F6BD400451413 /* SMSInvitationViewController.m in Sources */,
 				1366029C1990ABE300F2BEEC /* LTools.m in Sources */,
@@ -4004,6 +4071,7 @@
 				138EBEAE1992512F005DB531 /* BBSModel.m in Sources */,
 				56A64BF2198F6CA200451413 /* UMContactViewController.m in Sources */,
 				56A64B14198F6AD800451413 /* GlocalUserTextData.m in Sources */,
+				1320A7EA199B698000EB955B /* NSAttributedString+Attributes.m in Sources */,
 				136D3AAB1990DB950052E808 /* LSecionView.m in Sources */,
 				56A64B5F198F6BC700451413 /* OfficalSuggestCell.m in Sources */,
 				56A64DFC198F7B1E00451413 /* ChatModel.m in Sources */,
@@ -4025,6 +4093,7 @@
 				56A648D2198F512A00451413 /* AsyncImageView.m in Sources */,
 				56A64B57198F6BC700451413 /* FBQuanAlertView.m in Sources */,
 				56A649FA198F561E00451413 /* FBCirclePersonalModel.m in Sources */,
+				1320A7EB199B698000EB955B /* OHAttributedLabel.m in Sources */,
 				56A64B16198F6AD800451413 /* GTimeSwitch.m in Sources */,
 				56A64BFA198F6CA200451413 /* UMFeedbackViewController.m in Sources */,
 				56A648EA198F512A00451413 /* RTLabel.m in Sources */,
@@ -4053,6 +4122,7 @@
 				56A64B63198F6BC700451413 /* ZKingLoadingView.m in Sources */,
 				56A64ABE198F6AD800451413 /* GupData.m in Sources */,
 				134164641993731E00189A46 /* BBSListCell.m in Sources */,
+				1320A7F4199B6A0800EB955B /* RegexKitLite.m in Sources */,
 				56A64840198F430600451413 /* FoundViewController.m in Sources */,
 				56A64A3D198F69A800451413 /* FBCircleDetailCommentsView.m in Sources */,
 				56A64B82198F6BD400451413 /* AboutFBQuanViewController.m in Sources */,

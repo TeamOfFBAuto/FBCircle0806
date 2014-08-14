@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RTLabel.h"
 /**
  *  评论cell
  */
@@ -14,7 +15,9 @@
 @property (nonatomic,retain)UIImageView *aImageView;
 @property (nonatomic,retain)UILabel *nameLabel;
 @property (nonatomic,retain)UILabel *timeLabel;
-@property (nonatomic,retain)UILabel *contentLabel;
+@property(nonatomic,retain)UIView * content_label;
 
-- (void)setCellData:(id)aModel;
+- (void)setCellData:(NSString *)aModel OHLabel:(UIView *)OHLabel;
+
+
 @end

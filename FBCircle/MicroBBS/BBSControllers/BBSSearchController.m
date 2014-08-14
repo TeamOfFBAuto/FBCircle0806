@@ -8,13 +8,14 @@
 
 #import "BBSSearchController.h"
 #import "MicroBBSInfoController.h"
+#import "BBSSearchNoResultController.h"
 #import "BBSTopicController.h"
 #import "BBSInfoModel.h"
 #import "SearchBBSCell.h"
 
 #define SEARCH_HISTORY @"search_history"//搜索历史词
 
-@interface BBSSearchController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate>
+@interface BBSSearchController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate,UIGestureRecognizerDelegate>
 {
     RefreshTableView *_table;
     UITableView *_historyTable;//显示历史搜索词
@@ -97,6 +98,10 @@
     //创建清空历史记录按钮
     
     [self createMoveView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHidden)];
+    tap.delegate = self;
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,11 +112,16 @@
 
 #pragma mark - 事件处理
 
-//进入我的论坛
-
-- (void)clickToMyBBS:(UIButton *)sender
+- (void)tapToHidden
 {
-    
+    [searchView.searchField resignFirstResponder];
+}
+
+//搜索无结果
+- (void)clickToSearchNoResult:(UIButton *)sender
+{
+    BBSSearchNoResultController *noResult = [[BBSSearchNoResultController alloc]init];
+    [self PushToViewController:noResult WithAnimation:YES];
 }
 
 - (void)clickToBack:(UIButton *)sender
@@ -147,16 +157,6 @@
     [alert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [self clearHistory];
-        
-        _historyArray = nil;
-        [_historyTable reloadData];
-    }
-}
-
 #pragma mark - 网络请求
 
 - (NSArray *)getHistory
@@ -166,6 +166,9 @@
 
 - (void)recordHistoryKeyword:(NSString *)aKeyword
 {
+    if ([aKeyword isEqualToString:@""] || aKeyword == nil) {
+        return;
+    }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *arr = [NSMutableArray arrayWithArray:[defaults arrayForKey:SEARCH_HISTORY]];
     
@@ -243,6 +246,8 @@
             
             [_table.dataArray removeAllObjects];
             [weakTable reloadData:nil total:0];
+            
+            [weakSelf clickToSearchNoResult:nil];
         }
         
     }];
@@ -333,6 +338,31 @@
 }
 
 #pragma mark - delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self clearHistory];
+        
+        _historyArray = nil;
+        [_historyTable reloadData];
+    }
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // 输出点击的view的类名
+    NSLog(@"%@", NSStringFromClass([touch.view class]));
+    
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    return  YES;
+}
 
 #pragma - mark RefreshDelegate <NSObject>
 

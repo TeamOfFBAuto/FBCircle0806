@@ -17,10 +17,16 @@
 #import "BBSRecommendCell.h"
 #import "SendPostsViewController.h"
 
-@interface BBSTopicController ()<UITableViewDataSource,UITableViewDelegate>
+@interface BBSTopicController ()<UITableViewDataSource,UITableViewDelegate,OHAttributedLabelDelegate>
 {
     UITableView *_table;
     LInputView *inputView;
+    NSMutableArray *_dataArray;
+    RTLabel *height_Label;//计算高度
+    
+    NSMutableArray *rowHeights;//所有高度
+    NSDictionary *emojiDic;//所有表情
+    NSMutableArray *labelArr;//所有label
 }
 
 @end
@@ -63,7 +69,24 @@
     
     [self createInputView];
     
+    labelArr = [NSMutableArray array];
+    rowHeights = [NSMutableArray array];
+    _dataArray = [NSMutableArray array];
+    
+    [self testData];
+    
 }
+
+- (void)testData
+{
+    NSString *str1 = @"卡阿喀琉斯[真棒]建档立十块来得及阿卡[神马]丽";
+    NSString *str2 = @"卡机索拉卡[思考][发怒]机索拉卡[思考]阿里山评论内容[哈欠]老师卡机索拉卡[思考]阿里山的徕卡[思考]阿里山的徕卡监";
+    
+    
+    [_dataArray addObjectsFromArray:@[str1,str2]];
+    [_table reloadData];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -170,14 +193,52 @@
 
 #pragma mark - 网络请求
 
+- (void)sendComment:(NSString *)text
+{
+    [self createRichLabelWithMessage:text isInsert:YES];
+    [_dataArray insertObject:text atIndex:0];
+    [_table reloadData];
+}
 
 #pragma mark - 视图创建
+- (CGFloat)createRichLabelWithMessage:(NSString *)text isInsert:(BOOL)isInsert
+{
+    OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor orangeColor];
+    [FBHelper creatAttributedText:text Label:label OHDelegate:self];
+    
+    NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
+    
+    if (isInsert) {
+        [labelArr insertObject:label atIndex:0];
+    }else
+    {
+        [labelArr addObject:label];
+    }
+    
+    if (isInsert) {
+        [rowHeights insertObject:heightNum atIndex:0];
+    }else
+    {
+        [rowHeights addObject:heightNum];
+        
+    }
+    
+    return [heightNum floatValue];
+}
 
 - (void)createInputView
 {
+    __weak typeof(self) weakSelf = self;
     inputView = [[LInputView alloc]initWithFrame:CGRectMake(0, self.view.height - 45 - 20 - 44, 320, 45)inView:self.view inputText:^(NSString *inputText) {
 
         NSLog(@"inputText %@",inputText);
+        
+        if (inputText.length > 0) {
+            
+            [weakSelf sendComment:inputText];
+            
+        }
         
     }];
     inputView.clearInputWhenSend = YES;
@@ -373,31 +434,36 @@
 
 #pragma mark - delegate
 
-#pragma - mark RefreshDelegate <NSObject>
-
-- (void)loadNewData
-{
-    NSLog(@"loadNewData");
-}
-
-- (void)loadMoreData
-{
-    NSLog(@"loadMoreData");
-}
-
-- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
-{
-    return 75;
-}
-
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    NSString *text = [_dataArray objectAtIndex:indexPath.row];
+    
+    CGFloat labelHeight = 0.0;
+    if (rowHeights.count > indexPath.row && [rowHeights objectAtIndex:indexPath.row]) {
+        
+        labelHeight = [[rowHeights objectAtIndex:indexPath.row] floatValue];
+        
+    }else
+    {
+        labelHeight = [self createRichLabelWithMessage:text isInsert:NO];
+    }
+    
+    
+    CGFloat aHeight = 30 + labelHeight + 10;
+    
+    if (aHeight <= 75) {
+        aHeight = 75;
+    }
+    return aHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0)
+{
+    BBSRecommendCell *aCell =(BBSRecommendCell *)cell;
+    if (aCell.content_label) {
+        [aCell.content_label removeFromSuperview];//防止重绘
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -409,7 +475,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -422,7 +488,21 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
-   
+    
+    NSString *text = [_dataArray objectAtIndex:indexPath.row];
+    
+    if (labelArr.count > indexPath.row && [labelArr objectAtIndex:indexPath.row]) {
+        
+    }else
+    {
+        //否则没有,需要新创建
+        [self createRichLabelWithMessage:text isInsert:NO];
+        
+    }
+    
+    UIView *label = (UIView *)[labelArr objectAtIndex:indexPath.row];
+    
+    [cell setCellData:text OHLabel:label];
     
     return cell;
     

@@ -18,6 +18,7 @@
 #import "LActionSheet.h"
 #import "LSearchView.h"
 #import "LMoveView.h"
+#import "FBHelper.h"
 
 //#define PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息

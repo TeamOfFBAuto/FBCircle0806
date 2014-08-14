@@ -1280,7 +1280,7 @@ void RunDelegateDeallocCallback(void* refCon);
                     CGRect imageDrawRect;
                     imageDrawRect.size = CGSizeMake(self.imageWidth?self.imageWidth:17,self.imageHeight?self.imageHeight:17);
                     imageDrawRect.origin.x = runRect.origin.x + lineOrigin.x;
-                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:0) - (lineOrigin.y<10?_lineSpacing:0);
+                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:_lineSpacing) - (lineOrigin.y<10?_lineSpacing:0);
                 
                     CGContextDrawImage(context,imageDrawRect,image.CGImage);
                 }
