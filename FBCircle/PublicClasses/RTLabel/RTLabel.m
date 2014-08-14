@@ -330,7 +330,7 @@ void RunDelegateDeallocCallback(void* refCon);
 	
     // Initialize a rectangular path.
 	CGMutablePathRef path = CGPathCreateMutable();
-	CGRect bounds = CGRectMake(0.0,0.0, self.frame.size.width, self.frame.size.height);
+	CGRect bounds = CGRectMake(0.0,-3, self.frame.size.width, self.frame.size.height);
 	CGPathAddRect(path, NULL, bounds);
 	
 	// Create the frame and draw it into the graphics context
@@ -1267,7 +1267,7 @@ void RunDelegateDeallocCallback(void* refCon);
             runRect.size.width = (CGFloat)CTRunGetTypographicBounds(run, CFRangeMake(0,0), &runAscent, &runDescent, NULL);
             //            NSLog(@"width = %f",runRect.size.width);
             
-            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent, runRect.size.width, runAscent + runDescent);
+            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent - _lineSpacing, runRect.size.width, runAscent + runDescent);
             
             NSString *imageName = [attributes objectForKey:@"imageName"];
             

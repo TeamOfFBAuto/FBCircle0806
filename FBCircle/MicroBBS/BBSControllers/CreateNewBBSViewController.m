@@ -9,6 +9,7 @@
 #import "CreateNewBBSViewController.h"
 #import "BBSAddMemberViewController.h"
 #import "CreateBBSChooseTypeViewController.h"
+#import "FBQuanAlertView.h"
 
 #define MAX_NAME_NUMBER 8
 #define MAX_INTRODUCTION_NUMBWE 50
@@ -36,6 +37,19 @@
     
     ///展示分类
     UILabel * sub_label;
+    
+    ///论坛图标对应的数字
+    int icon_num;
+    
+    ///论坛分类对应的数字
+    int type_num;
+    
+    ///创建请求
+    AFHTTPRequestOperation * create_request;
+    
+    ///提示框
+    FBQuanAlertView * myAlertView;
+    
 }
 
 @end
@@ -90,7 +104,17 @@
         [self.view addSubview:select_view];
     }
     
+    
+    
+    
+    myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
+    myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
+    myAlertView.hidden = YES;
+    [self.view addSubview:myAlertView];
+    
+    
     [self addNotification];
+
 }
 
 
@@ -120,12 +144,57 @@
 
 -(void)createBBS:(UIButton *)button
 {
-    BBSAddMemberViewController * addMember = [[BBSAddMemberViewController alloc] init];
+    if (name_tf.text.length == 0)
+    {
+        [self showAlertViewWithText:@"微论坛名称不能为空" WithType:FBQuanAlertViewTypeNoJuhua];
+        return;
+    }else if (name_tf.text.length > 8)
+    {
+        [self showAlertViewWithText:@"微论坛名称不能超过8个字" WithType:FBQuanAlertViewTypeNoJuhua];
+        
+        return;
+    }else if (introduction_tf.text.length > 50)
+    {
+        [self showAlertViewWithText:@"论坛简介不能超过50个字" WithType:FBQuanAlertViewTypeNoJuhua];
+        
+        return;
+    }
     
-    [self PushToViewController:addMember WithAnimation:YES];
     
+    
+    NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],name_tf.text,introduction_tf.text,icon_num,type_num];
+    NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
+    
+    create_request = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    
+    [create_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    [create_request start];
+}
+
+#pragma mark - 展示弹出框
+
+-(void)showAlertViewWithText:(NSString *)text WithType:(FBQuanAlertViewType)theType
+{
+    [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"论坛简介不能超过50个字"];
+    myAlertView.hidden = NO;
+    
+    [self performSelector:@selector(hiddenAlertView) withObject:self afterDelay:0.3];
     
 }
+
+#pragma mark - 消失弹出框
+
+-(void)hiddenAlertView
+{
+    
+}
+
 
 
 #pragma mark - 加载输入框视图

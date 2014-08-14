@@ -201,3 +201,64 @@ alpha:(a)]
 #define FBCIRCLE_COMMENT_ADD @"http://quan.fblife.com/index.php?c=forum&a=addcomment&authkey=%@&content=%@&fid=1&tid=1" //发表评论
 #define FBCIRCLE_COMMENT_LIST @"http://quan.fblife.com/index.php?c=forum&a=getcomment&tid=%@&page=%d&ps=%d" //评论列表
 
+
+
+#pragma - mark 创建论坛接口
+
+#define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum&authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
