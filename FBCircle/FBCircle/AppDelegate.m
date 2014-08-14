@@ -24,8 +24,6 @@
 
 
 
-
-
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;

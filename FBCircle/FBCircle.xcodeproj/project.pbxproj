@@ -3149,6 +3149,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = soulnear;
 				TargetAttributes = {
+					56A647F0198F3A8B00451413 = {
+						DevelopmentTeam = 96PFYKQ596;
+					};
 					56A64810198F3A8B00451413 = {
 						TestTargetID = 56A647F0198F3A8B00451413;
 					};
@@ -4081,8 +4084,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4104,7 +4107,7 @@
 					"$(SRCROOT)/",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7761733C-A5E0-4A17-930B-15841082DF77";
+				PROVISIONING_PROFILE = "A2B9C6B6-2215-4468-9918-ACCFAB23E633";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -4127,8 +4130,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4144,7 +4147,7 @@
 					"$(SRCROOT)/",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7761733C-A5E0-4A17-930B-15841082DF77";
+				PROVISIONING_PROFILE = "A2B9C6B6-2215-4468-9918-ACCFAB23E633";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
@@ -4157,7 +4160,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBCircle/FBCircle-Prefix.pch";
 				INFOPLIST_FILE = "FBCircle/FBCircle-Info.plist";
@@ -4168,7 +4172,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7761733C-A5E0-4A17-930B-15841082DF77";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -4181,7 +4185,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBCircle/FBCircle-Prefix.pch";
 				INFOPLIST_FILE = "FBCircle/FBCircle-Info.plist";
@@ -4192,7 +4197,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7761733C-A5E0-4A17-930B-15841082DF77";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
