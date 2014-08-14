@@ -78,7 +78,7 @@
 {
     __weak typeof(_table)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_CLSSIFYBBS_SUB,[SzkAPI getAuthkey],_table.pageNum,PAGE_SIZE,classId];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_CLSSIFYBBS_SUB,[SzkAPI getAuthkey],_table.pageNum,L_PAGE_SIZE,classId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);

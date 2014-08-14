@@ -16,10 +16,20 @@
 #import "LSecionView.h"
 #import "BBSRecommendCell.h"
 #import "SendPostsViewController.h"
+#import "TopicCommentModel.h"
+
+typedef enum{
+    Action_Topic_Zan = 0,//赞帖
+    Action_Topic_Top,//置顶
+    Action_Topic_Top_Cancel//取消顶
+    
+}Network_ACTION;
 
 @interface BBSTopicController ()<UITableViewDataSource,UITableViewDelegate,OHAttributedLabelDelegate>
 {
     UITableView *_table;
+    int _pageNum;//评论页数
+    
     LInputView *inputView;
     NSMutableArray *_dataArray;
     RTLabel *height_Label;//计算高度
@@ -27,6 +37,8 @@
     NSMutableArray *rowHeights;//所有高度
     NSDictionary *emojiDic;//所有表情
     NSMutableArray *labelArr;//所有label
+    
+    UIButton *moreBtn;//点击加载更多
 }
 
 @end
@@ -73,13 +85,14 @@
     rowHeights = [NSMutableArray array];
     _dataArray = [NSMutableArray array];
     
-    [self testData];
+    _pageNum = 1;
+    [self getCommentList];
     
 }
 
 - (void)testData
 {
-    NSString *str1 = @"卡阿喀琉斯[真棒]建档立十块来得及阿卡[神马]丽";
+    NSString *str1 = @"卡阿喀琉斯[真棒]建档http://www.baidu.com立十块来得及阿卡[神马]丽";
     NSString *str2 = @"卡机索拉卡[思考][发怒]机索拉卡[思考]阿里山评论内容[哈欠]老师卡机索拉卡[思考]阿里山的徕卡[思考]阿里山的徕卡监";
     
     
@@ -116,10 +129,15 @@
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"赞",@"评论"] images:@[[UIImage imageNamed:@"zhiding"],[UIImage imageNamed:@"zhiding"]] sheetStyle:Style_SideBySide action:^(NSInteger buttonIndex) {
         
         if (buttonIndex == 0) {
-            NSLog(@"取消置顶");
+            NSLog(@"赞");
+            
+            [self networdAction:Action_Topic_Zan];
+            
         }else if (buttonIndex == 1)
         {
-            NSLog(@"删除");
+            NSLog(@"评论");
+            
+            [inputView.textView becomeFirstResponder];
         }
     }];
     [sheet showFromView:sender];
@@ -135,18 +153,9 @@
 
 - (void)clickToMore:(UIButton *)sender
 {
-    NSString *title = nil;
-    if (sender.tag == 101) {
-        
-        title = @"热门推荐";
-    }else
-    {
-        title = @"热门帖子";
-    }
-    HotTopicViewController *hotTopic = [[HotTopicViewController alloc]init];
-    hotTopic.navigationTitle = title;
-    hotTopic.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:hotTopic animated:YES];
+    _pageNum ++;
+    
+    [self getCommentList];
 }
 /**
  *  进入分类论坛
@@ -174,7 +183,10 @@
 {
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"取消置顶",@"删除"] images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {
+            
             NSLog(@"取消置顶");
+            [self networdAction:Action_Topic_Top];
+            
         }else if (buttonIndex == 1)
         {
             NSLog(@"删除");
@@ -195,16 +207,128 @@
 
 - (void)sendComment:(NSString *)text
 {
+    
+    TopicCommentModel *aModel = [[TopicCommentModel alloc]init];
+    aModel.username = [SzkAPI getUsername];
+    aModel.content = text;
+    aModel.time = [LTools timechangeToDateline];
+    aModel.userface = [SzkAPI getUserFace];
+    
     [self createRichLabelWithMessage:text isInsert:YES];
-    [_dataArray insertObject:text atIndex:0];
+    [_dataArray insertObject:aModel atIndex:0];
     [_table reloadData];
 }
+
+/**
+ *  添加评论
+ */
+- (void)addComment:(NSString *)text
+{
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,@"1",@"1"];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int errcode = [[result objectForKey:@"errcode"]integerValue];
+            if (errcode == 0) {
+                
+                [weakSelf sendComment:text];
+            }else
+            {
+                [LTools showMBProgressWithText:[dataInfo objectForKey:@"errinfo"] addToView:self.view];
+            }
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:self.view];
+    }];
+}
+
+/**
+ *  添加评论
+ */
+- (void)networdAction:(Network_ACTION)action
+{
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *url;
+    if (action == Action_Topic_Zan) {
+        
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_ZAN,[SzkAPI getAuthkey],@"1"];
+        
+    }else if (action == Action_Topic_Top)
+    {
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TOP,[SzkAPI getAuthkey],@"1",@"1"];
+        
+    }else if (action == Action_Topic_Top_Cancel)
+    {
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TRIPTOP,[SzkAPI getAuthkey],@"1",@"1"];
+    }
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:self.view];
+    }];
+}
+
+
+/**
+ *  评论列表
+ */
+- (void)getCommentList
+{
+    __weak typeof(UITableView *)weakTable = _table;
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,@"1",_pageNum,L_PAGE_SIZE];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            NSArray *data = [dataInfo objectForKey:@"data"];
+            for (NSDictionary *aDic in data) {
+                
+                [_dataArray addObject:[[TopicCommentModel alloc]initWithDictionary:aDic]];
+            }
+            [weakTable reloadData];
+            
+            int total = [[dataInfo objectForKey:@"total"]integerValue];
+            if (total > _pageNum) {
+                
+            }else
+            {
+                [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
+                moreBtn.userInteractionEnabled = NO;
+            }
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:self.view];
+    }];
+}
+
 
 #pragma mark - 视图创建
 - (CGFloat)createRichLabelWithMessage:(NSString *)text isInsert:(BOOL)isInsert
 {
     OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor orangeColor];
+    label.lineBreakMode = NSLineBreakByCharWrapping;
     [FBHelper creatAttributedText:text Label:label OHDelegate:self];
     
     NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
@@ -236,12 +360,12 @@
         
         if (inputText.length > 0) {
             
-            [weakSelf sendComment:inputText];
+            [weakSelf addComment:inputText];
             
         }
         
     }];
-    inputView.clearInputWhenSend = YES;
+    inputView.clearInputWhenSend = NO;;
     inputView.resignFirstResponderWhenSend = YES;
     
     [self.view addSubview:inputView];
@@ -424,7 +548,7 @@
 
     
     
-    UIButton *moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height) normalTitle:@"查看更多评论..." backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
+    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height) normalTitle:@"查看更多评论..." backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
     [moreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     moreBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -437,8 +561,8 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *text = [_dataArray objectAtIndex:indexPath.row];
-    
+    TopicCommentModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    NSString *text = aModel.content;
     CGFloat labelHeight = 0.0;
     if (rowHeights.count > indexPath.row && [rowHeights objectAtIndex:indexPath.row]) {
         
@@ -489,7 +613,8 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     
-    NSString *text = [_dataArray objectAtIndex:indexPath.row];
+    TopicCommentModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    NSString *text = aModel.content;
     
     if (labelArr.count > indexPath.row && [labelArr objectAtIndex:indexPath.row]) {
         
@@ -503,6 +628,16 @@
     UIView *label = (UIView *)[labelArr objectAtIndex:indexPath.row];
     
     [cell setCellData:text OHLabel:label];
+    
+    if ([aModel.userface isKindOfClass:[UIImage class]]) {
+        cell.aImageView.image = (UIImage *)aModel.userface;
+    }else
+    {
+       [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.userface] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    }
+    
+    cell.nameLabel.text = aModel.username;
+    cell.timeLabel.text = [LTools timechange:aModel.time];
     
     return cell;
     

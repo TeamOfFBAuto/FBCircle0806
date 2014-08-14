@@ -73,7 +73,7 @@
     __weak typeof(LButtonView *)weakBtn = btn2;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_NUMBER,bbsId,_table.pageNum,PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_NUMBER,bbsId,_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

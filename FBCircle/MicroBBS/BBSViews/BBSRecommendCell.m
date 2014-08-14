@@ -31,7 +31,7 @@
         [hh_view addSubview:_nameLabel];
         _nameLabel.font = [UIFont boldSystemFontOfSize:14];
         
-        self.timeLabel = [LTools createLabelFrame:CGRectMake(hh_view.width - 10 , 0, 100, 20) title:@"08-09" font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
+        self.timeLabel = [LTools createLabelFrame:CGRectMake(hh_view.width - 10 - 100 , 10, 100, 20) title:@"08-09" font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
         [hh_view addSubview:_timeLabel];
         
     }

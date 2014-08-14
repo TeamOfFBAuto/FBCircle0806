@@ -204,10 +204,10 @@
         NSLog(@"论坛");
         
         push_tiezi = NO;
-        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,PAGE_SIZE];
+        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,L_PAGE_SIZE];
     }else
     {
-        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,PAGE_SIZE];
+        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,L_PAGE_SIZE];
         NSLog(@"帖子");
         
         push_tiezi = YES;

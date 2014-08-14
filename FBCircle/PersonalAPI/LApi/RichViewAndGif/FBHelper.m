@@ -13,11 +13,14 @@
 + (NSMutableArray *)addHttpArr:(NSString *)text
 {
     //匹配网址链接
-    NSString *regex_http = @"(https?|ftp|file)+://[^\\s]*";
+//    NSString *regex_http = @"(https?|ftp|file)+://[^\\s]*";
+    
     
   //regex_http = @"(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";
 //    
 //    regex1 = @"\\bhttps?://[a-zA-Z0-9\\-.]+(?::(\\d+))?(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?";
+    
+    NSString *regex_http = @"http[s]?\\:\\/\\/[\\w-\\/\\.]+\\.(com|gov|net|int|edu|mil|org)(\\/[\\.\\w\\/]*)?";
     
     NSArray *array_http = [text componentsMatchedByRegex:regex_http];
     NSMutableArray *httpArr = [NSMutableArray arrayWithArray:array_http];
@@ -77,6 +80,9 @@
 + (void)creatAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label OHDelegate:(id<OHAttributedLabelDelegate>)delegate
 {
     [label setNeedsDisplay];
+    
+    label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
+    
     NSMutableArray *httpArr = [FBHelper addHttpArr:o_text];
     NSMutableArray *phoneNumArr = [FBHelper addPhoneNumArr:o_text];
     
@@ -86,16 +92,17 @@
     MarkupParser* p = [[MarkupParser alloc] init];
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
     [attString setFont:[UIFont systemFontOfSize:14]];
+    [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:kCTLineBreakByCharWrapping];
     label.backgroundColor = [UIColor clearColor];
     [label setAttString:attString withImages:p.images];
     
     NSString *string = attString.string;
     
-    if ([phoneNumArr count]) {
-        for (NSString *phoneNum in phoneNumArr) {
-            [label addCustomLink:[NSURL URLWithString:phoneNum] inRange:[string rangeOfString:phoneNum]];
-        }
-    }
+//    if ([phoneNumArr count]) {
+//        for (NSString *phoneNum in phoneNumArr) {
+//            [label addCustomLink:[NSURL URLWithString:phoneNum] inRange:[string rangeOfString:phoneNum]];
+//        }
+//    }
     
     if ([httpArr count]) {
         for (NSString *httpStr in httpArr) {

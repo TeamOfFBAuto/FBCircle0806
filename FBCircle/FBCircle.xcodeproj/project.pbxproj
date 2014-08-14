@@ -19,6 +19,7 @@
 		1320A7EC199B698000EB955B /* SCGIFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7E5199B698000EB955B /* SCGIFImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1320A7F4199B6A0800EB955B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 1320A7F1199B6A0800EB955B /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1320A7F6199B6B6200EB955B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1320A7F5199B6B6200EB955B /* libicucore.dylib */; };
+		1331F160199CA146009FFBAC /* TopicCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1331F15F199CA146009FFBAC /* TopicCommentModel.m */; };
 		134164491993582100189A46 /* BBSListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 134164481993582100189A46 /* BBSListViewController.m */; };
 		1341645819935A0B00189A46 /* jiaruluntan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644C19935A0B00189A46 /* jiaruluntan@2x.png */; };
 		1341645919935A0B00189A46 /* jing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1341644D19935A0B00189A46 /* jing@2x.png */; };
@@ -916,6 +917,8 @@
 		1320A7EF199B6A0800EB955B /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		1320A7F1199B6A0800EB955B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		1320A7F5199B6B6200EB955B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		1331F15E199CA146009FFBAC /* TopicCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicCommentModel.h; sourceTree = "<group>"; };
+		1331F15F199CA146009FFBAC /* TopicCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicCommentModel.m; sourceTree = "<group>"; };
 		134164471993582100189A46 /* BBSListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSListViewController.h; sourceTree = "<group>"; };
 		134164481993582100189A46 /* BBSListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSListViewController.m; sourceTree = "<group>"; };
 		1341644C19935A0B00189A46 /* jiaruluntan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiaruluntan@2x.png"; sourceTree = "<group>"; };
@@ -1918,6 +1921,8 @@
 				13CCD7391999B45B00E38ECC /* BBSInfoModel.m */,
 				13CCD73B1999C12E00E38ECC /* BBSMemberModel.h */,
 				13CCD73C1999C12E00E38ECC /* BBSMemberModel.m */,
+				1331F15E199CA146009FFBAC /* TopicCommentModel.h */,
+				1331F15F199CA146009FFBAC /* TopicCommentModel.m */,
 			);
 			path = BBSModel;
 			sourceTree = "<group>";
@@ -4143,6 +4148,7 @@
 				56A64E06198F7B2C00451413 /* CustomMessageCell.m in Sources */,
 				138EBEBC19925B4D005DB531 /* BaseModel.m in Sources */,
 				56A64A3B198F69A800451413 /* FBCircleCustomCell.m in Sources */,
+				1331F160199CA146009FFBAC /* TopicCommentModel.m in Sources */,
 				56A64B1E198F6AD800451413 /* MLImageCrop.m in Sources */,
 				56AE78DA1998905300FE869E /* BBSAddMemberCell.m in Sources */,
 				56A64882198F502700451413 /* SzkLoadData.m in Sources */,

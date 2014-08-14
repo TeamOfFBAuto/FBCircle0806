@@ -164,6 +164,12 @@
     [self textViewDidChange:self.textView];
 }
 
+- (void)clearContent
+{
+    self.textView.text = @"";
+    [self resetFrame];
+}
+
 - (void)sendBtnPress:(UIButton*)sender
 {
     if (_inputBlock) {
@@ -261,7 +267,6 @@
 }
 
 #pragma  mark ConvertPoint
-
 
 - (BOOL)resignFirstResponder
 {
