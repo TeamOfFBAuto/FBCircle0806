@@ -17,7 +17,7 @@
 #import "LTools.h"
 #import "LSecionView.h"
 #import "BBSTableCell.h"
-#import "SendPostsViewController.h"
+#import "CreateNewBBSViewController.h"
 #import "LBBSCellView.h"
 
 @interface MicroBBSViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
@@ -130,7 +130,7 @@
  */
 - (void)clickToAddBBS
 {
-    SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
+    CreateNewBBSViewController * sendPostVC = [[CreateNewBBSViewController alloc] init];
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 /**
