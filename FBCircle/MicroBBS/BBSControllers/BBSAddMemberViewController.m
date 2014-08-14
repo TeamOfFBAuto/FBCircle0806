@@ -30,14 +30,18 @@
     
     NSString * name_string;
     
-    
     NSMutableArray * name_array;
+    ///添加成员请求
+    AFHTTPRequestOperation * operation_request;
+    
+    ///弹出框
+    FBQuanAlertView * myAlertView;
 }
 
 @end
 
 @implementation BBSAddMemberViewController
-
+@synthesize fid = _fid;
 
 
 
@@ -49,10 +53,52 @@
     }
     return self;
 }
+
+///添加成员
 -(void)submitData:(UIButton *)sender
 {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self showAlertWihtTitle:@"正在添加" WithType:FBQuanAlertViewTypeHaveJuhua isHidden:NO];
+    
+    NSMutableArray * uids = [NSMutableArray array];
+    
+    for (FriendAttribute * model in name_array)
+    {
+        [uids addObject:model.uid];
+    }
+    
+    NSString * uids_string = [uids componentsJoinedByString:@","];
+    
+    NSLog(@"uids ----  %@",uids_string);
+    
+    NSString * fullUrl = [NSString stringWithFormat:ADD_MEMBER_URL,[SzkAPI getAuthkey],self.fid,uids_string];
+    
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]];
+    
+    operation_request = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    
+    __weak typeof(self) bself = self;
+    [operation_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        
+        NSLog(@"allDic ----  %@",allDic);
+        
+        if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+        {
+            [bself hiddenAlert];
+            
+            [bself.navigationController popViewControllerAnimated:YES];
+        }else
+        {
+            [bself showAlertWihtTitle:[allDic objectForKey:@"errinfo"] WithType:FBQuanAlertViewTypeNoJuhua isHidden:YES];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [bself showAlertWihtTitle:@"添加失败，请重试" WithType:FBQuanAlertViewTypeNoJuhua isHidden:YES];
+    }];
+    
+    [operation_request start];
     
 }
 
@@ -78,6 +124,8 @@
     self.titleLabel.text=@"添加成员";
     self.rightString = @"完成";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    [self.my_right_button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    self.my_right_button.userInteractionEnabled = NO;
     
     myfirendListArr=[NSMutableArray array];
     
@@ -159,6 +207,13 @@
         
     });
     //
+    
+    ///弹出框
+    
+    myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,100)];
+    myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
+    myAlertView.hidden = YES;
+    [self.view addSubview:myAlertView];
     
     
     
@@ -688,6 +743,9 @@
 
 -(void)isShow:(BOOL)isShow
 {
+    self.my_right_button.userInteractionEnabled = isShow;
+    
+    [self.my_right_button setTitleColor:isShow?[UIColor whiteColor]:[UIColor grayColor] forState:UIControlStateNormal];
     
     __weak typeof(_mainTabV) tab_ = _mainTabV;
     
@@ -744,9 +802,59 @@
 
 
 
+#pragma mark - Show AlertView
+
+-(void)showAlertViewWithTitle:(NSString *)title
+{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
+    
+    [alertView show];
+}
+
+#pragma mark - Show hidden FBQuanAlert
+
+-(void)showAlertWihtTitle:(NSString *)title WithType:(FBQuanAlertViewType)theType isHidden:(BOOL)hidden
+{
+    [myAlertView setType:theType thetext:title];
+    
+    myAlertView.hidden = NO;
+    
+    if (hidden)
+    {
+        [self performSelector:@selector(hiddenAlert) withObject:nil afterDelay:1.0];
+    }
+}
+
+-(void)hiddenAlert
+{
+    myAlertView.hidden = YES;
+}
 
 
+#pragma mark - dealloc
 
+-(void)dealloc
+{
+    name_array = nil;
+    
+    name_content_label = nil;
+    
+    myAlertView = nil;
+    
+    _mainTabV = nil;
+    
+    _searchTabV = nil;
+    
+    _zkingSearchV = nil;
+    
+    arrayinfoaddress = nil;
+    
+    arrayname = nil;
+    
+    arrayOfCharacters = nil;
+    
+    arrayOfSearchResault = nil;    
+}
 
 
 - (void)didReceiveMemoryWarning

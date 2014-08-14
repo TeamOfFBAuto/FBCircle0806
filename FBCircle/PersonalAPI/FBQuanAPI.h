@@ -207,11 +207,17 @@ alpha:(a)]
 
 #define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum&authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d"
 
+#pragma mark - 微论坛添加成员接口
 
+#define ADD_MEMBER_URL @"http://quan.fblife.com/index.php?c=forum&a=addforumuser&authkey=%@&fid=%@&uids=%@"
 
+#pragma mark - 创建帖子，上传图片接口
 
+#define BBS_UPLOAD_IMAGES_URL @"http://quan.fblife.com/index.php?c=forum&a=uploadpic&authkey=%@"
 
+#pragma mark - 发帖子接口
 
+#define BBS_UPLOAD_POSTS_URL @"http://quan.fblife.com/index.php?c=forum&a=addthread&authkey=%@&fid=%@&title=%@&content=%@&imgid=%@&address=%@"
 
 
 

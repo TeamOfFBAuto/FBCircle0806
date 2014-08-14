@@ -7,7 +7,6 @@
 //
 
 #import "CreateNewBBSViewController.h"
-#import "BBSAddMemberViewController.h"
 #import "CreateBBSChooseTypeViewController.h"
 #import "FBQuanAlertView.h"
 
@@ -158,6 +157,9 @@
         [self showAlertViewWithText:@"论坛简介不能超过50个字" WithType:FBQuanAlertViewTypeNoJuhua];
         
         return;
+    }else
+    {
+        [self showAlertViewWithText:@"正在创建" WithType:FBQuanAlertViewTypeHaveJuhua];
     }
     
     
@@ -168,10 +170,30 @@
     
     create_request = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     
+    __weak typeof(self) bself = self;
+    
     [create_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [bself hiddenAlertView];
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        
+        NSLog(@"创建微论坛 ---  %@ ----  %@",allDic,[allDic objectForKey:@"errinfo"]);
+        
+        if ([[allDic objectForKey:@"errcode"] intValue] == 0)//创建成功返回
+        {
+            [bself.navigationController popViewControllerAnimated:YES];
+        }else
+        {
+            [bself showAlertViewWith:[allDic objectForKey:@"errinfo"]];
+        }
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        [bself hiddenAlertView];
+        
+        [bself showAlertViewWith:@"创建失败，请重试"];
     }];
     
     [create_request start];
@@ -181,18 +203,17 @@
 
 -(void)showAlertViewWithText:(NSString *)text WithType:(FBQuanAlertViewType)theType
 {
-    [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"论坛简介不能超过50个字"];
+    [myAlertView setType:theType thetext:text];
     myAlertView.hidden = NO;
     
-    [self performSelector:@selector(hiddenAlertView) withObject:self afterDelay:0.3];
-    
+    [self performSelector:@selector(hiddenAlertView) withObject:self afterDelay:1];
 }
 
 #pragma mark - 消失弹出框
 
 -(void)hiddenAlertView
 {
-    
+    myAlertView.hidden = YES;
 }
 
 
@@ -458,6 +479,12 @@
     name_placeHolder = nil;
     
     content_array = nil;
+    
+    myAlertView = nil;
+    
+    [create_request cancel];
+    
+    create_request = nil;
 }
 
 

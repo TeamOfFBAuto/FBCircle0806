@@ -41,7 +41,7 @@
 
 
 @property(nonatomic,strong)UIView *SearchheaderV;
-
-
+///论坛id
+@property(nonatomic,strong)NSString * fid;
 
 @end

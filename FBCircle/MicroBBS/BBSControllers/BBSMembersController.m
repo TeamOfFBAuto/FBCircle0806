@@ -9,6 +9,7 @@
 #import "BBSMembersController.h"
 #import "PraiseMemberCell.h"
 #import "BBSMemberModel.h"
+#import "BBSAddMemberViewController.h"
 
 @interface BBSMembersController ()<RefreshDelegate,UITableViewDelegate>
 {
@@ -63,7 +64,9 @@
 //添加成员
 - (void)clickToAddMember:(LButtonView *)sender
 {
-    
+    BBSAddMemberViewController * addMember = [[BBSAddMemberViewController alloc] init];
+    addMember.fid = self.bbs_id;
+    [self PushToViewController:addMember WithAnimation:YES];
 }
 
 #pragma mark - 网络请求
