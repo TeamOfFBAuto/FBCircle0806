@@ -1242,7 +1242,6 @@ void RunDelegateDeallocCallback(void* refCon);
     for (int i = 0; i < CFArrayGetCount(lines); i++)
     {
         
-        NSLog(@"lines-=-==-=-=-=----- %@",imageName1);
         CTLineRef line = CFArrayGetValueAtIndex(lines, i);
         CGFloat lineAscent;
         CGFloat lineDescent;
@@ -1255,7 +1254,6 @@ void RunDelegateDeallocCallback(void* refCon);
         
         for (int j = 0; j < CFArrayGetCount(runs); j++)
         {
-            NSLog(@"runs-=-==-=-=-=----- %@",imageName1);
             CGFloat runAscent;
             CGFloat runDescent;
             CGPoint lineOrigin = lineOrigins[i];

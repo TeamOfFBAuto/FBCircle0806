@@ -8,6 +8,7 @@
 
 #import "MyBBSViewController.h"
 #import "SendPostsViewController.h"
+#import "MicroBBSInfoController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
 #import "BBSSubModel.h"
@@ -180,7 +181,18 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    BBSSubModel *aModel;
+    if (indexPath.section == 0) {
+        
+        aModel = [createArray objectAtIndex:indexPath.row];
+        
+    }else
+    {
+        aModel = [joinArray objectAtIndex:indexPath.row];
+    }
+    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+    bbsInfo.bbsId = aModel.id;
+    [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

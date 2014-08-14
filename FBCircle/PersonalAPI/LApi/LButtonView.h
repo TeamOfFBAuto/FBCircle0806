@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  自定义可点击 横条
+ */
 typedef enum {
     Line_No = 0, //没有
     Line_Up, //线在上
@@ -18,6 +20,11 @@ typedef enum {
 
 @property(nonatomic,retain)UIImageView *imageView;
 @property(nonatomic,retain)UILabel *titleLabel;
+@property(nonatomic,assign)BOOL selected;
+@property(nonatomic,retain)UIColor *selcted_TitleColor;
+
+@property(nonatomic,weak)id target;
+
 
 - (id)initWithFrame:(CGRect)frame
            imageUrl:(NSString *)url

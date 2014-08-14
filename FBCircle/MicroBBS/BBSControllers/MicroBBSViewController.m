@@ -12,11 +12,13 @@
 #import "ClassifyBBSController.h"
 #import "BBSListViewController.h"
 #import "BBSTopicController.h"
+#import "BBSSearchController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
 #import "BBSTableCell.h"
 #import "SendPostsViewController.h"
+#import "LBBSCellView.h"
 
 @interface MicroBBSViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -41,6 +43,8 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
+    NSLog(@"auteykey %@",[SzkAPI getAuthkey]);
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -95,8 +99,7 @@
 - (void)clickToMyBBS:(UIButton *)sender
 {
     MyBBSViewController *myBBS = [[MyBBSViewController alloc]init];
-    myBBS.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:myBBS animated:YES];
+    [self PushToViewController:myBBS WithAnimation:YES];
 }
 
 - (void)clickToMore:(UIButton *)sender
@@ -111,8 +114,7 @@
     }
     HotTopicViewController *hotTopic = [[HotTopicViewController alloc]init];
     hotTopic.navigationTitle = title;
-    hotTopic.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:hotTopic animated:YES];
+    [self PushToViewController:hotTopic WithAnimation:YES];
 }
 /**
  *  进入分类论坛
@@ -120,8 +122,7 @@
 - (void)clickToClassifyBBS
 {
     ClassifyBBSController *classify = [[ClassifyBBSController alloc]init];
-    classify.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:classify animated:YES];
+    [self PushToViewController:classify WithAnimation:YES];
 }
 
 /**
@@ -130,11 +131,6 @@
 - (void)clickToAddBBS
 {
     SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
-    
-//    UINavigationController * navc = [[UINavigationController alloc] initWithRootViewController:sendPostVC];
-//    
-//    [self presentViewController:navc animated:YES completion:NULL];
-    
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 /**
@@ -147,11 +143,22 @@
 }
 
 /**
+ *  帖子详情
+ */
+- (void)clickToTopicInfo:(LBBSCellView *)sender
+{
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    [self PushToViewController:topic WithAnimation:YES];
+}
+
+/**
  *  搜索页
  */
 - (void)clickToSearch:(UIButton *)sender
 {
     NSLog(@"searchPage");
+    BBSSearchController *search = [[BBSSearchController alloc]init];
+    [self PushToViewController:search WithAnimation:YES];
 }
 
 #pragma mark - 网络请求
@@ -177,6 +184,8 @@
 {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     headerView.backgroundColor = [UIColor clearColor];
+    
+    //我的论坛
     
     UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(8, 20, 304, 80)];
     bgView.layer.cornerRadius = 3.f;
@@ -208,6 +217,34 @@
         
     }
     
+    //热门推荐
+    
+    UIView *bgView2 = [[UIView alloc]init];
+    bgView2.layer.cornerRadius = 3.f;
+    bgView2.clipsToBounds = YES;
+    [headerView addSubview:bgView2];
+    
+    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:@"热门推荐" target:self action:@selector(clickToMore:)];
+    section2.rightBtn.tag = 101;
+    [bgView2 addSubview:section2];
+    
+    
+    //推荐列表
+    for (int i = 0; i < 2; i ++) {
+        LBBSCellView *cell_view = [[LBBSCellView alloc]initWithFrame:CGRectMake(0, section2.bottom + 75 * i, 320, 75) target:self action:@selector(clickToTopicInfo:)];
+        cell_view.backgroundColor = [UIColor whiteColor];
+        [bgView2 addSubview:cell_view];
+        
+        if (i < 1) {
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 0.5)];
+            line.backgroundColor = [UIColor lightGrayColor];
+            [bgView2 addSubview:line];
+        }
+    }
+    
+    bgView2.frame = CGRectMake(8, bgView.bottom + 15, 304, section2.height + 75 * 2);
+    headerView.frame = CGRectMake(0, 0, 320, bgView2.bottom + 15);
+    
     return headerView;
 }
 
@@ -237,7 +274,6 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BBSTopicController *topic = [[BBSTopicController alloc]init];
-    topic.hidesBottomBarWhenPushed = YES;
     [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
@@ -248,12 +284,8 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0 || indexPath.row == 4) {
+    if (indexPath.row == 0) {
         
-        return 16;
-        
-    }else if (indexPath.row == 1 || indexPath.row == 5)
-    {
         return 40;
     }
     return 75;
@@ -262,7 +294,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BBSTopicController *topic = [[BBSTopicController alloc]init];
-    topic.hidesBottomBarWhenPushed = YES;
     [self PushToViewController:topic WithAnimation:YES];
 }
 
@@ -281,36 +312,28 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * identifier1= @"cell1";
-    static NSString * identifier2 = @"cell2";
     static NSString * identifier3 = @"BBSTableCell";
     
-    if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 5) {
+    if (indexPath.row == 0) {
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:(indexPath.row == 0 || indexPath.row == 4) ? identifier1 : identifier2];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:(indexPath.row == 0 || indexPath.row == 4) ? identifier1 : identifier2 ];
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier1];
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor clearColor];
         
-        if (indexPath.row == 0 || indexPath.row == 4) {
-            cell.contentView.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
-            return cell;
-            
-        }else
-        {
-            cell.contentView.backgroundColor = [UIColor clearColor];
-            cell.backgroundColor = [UIColor clearColor];
-            
-            NSString *title = (indexPath.row == 1) ? @"热门推荐" : @"我关注的论坛的热门话题";
-            LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 0, 304, 40) title:title target:self action:@selector(clickToMore:)];
-            section.rightBtn.tag = 100 + indexPath.row;
-            [cell addSubview:section];
-            
-            section.layer.cornerRadius = 3.f;
-            
-            return cell;
-        }
+        NSString *title = @"我关注的论坛的热门话题";
+        LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 0, 304, 40) title:title target:self action:@selector(clickToMore:)];
+        section.rightBtn.tag = 100 + indexPath.row;
+        [cell addSubview:section];
+        
+        section.layer.cornerRadius = 3.f;
+        
+        return cell;
     }
     
     BBSTableCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];

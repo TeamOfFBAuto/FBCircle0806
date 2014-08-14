@@ -24,20 +24,16 @@
 
 
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    
-    
-    
-    
+    _poisearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
--(void)viewWillDisappear:(BOOL)animated
-{
+
+-(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
-    _searcher.delegate = nil; 
+    _poisearch.delegate = nil; // 不用时，置nil
 }
 
 
@@ -101,99 +97,34 @@
     _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 88+20, 320, iPhone5?568-88-20:480-88-20)];
     [self.view addSubview:_mapView];
     
+    _poisearch = [[BMKPoiSearch alloc]init];
+    _poisearch.delegate = self;
+    
+    // 设置地图级别
+    [_mapView setZoomLevel:13];
+    _mapView.isSelectedAnnotationViewFront = YES;
+    
     //定位
     _locService = [[BMKLocationService alloc]init];
-    NSLog(@"进入普通定位态");
+    _locService.delegate = self;
     [_locService startUserLocationService];//启动LocationService
-    _mapView.showsUserLocation = NO;//先关闭显示的定位图层
+    
+    
+   
     _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
     _mapView.showsUserLocation = YES;//显示定位图层
     
     
-    ////设置地图缩放级别
-    [_mapView setZoomLevel:11];
-    //添加内置覆盖物
-    [self addOverlayView];
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
-//添加内置覆盖物
-- (void)addOverlayView
+
+- (void)didReceiveMemoryWarning
 {
-    // 添加圆形覆盖物
-    if (circle == nil) {
-        CLLocationCoordinate2D coor;
-//        coor.latitude = _guserLocation.location.coordinate.latitude;
-//        coor.longitude = _guserLocation.location.coordinate.longitude;
-        
-        coor.latitude = 39.915;
-        coor.longitude = 116.404;
-        
-        circle = [BMKCircle circleWithCenterCoordinate:coor radius:3000];
-        [_mapView addOverlay:circle];
-    }
-//    // 添加多边形覆盖物
-//    if (polygon == nil) {
-//        CLLocationCoordinate2D coords[4] = {0};
-//        coords[0].latitude = 39.915;
-//        coords[0].longitude = 116.404;
-//        coords[1].latitude = 39.815;
-//        coords[1].longitude = 116.404;
-//        coords[2].latitude = 39.815;
-//        coords[2].longitude = 116.504;
-//        coords[3].latitude = 39.915;
-//        coords[3].longitude = 116.504;
-//        polygon = [BMKPolygon polygonWithCoordinates:coords count:4];
-//        [_mapView addOverlay:polygon];
-//    }
-//    // 添加多边形覆盖物
-//    if (polygon2 == nil) {
-//        CLLocationCoordinate2D coords[5] = {0};
-//        coords[0].latitude = 39.965;
-//        coords[0].longitude = 116.604;
-//        coords[1].latitude = 39.865;
-//        coords[1].longitude = 116.604;
-//        coords[2].latitude = 39.865;
-//        coords[2].longitude = 116.704;
-//        coords[3].latitude = 39.905;
-//        coords[3].longitude = 116.654;
-//        coords[4].latitude = 39.965;
-//        coords[4].longitude = 116.704;
-//        polygon2 = [BMKPolygon polygonWithCoordinates:coords count:5];
-//        [_mapView addOverlay:polygon2];
-//    }
-//    //添加折线覆盖物
-//    if (polyline == nil) {
-//        CLLocationCoordinate2D coors[2] = {0};
-//        coors[0].latitude = 39.895;
-//        coors[0].longitude = 116.354;
-//        coors[1].latitude = 39.815;
-//        coors[1].longitude = 116.304;
-//        polyline = [BMKPolyline polylineWithCoordinates:coors count:2];
-//        [_mapView addOverlay:polyline];
-//    }
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-//添加标注
-- (void)addPointAnnotation
-{
-    pointAnnotation = [[BMKPointAnnotation alloc]init];
-    CLLocationCoordinate2D coor;
-    coor.latitude = 39.915;
-    coor.longitude = 116.404;
-    pointAnnotation.coordinate = coor;
-    pointAnnotation.title = @"test";
-    pointAnnotation.subtitle = @"此Annotation可拖拽!";
-    [_mapView addAnnotation:pointAnnotation];
-    
-}
+
 //根据overlay生成对应的View
 - (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id <BMKOverlay>)overlay
 {
@@ -231,24 +162,50 @@
 }
 
 
-#pragma mark implement BMKMapViewDelegate
-
-// 根据anntation生成对应的View
-- (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
+#pragma mark - 地图view代理方法
+/**
+ *根据anntation生成对应的View
+ *@param annotation 指定的标注
+ *@return 生成的标注View
+ */
+- (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation
 {
-    NSString *AnnotationViewID = @"renameMark";
-    if (newAnnotation == nil) {
-        newAnnotation = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
-        // 设置颜色
-		((BMKPinAnnotationView*)newAnnotation).pinColor = BMKPinAnnotationColorPurple;
-        // 从天上掉下效果
-		((BMKPinAnnotationView*)newAnnotation).animatesDrop = YES;
-        // 设置可拖拽
-		((BMKPinAnnotationView*)newAnnotation).draggable = YES;
-    }
-    return newAnnotation;
+    // 生成重用标示identifier
+    NSString *AnnotationViewID = @"xidanMark";
+	
+    // 检查是否有重用的缓存
+    BMKAnnotationView* annotationView = [view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
     
+    // 缓存没有命中，自己构造一个，一般首次添加annotation代码会运行到此处
+    if (annotationView == nil) {
+        annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
+		((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
+		// 设置重天上掉下的效果(annotation)
+        ((BMKPinAnnotationView*)annotationView).animatesDrop = YES;
+    }
+	
+    // 设置位置
+	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
+    annotationView.annotation = annotation;
+    // 单击弹出泡泡，弹出泡泡前提annotation必须实现title属性
+	annotationView.canShowCallout = YES;
+    // 设置是否可以拖拽
+    annotationView.draggable = NO;
+    
+    return annotationView;
 }
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
+{
+    [mapView bringSubviewToFront:view];
+    [mapView setNeedsDisplay];
+}
+- (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    NSLog(@"didAddAnnotationViews");
+}
+
+
+#pragma mark - 弹出框点击代理方法
 
 // 当点击annotation view弹出的泡泡时，调用此接口
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
@@ -258,55 +215,35 @@
 
 
 
+#pragma mark - 定位代理方法
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
-#pragma mark - 实现相关delegate 处理位置信息更新
-/**
- *在地图View将要启动定位时，会调用此函数
- *@param mapView 地图View
- */
+//在地图View将要启动定位时，会调用此函数
 - (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView
 {
 	NSLog(@"start locate");
 }
 
-/**
- *用户方向更新后，会调用此函数
- *@param userLocation 新的用户位置
- */
+
+//用户方向更新后，会调用此函数
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
     [_mapView updateLocationData:userLocation];
-    
     _guserLocation = userLocation;
     NSLog(@"heading is %@",userLocation.heading);
 }
 
-/**
- *用户位置更新后，会调用此函数
- *@param userLocation 新的用户位置
- */
+
+//用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-    
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     _guserLocation = userLocation;
     
     [_mapView updateLocationData:userLocation];
 }
 
-/**
- *定位失败后，会调用此函数
- *@param mapView 地图View
- *@param error 错误号，参考CLError.h中定义的错误号
- */
+
+//定位失败后，会调用此函数
 - (void)mapView:(BMKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -315,11 +252,11 @@
 
 
 
-#pragma mark - 按钮点击方法
+#pragma mark - 按钮点击方法  搜索周边
 -(void)FoundBtnClicked:(UIButton *)sender{
-    
     NSLog(@"%d",sender.tag);
     
+    //改变字体和背景颜色
     for (UIButton *btn in self.btnArray) {
         
         if (btn.tag == sender.tag) {
@@ -330,32 +267,75 @@
         
     }
     
-    
-    
-    
-//    option.location = CLLocationCoordinate=={==.==== ========;
-//        option.keyword = @"加油站";
-//        BOOL flag = [_searcher poiSearchNearBy:option];
-//        if(flag)
-//        {
-//            NSLog(@"周边检索发送成功");
-//        }
-//        else
-//        {
-//            NSLog(@"周边检索发送失败");
-//        }
-    
-    
-    
+    //进行地图搜索相关操作
+    if (sender.tag == 10) {//停车场
+        
+        //初始化检索对象
+        _poisearch =[[BMKPoiSearch alloc]init];
+        _poisearch.delegate = self;
+        //发起检索
+        BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
+        option.pageIndex = curPage;
+        option.pageCapacity = 100;
+        option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
+            option.keyword = @"停车场";
+            BOOL flag = [_poisearch poiSearchNearBy:option];
+            if(flag)
+            {
+                NSLog(@"周边检索发送成功");
+            }  
+            else  
+            {  
+                NSLog(@"周边检索发送失败");  
+            }
+        
+        
+    }else if (sender.tag == 11){//加油站
+        //初始化检索对象
+        _poisearch =[[BMKPoiSearch alloc]init];
+        _poisearch.delegate = self;
+        //发起检索
+        BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
+        option.pageIndex = curPage;
+        option.pageCapacity = 100;
+        option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
+        option.keyword = @"加油站";
+        BOOL flag = [_poisearch poiSearchNearBy:option];
+        if(flag)
+        {
+            NSLog(@"周边检索发送成功");
+        }
+        else
+        {
+            NSLog(@"周边检索发送失败");
+        }
+        
+    }else if (sender.tag == 12){//维修厂
+        //初始化检索对象
+        _poisearch =[[BMKPoiSearch alloc]init];
+        _poisearch.delegate = self;
+        //发起检索
+        BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
+        option.pageIndex = curPage;
+        option.pageCapacity = 100;
+        option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
+        option.keyword = @"维修厂";
+        BOOL flag = [_poisearch poiSearchNearBy:option];
+        if(flag)
+        {
+            NSLog(@"周边检索发送成功");
+        }
+        else
+        {
+            NSLog(@"周边检索发送失败");
+        }
+    }
     
     
 }
 
 
-
-#pragma mark - 周边搜索
-
-//实现PoiSearchDeleage处理回调结果
+//周边搜索回调结果
 - (void)onGetPoiResult:(BMKPoiSearch*)searcher result:(BMKPoiResult*)poiResultList errorCode:(BMKSearchErrorCode)error
 {
     if (error == BMK_SEARCH_NO_ERROR) {
@@ -374,6 +354,9 @@
 
 
 
+
+
+//左上角返回按钮
 -(void)gBackBtnClicked{
     [self dismissViewControllerAnimated:YES completion:^{
         

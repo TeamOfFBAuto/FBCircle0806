@@ -75,7 +75,7 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
     
     
-    //    [timer fire];
+    [timer fire];
     
     
 }

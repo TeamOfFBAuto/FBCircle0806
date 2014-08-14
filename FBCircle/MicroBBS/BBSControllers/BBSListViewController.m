@@ -10,6 +10,7 @@
 #import "MyBBSViewController.h"
 #import "HotTopicViewController.h"
 #import "ClassifyBBSController.h"
+#import "MicroBBSInfoController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
@@ -68,6 +69,14 @@
 }
 #pragma mark - 事件处理
 
+//论坛信息页
+- (void)clickToBBSInfo:(UIGestureRecognizer *)tap
+{
+    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+    bbsInfo.bbsId = @"1";
+    [self PushToViewController:bbsInfo WithAnimation:YES];
+}
+
 //进入我的论坛
 
 - (void)clickToMyBBS:(UIButton *)sender
@@ -98,8 +107,7 @@
 - (void)clickToClassifyBBS
 {
     ClassifyBBSController *classify = [[ClassifyBBSController alloc]init];
-    classify.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:classify animated:YES];
+    [self PushToViewController:classify WithAnimation:YES];
 }
 
 /**
@@ -124,13 +132,6 @@
     
 }
 
-/**
- *  搜索页
- */
-- (void)clickToSearch:(UIButton *)sender
-{
-    NSLog(@"searchPage");
-}
 
 #pragma mark - 网络请求
 #pragma mark - 视图创建
@@ -170,6 +171,10 @@
     UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:@"1666666" font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
     [basic_view addSubview:topicLabel_num];
     
+    UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(320 - 12 - 8, basic_view.height/2.f - 13/2.f, 8, 13)];
+    arrow_image.image = [UIImage imageNamed:@"jiantou"];
+    [basic_view addSubview:arrow_image];
+    
     return basic_view;
 }
 
@@ -208,6 +213,9 @@
     
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(0, 0, 320, 75)];
     [headerView addSubview:basic_view];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToBBSInfo:)];
+    [basic_view addGestureRecognizer:tap];
+    
     
     UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304, 80)];
     [headerView addSubview:recommed_view];
@@ -222,13 +230,6 @@
 
 #pragma mark - delegate
 
-#pragma - mark UISearchBarDelegate
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    [self clickToSearch:nil];
-    return NO;
-}
 
 #pragma - mark RefreshDelegate <NSObject>
 
