@@ -7,6 +7,7 @@
 //
 
 #import "GmFoundScanViewController.h"
+#import "GmyErweimaViewController.h"//二维码
 
 
 #define ScanKuangFrame CGRectMake(50, 70+89, 220, 220)
@@ -39,7 +40,7 @@
     
     //四个角
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:ScanKuangFrame];
-    imageView.image = [UIImage imageNamed:@"saoyisao_440_440.png"];
+    imageView.image = [UIImage imageNamed:@"fkuang.png"];
     [self.view addSubview:imageView];
     
     
@@ -61,6 +62,7 @@
     [btn setTitle:@"我的二维码" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [btn addTarget:self action:@selector(myErweima) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
     
@@ -69,7 +71,7 @@
     
     //上下滚动的条
     _line = [[UIImageView alloc]initWithFrame:CGRectMake(ScanKuangFrame.origin.x, ScanKuangFrame.origin.y, ScanKuangFrame.size.width, 2)];
-    _line.backgroundColor = [UIColor greenColor];
+    [_line setImage:[UIImage imageNamed:@"fshan.png"]];
     [self.view addSubview:_line];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
@@ -204,6 +206,10 @@
 #pragma mark - 点击我的二维码跳转
 -(void)myErweima{
     NSLog(@"%s",__FUNCTION__);
+    GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
+    erweima.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:erweima animated:YES];
+    
 }
 
 

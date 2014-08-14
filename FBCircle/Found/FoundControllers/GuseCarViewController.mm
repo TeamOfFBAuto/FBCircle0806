@@ -7,6 +7,7 @@
 //
 
 #import "GuseCarViewController.h"
+#import "GcustomUseCarDownInfoCell.h"//底层view自定义cell
 
 @interface GuseCarViewController ()
 
@@ -18,6 +19,7 @@
 
 - (void)dealloc
 {
+    
     NSLog(@"%s",__FUNCTION__);
 }
 
@@ -26,14 +28,23 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
-    _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    _poisearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
+    
+    
     _mapView.delegate = nil; // 不用时，置nil
+    
     _poisearch.delegate = nil; // 不用时，置nil
+    
+    _locService.delegate = nil;
+    
+    
+    
+    
 }
 
 
@@ -47,6 +58,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    _isShowDownInfoView = NO;
     
     //导航栏
     UIView *navigationbar = [[UIView alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
@@ -95,14 +107,19 @@
     
     //地图
     _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 88+20, 320, iPhone5?568-88-20:480-88-20)];
+    [_mapView setZoomLevel:13];// 设置地图级别
+    _mapView.isSelectedAnnotationViewFront = YES;
+    _mapView.delegate = self;//设置代理
+    _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
+    _mapView.showsUserLocation = YES;//显示定位图层
+    
     [self.view addSubview:_mapView];
     
+    //搜索类
     _poisearch = [[BMKPoiSearch alloc]init];
     _poisearch.delegate = self;
     
-    // 设置地图级别
-    [_mapView setZoomLevel:13];
-    _mapView.isSelectedAnnotationViewFront = YES;
+    
     
     //定位
     _locService = [[BMKLocationService alloc]init];
@@ -111,8 +128,49 @@
     
     
    
-    _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
-    _mapView.showsUserLocation = YES;//显示定位图层
+    
+    //下面信息view
+    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
+    _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
+    
+    //底层view
+    UIView *downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
+    downBackView.backgroundColor = [UIColor whiteColor];
+    downBackView.layer.borderWidth = 0.5;
+    downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    downBackView.layer.cornerRadius = 5;
+    [_downInfoView addSubview:downBackView];
+    
+//    //自定义downInfoView
+//    for (int i = 0; i<3; i++) {
+//        UIImageView *imv = [[UIImageView alloc]init];
+//        if (i == 0) {
+//            imv.frame = CGRectMake(18, 15, 15, 15);
+//            [imv setImage:[UIImage imageNamed:@"fhome.png"]];
+//        }else if (i == 1){
+//            imv.frame = CGRectMake(18, 59, 15, 15);
+//            [imv setImage:[UIImage imageNamed:@"fearth.png"]];
+//        }else if (i == 2){
+//            imv.frame = CGRectMake(18, 120, 15, 15);
+//            [imv setImage:[UIImage imageNamed:@"ftel.png"]];
+//        }
+//        [downBackView addSubview:imv];
+//        
+//    }
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.layer.borderWidth = 0.5;
+    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _tableView.layer.cornerRadius = 5;
+//    _tableView.separatorColor = [UIColor clearColor];
+    [downBackView addSubview:_tableView];
+    
+    
+    
+    [self.view addSubview:_downInfoView];
     
     
 }
@@ -124,93 +182,31 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-//根据overlay生成对应的View
-- (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id <BMKOverlay>)overlay
-{
-	if ([overlay isKindOfClass:[BMKCircle class]])
-    {
-        BMKCircleView* circleView = [[BMKCircleView alloc] initWithOverlay:overlay];
-        circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
-        circleView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
-        circleView.lineWidth = 5.0;
-		return circleView;
+#pragma mark - UITableViewDelegate && UITableViewDataSource
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"dd";
+    GcustomUseCarDownInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[GcustomUseCarDownInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    
-    if ([overlay isKindOfClass:[BMKPolyline class]])
-    {
-        BMKPolylineView* polylineView = [[BMKPolylineView alloc] initWithOverlay:overlay];
-        polylineView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:1];
-        polylineView.lineWidth = 3.0;
-		return polylineView;
-    }
-	
-	if ([overlay isKindOfClass:[BMKPolygon class]])
-    {
-        BMKPolygonView* polygonView = [[BMKPolygonView alloc] initWithOverlay:overlay];
-        polygonView.strokeColor = [[UIColor purpleColor] colorWithAlphaComponent:1];
-        polygonView.fillColor = [[UIColor cyanColor] colorWithAlphaComponent:0.2];
-        polygonView.lineWidth =2.0;
-		return polygonView;
-    }
-    if ([overlay isKindOfClass:[BMKGroundOverlay class]])
-    {
-        BMKGroundOverlayView* groundView = [[BMKGroundOverlayView alloc] initWithOverlay:overlay];
-		return groundView;
-    }
-	return nil;
+    return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
 }
 
-
-#pragma mark - 地图view代理方法
-/**
- *根据anntation生成对应的View
- *@param annotation 指定的标注
- *@return 生成的标注View
- */
-- (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation
-{
-    // 生成重用标示identifier
-    NSString *AnnotationViewID = @"xidanMark";
-	
-    // 检查是否有重用的缓存
-    BMKAnnotationView* annotationView = [view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
-    
-    // 缓存没有命中，自己构造一个，一般首次添加annotation代码会运行到此处
-    if (annotationView == nil) {
-        annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
-		((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
-		// 设置重天上掉下的效果(annotation)
-        ((BMKPinAnnotationView*)annotationView).animatesDrop = YES;
-    }
-	
-    // 设置位置
-	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
-    annotationView.annotation = annotation;
-    // 单击弹出泡泡，弹出泡泡前提annotation必须实现title属性
-	annotationView.canShowCallout = YES;
-    // 设置是否可以拖拽
-    annotationView.draggable = NO;
-    
-    return annotationView;
-}
-- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
-{
-    [mapView bringSubviewToFront:view];
-    [mapView setNeedsDisplay];
-}
-- (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
-    NSLog(@"didAddAnnotationViews");
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 3;
 }
 
-
-#pragma mark - 弹出框点击代理方法
-
-// 当点击annotation view弹出的泡泡时，调用此接口
-- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    NSLog(@"paopaoclick");
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
 }
 
 
@@ -338,18 +334,104 @@
 //周边搜索回调结果
 - (void)onGetPoiResult:(BMKPoiSearch*)searcher result:(BMKPoiResult*)poiResultList errorCode:(BMKSearchErrorCode)error
 {
+    
+    // 清楚屏幕中所有的annotation
+    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+	[_mapView removeAnnotations:array];
+    
     if (error == BMK_SEARCH_NO_ERROR) {
-        //在此处理正常结果
-    }
-    else if (error == BMK_SEARCH_AMBIGUOUS_KEYWORD){
-        //当在设置城市未找到结果，但在其他城市找到结果时，回调建议检索城市列表
-        // result.cityList;
+        
+        
+		for (int i = 0; i < poiResultList.poiInfoList.count; i++) {
+            BMKPoiInfo* poi = [poiResultList.poiInfoList objectAtIndex:i];
+            BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+            item.coordinate = poi.pt;
+            item.title = poi.name;
+            [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
+            if(i == 0)
+            {
+                //将第一个点的坐标移到屏幕中央
+                _mapView.centerCoordinate = poi.pt;
+            }
+		}
+	} else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
+        
+        
         NSLog(@"起始点有歧义");
     } else {
-        NSLog(@"抱歉，未找到结果");
+        
+        // 各种情况的判断。。。
     }
 }
 
+
+#pragma mark - 地图view代理方法 BMKMapViewDelegate
+/**
+ *根据anntation生成对应的View
+ *@param annotation 指定的标注
+ *@return 生成的标注View
+ */
+- (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    // 生成重用标示identifier
+    NSString *AnnotationViewID = @"xidanMark";
+
+    // 检查是否有重用的缓存
+    BMKAnnotationView* annotationView = [view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
+
+    // 缓存没有命中，自己构造一个，一般首次添加annotation代码会运行到此处
+    if (annotationView == nil) {
+        annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
+		((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
+		// 设置重天上掉下的效果(annotation)
+        ((BMKPinAnnotationView*)annotationView).animatesDrop = YES;
+    }
+
+    // 设置位置
+	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
+    annotationView.annotation = annotation;
+    // 单击弹出泡泡，弹出泡泡前提annotation必须实现title属性
+	annotationView.canShowCallout = YES;
+    // 设置是否可以拖拽
+    annotationView.draggable = NO;
+
+    return annotationView;
+}
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
+{
+    [mapView bringSubviewToFront:view];
+    [mapView setNeedsDisplay];
+}
+
+
+- (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    NSLog(@"didAddAnnotationViews");
+}
+
+
+
+#pragma mark - 弹出框点击代理方法
+// 当点击annotation view弹出的泡泡时，调用此接口
+- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
+{
+    NSLog(@"paopaoclick");
+    
+    if (!_isShowDownInfoView) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _downInfoView.frame = CGRectMake(0, 568-206, 320, 206);
+        } completion:^(BOOL finished) {
+            _isShowDownInfoView = !_isShowDownInfoView;
+        }];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            _downInfoView.frame = CGRectMake(0, 568, 320, 206);
+        } completion:^(BOOL finished) {
+            _isShowDownInfoView = !_isShowDownInfoView;
+        }];
+    }
+    
+}
 
 
 
