@@ -8,7 +8,7 @@
 
 #import "MicroBBSInfoController.h"
 #import "BBSMembersController.h"
-
+#import "BBSAddMemberViewController.h"
 #import "BBSInfoModel.h"
 
 @interface MicroBBSInfoController ()
@@ -46,7 +46,9 @@
 //添加成员
 - (void)clickToAddMember:(LButtonView *)sender
 {
-    
+    BBSAddMemberViewController * addMember = [[BBSAddMemberViewController alloc] init];
+    addMember.fid = infoModel.id;
+    [self PushToViewController:addMember WithAnimation:YES];
 }
 //成员列表
 - (void)clickToMember:(LButtonView *)sender

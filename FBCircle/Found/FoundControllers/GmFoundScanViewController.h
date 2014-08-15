@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
+
+//扫一扫界面
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 @interface GmFoundScanViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate>
@@ -19,7 +21,7 @@
 @property (strong,nonatomic)AVCaptureMetadataOutput * output;
 @property (strong,nonatomic)AVCaptureSession * session;
 @property (strong,nonatomic)AVCaptureVideoPreviewLayer * preview;
-@property (nonatomic, strong) UIView * line;
+@property (nonatomic, strong) UIImageView * line;
 
 
 @end

@@ -50,4 +50,7 @@ typedef void(^ InputTextBlock)(NSString *inputText);//输入内容
 - (void)setToolBlock:(ToolBlock)aBlock;
 
 - (void)setFrameBlock:(FrameBlock)aFrameBlock;
+
+- (void)clearContent;//清空内容
+
 @end

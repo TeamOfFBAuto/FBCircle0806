@@ -181,6 +181,90 @@ alpha:(a)]
 //搜索
 
 #define FBCIRCLE_SEARCH_BBS @"http://quan.fblife.com/index.php?c=forum&a=searchforum&keyword=%@&page=%d&ps=%d" //搜论坛
-
 #define FBCIRCLE_SEARCH_TOPIC @"" //搜帖子
+
+//微论坛主页 -- 帖子
+
+#define FBCIRCLE_TOPIC_LIST @"http://quan.fblife.com/index.php?c=forum&a=getthreads&fid=%@" //帖子列表
+#define FBCIRCLE_TOPIC_LIST_HOT @"http://quan.fblife.com/index.php?c=forum&a=topcomthreads" //热门帖子列表
+#define FBCIRCLE_TOPIC_LIST_MYJOIN @"http://quan.fblife.com/index.php?c=forum&a=topcomthreads&authkey=%@" //我关注的热门帖子列表
+
+#define FBCIRCLE_TOPIC_INFO @"http://quan.fblife.com/index.php?c=forum&a=viewthread&tid=%@&page=%d&ps=%d"//帖子详情
+#define FBCIRCLE_TOPIC_ZAN @"http://quan.fblife.com/index.php?c=forum&a=zanthread&authkey=%@&tid=%@"//赞帖子
+#define FBCIRCLE_TOPIC_TOP @"http://quan.fblife.com/index.php?c=forum&a=topthread&authkey=%@&fid=%@&tid=%@"//置顶帖子
+#define FBCIRCLE_TOPIC_TRIPTOP @"http://quan.fblife.com/index.php?c=forum&a=triptopthread&authkey=%@&fid=%@&tid=%@"//取消帖子置顶
+
+#define FBCIRCLE_TOPIC_DELETE @"http://quan.fblife.com/index.php?c=forum&a=delthread&authkey=%@&fid=%@&tid=%@"//删除帖子
+
+//评论
+
+#define FBCIRCLE_COMMENT_ADD @"http://quan.fblife.com/index.php?c=forum&a=addcomment&authkey=%@&content=%@&fid=%@&tid=%@" //发表评论
+#define FBCIRCLE_COMMENT_LIST @"http://quan.fblife.com/index.php?c=forum&a=getcomment&tid=%@&page=%d&ps=%d" //评论列表
+
+
+
+#pragma - mark 创建论坛接口
+
+#define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum&authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d"
+
+#pragma mark - 微论坛添加成员接口
+
+#define ADD_MEMBER_URL @"http://quan.fblife.com/index.php?c=forum&a=addforumuser&authkey=%@&fid=%@&uids=%@"
+
+#pragma mark - 创建帖子，上传图片接口
+
+#define BBS_UPLOAD_IMAGES_URL @"http://quan.fblife.com/index.php?c=forum&a=uploadpic&authkey=%@"
+
+#pragma mark - 发帖子接口
+
+#define BBS_UPLOAD_POSTS_URL @"http://quan.fblife.com/index.php?c=forum&a=addthread&authkey=%@&fid=%@&title=%@&content=%@&imgid=%@&address=%@"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

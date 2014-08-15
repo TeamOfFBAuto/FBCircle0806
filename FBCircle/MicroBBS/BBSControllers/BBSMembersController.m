@@ -9,6 +9,7 @@
 #import "BBSMembersController.h"
 #import "PraiseMemberCell.h"
 #import "BBSMemberModel.h"
+#import "BBSAddMemberViewController.h"
 
 @interface BBSMembersController ()<RefreshDelegate,UITableViewDelegate>
 {
@@ -63,7 +64,9 @@
 //添加成员
 - (void)clickToAddMember:(LButtonView *)sender
 {
-    
+    BBSAddMemberViewController * addMember = [[BBSAddMemberViewController alloc] init];
+    addMember.fid = self.bbs_id;
+    [self PushToViewController:addMember WithAnimation:YES];
 }
 
 #pragma mark - 网络请求
@@ -73,7 +76,7 @@
     __weak typeof(LButtonView *)weakBtn = btn2;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_NUMBER,bbsId,_table.pageNum,PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_NUMBER,bbsId,_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

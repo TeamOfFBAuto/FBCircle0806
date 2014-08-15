@@ -8,7 +8,7 @@
 
 #import "ClassifyBBSController.h"
 #import "ClassifyBBSController_Sub.h"
-#import "SendPostsViewController.h"
+#import "CreateNewBBSViewController.h"
 #import "BBSSearchController.h"
 #import "BBSModel.h"
 
@@ -106,7 +106,7 @@
  */
 - (void)clickToAddBBS
 {
-    SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
+    CreateNewBBSViewController * sendPostVC = [[CreateNewBBSViewController alloc] init];
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 

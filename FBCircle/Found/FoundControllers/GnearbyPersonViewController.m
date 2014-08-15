@@ -18,13 +18,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    
-    _tableView = [[RefreshTableView alloc]init];
-    
-    
+    // Do any addi
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
+    _tableView.refreshDelegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
     
     
 }
