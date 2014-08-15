@@ -17,6 +17,7 @@
 #import "BBSRecommendCell.h"
 #import "SendPostsViewController.h"
 #import "TopicCommentModel.h"
+#import "BBSInfoModel.h"
 
 typedef enum{
     Action_Topic_Zan = 0,//赞帖
@@ -314,6 +315,34 @@ typedef enum{
     }];
 }
 
+- (void)getBBSInfoId:(NSString *)bbsId
+{
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(UITableView *)weakTable = _table;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            BBSInfoModel *aBBSModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
+            
+            weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+            
+            weakSelf.titleLabel.text = aBBSModel.name;
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+    }];
+}
 
 #pragma mark - 视图创建
 - (CGFloat)createRichLabelWithMessage:(NSString *)text isInsert:(BOOL)isInsert

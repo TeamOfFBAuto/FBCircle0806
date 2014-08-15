@@ -63,6 +63,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    _table.refreshDelegate = nil;
+}
+
 #pragma mark - 事件处理
 
 //进入我的论坛

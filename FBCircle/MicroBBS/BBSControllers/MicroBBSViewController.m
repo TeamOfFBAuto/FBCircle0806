@@ -486,7 +486,7 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"BBSTableCell" owner:self options:nil]objectAtIndex:0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row == 3) {
+    if (indexPath.row == _concern_hot_array.count - 1) {
         
         cell.bgView.layer.cornerRadius = 3.f;
     }else

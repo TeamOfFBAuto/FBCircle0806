@@ -59,6 +59,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)dealloc
+{
+    _table.refreshDelegate = nil;
+}
+
 #pragma mark - 事件处理
 
 //添加成员
