@@ -109,7 +109,8 @@
         NSLog(@"manager start failed!");
     }
     
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
     
     [self.window makeKeyAndVisible];
     return YES;
