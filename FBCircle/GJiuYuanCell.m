@@ -1,14 +1,14 @@
 //
-//  GcustomUseCarDownInfoCell.m
+//  GJiuYuanCell.m
 //  FBCircle
 //
-//  Created by gaomeng on 14-8-14.
+//  Created by gaomeng on 14-8-15.
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
-#import "GcustomUseCarDownInfoCell.h"
+#import "GJiuYuanCell.h"
 
-@implementation GcustomUseCarDownInfoCell
+@implementation GJiuYuanCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -34,7 +34,6 @@
 
 
 
-
 -(void)loadViewWithIndexPath:(NSIndexPath*)theIndexPath{
     
     self.titielImav  = [[UIImageView alloc]init];
@@ -53,12 +52,6 @@
     
 }
 
-
--(CGFloat)configDataWithIndexPath:(NSIndexPath *)indexPath{
-    CGFloat height = 0;
-    
-    return height;
-}
 
 
 

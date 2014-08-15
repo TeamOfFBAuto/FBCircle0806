@@ -9,7 +9,7 @@
 
 //用车服务
 #import <UIKit/UIKit.h>
-@interface GuseCarViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UITableViewDataSource,UITableViewDelegate>
+@interface GuseCarViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     BMKMapView *_mapView;//地图
     BMKLocationService *_locService;//定位服务

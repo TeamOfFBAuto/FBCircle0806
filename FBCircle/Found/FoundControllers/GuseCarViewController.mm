@@ -83,6 +83,7 @@
     
     
     
+    
     //按钮下面的背景view
     UIView *btnBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, 320, 44)];
     btnBackView.backgroundColor = RGBCOLOR(240, 241, 243);
@@ -130,7 +131,7 @@
    
     
     //下面信息view
-    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
+    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568-206, 320, 206)];
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
     
     //底层view
@@ -141,22 +142,7 @@
     downBackView.layer.cornerRadius = 5;
     [_downInfoView addSubview:downBackView];
     
-//    //自定义downInfoView
-//    for (int i = 0; i<3; i++) {
-//        UIImageView *imv = [[UIImageView alloc]init];
-//        if (i == 0) {
-//            imv.frame = CGRectMake(18, 15, 15, 15);
-//            [imv setImage:[UIImage imageNamed:@"fhome.png"]];
-//        }else if (i == 1){
-//            imv.frame = CGRectMake(18, 59, 15, 15);
-//            [imv setImage:[UIImage imageNamed:@"fearth.png"]];
-//        }else if (i == 2){
-//            imv.frame = CGRectMake(18, 120, 15, 15);
-//            [imv setImage:[UIImage imageNamed:@"ftel.png"]];
-//        }
-//        [downBackView addSubview:imv];
-//        
-//    }
+
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -189,6 +175,17 @@
     if (!cell) {
         cell = [[GcustomUseCarDownInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.separatorInset = UIEdgeInsetsMake(0,53,0,0);
+    
+    
+    [cell loadViewWithIndexPath:indexPath];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -207,6 +204,24 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.01f;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%d",indexPath.row);
+    if (indexPath.row == 2) {
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:@"13301072337" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [al show];
+    }
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%d",buttonIndex);
+    
+    //0取消    1确定
+    if (buttonIndex == 1) {
+        
+    }
 }
 
 

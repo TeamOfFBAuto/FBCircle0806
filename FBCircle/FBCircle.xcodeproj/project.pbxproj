@@ -880,6 +880,7 @@
 		56D6E334199B468200607DC5 /* brid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D6E333199B468200607DC5 /* brid@2x.png */; };
 		56D6E335199B468200607DC5 /* brid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D6E333199B468200607DC5 /* brid@2x.png */; };
 		B15A5508DFA84914A2D845DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3093716B5174DF29B814680 /* libPods.a */; };
+		E30769F7199DE5DD00D4C451 /* GJiuYuanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E30769F6199DE5DD00D4C451 /* GJiuYuanCell.m */; };
 		E315DF4F199C5E3B00EA9109 /* GpersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E315DF4E199C5E3B00EA9109 /* GpersonInfoViewController.m */; };
 		E384CB6C19925DCF002E7D71 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */; };
 		E384CBAA19925E08002E7D71 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E384CBA919925E08002E7D71 /* mapapi.bundle */; };
@@ -1610,6 +1611,8 @@
 		56D6E331199B13AE00607DC5 /* CreateBBSChooseIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBBSChooseIconCell.m; sourceTree = "<group>"; };
 		56D6E333199B468200607DC5 /* brid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brid@2x.png"; sourceTree = "<group>"; };
 		D3093716B5174DF29B814680 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E30769F5199DE5DD00D4C451 /* GJiuYuanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJiuYuanCell.h; sourceTree = SOURCE_ROOT; };
+		E30769F6199DE5DD00D4C451 /* GJiuYuanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJiuYuanCell.m; sourceTree = SOURCE_ROOT; };
 		E315DF4D199C5E3B00EA9109 /* GpersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonInfoViewController.h; sourceTree = "<group>"; };
 		E315DF4E199C5E3B00EA9109 /* GpersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpersonInfoViewController.m; sourceTree = "<group>"; };
 		E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
@@ -2324,6 +2327,8 @@
 			children = (
 				E3A62B7B199CC87200C300A3 /* GcustomUseCarDownInfoCell.h */,
 				E3A62B7C199CC87200C300A3 /* GcustomUseCarDownInfoCell.m */,
+				E30769F5199DE5DD00D4C451 /* GJiuYuanCell.h */,
+				E30769F6199DE5DD00D4C451 /* GJiuYuanCell.m */,
 			);
 			path = FoundViews;
 			sourceTree = "<group>";
@@ -4333,6 +4338,7 @@
 				561731E319925E98001B8574 /* SendPostsImageScrollView.m in Sources */,
 				56A64B84198F6BD400451413 /* AddFriendViewController.m in Sources */,
 				56A64A37198F69A800451413 /* WeiBoFaceScrollView.m in Sources */,
+				E30769F7199DE5DD00D4C451 /* GJiuYuanCell.m in Sources */,
 				1383366F19947E6F00F73194 /* BBSRecommendCell.m in Sources */,
 				56A64B1C198F6AD800451413 /* GHolderTextView.m in Sources */,
 				56A64884198F502700451413 /* FBCirclePromptView.m in Sources */,

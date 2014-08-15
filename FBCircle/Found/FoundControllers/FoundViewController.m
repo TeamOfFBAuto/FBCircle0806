@@ -189,7 +189,10 @@
         
         [self.navigationController pushViewController:[[GpersonInfoViewController alloc]init] animated:YES];
     }else if (indexPath.row == 1 && indexPath.section == 1){//e族救援队
-        [self.navigationController pushViewController:[[GJiuYuanDuiViewController alloc]init] animated:YES];
+        [self presentViewController:[[GJiuYuanDuiViewController alloc]init] animated:YES completion:^{
+            
+        }];
+    
     }
     
     
