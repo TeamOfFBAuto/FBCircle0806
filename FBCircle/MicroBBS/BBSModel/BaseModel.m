@@ -20,7 +20,7 @@
 
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-//    NSLog(@"forUndefinedKey %@",key);
+    NSLog(@"forUndefinedKey %@",key);
 }
 
 @end

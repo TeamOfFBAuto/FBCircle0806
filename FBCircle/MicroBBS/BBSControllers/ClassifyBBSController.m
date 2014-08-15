@@ -9,6 +9,7 @@
 #import "ClassifyBBSController.h"
 #import "ClassifyBBSController_Sub.h"
 #import "SendPostsViewController.h"
+#import "BBSSearchController.h"
 #import "BBSModel.h"
 
 @interface ClassifyBBSController ()<UISearchBarDelegate>
@@ -115,6 +116,8 @@
 - (void)clickToSearch:(UIButton *)sender
 {
     NSLog(@"searchPage");
+    BBSSearchController *search = [[BBSSearchController alloc]init];
+    [self PushToViewController:search WithAnimation:YES];
 }
 
 #pragma mark - 网络请求

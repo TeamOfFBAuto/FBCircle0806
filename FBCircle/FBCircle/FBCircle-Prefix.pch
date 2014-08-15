@@ -39,13 +39,13 @@
 
 
 
-    #define TITLEFONT [UIFont fontWithName:@"Helvetica" size:20]
+    #define TITLEFONT [UIFont fontWithName:@"Helvetica" size:18]
 
     #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
     #define MY_MACRO_NAME ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
-
+    #define DEFAULT_NAVIGATION_IMAGE [UIImage imageNamed:@"daohanglan_bg_640_88"]
 
 
 #endif

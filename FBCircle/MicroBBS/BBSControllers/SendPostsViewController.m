@@ -12,6 +12,8 @@
 #import "TakePhotoView.h"
 #import "MyImagePickViewController.h"
 #import "TakePhotoPreViewController.h"
+#import "WritePreviewDeleteViewController.h"///图片预览类
+#import "CreateNewBBSViewController.h"
 
 #define INPUT_HEIGHT 40.5
 
@@ -60,15 +62,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 
@@ -78,7 +80,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.title = @"新帖子";
+    self.titleLabel.text = @"新帖子";
     
     self.rightString = @"发表";
     
@@ -87,7 +89,7 @@
     
     [self.my_right_button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     
-    self.my_right_button.userInteractionEnabled = NO;
+//    self.my_right_button.userInteractionEnabled = NO;
     
     [self.my_right_button addTarget:self action:@selector(sendTap:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -302,6 +304,10 @@
     NSLog(@"self.count -=-----  %@",allImageArray);
     
     
+    CreateNewBBSViewController * createBBS = [[CreateNewBBSViewController alloc] init];
+    
+    [self PushToViewController:createBBS WithAnimation:YES];
+    
 }
 
 
@@ -430,7 +436,7 @@
         [allAssesters addObject:[[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"]];
     }
     
-    [imageScrollView loadAllViewsWith:allImageArray];
+    [self loadSelectedImages];
     
 }
 
@@ -491,16 +497,12 @@
     [imageScrollView loadAllViewsWith:allImageArray];
      */
     
-    
+    __weak typeof(self) bself = self;
     
     
     TakePhotoPreViewController * previewC = [[TakePhotoPreViewController alloc] initWithBlock:^{
         
         UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
-        
-        NSLog(@"image1 ----  %@ ----  %@",image1,info);
-        
-        
         
         [allImageArray addObject:image1];
         
@@ -512,21 +514,62 @@
              [allAssesters addObject:assetURL];
          }];
         
-        [imageScrollView loadAllViewsWith:allImageArray];
+        [bself loadSelectedImages];
         
         [picker dismissViewControllerAnimated:NO completion:NULL];
-        
-        NSLog(@"image2 ----  %@ ----  %@",image1,info);
-        
     }];
     
     previewC.theImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    [picker presentViewController:previewC animated:YES completion:NULL];
+//    [picker presentViewController:previewC animated:YES completion:NULL];
+    
+    [picker pushViewController:previewC animated:YES];
     
     
     
 }
+
+
+
+#pragma mark - 加载选择的图片
+
+
+-(void)loadSelectedImages
+{    
+    [imageScrollView loadAllViewsWith:allImageArray WithBlock:^(int index,int preViewPage) {
+        
+        switch (preViewPage) {
+            case 0://删除某张图片
+            {
+                [allImageArray removeObjectAtIndex:index];
+                
+                [allAssesters removeObjectAtIndex:index];
+            }
+                break;
+            case 1://预览图片
+            {
+                
+                WritePreviewDeleteViewController * preViewVC = [[WritePreviewDeleteViewController alloc] init];
+
+                preViewVC.AllImagesArray = allImageArray;
+                
+                preViewVC.currentPage = index;
+                
+//                [self.navigationController pushViewController:preViewVC animated:YES];
+                
+                [self presentViewController:preViewVC animated:YES completion:NULL];
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+    }];
+    
+}
+
 
 
 -(UIView *)findView:(UIView *)aView withName:(NSString *)name{

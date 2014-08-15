@@ -1867,7 +1867,6 @@
              
              [bself dotheSuccessloadDtat:array];
              
-             
              if (self.data_array.count == array.count)
              {
                  loadview.normalLabel.text = @"没有更多数据了";

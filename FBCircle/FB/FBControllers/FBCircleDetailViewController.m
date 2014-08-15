@@ -103,7 +103,7 @@
         
     }
     
-    self.title = @"详情";
+    self.titleLabel.text = @"详情";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     

@@ -51,7 +51,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
-    UIColor * cc = RGBCOLOR(91,138,59);
+    UIColor * cc = [UIColor whiteColor];//RGBCOLOR(91,138,59);
     
     NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
     
@@ -177,15 +177,15 @@
     {
         _my_right_button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _my_right_button.frame = CGRectMake(0,0,30,44);
+        _my_right_button.frame = CGRectMake(0,0,50,44);
         
-        _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
+        _my_right_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         
         [_my_right_button setTitle:_rightString forState:UIControlStateNormal];
         
-        _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
+        _my_right_button.titleLabel.font = [UIFont systemFontOfSize:20];
         
-        [_my_right_button setTitleColor:RGBCOLOR(91,138,59) forState:UIControlStateNormal];
+        [_my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         [_my_right_button addTarget:self action:@selector(submitData:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -284,7 +284,10 @@
     [self.navigationController pushViewController:controller animated:animation];
 }
 
-
+-(void)dealloc
+{
+    NSLog(@"-----%@",self);
+}
 
 
 @end

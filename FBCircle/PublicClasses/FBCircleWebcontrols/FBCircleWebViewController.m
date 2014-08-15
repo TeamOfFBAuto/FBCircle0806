@@ -89,7 +89,7 @@
 {
     self.web_title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     
-    self.title = self.web_title;
+    self.titleLabel.text = self.web_title;
     
     NSString * content = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     

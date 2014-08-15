@@ -22,4 +22,13 @@
     // Configure the view for the selected state
 }
 
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self = [[[NSBundle mainBundle]loadNibNamed:@"BBSTableCell" owner:self options:nil]objectAtIndex:0];
+    }
+    return self;
+}
+
 @end

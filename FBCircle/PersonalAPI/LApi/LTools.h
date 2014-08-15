@@ -13,8 +13,13 @@
 #import "UIView+Frame.h"
 #import "UIImageView+WebCache.h"
 #import "LButtonView.h"
+#import "LNineImagesView.h"
+#import "LInputView.h"
+#import "LActionSheet.h"
+#import "LSearchView.h"
+#import "LMoveView.h"
 
-#define PAGE_SIZE 10 //每页条数
+//#define PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
@@ -53,6 +58,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
                         align:(NSTextAlignment)align
                     textColor:(UIColor *)textColor;
 
+#pragma mark - 计算宽度、高度
+
++ (CGFloat)widthForText:(NSString *)text font:(CGFloat)size;
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size;
+
 #pragma mark - 小工具
 
 + (NSString *) md5:(NSString *) text;
@@ -79,6 +89,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 + (BOOL)isValidateName:(NSString *)userName;
 + (BOOL)isValidatePwd:(NSString *)pwdString;
 + (BOOL)isValidateMobile:(NSString *)mobileNum;
+
+/**
+ *  切图
+ */
++(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size;
 
 
 #pragma mark - CoreData管理

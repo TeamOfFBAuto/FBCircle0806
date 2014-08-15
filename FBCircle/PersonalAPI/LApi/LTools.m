@@ -95,7 +95,7 @@
                 if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
 
 
-                    NSDictionary *failDic = @{ERROR_INFO:erroInfo};
+                    NSDictionary *failDic = @{ERROR_INFO:erroInfo,@"errcode":[NSString stringWithFormat:@"%d",erroCode]};
                     failBlock(failDic,connectionError);
                     
                     return ;
@@ -163,6 +163,23 @@
     titleLabel.textAlignment = align;
     titleLabel.textColor = textColor;
     return titleLabel;
+}
+
+/**
+ *  计算宽度
+ */
++ (CGFloat)widthForText:(NSString *)text font:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};
+    CGSize aSize = [text sizeWithAttributes:attributes];
+    return aSize.width;
+}
+
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};
+    CGSize aSize = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
+    return aSize.height;
 }
 
 #pragma - mark 验证邮箱、电话等有效性
@@ -335,6 +352,16 @@
         return @"";
     }
     return text;
+}
+
+#pragma - mark 切图
+
++(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 #pragma - mark CoreData数据管理

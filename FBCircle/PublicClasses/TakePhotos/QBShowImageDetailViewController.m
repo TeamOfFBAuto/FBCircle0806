@@ -45,8 +45,8 @@
 
 -(void)finishTap:(UIButton *)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(returnSelectedImagesWith:)]) {
-        [_delegate returnSelectedImagesWith:self.selectedAssets];
+    if (_delegate && [_delegate respondsToSelector:@selector(returnSelectedImagesWith: WithCurrentPage:)]) {
+        [_delegate returnSelectedImagesWith:self.selectedAssets WithCurrentPage:self.currentPage];
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
@@ -247,9 +247,22 @@
     
     self.extendedLayoutIncludesOpaqueBars = YES;
     
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
     self.view.backgroundColor = RGBCOLOR(229,229,229);
+    
+    
+    self.titleLabel.text = @"预览";
+    
+    self.rightString = @"选中";
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    
+    [self.my_right_button addTarget:self action:@selector(right:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     _allImages = [NSMutableArray array];
     
@@ -272,11 +285,41 @@
     
     _myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
     
-    [self setNavgationBar];
+ //   [self setNavgationBar];
     
     [self loadThreePage];
     
     
+}
+
+
+-(void)right:(UIButton *)button
+{
+    BOOL isContains = [self.selectedAssets containsObject:[self.AllImagesArray objectAtIndex:_currentPage]];
+    
+    if (isContains)
+    {
+        
+//        [self.selectedAssets removeObject:[self.AllImagesArray objectAtIndex:_currentPage]];
+    }else
+    {
+        if (self.selectedAssets.count + self.SelectedCount == 9) {
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"最多只能选择9张照片" message:@"" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            
+            [alertView show];
+            
+            return;
+        }
+        
+        [self.selectedAssets addObject:[self.AllImagesArray objectAtIndex:_currentPage]];
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(returnSelectedImagesWith: WithCurrentPage:)])
+        {
+            [_delegate returnSelectedImagesWith:self.selectedAssets WithCurrentPage:self.currentPage];
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 
@@ -447,20 +490,25 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:isHidden withAnimation:UIStatusBarAnimationSlide];
     
-    CGRect rect = bottomView.frame;
     
-    rect.origin.y = rect.origin.y + (isHidden?rect.size.height:-rect.size.height);
+    [self.navigationController setNavigationBarHidden:isHidden animated:YES];
     
-    CGRect frame = navImageView.frame;
     
-    frame.origin.y = frame.origin.y + (isHidden?-frame.size.height:frame.size.height);
     
-    [UIView animateWithDuration:0.3 animations:^{
-        bottomView.frame = rect;
-        navImageView.frame = frame;
-    } completion:^(BOOL finished) {
-        
-    }];
+//    CGRect rect = bottomView.frame;
+//    
+//    rect.origin.y = rect.origin.y + (isHidden?rect.size.height:-rect.size.height);
+//    
+//    CGRect frame = navImageView.frame;
+//    
+//    frame.origin.y = frame.origin.y + (isHidden?-frame.size.height:frame.size.height);
+//    
+//    [UIView animateWithDuration:0.3 animations:^{
+//        bottomView.frame = rect;
+//        navImageView.frame = frame;
+//    } completion:^(BOOL finished) {
+//        
+//    }];
 }
 
 -(void)dealloc

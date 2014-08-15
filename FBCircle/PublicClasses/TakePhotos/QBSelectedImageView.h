@@ -17,8 +17,6 @@
 
 @property(nonatomic,strong)UILabel * label;
 
-
-
 -(void)setNumberLabel:(NSString *)theText;
 
 

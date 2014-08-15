@@ -38,17 +38,48 @@
         self.backgroundColor = RGBCOLOR(3,3,3);
         
         self.contentView.backgroundColor = RGBCOLOR(3,3,3);
-        
     }
     
     return self;
 }
 
-- (void)setAssets:(NSArray *)assets WithSelected:(NSMutableOrderedSet *)theSelected
+- (void)setAssets:(NSArray *)assets WithSelected:(NSMutableOrderedSet *)theSelected withRow:(int)row WithSelectedViews:(NSMutableArray *)selectedViews
 {
     [_assets release];
     _assets = [assets retain];
     
+
+    for(NSUInteger i = 0;i < self.numberOfAssets;i++)
+    {
+        QBImagePickerAssetView *assetView = (QBImagePickerAssetView *)[self.contentView viewWithTag:(1 + i)];
+        
+        if(i < self.assets.count)
+        {
+            assetView.hidden = NO;
+            
+            assetView.asset = [self.assets objectAtIndex:i];
+            
+            NSString * count = [NSString stringWithFormat:@"%d",row*3 + (1+i)];
+                        
+            if ([selectedViews containsObject:count])
+            {
+                int index = [selectedViews indexOfObject:count];
+                
+                assetView.selected = YES;
+                
+                [assetView.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",index+1]];
+            }
+            
+        } else
+        {
+            assetView.hidden = YES;
+        }
+    }
+    
+
+  
+    
+/*之前对号选择版本
     // Set assets
     for(NSUInteger i = 0; i < self.numberOfAssets; i++)
     {
@@ -73,6 +104,8 @@
             assetView.hidden = YES;
         }
     }
+*/
+ 
 }
 
 - (void)setAllowsMultipleSelection:(BOOL)allowsMultipleSelection
@@ -89,7 +122,11 @@
 
 - (void)dealloc
 {
-    [_assets release];
+    _assets = nil;
+    
+    _selected_array = nil;
+    
+    _delegate = nil;
     
     [super dealloc];
 }
@@ -188,6 +225,7 @@
         [alertView show];
         return;
     }
+    
     [self.delegate assetCell:self didChangeAssetSelectionState:selected atIndex:(assetView.tag - 1) withAssetView:assetView];
 }
 

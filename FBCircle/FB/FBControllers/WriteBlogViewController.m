@@ -78,7 +78,7 @@
     [ self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     
-    self.title = self.theType==WriteBlogWithContent?@"发表说说":@"发表图片";
+    self.titleLabel.text = self.theType==WriteBlogWithContent?@"发表说说":@"发表图片";
     
     self.view.backgroundColor = RGBCOLOR(229,229,229);
     

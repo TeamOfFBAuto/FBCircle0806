@@ -11,12 +11,12 @@
 
 @protocol QBShowImageDetailViewControllerDelegate <NSObject>
 
--(void)returnSelectedImagesWith:(NSMutableOrderedSet *)assets;
+-(void)returnSelectedImagesWith:(NSMutableOrderedSet *)assets WithCurrentPage:(int)thePage;
 
 @end
 
 
-@interface QBShowImageDetailViewController : UIViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate>
+@interface QBShowImageDetailViewController : MyViewController<UIScrollViewDelegate,QBShowImagesScrollViewDelegate>
 {
     UIView * navgationBar;
     

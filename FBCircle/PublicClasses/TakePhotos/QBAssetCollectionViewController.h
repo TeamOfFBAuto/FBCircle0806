@@ -22,7 +22,7 @@
 #import "QBShowImageDetailViewController.h"
 
 
-@interface QBAssetCollectionViewController : MyViewController <UITableViewDataSource, UITableViewDelegate, QBImagePickerAssetCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,QBShowImageDetailViewControllerDelegate>
+@interface QBAssetCollectionViewController : MyViewController <UITableViewDataSource, UITableViewDelegate, QBImagePickerAssetCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,QBShowImageDetailViewControllerDelegate,UIAlertViewDelegate>
 {
     NSMutableArray * image_array;
     int currentPage;

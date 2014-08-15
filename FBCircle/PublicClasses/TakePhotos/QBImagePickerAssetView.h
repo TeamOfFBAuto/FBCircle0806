@@ -25,8 +25,11 @@
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, retain) QBSelectedImageView *overlayImageView;
 @property(nonatomic,strong)UIImageView * translucentLayer;
+@property(nonatomic,strong)NSString * number_string;
 
 
 - (UIImage *)thumbnail;
+
+-(void)selectedPictures;
 
 @end

@@ -10,7 +10,9 @@
 
 #import "GmFoundScanViewController.h"//扫一扫
 
-#import "GuseCarViewController.h"
+#import "GuseCarViewController.h"//用车服务
+
+#import "GnearbyPersonViewController.h"//附近的人
 
 @interface FoundViewController ()
 
@@ -148,12 +150,10 @@
     if (indexPath.row == 0 && indexPath.section == 2) {//扫一扫
         [self.navigationController pushViewController:[[GmFoundScanViewController alloc]init] animated:YES];
     }else if (indexPath.row == 0 && indexPath.section == 1){//用车服务
-        
-        
         [self presentViewController:[[GuseCarViewController alloc]init] animated:YES completion:^{
-            
         }];
-        
+    }else if (indexPath.row ==0 && indexPath.section == 0){//附近的人
+        [self.navigationController pushViewController:[[GnearbyPersonViewController alloc] init] animated:YES];
     }
     
     
