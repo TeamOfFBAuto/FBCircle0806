@@ -71,6 +71,7 @@
 		1371C5641991D63E00D937CD /* daohanglan_bg_640_88@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1371C5631991D63E00D937CD /* daohanglan_bg_640_88@2x.png */; };
 		1371C5671991D9EE00D937CD /* MyBBSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1371C5661991D9EE00D937CD /* MyBBSViewController.m */; };
 		1371C56A1991DDAE00D937CD /* HotTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1371C5691991DDAE00D937CD /* HotTopicViewController.m */; };
+		137DFC7A199DA87000C1E81E /* TopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 137DFC79199DA87000C1E81E /* TopicModel.m */; };
 		13833669199469B200F73194 /* LNineImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13833668199469B200F73194 /* LNineImagesView.m */; };
 		1383366F19947E6F00F73194 /* BBSRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1383366E19947E6F00F73194 /* BBSRecommendCell.m */; };
 		1383367219949DDD00F73194 /* LInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1383367119949DDD00F73194 /* LInputView.m */; };
@@ -91,7 +92,6 @@
 		138EBEB41992512F005DB531 /* JoinBBSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEAA1992512F005DB531 /* JoinBBSCell.xib */; };
 		138EBEB51992512F005DB531 /* MyBBSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEAC1992512F005DB531 /* MyBBSCell.m */; };
 		138EBEB61992512F005DB531 /* MyBBSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138EBEAD1992512F005DB531 /* MyBBSCell.xib */; };
-		138EBEB919925A25005DB531 /* BBSSubModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEB819925A25005DB531 /* BBSSubModel.m */; };
 		138EBEBC19925B4D005DB531 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138EBEBB19925B4D005DB531 /* BaseModel.m */; };
 		13B85AFC1999ED5F000072FB /* BBSSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B85AFB1999ED5F000072FB /* BBSSearchController.m */; };
 		13B85AFF1999EE7D000072FB /* LSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B85AFE1999EE7D000072FB /* LSearchView.m */; };
@@ -1005,6 +1005,8 @@
 		1371C5661991D9EE00D937CD /* MyBBSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBBSViewController.m; sourceTree = "<group>"; };
 		1371C5681991DDAE00D937CD /* HotTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotTopicViewController.h; sourceTree = "<group>"; };
 		1371C5691991DDAE00D937CD /* HotTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotTopicViewController.m; sourceTree = "<group>"; };
+		137DFC78199DA87000C1E81E /* TopicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicModel.h; sourceTree = "<group>"; };
+		137DFC79199DA87000C1E81E /* TopicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicModel.m; sourceTree = "<group>"; };
 		13833667199469B200F73194 /* LNineImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNineImagesView.h; sourceTree = "<group>"; };
 		13833668199469B200F73194 /* LNineImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNineImagesView.m; sourceTree = "<group>"; };
 		1383366D19947E6F00F73194 /* BBSRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSRecommendCell.h; sourceTree = "<group>"; };
@@ -1039,8 +1041,6 @@
 		138EBEAB1992512F005DB531 /* MyBBSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBBSCell.h; sourceTree = "<group>"; };
 		138EBEAC1992512F005DB531 /* MyBBSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBBSCell.m; sourceTree = "<group>"; };
 		138EBEAD1992512F005DB531 /* MyBBSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyBBSCell.xib; sourceTree = "<group>"; };
-		138EBEB719925A25005DB531 /* BBSSubModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSSubModel.h; sourceTree = "<group>"; };
-		138EBEB819925A25005DB531 /* BBSSubModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSSubModel.m; sourceTree = "<group>"; };
 		138EBEBA19925B4D005DB531 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		138EBEBB19925B4D005DB531 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		13B85AFA1999ED5F000072FB /* BBSSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSSearchController.h; sourceTree = "<group>"; };
@@ -1957,8 +1957,6 @@
 			children = (
 				138EBE9F1992512F005DB531 /* BBSModel.h */,
 				138EBEA01992512F005DB531 /* BBSModel.m */,
-				138EBEB719925A25005DB531 /* BBSSubModel.h */,
-				138EBEB819925A25005DB531 /* BBSSubModel.m */,
 				138EBEBA19925B4D005DB531 /* BaseModel.h */,
 				138EBEBB19925B4D005DB531 /* BaseModel.m */,
 				13CCD7381999B45B00E38ECC /* BBSInfoModel.h */,
@@ -1967,6 +1965,8 @@
 				13CCD73C1999C12E00E38ECC /* BBSMemberModel.m */,
 				1331F15E199CA146009FFBAC /* TopicCommentModel.h */,
 				1331F15F199CA146009FFBAC /* TopicCommentModel.m */,
+				137DFC78199DA87000C1E81E /* TopicModel.h */,
+				137DFC79199DA87000C1E81E /* TopicModel.m */,
 			);
 			path = BBSModel;
 			sourceTree = "<group>";
@@ -4179,7 +4179,6 @@
 				56A64B61198F6BC700451413 /* SuggestFriendCell.m in Sources */,
 				1371C56A1991DDAE00D937CD /* HotTopicViewController.m in Sources */,
 				56A64B18198F6AD800451413 /* LoadingIndicatorView.m in Sources */,
-				138EBEB919925A25005DB531 /* BBSSubModel.m in Sources */,
 				56A64BC2198F6CA200451413 /* UMEGORefreshTableHeaderView.m in Sources */,
 				56A64A43198F69A800451413 /* FBCirclePicturesViews.m in Sources */,
 				56A64B53198F6BC700451413 /* FbLoginView.m in Sources */,
@@ -4207,6 +4206,7 @@
 				56D6E332199B13AE00607DC5 /* CreateBBSChooseIconCell.m in Sources */,
 				E3AC5316199D8EBA007C7733 /* GJiuYuanDuiViewController.m in Sources */,
 				56A64917198F55A500451413 /* FBCircleCommentModel.m in Sources */,
+				137DFC7A199DA87000C1E81E /* TopicModel.m in Sources */,
 				56A64AB2198F6AD800451413 /* GmyFootViewController.m in Sources */,
 				136602971990AB7100F2BEEC /* UIView+Frame.m in Sources */,
 				56A64880198F502700451413 /* SzkAPI.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import "BBSListCell.h"
+#import "TopicModel.h"
 
 @implementation BBSListCell
 
@@ -20,6 +21,16 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setCellDataWithModel:(TopicModel *)aModel
+{
+    self.aTitleLabel.text = aModel.title;
+    self.nameAndAddressLabel.text = [NSString stringWithFormat:@"%@  |  %@",aModel.username,aModel.address];
+    self.timeAndCommentLabel.text = [NSString stringWithFormat:@"%@  |   %@评论",[ZSNApi timestamp:aModel.time],aModel.comment_num];
+//    小野人  |  广东 佛山
+//    13分钟前  |   10评论
+
 }
 
 @end

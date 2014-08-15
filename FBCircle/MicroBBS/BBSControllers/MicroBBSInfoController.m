@@ -14,6 +14,7 @@
 @interface MicroBBSInfoController ()
 {
     BBSInfoModel *infoModel;
+    UIButton *btn;//加入或者退出按钮
 }
 
 @end
@@ -66,7 +67,8 @@
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title1,@"退出",@"取消"] images:nil sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
         
         if (buttonIndex == 1) {
-            [weakSelf leaveBBS];
+            
+            [weakSelf leaveOrJoinBBS:!sender.selected];
         }
         
     }];
@@ -101,16 +103,36 @@
 }
 
 /**
- *  退出论坛
+ *  退出论坛\加入
  */
-- (void)leaveBBS
+- (void)leaveOrJoinBBS:(BOOL)leave
 {
      __weak typeof(self)weakSelf = self;
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_LEAVER,[SzkAPI getAuthkey],infoModel.id];
+    
+    NSString *url;
+    if (leave) {
+        url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_LEAVER,[SzkAPI getAuthkey],infoModel.id];
+    }else
+    {
+        url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],infoModel.id];
+    }
+
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSString *errinfo = [result objectForKey:@"errinfo"];
+        int errcode = [[result objectForKey:@"errcode"]integerValue];
+        
+        if (errcode == 0) {
+            
+            NSString *info = leave ? @"退出论坛成功" : @"加入论坛成功";
+            
+            [LTools showMBProgressWithText:info addToView:weakSelf.view];
+            
+            btn.selected = NO;
+            
+        }
+
         
         [LTools showMBProgressWithText:errinfo addToView:weakSelf.view];
         
@@ -138,7 +160,9 @@
     UIView *third = [self createThirdViewFrame:CGRectMake(18, second.bottom + 15, first.width, 0)];
     [self.view addSubview:third];
     
-    UIButton *btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛" backgroudImage:nil superView:self.view target:self action:@selector(clickToLeave:)];
+    btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛" backgroudImage:nil superView:self.view target:self action:@selector(clickToLeave:)];
+    [btn setTitle:@"加入微论坛" forState:UIControlStateSelected];
+    
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 }
 

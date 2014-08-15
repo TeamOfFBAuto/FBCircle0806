@@ -11,15 +11,21 @@
 #import "HotTopicViewController.h"
 #import "ClassifyBBSController.h"
 #import "MicroBBSInfoController.h"
+#import "BBSTopicController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
 #import "BBSListCell.h"
 #import "SendPostsViewController.h"
 
+#import "BBSInfoModel.h"
+#import "TopicModel.h"
+
 @interface BBSListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_table;
+    BBSInfoModel *_aBBSModel;
+    NSMutableArray *_dataArray;
 }
 
 @end
@@ -58,7 +64,13 @@
     _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     [self.view addSubview:_table];
     
-    _table.tableHeaderView = [self createTableHeaderView];
+    //获取论坛基本信息
+    [self getBBSInfoId:self.bbsId];
+    
+    //帖子列表
+    
+    _dataArray = [NSMutableArray array];
+    [self getBBSTopicList:self.bbsId];
     
 }
 
@@ -87,17 +99,9 @@
 }
 
 - (void)clickToMore:(UIButton *)sender
-{
-    NSString *title = nil;
-    if (sender.tag == 101) {
-        
-        title = @"热门推荐";
-    }else
-    {
-        title = @"热门帖子";
-    }
+{   
     HotTopicViewController *hotTopic = [[HotTopicViewController alloc]init];
-    hotTopic.navigationTitle = title;
+    hotTopic.data_Style = sender.tag - 100;
     hotTopic.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:hotTopic animated:YES];
 }
@@ -134,6 +138,76 @@
 
 
 #pragma mark - 网络请求
+
+- (void)getBBSInfoId:(NSString *)bbsId
+{
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(UITableView *)weakTable = _table;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
+            
+            weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+            
+            weakSelf.titleLabel.text = _aBBSModel.name;
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+    }];
+}
+
+/**
+ *  获取帖子列表
+ *
+ *  @param bbsId 论坛id
+ */
+- (void)getBBSTopicList:(NSString *)bbsId
+{
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(UITableView *)weakTable = _table;
+    __weak typeof(NSMutableArray *)weakArray = _dataArray;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *data = [dataInfo objectForKey:@"data"];
+            
+            for (NSDictionary *aDic in data) {
+                TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                [_dataArray addObject:aModel];
+            }
+            
+            [weakTable reloadData];
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+    }];
+}
+
+
+
 #pragma mark - 视图创建
 
 /**
@@ -147,16 +221,16 @@
     
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 53, 53)];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:@"s"] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:_aBBSModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     [basic_view addSubview:imageView];
     
-    UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:@"汽车联赛" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [basic_view addSubview:titleLabel];
     
     UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,25, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:memberLabel];
     
-    UILabel *memberLabel_num = [LTools createLabelFrame:CGRectMake(memberLabel.right, titleLabel.bottom,50, 25) title:@"666666" font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
+    UILabel *memberLabel_num = [LTools createLabelFrame:CGRectMake(memberLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.member_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
     [basic_view addSubview:memberLabel_num];
     
     
@@ -168,7 +242,7 @@
     UILabel *topicLabel = [LTools createLabelFrame:CGRectMake(line_h.right + 5, titleLabel.bottom,25, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:topicLabel];
     
-    UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:@"1666666" font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
+    UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.thread_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
     [basic_view addSubview:topicLabel_num];
     
     UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(320 - 12 - 8, basic_view.height/2.f - 13/2.f, 8, 13)];
@@ -245,7 +319,7 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
@@ -258,6 +332,14 @@
     return 75;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TopicModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    topic.fid = aModel.fid;
+    topic.tid = aModel.tid;
+    [self PushToViewController:topic WithAnimation:YES];
+}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -267,7 +349,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return _dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -280,13 +362,15 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 || indexPath.row == _dataArray.count - 1) {
         
         cell.bgView.layer.cornerRadius = 3.f;
     }else
     {
         cell.bgView.layer.cornerRadius = 0.f;
     }
+    TopicModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    [cell setCellDataWithModel:aModel];
     
     return cell;
     

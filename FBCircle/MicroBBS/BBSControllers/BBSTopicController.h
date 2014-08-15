@@ -12,4 +12,7 @@
  */
 @interface BBSTopicController : MyViewController
 
+@property(nonatomic,retain)NSString *tid;//主贴id
+@property(nonatomic,retain)NSString *fid;//板块id
+
 @end

@@ -11,7 +11,7 @@
 #import "MicroBBSInfoController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
-#import "BBSSubModel.h"
+#import "BBSInfoModel.h"
 
 @interface MyBBSViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -108,12 +108,12 @@
             NSMutableArray *arr_create = [NSMutableArray arrayWithCapacity:create.count];
             for (NSDictionary *aDic in join) {
                 
-                [arr_join addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+                [arr_join addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
             }
             
             for (NSDictionary *aDic in create) {
                 
-                [arr_create addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+                [arr_create addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
             }
             
             [weakSelf reloadDataWithCreateArr:arr_create joinArr:arr_join total:total];
@@ -181,7 +181,7 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BBSSubModel *aModel;
+    BBSInfoModel *aModel;
     if (indexPath.section == 0) {
         
         aModel = [createArray objectAtIndex:indexPath.row];
@@ -250,7 +250,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    BBSSubModel *aModel;
+    BBSInfoModel *aModel;
     if (indexPath.section == 0) {
         
         aModel = [createArray objectAtIndex:indexPath.row];

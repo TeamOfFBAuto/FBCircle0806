@@ -67,7 +67,7 @@
     
     NSLog(@"requestUrl %@",newStr);
     NSURL *urlS = [NSURL URLWithString:newStr];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
     
     
     if (isPostRequest) {

@@ -7,6 +7,7 @@
 //
 
 #import "LBBSCellView.h"
+#import "TopicModel.h"
 
 @implementation LBBSCellView
 {
@@ -41,6 +42,13 @@
         [self addSubview:arrow_image];
     }
     return self;
+}
+
+-(void)setCellWithModel:(TopicModel *)aModel
+{
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    self.aTitleLabel.text = aModel.title;
+    self.subTitleLabel.text = aModel.sub_content;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

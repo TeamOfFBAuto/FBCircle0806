@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TopicModel;
 
 @interface LBBSCellView : UIView
 @property (strong, nonatomic) IBOutlet UIView *bgView;
@@ -17,5 +18,6 @@
 - (id)initWithFrame:(CGRect)frame
              target:(id)target
              action:(SEL)action;
+-(void)setCellWithModel:(TopicModel *)aModel;
 
 @end

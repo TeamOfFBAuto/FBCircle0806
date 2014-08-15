@@ -90,28 +90,12 @@ typedef enum{
     
 }
 
-- (void)testData
-{
-    NSString *str1 = @"卡阿喀琉斯[真棒]建档http://www.baidu.com立十块来得及阿卡[神马]丽";
-    NSString *str2 = @"卡机索拉卡[思考][发怒]机索拉卡[思考]阿里山评论内容[哈欠]老师卡机索拉卡[思考]阿里山的徕卡[思考]阿里山的徕卡监";
-    
-    
-    [_dataArray addObjectsFromArray:@[str1,str2]];
-    [_table reloadData];
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - 事件处理
-
-- (void)clickTo
-{
-    NSLog(@"clickTo");
-}
 
 //进入称赞者页
 - (void)clickTOPraiseMember:(UIGestureRecognizer *)tap
@@ -226,7 +210,10 @@ typedef enum{
 {
     __weak typeof(self)weakSelf = self;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,@"1",@"1"];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,self.fid,self.tid];
+    
+    url = [url stringByReplacingEmojiUnicodeWithCheatCodes];
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
@@ -254,21 +241,19 @@ typedef enum{
  *  添加评论
  */
 - (void)networdAction:(Network_ACTION)action
-{
-    __weak typeof(self)weakSelf = self;
-    
+{    
     NSString *url;
     if (action == Action_Topic_Zan) {
         
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_ZAN,[SzkAPI getAuthkey],@"1"];
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_ZAN,[SzkAPI getAuthkey],self.tid];
         
     }else if (action == Action_Topic_Top)
     {
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TOP,[SzkAPI getAuthkey],@"1",@"1"];
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TOP,[SzkAPI getAuthkey],self.fid,self.tid];
         
     }else if (action == Action_Topic_Top_Cancel)
     {
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TRIPTOP,[SzkAPI getAuthkey],@"1",@"1"];
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TRIPTOP,[SzkAPI getAuthkey],self.fid,self.tid];
     }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -293,7 +278,7 @@ typedef enum{
 - (void)getCommentList
 {
     __weak typeof(UITableView *)weakTable = _table;
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,@"1",_pageNum,L_PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,self.tid,_pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
@@ -302,7 +287,9 @@ typedef enum{
             NSArray *data = [dataInfo objectForKey:@"data"];
             for (NSDictionary *aDic in data) {
                 
-                [_dataArray addObject:[[TopicCommentModel alloc]initWithDictionary:aDic]];
+                TopicCommentModel *aModel = [[TopicCommentModel alloc]initWithDictionary:aDic];
+                aModel.content = [aModel.content stringByReplacingEmojiCheatCodesWithUnicode];
+                [_dataArray addObject:aModel];
             }
             [weakTable reloadData];
             
@@ -317,8 +304,13 @@ typedef enum{
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"result %@",failDic);
-        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:self.view];
+        NSLog(@"failDic result %@",failDic);
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        int erroCode = [[failDic objectForKey:@"errcode"]integerValue];
+        if (erroCode == 2) {
+            [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
+            moreBtn.userInteractionEnabled = NO;
+        }
     }];
 }
 
@@ -548,7 +540,7 @@ typedef enum{
 
     
     
-    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height) normalTitle:@"查看更多评论..." backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
+    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height - 15) normalTitle:@"查看更多评论..." backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
     [moreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     moreBtn.titleLabel.font = [UIFont systemFontOfSize:14];

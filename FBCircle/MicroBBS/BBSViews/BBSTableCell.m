@@ -7,6 +7,7 @@
 //
 
 #import "BBSTableCell.h"
+#import "TopicModel.h"
 
 @implementation BBSTableCell
 
@@ -29,6 +30,13 @@
         self = [[[NSBundle mainBundle]loadNibNamed:@"BBSTableCell" owner:self options:nil]objectAtIndex:0];
     }
     return self;
+}
+
+-(void)setCellWithModel:(TopicModel *)aModel
+{
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    self.aTitleLabel.text = aModel.title;
+    self.subTitleLabel.text = aModel.sub_content;
 }
 
 @end

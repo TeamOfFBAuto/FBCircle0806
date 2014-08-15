@@ -82,7 +82,7 @@
     {
         NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
         
-        NSLog(@"image_string ----   %@ ---  %d",image_string,image_string.length);
+//        NSLog(@"image_string ----   %@ ---  %d",image_string,image_string.length);
         
         if (image_string.length > 0)
         {
@@ -380,7 +380,7 @@
             NSDictionary * allDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             
             
-            NSLog(@"allDic-----%@",allDic);
+//            NSLog(@"allDic-----%@",allDic);
             
             
             if ([[allDic objectForKey:@"errcode"] intValue]==0)
@@ -1239,7 +1239,7 @@
             
             per.rfb_image = [FBCircleModel returnImageUrlWith:rfb_image];
             
-            NSLog(@"fb_image--------%@",per.fb_image);
+//            NSLog(@"fb_image--------%@",per.fb_image);
             
             
             per.fb_tid = tid?[NSString stringWithUTF8String:(const char *)tid]:@"";
@@ -1757,7 +1757,7 @@
             
             per.rfb_image = [FBCircleModel returnImageUrlWith:rfb_image];
             
-            NSLog(@"fb_image--------%@",per.fb_image);
+//            NSLog(@"fb_image--------%@",per.fb_image);
             
             
             per.fb_tid = tid?[NSString stringWithUTF8String:(const char *)tid]:@"";

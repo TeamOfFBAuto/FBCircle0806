@@ -10,9 +10,12 @@
 /**
  *  热门推荐帖子
  */
+@class TopicModel;
 @interface HotTopicCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *aImageView;
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subTitleLabel;
+
+-(void)setCellWithModel:(TopicModel *)aModel;
 
 @end
