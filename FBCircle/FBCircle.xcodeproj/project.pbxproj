@@ -890,6 +890,7 @@
 		E3A62B7A199CC41E00C300A3 /* ftel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3A62B77199CC41E00C300A3 /* ftel@2x.png */; };
 		E3A62B7D199CC87200C300A3 /* GcustomUseCarDownInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A62B7C199CC87200C300A3 /* GcustomUseCarDownInfoCell.m */; };
 		E3A73FDE199863E100C49CC6 /* GnearbyPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A73FDD199863E100C49CC6 /* GnearbyPersonViewController.m */; };
+		E3AC5316199D8EBA007C7733 /* GJiuYuanDuiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */; };
 		E3B9CAD41990AC9D00DE07F4 /* GmFoundScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B9CAD31990AC9D00DE07F4 /* GmFoundScanViewController.m */; };
 		E3E2FBAB1990B93E0062A4F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBAA1990B93E0062A4F2 /* AVFoundation.framework */; };
 		E3E2FBAE1990D0940062A4F2 /* GuseCarViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E3E2FBAD1990D0940062A4F2 /* GuseCarViewController.mm */; };
@@ -1676,6 +1677,8 @@
 		E3A62B7C199CC87200C300A3 /* GcustomUseCarDownInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomUseCarDownInfoCell.m; sourceTree = SOURCE_ROOT; };
 		E3A73FDC199863E100C49CC6 /* GnearbyPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GnearbyPersonViewController.h; sourceTree = "<group>"; };
 		E3A73FDD199863E100C49CC6 /* GnearbyPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GnearbyPersonViewController.m; sourceTree = "<group>"; };
+		E3AC5314199D8EBA007C7733 /* GJiuYuanDuiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJiuYuanDuiViewController.h; sourceTree = "<group>"; };
+		E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJiuYuanDuiViewController.m; sourceTree = "<group>"; };
 		E3B9CAD21990AC9D00DE07F4 /* GmFoundScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmFoundScanViewController.h; sourceTree = "<group>"; };
 		E3B9CAD31990AC9D00DE07F4 /* GmFoundScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmFoundScanViewController.m; sourceTree = "<group>"; };
 		E3D313901990DCAC00EE1B9C /* libPods-BaiduMapSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-BaiduMapSDK.a"; path = "Pods/build/Debug-iphoneos/libPods-BaiduMapSDK.a"; sourceTree = "<group>"; };
@@ -2278,6 +2281,8 @@
 				E315DF4E199C5E3B00EA9109 /* GpersonInfoViewController.m */,
 				E3A62B71199CA9C700C300A3 /* GmyErweimaViewController.h */,
 				E3A62B72199CA9C700C300A3 /* GmyErweimaViewController.m */,
+				E3AC5314199D8EBA007C7733 /* GJiuYuanDuiViewController.h */,
+				E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */,
 			);
 			path = FoundControllers;
 			sourceTree = "<group>";
@@ -4165,6 +4170,7 @@
 				56A64DF6198F7AF500451413 /* ChatViewController.m in Sources */,
 				56A64A12198F696000451413 /* WritePreviewDeleteViewController.m in Sources */,
 				56D6E332199B13AE00607DC5 /* CreateBBSChooseIconCell.m in Sources */,
+				E3AC5316199D8EBA007C7733 /* GJiuYuanDuiViewController.m in Sources */,
 				56A64917198F55A500451413 /* FBCircleCommentModel.m in Sources */,
 				56A64AB2198F6AD800451413 /* GmyFootViewController.m in Sources */,
 				136602971990AB7100F2BEEC /* UIView+Frame.m in Sources */,
@@ -4219,11 +4225,8 @@
 				138EBEAE1992512F005DB531 /* BBSModel.m in Sources */,
 				56A64BF2198F6CA200451413 /* UMContactViewController.m in Sources */,
 				56A64B14198F6AD800451413 /* GlocalUserTextData.m in Sources */,
-
 				E3A62B73199CA9C700C300A3 /* GmyErweimaViewController.m in Sources */,
-
 				1320A7EA199B698000EB955B /* NSAttributedString+Attributes.m in Sources */,
-
 				136D3AAB1990DB950052E808 /* LSecionView.m in Sources */,
 				56A64B5F198F6BC700451413 /* OfficalSuggestCell.m in Sources */,
 				56A64DFC198F7B1E00451413 /* ChatModel.m in Sources */,

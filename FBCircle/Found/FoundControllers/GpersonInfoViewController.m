@@ -207,10 +207,10 @@
     [infoView addSubview:view];
     
     
-    
-    
-    
-    
+    //箭头
+    UIImageView *jiantouImv = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jiantou.png"]];
+    jiantouImv.frame = CGRectMake(CGRectGetMaxX(view.frame)+15, CGRectGetMinY(view.frame)+23, 8, 13);
+    [infoView addSubview:jiantouImv];
     
     
     

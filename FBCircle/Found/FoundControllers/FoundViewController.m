@@ -17,6 +17,8 @@
 
 #import "GpersonInfoViewController.h"//测试用户信息界面
 
+#import "GJiuYuanDuiViewController.h"//e族救援队
+
 @interface FoundViewController ()
 
 @end
@@ -186,6 +188,8 @@
 //        [self.navigationController pushViewController:[[GnearbyPersonViewController alloc] init] animated:YES];
         
         [self.navigationController pushViewController:[[GpersonInfoViewController alloc]init] animated:YES];
+    }else if (indexPath.row == 1 && indexPath.section == 1){//e族救援队
+        [self.navigationController pushViewController:[[GJiuYuanDuiViewController alloc]init] animated:YES];
     }
     
     
