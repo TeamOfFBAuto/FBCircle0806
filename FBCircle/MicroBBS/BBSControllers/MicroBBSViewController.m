@@ -22,12 +22,15 @@
 #import "BBSInfoModel.h"
 #import "TopicModel.h"
 
-@interface MicroBBSViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface MicroBBSViewController ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
-    UITableView *_table;
+    RefreshTableView *_table;
     NSArray *_myBBSArray;//我的论坛
     NSArray *_concern_hot_array;//关注热门
     NSArray *_hot_array;//热门
+    
+    BOOL first_success;//第一部分请求成功
+    BOOL second_success;//第二部分请求成功
 }
 
 @end
@@ -80,10 +83,13 @@
     [self createSearchView];
     
     //数据展示table
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 45 - 49 - 20) style:UITableViewStylePlain];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 45 - 49 - 20) showLoadMore:NO];
     _table.backgroundColor = [UIColor clearColor];
-    _table.delegate = self;
+//    _table.delegate = self;
+    _table.refreshDelegate = self;
     _table.dataSource = self;
+    
+    _table.hiddenLoadMore = YES;
     
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
@@ -239,7 +245,7 @@
 - (void)getTopic:(int)dataStyle
 {
     __weak typeof(self)weakSelf = self;
-    __weak typeof(UITableView *)weakTable = _table;
+    __weak typeof(RefreshTableView *)weakTable = _table;
     
     NSString *url;
     if (dataStyle == 0) {
@@ -258,12 +264,15 @@
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
         for (NSDictionary *aDic in dataInfo) {
             
-            int max = (dataStyle == 0) ? 2 : 15;
-            
-            if (arr.count < max) {
-                TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
-                [arr addObject:aModel];
+            if ([aDic isKindOfClass:[NSDictionary class]]) {
+                int max = (dataStyle == 0) ? 2 : 15;
+                
+                if (arr.count < max) {
+                    TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                    [arr addObject:aModel];
+                }
             }
+            
         }
         
         if (dataStyle == 0) {
@@ -273,13 +282,19 @@
             
             weakTable.tableHeaderView = [weakSelf createTableHeaderView];
             
+            first_success = YES;
+            
         }else if (dataStyle == 1)
         {
             //关注帖子
             
             _concern_hot_array = arr;
             
-            [weakTable reloadData];
+//            [weakTable reloadData];
+            
+            [weakTable reloadData:arr total:0];
+            
+            second_success = YES;
         }
         
         
@@ -382,7 +397,7 @@
         }
     }
     
-    bgView2.frame = CGRectMake(8, bgView.bottom + 15, 304, section2.height + 75 * 2);
+    bgView2.frame = CGRectMake(8, bgView.bottom + 15, 304, section2.height + 75 * _hot_array.count);
     headerView.frame = CGRectMake(0, 0, 320, bgView2.bottom + 15);
     
     return headerView;
@@ -404,6 +419,14 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    
+    //我的论坛
+    
+    [self getMyBBS];
+    
+    //我的关注热门
+    
+    [self getTopic:1];
 }
 
 - (void)loadMoreData
@@ -413,11 +436,20 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    TopicModel *aModel = [_concern_hot_array objectAtIndex:indexPath.row - 1];
     BBSTopicController *topic = [[BBSTopicController alloc]init];
+    
+    topic.fid = aModel.fid;
+    topic.tid = aModel.tid;
+    
     [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        
+        return 40;
+    }
     return 75;
 }
 
@@ -433,13 +465,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TopicModel *aModel = [_concern_hot_array objectAtIndex:indexPath.row - 1];
-    BBSTopicController *topic = [[BBSTopicController alloc]init];
     
-    topic.fid = aModel.fid;
-    topic.tid = aModel.tid;
-    
-    [self PushToViewController:topic WithAnimation:YES];
 }
 
 #pragma mark - UITableViewDataSource

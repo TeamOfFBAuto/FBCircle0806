@@ -40,6 +40,7 @@
 @property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic,retain)UILabel *normalLabel;
 @property(nonatomic,retain)UILabel *loadingLabel;
+@property(nonatomic,assign)BOOL hiddenLoadMore;//隐藏加载更多,默认隐藏
 
 -(void)createHeaderView;
 -(void)removeHeaderView;
@@ -50,5 +51,7 @@
 
 - (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据
 - (void)loadFail;//请求数据失败
+
+-(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show;
 
 @end

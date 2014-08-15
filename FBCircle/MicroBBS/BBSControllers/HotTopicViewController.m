@@ -101,8 +101,11 @@
         
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
         for (NSDictionary *aDic in dataInfo) {
-            TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
-            [arr addObject:aModel];
+            
+            if ([aDic isKindOfClass:[NSDictionary class]]) {
+                TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                [arr addObject:aModel];
+            }
         }
         [weakTable reloadData:arr total:0];
         

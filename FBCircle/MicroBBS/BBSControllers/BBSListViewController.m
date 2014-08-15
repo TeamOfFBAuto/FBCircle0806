@@ -22,11 +22,10 @@
 #import "BBSInfoModel.h"
 #import "TopicModel.h"
 
-@interface BBSListViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface BBSListViewController ()<UITableViewDataSource,UITableViewDelegate,RefreshDelegate>
 {
-    UITableView *_table;
+    RefreshTableView *_table;
     BBSInfoModel *_aBBSModel;
-    NSMutableArray *_dataArray;
 }
 
 @end
@@ -56,9 +55,10 @@
     [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     
     //数据展示table
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) style:UITableViewStylePlain];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) showLoadMore:NO];
     _table.backgroundColor = [UIColor clearColor];
-    _table.delegate = self;
+//    _table.delegate = self;
+    _table.refreshDelegate = self;
     _table.dataSource = self;
     
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -70,7 +70,6 @@
     
     //帖子列表
     
-    _dataArray = [NSMutableArray array];
     [self getBBSTopicList:self.bbsId];
     
 }
@@ -178,8 +177,7 @@
 - (void)getBBSTopicList:(NSString *)bbsId
 {
     __weak typeof(self)weakSelf = self;
-    __weak typeof(UITableView *)weakTable = _table;
-    __weak typeof(NSMutableArray *)weakArray = _dataArray;
+    __weak typeof(RefreshTableView *)weakTable = _table;
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -190,20 +188,21 @@
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
             NSArray *data = [dataInfo objectForKey:@"data"];
-            
+            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
             for (NSDictionary *aDic in data) {
                 TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
-                [_dataArray addObject:aModel];
+                [arr addObject:aModel];
             }
             
-            [weakTable reloadData];
-            
+//            [weakTable reloadData];
+            [weakTable reloadData:arr total:0];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [weakTable loadFail];
         
     }];
 }
@@ -312,6 +311,12 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    //获取论坛基本信息
+    [self getBBSInfoId:self.bbsId];
+    
+    //帖子列表
+    
+    [self getBBSTopicList:self.bbsId];
 }
 
 - (void)loadMoreData
@@ -321,7 +326,11 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    topic.fid = aModel.fid;
+    topic.tid = aModel.tid;
+    [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
@@ -336,11 +345,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TopicModel *aModel = [_dataArray objectAtIndex:indexPath.row];
-    BBSTopicController *topic = [[BBSTopicController alloc]init];
-    topic.fid = aModel.fid;
-    topic.tid = aModel.tid;
-    [self PushToViewController:topic WithAnimation:YES];
+    
 }
 #pragma mark - UITableViewDataSource
 
@@ -351,7 +356,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return _table.dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -364,14 +369,14 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
-    if (indexPath.row == 0 || indexPath.row == _dataArray.count - 1) {
+    if (indexPath.row == 0 || indexPath.row == _table.dataArray.count - 1) {
         
         cell.bgView.layer.cornerRadius = 3.f;
     }else
     {
         cell.bgView.layer.cornerRadius = 0.f;
     }
-    TopicModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
     
     return cell;
