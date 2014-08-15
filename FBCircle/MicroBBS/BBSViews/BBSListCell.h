@@ -10,10 +10,13 @@
 /**
  *  论坛 帖子列表
  */
+@class TopicModel;
 @interface BBSListCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nameAndAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeAndCommentLabel;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
+
+- (void)setCellDataWithModel:(TopicModel *)aModel;
 
 @end

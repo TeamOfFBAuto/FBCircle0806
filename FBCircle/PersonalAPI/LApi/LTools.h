@@ -19,6 +19,7 @@
 #import "LSearchView.h"
 #import "LMoveView.h"
 #import "FBHelper.h"
+#import "NSString+Emoji.h"
 
 #define L_PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息

@@ -42,7 +42,7 @@
         CALayer *l = [self.iconImageV layer];   //获取ImageView的层
         [l setMasksToBounds:YES];
         [l setCornerRadius:2.0f];
-        self.iconImageV.backgroundColor=[UIColor redColor];
+//        self.iconImageV.backgroundColor=[UIColor redColor];
         
         self.selectionStyle=UITableViewCellSelectionStyleBlue;
 

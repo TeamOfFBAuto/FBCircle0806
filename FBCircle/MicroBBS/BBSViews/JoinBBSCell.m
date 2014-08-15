@@ -7,7 +7,7 @@
 //
 
 #import "JoinBBSCell.h"
-#import "BBSSubModel.h"
+#import "BBSInfoModel.h"
 
 @implementation JoinBBSCell
 
@@ -29,7 +29,7 @@
     cellBlock(topicId);
 }
 
-- (void)setCellDataWithModel:(BBSSubModel *)aModel cellBlock:(CellBlock)aBlock
+- (void)setCellDataWithModel:(BBSInfoModel *)aModel cellBlock:(CellBlock)aBlock
 {
     topicId = aModel.id;
     cellBlock = aBlock;

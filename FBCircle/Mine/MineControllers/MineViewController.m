@@ -38,16 +38,22 @@
 {
     [super viewDidLoad];
     
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bg_640_88"] forBarMetrics: UIBarMetricsDefault];
+    
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     UIColor * cc = RGBCOLOR(91,138,59);
     
     NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+    
+    
     
     
     self.navigationController.navigationBar.titleTextAttributes = dict;
     
     self.navigationItem.title=@"我";
     
-    self.iconArr=[NSArray arrayWithObjects:@"",@"",@"",@"",@"", nil];
+    self.iconArr=[NSArray arrayWithObjects:@"fbMetongxunlu.png",@"fbMeclock.png",@"fbMeclear.png",@"fbMeyijian.png",@"fbMefb.png", nil];
     
     self.titleArr=[NSArray arrayWithObjects:@"通讯录",@"我的足迹",@"清除缓存",@"意见反馈",@"关于fb圈", nil];
     
@@ -118,7 +124,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
     if (section==0) {
-        return 103;
+        return 70;
 
     }
     return 0;
@@ -193,20 +199,20 @@
         //头像 和 用户名 能点击部位
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setBackgroundImage:[UIImage imageNamed:@"geren320_103.png"] forState:UIControlStateHighlighted];
-        btn.frame = CGRectMake(0, 0, 320, 103);
+        btn.frame = CGRectMake(0, 0, 320, 70);
         [btn addTarget:self action:@selector(doTap) forControlEvents:UIControlEventTouchUpInside];
         
         
         
         //箭头
-        UIImageView *jiantouV = [[UIImageView alloc]initWithFrame:CGRectMake(288, 45, 7, 14)];
+        UIImageView *jiantouV = [[UIImageView alloc]initWithFrame:CGRectMake(288, 35, 7, 14)];
         [jiantouV setImage:[UIImage imageNamed:@"geren-jiantou.png"]];
         [btn addSubview:jiantouV];
         
         
         //头像图片
         
-        UIView *backFaceView = [[UIView alloc]initWithFrame:CGRectMake(23.5, 19.5, 63, 63)];
+        UIView *backFaceView = [[UIView alloc]initWithFrame:CGRectMake(23.5, 9.5, 46, 46)];
         backFaceView.backgroundColor = [UIColor whiteColor];
         backFaceView.layer.cornerRadius = 5;
         backFaceView.layer.borderColor = [RGBCOLOR(211, 211, 211)CGColor];
@@ -214,7 +220,7 @@
         backFaceView.layer.masksToBounds = YES;
         
         
-        self.userFaceImageView = [[GavatarView alloc]initWithFrame:CGRectMake(24, 20, 62, 62)];
+        self.userFaceImageView = [[GavatarView alloc]initWithFrame:CGRectMake(24, 10, 45, 45)];
         self.userFaceImageView.layer.cornerRadius = 5;
         self.userFaceImageView.layer.borderWidth = 0;//设置边框的宽度，当然可以不要
         self.userFaceImageView.layer.borderColor = [[UIColor whiteColor] CGColor];//设置边框的颜色
@@ -242,11 +248,12 @@
         
         
         //用户名
-        self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImageView.frame)+12, 30, 188, 18)];
+        self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImageView.frame)+12, 10, 188, 18)];
         //self.userNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
         
         
         [btn addSubview:self.userNameLabel];
+        
         
         //个性签名
         self.userWordsLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+3, 169, 40)];
@@ -261,7 +268,18 @@
         self.userNameLabel.text = self.personModel.person_username;
         self.userWordsLabel.text = self.personModel.person_words;
         
-        return btn;
+        UIView *lineV=[[UIView alloc]initWithFrame:CGRectMake(0, 70, 320, 1)];
+        lineV.backgroundColor=RGBCOLOR(235, 235, 235);
+        
+
+        
+        
+        UIView *aviewAll=[[UIView alloc]initWithFrame: CGRectMake(0, 0, 320, 103) ];
+        [aviewAll addSubview:btn];
+        [aviewAll addSubview:lineV];
+        btn.backgroundColor=[UIColor whiteColor];
+        
+        return aviewAll;
         
     }
     return nil;

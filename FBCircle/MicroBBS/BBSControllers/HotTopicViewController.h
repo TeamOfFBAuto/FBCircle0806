@@ -13,6 +13,6 @@
  */
 @interface HotTopicViewController : MyViewController
 
-@property(nonatomic,retain)NSString *navigationTitle;
+@property(nonatomic,assign)int data_Style;//0 热门帖子 1 推荐帖子
 
 @end

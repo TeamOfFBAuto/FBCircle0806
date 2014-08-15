@@ -7,7 +7,7 @@
 //
 
 #import "MyBBSCell.h"
-#import "BBSSubModel.h"
+#import "BBSInfoModel.h"
 
 @implementation MyBBSCell
 
@@ -23,7 +23,7 @@
     // Configure the view for the selected state
 }
 
--(void)setCellWithModel:(BBSSubModel *)aModel
+-(void)setCellWithModel:(BBSInfoModel *)aModel
 {
     [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     self.nameLabel.text = aModel.name;

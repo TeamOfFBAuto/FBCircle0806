@@ -10,7 +10,7 @@
 #import "MicroBBSInfoController.h"
 #import "BBSSearchController.h"
 #import "JoinBBSCell.h"
-#import "BBSSubModel.h"
+#import "BBSInfoModel.h"
 
 @interface ClassifyBBSController_Sub ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
@@ -60,6 +60,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc
+{
+    _table.refreshDelegate = nil;
+}
+
 #pragma mark - 事件处理
 
 /**
@@ -92,7 +98,7 @@
             NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
             for (NSDictionary *aDic in data) {
                 
-                [arr addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+                [arr addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
             }
             
             [weakTable reloadData:arr total:total];
@@ -183,11 +189,11 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BBSSubModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
-
-    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-    bbsInfo.bbsId = aModel.id;
-    [self PushToViewController:bbsInfo WithAnimation:YES];
+//    BBSSubModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+//
+//    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
+//    bbsInfo.bbsId = aModel.id;
+//    [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

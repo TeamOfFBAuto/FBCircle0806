@@ -7,6 +7,7 @@
 //
 
 #import "HotTopicCell.h"
+#import "TopicModel.h"
 
 @implementation HotTopicCell
 
@@ -20,6 +21,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)setCellWithModel:(TopicModel *)aModel
+{
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    self.aTitleLabel.text = aModel.title;
+    self.subTitleLabel.text = aModel.sub_content;
 }
 
 @end

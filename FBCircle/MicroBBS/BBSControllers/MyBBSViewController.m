@@ -11,7 +11,7 @@
 #import "MicroBBSInfoController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
-#import "BBSSubModel.h"
+#import "BBSInfoModel.h"
 
 @interface MyBBSViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -63,6 +63,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    _table.refreshDelegate = nil;
+}
+
 #pragma mark - 事件处理
 
 //进入我的论坛
@@ -108,12 +113,12 @@
             NSMutableArray *arr_create = [NSMutableArray arrayWithCapacity:create.count];
             for (NSDictionary *aDic in join) {
                 
-                [arr_join addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+                [arr_join addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
             }
             
             for (NSDictionary *aDic in create) {
                 
-                [arr_create addObject:[[BBSSubModel alloc]initWithDictionary:aDic]];
+                [arr_create addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
             }
             
             [weakSelf reloadDataWithCreateArr:arr_create joinArr:arr_join total:total];
@@ -181,7 +186,7 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BBSSubModel *aModel;
+    BBSInfoModel *aModel;
     if (indexPath.section == 0) {
         
         aModel = [createArray objectAtIndex:indexPath.row];
@@ -250,7 +255,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    BBSSubModel *aModel;
+    BBSInfoModel *aModel;
     if (indexPath.section == 0) {
         
         aModel = [createArray objectAtIndex:indexPath.row];
