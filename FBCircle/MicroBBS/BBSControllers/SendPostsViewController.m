@@ -35,6 +35,13 @@
     NSMutableArray * allImageArray;//存放图片数据
     
     NSMutableArray * allAssesters;
+    
+    ///上传图片请求
+    ASIFormDataRequest * image_request;
+    ///发表帖子请求
+    AFHTTPRequestOperation * posts_request;
+    ///地理位置
+    CLLocationManager * locationManager;
 }
 
 @end
@@ -43,6 +50,7 @@
 @synthesize title_textView = _title_textView;
 @synthesize content_textView = _content_textView;
 @synthesize fid = _fid;
+@synthesize location_string = _location_string;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -60,18 +68,18 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated
-{
+//-(void)viewWillAppear:(BOOL)animated
+//{
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 //    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-}
-
-
--(void)viewWillDisappear:(BOOL)animated
-{
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-}
+//}
+//
+//
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+////    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+////    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//}
 
 
 - (void)viewDidLoad
@@ -91,12 +99,13 @@
     
 //    self.my_right_button.userInteractionEnabled = NO;
     
-    [self.my_right_button addTarget:self action:@selector(sendTap:) forControlEvents:UIControlEventTouchUpInside];
-    
     
     allImageArray = [NSMutableArray array];
     
     allAssesters = [NSMutableArray array];
+    
+    
+    [self ShowLocation];
     
     
     _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,40)];
@@ -126,54 +135,30 @@
     
     [self.view addSubview:lineView];
     
-    
-    
     _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,50.5,300,80)];
-    
     _content_textView.textAlignment = NSTextAlignmentLeft;
-    
     _content_textView.textColor = RGBCOLOR(3,3,3);
-    
     _content_textView.delegate = self;
-    
     _content_textView.returnKeyType = UIReturnKeyDone;
-    
     _content_textView.backgroundColor = [UIColor clearColor];
-    
     _content_textView.delegate = self;
-    
     _content_textView.font = [UIFont systemFontOfSize:16];
-    
     [self.view addSubview:_content_textView];
     
-    
     content_place_label = [[UILabel alloc] initWithFrame:CGRectMake(10,0,300,33)];
-    
     content_place_label.font = [UIFont systemFontOfSize:16];
-    
     content_place_label.textColor = RGBCOLOR(173,173,173);
-    
     content_place_label.text = @"输入正文";
-    
     content_place_label.textAlignment = NSTextAlignmentLeft;
-    
     content_place_label.backgroundColor = [UIColor clearColor];
-    
     content_place_label.userInteractionEnabled = NO;
-    
     [_content_textView addSubview:content_place_label];
     
-    
-    
     imageScrollView = [[SendPostsImageScrollView alloc] initWithFrame:CGRectMake(0,_content_textView.frame.origin.y+_content_textView.frame.size.height,320,150)];
-    
     imageScrollView.showsHorizontalScrollIndicator = NO;
-    
     imageScrollView.showsVerticalScrollIndicator = NO;
     
     [self.view addSubview:imageScrollView];
-    
-    
     
     __weak typeof(self) bself = self;
     
@@ -231,24 +216,23 @@
 
 -(void)upDataImages
 {
-    
     NSString* fullURL = [NSString stringWithFormat:BBS_UPLOAD_IMAGES_URL,[SzkAPI getAuthkey]];
     
     NSLog(@"上传图片的url  ——--  %@",fullURL);
     
-    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
+    image_request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
     //    request.delegate = self;
-    request.tag = 1;
+    image_request.tag = 1;
     
-    [request setRequestMethod:@"POST"];
+    [image_request setRequestMethod:@"POST"];
     
-    request.timeOutSeconds = 30;
+    image_request.timeOutSeconds = 45;
     
-    request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
+    image_request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
     
-    request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+    image_request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
     
-    [request setPostFormat:ASIMultipartFormDataPostFormat];
+    [image_request setPostFormat:ASIMultipartFormDataPostFormat];
     
     NSLog(@"imagearray -----  %@",allImageArray);
     
@@ -269,11 +253,11 @@
             
             data = UIImageJPEGRepresentation(image,0.5);
             
-            [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [myRequestData length]]];
+            [image_request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [myRequestData length]]];
             
             //设置http body
             
-            [request addData:data withFileName:[NSString stringWithFormat:@"forum_img[%d].png",i] andContentType:@"image/PNG" forKey:@"forum_img[]"];
+            [image_request addData:data withFileName:[NSString stringWithFormat:@"forum_img[%d].png",i] andContentType:@"image/PNG" forKey:@"forum_img[]"];
             
             //  [request addData:myRequestData forKey:[NSString stringWithFormat:@"boris%d",i]];
             
@@ -282,19 +266,19 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             // 更新界面
             
-            [request startAsynchronous];
+            [image_request startAsynchronous];
         });
     });
     
     
-    __block ASIHTTPRequest * finishedRequest = request;
+    __block ASIHTTPRequest * finishedRequest = image_request;
     
     [finishedRequest setCompletionBlock:^{
         
         @try {
             __weak typeof(self) bself=self;
             
-            NSDictionary * allDic = [request.responseString objectFromJSONString];
+            NSDictionary * allDic = [image_request.responseString objectFromJSONString];
             
             NSLog(@"allDic ----   %@",allDic);
             
@@ -335,12 +319,44 @@
 
 -(void)uploadNewBBSPostsHaveImages:(BOOL)haveImage WithImageID:(NSString *)images
 {
-    NSString * fullUrl = [NSString stringWithFormat:BBS_UPLOAD_POSTS_URL,[SzkAPI getAuthkey],@"id",_title_textView.text,_content_textView.text,images,@""];
+    NSString * fullUrl = [NSString stringWithFormat:BBS_UPLOAD_POSTS_URL,[SzkAPI getAuthkey],self.fid,_title_textView.text,_content_textView.text,images,_location_string];
+    NSLog(@"发表帖子接口 -- %@",fullUrl);
     
+    NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
+    posts_request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:url]];
     
+    __weak typeof(self)bself = self;
+    
+    [posts_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        NSLog(@"发表帖子 ---- %@",allDic);
+        
+        @try {
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+            {
+                [bself.navigationController popViewControllerAnimated:YES];
+            }else
+            {
+                NSLog(@"error ---  %@",[allDic objectForKey:@"errinfo"]);
+            }
+            
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    [posts_request start];
 }
-
 
 
 
@@ -408,14 +424,6 @@
                                                                   inputViewFrameY,
                                                                   inputViewFrame.size.width,
                                                                   inputViewFrame.size.height);
-                         
-                         
-//                         CGRect content_frame = _content_textView.frame;
-//                         
-//                         content_frame.size.height = inputViewFrameY-43.5;
-//                         
-//                         _content_textView.frame = content_frame;
-                         
                      }
                      completion:^(BOOL finished) {
                      }];
@@ -507,31 +515,7 @@
 -(void)imagePickerController1:(QBImagePickerController *)imagePickerController didFinishPickingMediaWithInfo:(id)info
 {
     NSArray *mediaInfoArray = (NSArray *)info;
-    
-//    NSMutableArray * allAssesters = [[NSMutableArray alloc] init];
-    
-//    for (int i = 0;i < mediaInfoArray.count;i++)
-//    {
-//        UIImage * image = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerOriginalImage"];
-//        
-//        UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
-//        
-//        [allImageArray addObject:newImage];
-//        
-//        NSURL * url = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"];
-//        
-//        NSString * url_string = [[url absoluteString] stringByReplacingOccurrencesOfString:@"/" withString:@""];
-//        
-//        url_string = [url_string stringByAppendingString:@".png"];
-//        
-//        [allAssesters addObject:url_string];
-        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-//            [ZSNApi saveImageToDocWith:url_string WithImage:image];
-//        });
-//    }
-    
-    
+
     [imagePickerController dismissViewControllerAnimated:YES completion:NULL];
     
     
@@ -546,7 +530,6 @@
     }
     
     [self loadSelectedImages];
-    
 }
 
 -(void)imagePickerControllerWillFinishPickingMedia:(QBImagePickerController *)imagePickerController
@@ -557,57 +540,7 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
- /*直接发送方法
-    NSMutableArray * allImageArray = [NSMutableArray array];
-    
-    NSMutableArray * allAssesters = [[NSMutableArray alloc] init];
-    
-    UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    [allImageArray addObject:image1];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
-     {
-         //here is your URL : assetURL
-         
-         NSString * url_string = [[assetURL absoluteString] stringByReplacingOccurrencesOfString:@"/" withString:@""];
-         
-         url_string = [url_string stringByAppendingString:@".png"];
-         
-         [allAssesters addObject:url_string];
-         
-         [picker dismissViewControllerAnimated:YES completion:NULL];
-         
-//         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-//             [ZSNApi saveImageToDocWith:url_string WithImage:image1];
-//         });
-     }];
-  
-  */
-    
-    
-    /*
-    
-    UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    [allImageArray addObject:image1];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
-     {
-         //here is your URL : assetURL
-         
-         [allAssesters addObject:assetURL];
-     }];
-    
-    [imageScrollView loadAllViewsWith:allImageArray];
-     */
-    
     __weak typeof(self) bself = self;
-    
     
     TakePhotoPreViewController * previewC = [[TakePhotoPreViewController alloc] initWithBlock:^{
         
@@ -619,7 +552,6 @@
         [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
          {
              //here is your URL : assetURL
-             
              [allAssesters addObject:assetURL];
          }];
         
@@ -630,14 +562,51 @@
     
     previewC.theImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-//    [picker presentViewController:previewC animated:YES completion:NULL];
-    
     [picker pushViewController:previewC animated:YES];
-    
-    
-    
 }
 
+
+#pragma mark - 获取地理位置
+
+-(void)ShowLocation
+{
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    [locationManager startUpdatingLocation];
+}
+
+-(void)loadLocationDataWith:(CLLocation *)newLocation With:(NSArray *)array
+{
+    if (array.count > 0)
+    {
+        CLPlacemark *placemark = [array objectAtIndex:0];
+        NSString * country = placemark.administrativeArea;
+        NSString * city = placemark.subLocality;
+        
+        _location_string = [NSString stringWithFormat:@"%@ %@",country,city];
+
+    }
+}
+
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation {
+    
+    [manager stopUpdatingLocation];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    
+    __weak typeof(self) bself = self;
+    
+    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *array, NSError *error)
+     {
+         [bself loadLocationDataWith:newLocation With:array];
+         
+     }];
+}
 
 
 #pragma mark - 加载选择的图片
@@ -657,24 +626,16 @@
                 break;
             case 1://预览图片
             {
-                
                 WritePreviewDeleteViewController * preViewVC = [[WritePreviewDeleteViewController alloc] init];
-
                 preViewVC.AllImagesArray = allImageArray;
-                
                 preViewVC.currentPage = index;
-                
-//                [self.navigationController pushViewController:preViewVC animated:YES];
-                
                 [self presentViewController:preViewVC animated:YES completion:NULL];
-                
             }
                 break;
                 
             default:
                 break;
         }
-        
     }];
     
 }
@@ -787,8 +748,6 @@
     return YES;
 }
 
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -806,9 +765,6 @@
     
     imageScrollView = nil;
 }
-
-
-
 
 
 /*

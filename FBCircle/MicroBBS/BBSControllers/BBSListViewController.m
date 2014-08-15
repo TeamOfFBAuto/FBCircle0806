@@ -11,7 +11,7 @@
 #import "HotTopicViewController.h"
 #import "ClassifyBBSController.h"
 #import "MicroBBSInfoController.h"
-
+#import "SendPostsViewController.h"
 #import "LTools.h"
 #import "LSecionView.h"
 #import "BBSListCell.h"
@@ -111,11 +111,12 @@
 }
 
 /**
- *  添加论坛
+ *  添加帖子
  */
 - (void)clickToAddBBS
-{
+{//张少南 这里需要论坛id
     SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
+    sendPostVC.fid = @"1";
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 

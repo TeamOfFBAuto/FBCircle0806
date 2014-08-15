@@ -45,11 +45,11 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bg_640_88"] forBarMetrics: UIBarMetricsDefault];
     
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];//返回按钮颜色
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
     
     UIColor * cc = [UIColor whiteColor];//RGBCOLOR(91,138,59);
     
@@ -59,12 +59,6 @@
 }
 
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-}
-
 
 - (void)viewDidLoad
 {
@@ -73,7 +67,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.view.backgroundColor = RGBCOLOR(214,214,214);
-	
+
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spaceButton.width = MY_MACRO_NAME?-5:5;

@@ -370,30 +370,30 @@
     
     
     
-    img= [img stringByReplacingOccurrencesOfString:@"[愣神]" withString:@"<img src=\"Expression_1.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[思考]" withString:@"<img src=\"Expression_2.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[大笑]" withString:@"<img src=\"Expression_3.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[大哭]" withString:@"<img src=\"Expression_4.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[发怒]" withString:@"<img src=\"Expression_5.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[恶魔]" withString:@"<img src=\"Expression_6.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[撇嘴]" withString:@"<img src=\"Expression_7.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[害羞]" withString:@"<img src=\"Expression_8.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[霸气]" withString:@"<img src=\"Expression_9.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[睡觉]" withString:@"<img src=\"Expression_10.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[真棒]" withString:@"<img src=\"Expression_11.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[晕菜]" withString:@"<img src=\"Expression_12.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[礼物]" withString:@"<img src=\"Expression_13.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[微笑]" withString:@"<img src=\"Expression_14.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[鬼脸]" withString:@"<img src=\"Expression_15.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[傻笑]" withString:@"<img src=\"Expression_16.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[可爱]" withString:@"<img src=\"Expression_17.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[憨笑]" withString:@"<img src=\"Expression_18.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[伤心]" withString:@"<img src=\"Expression_19.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[惊讶]" withString:@"<img src=\"Expression_20.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[哈欠]" withString:@"<img src=\"Expression_21.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[劈掌]" withString:@"<img src=\"Expression_22.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[得意]" withString:@"<img src=\"Expression_23.png\"> 你 </img>"] ;
-    img= [img stringByReplacingOccurrencesOfString:@"[大爱]" withString:@"<img src=\"Expression_24.png\"> 你 </img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[愣神]" withString:@"<img src=\"Expression_1.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[思考]" withString:@"<img src=\"Expression_2.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[大笑]" withString:@"<img src=\"Expression_3.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[大哭]" withString:@"<img src=\"Expression_4.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[发怒]" withString:@"<img src=\"Expression_5.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[恶魔]" withString:@"<img src=\"Expression_6.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[撇嘴]" withString:@"<img src=\"Expression_7.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[害羞]" withString:@"<img src=\"Expression_8.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[霸气]" withString:@"<img src=\"Expression_9.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[睡觉]" withString:@"<img src=\"Expression_10.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[真棒]" withString:@"<img src=\"Expression_11.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[晕菜]" withString:@"<img src=\"Expression_12.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[礼物]" withString:@"<img src=\"Expression_13.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[微笑]" withString:@"<img src=\"Expression_14.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[鬼脸]" withString:@"<img src=\"Expression_15.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[傻笑]" withString:@"<img src=\"Expression_16.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[可爱]" withString:@"<img src=\"Expression_17.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[憨笑]" withString:@"<img src=\"Expression_18.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[伤心]" withString:@"<img src=\"Expression_19.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[惊讶]" withString:@"<img src=\"Expression_20.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[哈欠]" withString:@"<img src=\"Expression_21.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[劈掌]" withString:@"<img src=\"Expression_22.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[得意]" withString:@"<img src=\"Expression_23.png\"> 你l</img>"] ;
+    img= [img stringByReplacingOccurrencesOfString:@"[大爱]" withString:@"<img src=\"Expression_24.png\"> 你l</img>"] ;
     
     
     

@@ -11,7 +11,7 @@
 
 
 
-@interface SendPostsViewController : MyViewController<UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate>
+@interface SendPostsViewController : MyViewController<UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,CLLocationManagerDelegate>
 {
     
 }
@@ -22,7 +22,7 @@
 @property(nonatomic,strong)UITextView * content_textView;
 ///论坛id
 @property(nonatomic,strong)NSString * fid;
-
-
+///显示所在地
+@property(nonatomic,strong)NSString * location_string;
 
 @end

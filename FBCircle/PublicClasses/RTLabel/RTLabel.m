@@ -1232,7 +1232,7 @@ void RunDelegateDeallocCallback(void* refCon);
     CTFrameRef _frame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0,content.length),path, NULL);
     CGPathRelease(path);
     //把文字内容绘制出来
-    //    CTFrameDraw(_frame, context);
+ //   CTFrameDraw(_frame, context);
     //获取画出来的内容的行数
     CFArrayRef lines = CTFrameGetLines(_frame);
     //获取每行的原点坐标
@@ -1241,7 +1241,6 @@ void RunDelegateDeallocCallback(void* refCon);
     
     for (int i = 0; i < CFArrayGetCount(lines); i++)
     {
-        
         CTLineRef line = CFArrayGetValueAtIndex(lines, i);
         CGFloat lineAscent;
         CGFloat lineDescent;
@@ -1267,7 +1266,7 @@ void RunDelegateDeallocCallback(void* refCon);
             runRect.size.width = (CGFloat)CTRunGetTypographicBounds(run, CFRangeMake(0,0), &runAscent, &runDescent, NULL);
             //            NSLog(@"width = %f",runRect.size.width);
             
-            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent - _lineSpacing, runRect.size.width, runAscent + runDescent);
+            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runAscent - _lineSpacing, runRect.size.width, runAscent + runDescent);
             
             NSString *imageName = [attributes objectForKey:@"imageName"];
             
@@ -1281,9 +1280,7 @@ void RunDelegateDeallocCallback(void* refCon);
                     CGRect imageDrawRect;
                     imageDrawRect.size = CGSizeMake(self.imageWidth?self.imageWidth:17,self.imageHeight?self.imageHeight:17);
                     imageDrawRect.origin.x = runRect.origin.x + lineOrigin.x;
-                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:_lineSpacing) - (lineOrigin.y<10?_lineSpacing:0);
-                    imageDrawRect.origin.y = lineOrigin.y + (self.imageWidth?4:-_lineSpacing) - (lineOrigin.y<10?_lineSpacing:0);
-                
+                    imageDrawRect.origin.y = lineOrigin.y - _lineSpacing*i - 2;
                     CGContextDrawImage(context,imageDrawRect,image.CGImage);
                 }
             }
