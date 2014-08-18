@@ -182,7 +182,7 @@ alpha:(a)]
 //搜索
 
 #define FBCIRCLE_SEARCH_BBS @"http://quan.fblife.com/index.php?c=forum&a=searchforum&keyword=%@&page=%d&ps=%d" //搜论坛
-#define FBCIRCLE_SEARCH_TOPIC @"" //搜帖子
+#define FBCIRCLE_SEARCH_TOPIC @"http://quan.fblife.com/index.php?c=forum&a=searchthread&keyword=%@&page=%d&ps=%d" //搜帖子
 
 //微论坛主页 -- 帖子
 

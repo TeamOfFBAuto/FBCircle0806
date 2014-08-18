@@ -85,7 +85,6 @@
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 45 - 49 - 20) showLoadMore:NO];
     _table.backgroundColor = [UIColor clearColor];
-//    _table.delegate = self;
     _table.refreshDelegate = self;
     _table.dataSource = self;
     

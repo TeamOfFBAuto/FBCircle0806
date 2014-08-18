@@ -46,9 +46,13 @@
 
 -(void)setCellWithModel:(TopicModel *)aModel
 {
-    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    NSString *imageUrl;
+    if ([aModel.img count] > 0) {
+        imageUrl = [aModel.img objectAtIndex:0];
+    }
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     self.aTitleLabel.text = aModel.title;
-    self.subTitleLabel.text = aModel.sub_content;
+    self.subTitleLabel.text = aModel.sub_content ? aModel.sub_content : aModel.content;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

@@ -81,6 +81,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 + (NSString *)NSStringNotNull:(NSString *)text;
 
++ (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;
+
 #pragma mark - 验证有效性
 
 /**

@@ -29,6 +29,24 @@
 
 @property(nonatomic,assign)int inForum;//是否在此论坛中
 
+@property(nonatomic,retain)NSString *fid;
+
+
+//"tid": "3",
+//"fid": "1",
+//"title": "ttttt",
+//"content": "323232323233232",
+//"imgid": "3,4",
+//"uid": "967897",
+//"username": "soulnear",
+//"address": "ewewewewwe",
+//"comment_num": "1",
+//"zan_num": "0",
+//"time": "1407926715",
+//"ip": "101.226.89.119",
+//"status": "0",
+//"isdel": "0"
+
 /*
  errcode:>0 时返回错误结果
  errinfo:errcode>0 时返回错误描述

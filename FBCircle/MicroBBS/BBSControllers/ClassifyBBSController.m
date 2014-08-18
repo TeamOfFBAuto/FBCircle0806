@@ -14,8 +14,8 @@
 
 @interface ClassifyBBSController ()<UISearchBarDelegate>
 {
-    NSArray *_first_DataArr;//第一部分
-    NSArray *_second_DataArray;//第二部分
+    NSArray *_tuijian_Arr;//第一部分 推荐
+    NSArray *_normal_Array;//第二部分 正常
     UIView *search_bgview;
     UIScrollView *bgScroll;
     
@@ -80,17 +80,17 @@
 {
     NSString *title = nil;
     NSString *class_id = nil;
-    if (sender.tag <= 1000) {
+    if (sender.tag < 1000) {
         //上部分 100开始
         
-        BBSModel *aModel = [_first_DataArr objectAtIndex:sender.tag - 100];
+        BBSModel *aModel = [_tuijian_Arr objectAtIndex:sender.tag - 100];
         title = aModel.classname;
         class_id = aModel.id;
         
     }else
     {
         //下部分 1000开始
-        BBSModel *aModel = [_second_DataArray objectAtIndex:sender.tag - 1000];
+        BBSModel *aModel = [_normal_Array objectAtIndex:sender.tag - 1000];
         title = aModel.classname;
         class_id = aModel.id;
         
@@ -131,14 +131,27 @@
     LTools *tool = [[LTools alloc]initWithUrl:FBCIRCLE_MICROBBS_BBSCLASS isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSArray *dataInfo = [result objectForKey:@"datainfo"];
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
-        for (NSDictionary *aDic in dataInfo) {
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-            [arr addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+            NSArray *tuijian = [dataInfo objectForKey:@"tuijian"];
+            NSArray *normal = [dataInfo objectForKey:@"nomal"];
+            
+            NSMutableArray *arr_tuijian = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            NSMutableArray *arr_normal = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            for (NSDictionary *aDic in tuijian) {
+                
+                [arr_tuijian addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+            }
+            
+            for (NSDictionary *aDic in normal) {
+                
+                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+            }
+            
+            [weakSelf createFirstViewWithTitles:arr_tuijian];
+            [weakSelf createSecondViewWithDataArray:arr_normal];
         }
-        
-        [weakSelf createFirstViewWithTitles:arr];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
@@ -165,7 +178,7 @@
 
 - (void)createFirstViewWithTitles:(NSArray *)titles
 {
-    _first_DataArr = titles;
+    _tuijian_Arr = titles;
     
     int k = 0;
     int line = 0;
@@ -181,20 +194,23 @@
         
         [bgScroll addSubview:lBtn];
     }
-    
-    [self createSecondViewWithDataArray:@[@"赛事",@"汽车",@"竞技",@"体育",@"赛跑"]];
+
 }
 
 - (void)createSecondViewWithDataArray:(NSArray *)array
 {
-    CGFloat aY = [bgScroll viewWithTag:(_first_DataArr.count + 100 - 1)].bottom + 15;
+    _normal_Array = array;
+    CGFloat aY = [bgScroll viewWithTag:(_normal_Array.count + 100 - 1)].bottom + 15;
     int k = 0;
     int line = 0;
     for (int i = 0; i < array.count; i ++) {
+        
+        NSString *title = ((BBSModel *)[array objectAtIndex:i]).classname;
+        
         k = i % 4;
         line = i / 4;
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [btn setTitle:[array objectAtIndex:i] forState:UIControlStateNormal];
+        [btn setTitle:title forState:UIControlStateNormal];
         btn.frame = CGRectMake(80 * k, aY + 45 * line, 80, 45);
         [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         btn.backgroundColor = [UIColor whiteColor];

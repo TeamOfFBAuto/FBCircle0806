@@ -196,7 +196,7 @@
         aModel = [joinArray objectAtIndex:indexPath.row];
     }
     MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-    bbsInfo.bbsId = aModel.id;
+    bbsInfo.bbsId = aModel.fid;
     [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath

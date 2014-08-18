@@ -377,6 +377,30 @@
     return text;
 }
 
+/**
+ *  关键词特殊显示
+ *
+ *  @param content   源字符串
+ *  @param aKeyword  关键词
+ *  @param textColor 关键词颜色
+ */
++ (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor
+{
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:content];
+    for (int i = 0; i <= content.length - aKeyword.length; i ++) {
+        
+        NSRange tmp = NSMakeRange(i, aKeyword.length);
+        
+        NSRange range = [content rangeOfString:aKeyword options:NSCaseInsensitiveSearch range:tmp];
+        
+        if (range.location != NSNotFound) {
+            [string addAttribute:NSForegroundColorAttributeName value:textColor range:range];
+        }
+    }
+    
+    return string;
+}
+
 #pragma - mark 切图
 
 +(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size{

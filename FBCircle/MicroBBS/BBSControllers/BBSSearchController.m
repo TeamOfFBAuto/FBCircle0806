@@ -12,6 +12,7 @@
 #import "BBSTopicController.h"
 #import "BBSInfoModel.h"
 #import "SearchBBSCell.h"
+#import "TopicModel.h"
 
 #define SEARCH_HISTORY @"search_history"//搜索历史词
 
@@ -205,6 +206,7 @@
     [self recordHistoryKeyword:aKeyword];
     
     NSString *url;
+
     if (search_tag == 1) {
         NSLog(@"论坛");
         
@@ -212,7 +214,7 @@
         url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,L_PAGE_SIZE];
     }else
     {
-        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_BBS,keyword,_table.pageNum,L_PAGE_SIZE];
+        url = [NSString stringWithFormat:FBCIRCLE_SEARCH_TOPIC,keyword,_table.pageNum,L_PAGE_SIZE];
         NSLog(@"帖子");
         
         push_tiezi = YES;
@@ -230,7 +232,13 @@
         
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
         for (NSDictionary *aDic in data) {
-            [arr addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+            if (search_tag == 1) {
+                [arr addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+
+            }else
+            {
+                [arr addObject:[[TopicModel alloc]initWithDictionary:aDic]];
+            }
         }
         
         if (isClear) {
@@ -362,6 +370,10 @@
     // 输出点击的view的类名
     NSLog(@"%@", NSStringFromClass([touch.view class]));
     
+    if ([NSStringFromClass([touch.view class]) isEqualToString:NSStringFromClass([LButtonView class])]) {
+        return NO;
+    }
+    
     // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
     if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
         return NO;
@@ -471,6 +483,27 @@
         return cell;
     }
     
+    if (search_tag == 2) {
+        
+        static NSString *identifier = @"tiezi";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = aModel.title;
+        cell.detailTextLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        cell.detailTextLabel.numberOfLines = 2;
+        
+        NSString *content = aModel.content;        
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+        cell.detailTextLabel.attributedText = [LTools attributedString:content keyword:keyword color:[UIColor colorWithHexString:@"637cbc"]];
+        
+        return cell;
+    }
+    
     static NSString * identifier = @"SearchBBSCell";
     
     SearchBBSCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -486,5 +519,6 @@
     return cell;
     
 }
+
 
 @end

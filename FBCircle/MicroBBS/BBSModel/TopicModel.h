@@ -28,6 +28,9 @@
 @property(nonatomic,retain)NSString *isdel;//
 @property(nonatomic,retain)NSString *imgid;//图片id
 
+//热门推荐
+@property(nonatomic,retain)NSString *content;//内容
+@property(nonatomic,retain)NSArray *img;//图片数组
 //我加入回帖最多
 @property(nonatomic,retain)NSString *forumpic;//主帖图片
 
