@@ -256,7 +256,7 @@
  */
 - (UIView *)createRecommendViewFrame:(CGRect)aFrame
 {
-    NSArray *titles = @[@"改装商最好的广告 雪佛兰创酷",@"阿喀琉斯就打开啦",@"哈哈哈大撒旦"];
+    NSArray *titles = @[@"改装商最好的广告 雪佛兰创酷",@"阿喀琉斯就打开啦"];
     
     UIView *recommed_view = [[UIView alloc]init];
     recommed_view.backgroundColor = [UIColor whiteColor];
@@ -381,6 +381,14 @@
     if (indexPath.row == 0 || indexPath.row == _table.dataArray.count - 1) {
         
         cell.bgView.layer.cornerRadius = 3.f;
+        
+        if (indexPath.row == 0) {
+            cell.upMask.hidden = YES;
+        }else
+        {
+            cell.downMask.hidden = YES;
+        }
+        
     }else
     {
         cell.bgView.layer.cornerRadius = 0.f;

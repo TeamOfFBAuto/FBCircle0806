@@ -13,6 +13,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IdM-gk-AOw">
+                        <rect key="frame" x="10" y="60" width="300" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="08D-OY-Gf6">
+                        <rect key="frame" x="10" y="0.0" width="300" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bYd-hE-kyV">
                         <rect key="frame" x="10" y="0.0" width="300" height="74"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -46,8 +56,10 @@
             <connections>
                 <outlet property="aTitleLabel" destination="3K5-hJ-p3e" id="YjB-N7-Me7"/>
                 <outlet property="bgView" destination="bYd-hE-kyV" id="R1J-KH-7Re"/>
+                <outlet property="downMask" destination="IdM-gk-AOw" id="9kR-RX-091"/>
                 <outlet property="nameAndAddressLabel" destination="qhT-yH-WUg" id="vbd-o9-tbt"/>
                 <outlet property="timeAndCommentLabel" destination="FTV-aZ-NrB" id="phY-7H-O4h"/>
+                <outlet property="upMask" destination="08D-OY-Gf6" id="tFE-g5-ZKW"/>
             </connections>
         </tableViewCell>
     </objects>

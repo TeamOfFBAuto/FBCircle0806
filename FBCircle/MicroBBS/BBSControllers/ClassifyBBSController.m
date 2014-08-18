@@ -147,6 +147,12 @@
             for (NSDictionary *aDic in normal) {
                 
                 [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+
             }
             
             [weakSelf createFirstViewWithTitles:arr_tuijian];
@@ -210,6 +216,11 @@
         k = i % 4;
         line = i / 4;
         
+        if (i % 4 == 0) {
+            UIView *line_bg = [[UIView alloc]initWithFrame:CGRectMake(0, aY + 45 * (i / 4), 320, 45)];
+            line_bg.backgroundColor = [UIColor colorWithHexString:@"f0f1f3"];
+            [bgScroll addSubview:line_bg];
+        }
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [btn setTitle:title forState:UIControlStateNormal];

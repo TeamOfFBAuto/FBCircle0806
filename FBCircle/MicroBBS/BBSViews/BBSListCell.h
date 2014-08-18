@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameAndAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeAndCommentLabel;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
+@property (strong, nonatomic) IBOutlet UIView *downMask;
+@property (strong, nonatomic) IBOutlet UIView *upMask;
 
 - (void)setCellDataWithModel:(TopicModel *)aModel;
 

@@ -144,9 +144,7 @@
 {
     BBSInfoModel *aModel = [_myBBSArray objectAtIndex:sender.tag - 100];
     BBSListViewController *list = [[BBSListViewController alloc]init];
-    list.bbsId = aModel.id;
-    //test
-    list.bbsId = @"1";
+    list.bbsId = aModel.fid;
     [self PushToViewController:list WithAnimation:YES];
 }
 
@@ -480,7 +478,10 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _concern_hot_array.count + 1;
+    if (_concern_hot_array.count > 0) {
+        return _concern_hot_array.count + 1;
+    }
+    return _concern_hot_array.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

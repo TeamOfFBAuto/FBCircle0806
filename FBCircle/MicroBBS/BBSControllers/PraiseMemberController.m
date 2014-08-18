@@ -49,7 +49,9 @@
     
     //获取称赞者
     
-    [self getZanList];
+//    [self getZanList];
+    
+    [_table showRefreshHeader:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,11 +106,14 @@
 {
     NSLog(@"loadNewData");
     
+    [self getZanList];
+    
 }
 
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
+    [self getZanList];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
