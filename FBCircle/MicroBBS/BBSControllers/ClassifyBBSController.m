@@ -147,11 +147,6 @@
             for (NSDictionary *aDic in normal) {
                 
                 [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
 
             }
             
