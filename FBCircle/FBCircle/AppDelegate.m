@@ -36,6 +36,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    _uploadData = [[FBCircleUploadData alloc] init];
     
     MainViewController * mainVC = [[MainViewController alloc] init];
     

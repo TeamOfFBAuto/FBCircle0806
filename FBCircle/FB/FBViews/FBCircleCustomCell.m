@@ -503,7 +503,7 @@
             showBigVC.allImagesUrlArray=arry_url;
             
             showBigVC.currentPage = index-1;
-            
+            VCtest.hidesBottomBarWhenPushed = YES;
             [VCtest.navigationController pushViewController:showBigVC animated:YES];
         }];
         
@@ -744,15 +744,17 @@
 
 -(void)showOriginBlog
 {
+    UIViewController *VCtest=(UIViewController *)self.delegate;
     
     if ([_myModel.fb_sort isEqualToString:@"1"])//分享类型，跳转到浏览器
     {
-        
         FBCircleWebViewController * webVC = [[FBCircleWebViewController alloc] init];
         
         webVC.web_url = _myModel.rfb_zan_num;
         
-        [[(UIViewController *)self.delegate navigationController] pushViewController:webVC animated:YES];
+        VCtest.hidesBottomBarWhenPushed = YES;
+        
+        [VCtest.navigationController pushViewController:webVC animated:YES];
         
     }else//普通类型，跳转到详情
     {
@@ -762,7 +764,9 @@
         
         detail.isForward = YES;
         
-        [[(UIViewController *)self.delegate navigationController] pushViewController:detail animated:YES];
+        VCtest.hidesBottomBarWhenPushed = YES;
+        
+        [VCtest.navigationController pushViewController:detail animated:YES];
     }
     
 }
@@ -1594,11 +1598,15 @@
 
 -(void)pushToPersonalWith:(NSString *)theUid
 {
+    UIViewController *VCtest=(UIViewController *)self.delegate;
+    
     GRXX4ViewController * friendView = [[GRXX4ViewController alloc] init];
     
     friendView.passUserid = theUid;
     
-    [[(UIViewController *)self.delegate navigationController] pushViewController:friendView animated:YES];
+    VCtest.hidesBottomBarWhenPushed = YES;
+    
+    [VCtest.navigationController pushViewController:friendView animated:YES];
 }
 
 

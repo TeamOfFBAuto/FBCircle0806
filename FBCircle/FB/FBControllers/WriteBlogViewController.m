@@ -774,7 +774,7 @@
         
     AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-//    [appdelegate.uploadData upload];//张少南 先注释掉
+    [appdelegate.uploadData upload];//张少南 先注释掉
     
     
     [self dismissViewControllerAnimated:YES completion:^{

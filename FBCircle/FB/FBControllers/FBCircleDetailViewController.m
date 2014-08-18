@@ -88,13 +88,30 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.inputToolBarView.myTextView resignFirstResponder];
+    
+    isMyTextView = NO;
+    
+    _theModel.isShowMenuView = NO;
+    
+    if (fbcircledetailviewblock)
+    {
+        fbcircledetailviewblock();
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    NSLog(@"self.theModel.fb_tid ----  %@",self.theModel.fb_tid);
-    
     
     //执行我的消息界面设置的block 用于请求单个文章数据
     if (self.gmyMessagePassBlock) {
@@ -105,7 +122,7 @@
     
     self.titleLabel.text = @"详情";
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     if (_isForward)
     {
@@ -124,39 +141,25 @@
     [self loadCommentsWithPage:_currentPage];
     
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64-44) style:UITableViewStylePlain];
-    
     _myTableView.delegate = self;
-    
     _myTableView.dataSource = self;
-    
     _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.view addSubview:_myTableView];
     
     loadview=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
-    
     _myTableView.tableFooterView = loadview;
-    
-    
-    
     
     faceScrollView = [[WeiBoFaceScrollView alloc] initWithFrame:CGRectMake(0,0,320,215) target:self];
     faceScrollView.delegate = self;
     faceScrollView.bounces = NO;
     faceScrollView.contentSize = CGSizeMake(320*3,0);
-    
-    
+
     
     _inputToolBarView = [[ChatInputView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480)-20-44-44,320,44)];
-    
     _inputToolBarView.myTextView.delegate = self;
-    
     _inputToolBarView.delegate = self;
-    
     _inputToolBarView.myTextView.returnKeyType = UIReturnKeySend;
-    
     _inputToolBarView.myTextView.textColor = RGBCOLOR(153,153,153);
-    
     [self.view addSubview:_inputToolBarView];
     
     [_inputToolBarView.sendButton setTitle:nil forState:UIControlStateNormal];
@@ -174,10 +177,6 @@
 												 name:UIKeyboardWillHideNotification
                                                object:nil];
     
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
-    
 
     if ((_theModel.fb_tid.length == 0 || [_theModel.fb_tid isEqualToString:@"(null)"] || [_theModel isKindOfClass:[NSNull class]])&&![_flag isEqualToString:@"test"])
     {
@@ -186,8 +185,6 @@
         
         return;
     }
-    
-    
     
     /**
      test
@@ -225,22 +222,9 @@
              
              NSArray *dataInfoArray = [dataDic objectForKey:@"datainfo"];
              
-             
              NSDictionary *wenzhangDic = dataInfoArray[0];
              
-             
-             
-             NSLog(@"dataInfoArray==%@",dataInfoArray);
-             
-             
-             NSLog(@"wenzhangDic%@",wenzhangDic);
-             
-             
-             
              bself.theModel = [[FBCircleModel alloc]initWithDictionary:wenzhangDic];
-             
-//             NSLog(@"_model.fb_tid===%@",_theModel.fb_tid);
-//             [bself.myTableView reloadData];
              
              [bself loadCommentsWithPage:_currentPage];
              
@@ -251,10 +235,7 @@
          @finally {
              
          }
-         
-         
      }];
-    
 }
 
 
@@ -301,8 +282,6 @@
     //szk修改
     // int pinglun = [_theModel.fb_reply_num intValue];
     int pinglun = _data_array.count;
-    
-    NSLog(@"xxxxxxpinglun=====%dxxxxxxzan==%d",pinglun,zan);
     
     if (zan == 0 && pinglun == 0)
     {
@@ -387,15 +366,9 @@
         
     }else if (indexPath.row == 1)
     {
-        
-        
-        NSLog(@"——————————%@",_theModel.fb_praise_array);
         FBCircleDetailPraiseView * thePraiseView = [[FBCircleDetailPraiseView alloc] initWithFrame:CGRectMake(0,0,320,[tableView rectForRowAtIndexPath:indexPath].size.height)];
-        
         thePraiseView.delegate = self;
-                
         [thePraiseView loadAllUserImagesWith:_theModel.fb_praise_array];
-        
         [cell.contentView addSubview:thePraiseView];
         
     }else
@@ -492,21 +465,14 @@
             if ((_theModel.rfb_tid.length == 0 || [_theModel.rfb_tid isEqualToString:@"(null)"] || [_theModel.rfb_tid isKindOfClass:[NSNull class]]) && [_theModel.rfb_content isEqualToString:@"此内容已删除"])
             {
                 myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
-                
                 myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
-                
                 [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"此内容已删除"];
-                
                 [self.view addSubview:myAlertView];
                 
                 [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1];
                 
-                
                 return;
-                
             }
-            
-            
             
             __weak typeof(self) bself = self;
             
@@ -570,18 +536,10 @@
         }
     }
     
-    
-    
-    
-    
     praiseModel.praise_image_url = [SzkAPI getUid];
-    
     praiseModel.praise_uid = [SzkAPI getUid];
-    
     praiseModel.praise_image_url = [SzkAPI getUserFace];
-    
     praiseModel.praise_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-    
     [_theModel.fb_praise_array insertObject:praiseModel atIndex:0];
     
     _theModel.fb_zan_num = [NSString stringWithFormat:@"%d",([_theModel.fb_zan_num intValue]+1)];
@@ -911,13 +869,9 @@
     
     
     FBCircleCommentModel * commentModel = [[FBCircleCommentModel alloc] init];
-    
     commentModel.comment_content = self.inputToolBarView.myTextView.text;
-    
     commentModel.comment_uid = [SzkAPI getUid];
-    
     commentModel.comment_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-    
     commentModel.comment_face = [ZSNApi returnUrl:[SzkAPI getUid]];
     
     //             [_theModel.fb_comment_array addObject:commentModel];
@@ -927,8 +881,6 @@
     _theModel.fb_reply_num = [NSString stringWithFormat:@"%d",([_theModel.fb_reply_num intValue]+1)];
     
     [self.myTableView reloadData];
-    
-
     
     
     
@@ -979,9 +931,7 @@
 -(void)clickHeaderWith:(NSString *)theUid
 {
     GRXX4ViewController * friendView = [[GRXX4ViewController alloc] init];
-    
     friendView.passUserid = theUid;
-    
     [[self navigationController] pushViewController:friendView animated:YES];
 }
 
@@ -989,13 +939,9 @@
 -(void)clickHeaderShowInfomationWith:(NSString *)theUid
 {
     GRXX4ViewController * friendView = [[GRXX4ViewController alloc] init];
-    
     friendView.passUserid = theUid;
-    
     [[self navigationController] pushViewController:friendView animated:YES];
 }
-
-
 
 
 //原文转发转换
@@ -1005,47 +951,26 @@
 {
     
     FBCircleModel * aModel = [[FBCircleModel alloc] init];
-    
     aModel.fb_tid = forward_model.rfb_tid;
-    
     aModel.fb_uid = forward_model.rfb_uid;
-    
     aModel.fb_username = forward_model.rfb_username;
-    
     aModel.fb_content = forward_model.rfb_content;
-        
     aModel.fb_imageid = forward_model.rfb_imageid;
-    
     aModel.fb_topic_type = forward_model.rfb_topic_type;
-    
     aModel.fb_zan_num = forward_model.rfb_zan_num;
-    
     aModel.fb_reply_num = forward_model.rfb_reply_num;
-    
     aModel.fb_forward_num = forward_model.rfb_forward_num;
-    
     aModel.fb_replyid = forward_model.rfb_replyid;
-    
     aModel.fb_rootid = forward_model.rfb_rootid;
-    
     aModel.fb_ip = forward_model.rfb_ip;
-    
     aModel.fb_lng = forward_model.rfb_lng;
-    
     aModel.fb_lat = forward_model.rfb_lat;
-    
     aModel.fb_area = forward_model.rfb_area;
-    
     aModel.fb_status = forward_model.rfb_status;
-    
     aModel.fb_deteline = forward_model.rfb_deteline;
-    
     aModel.fb_image = forward_model.rfb_image;
-    
     aModel.fb_praise_array = forward_model.rfb_praise_array;
-    
     aModel.fb_face = forward_model.rfb_face;
-    
     
     if ([forward_model.fb_sort isEqualToString:@"1"])
     {

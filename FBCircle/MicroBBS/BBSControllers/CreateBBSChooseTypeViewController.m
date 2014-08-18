@@ -36,11 +36,19 @@
     [super viewDidLoad];
     
     self.titleLabel.text = @"创建新论坛";
+    self.rightString = @"完成";
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"BBSClassify" ofType:@"plist"];
     
-    _data_array = [NSMutableArray arrayWithObjects:@"公益",@"汽车",@"旅行",@"摄影",@"户外",@"兴趣",@"购车",@"试驾",@"改装",@"品车",@"铁骑",@"寒窗春暖",@"公益",@"汽车",@"旅行",@"摄影",@"户外",@"兴趣",@"购车",@"试驾",@"改装",@"品车",@"铁骑",@"寒窗春暖", nil];
+    NSDictionary * dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSLog(@"dictionary ----   %@",dictionary);
+    NSArray * special = [dictionary objectForKey:@"special"];
+    NSArray * normal = [dictionary objectForKey:@"normal"];
     
+    _data_array = [NSMutableArray array];
+    [_data_array addObjectsFromArray:special];
+    [_data_array addObjectsFromArray:normal];
     
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64) style:UITableViewStylePlain];
     _myTableView.delegate = self;
@@ -49,6 +57,12 @@
 }
 
 
+#pragma mark - 完成
+
+-(void)submitData:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - UITableViewDelegate
 

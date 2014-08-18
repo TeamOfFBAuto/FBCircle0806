@@ -26,7 +26,6 @@ alpha:(a)]
 
 
 
-#define TITLEFONT [UIFont fontWithName:@"Helvetica" size:20]
 //判断屏幕
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 //判断系统

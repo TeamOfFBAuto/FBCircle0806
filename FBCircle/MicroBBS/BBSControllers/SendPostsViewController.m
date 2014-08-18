@@ -225,13 +225,9 @@
     image_request.tag = 1;
     
     [image_request setRequestMethod:@"POST"];
-    
     image_request.timeOutSeconds = 45;
-    
     image_request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
-    
     image_request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
-    
     [image_request setPostFormat:ASIMultipartFormDataPostFormat];
     
     NSLog(@"imagearray -----  %@",allImageArray);

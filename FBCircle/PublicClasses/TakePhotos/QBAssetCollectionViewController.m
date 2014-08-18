@@ -260,22 +260,18 @@
         preview_label.text = [NSString stringWithFormat:@"预览(%d)",self.selectedAssets.count];
     }
     
-    
-    
-    // Scroll to bottom
-    //    [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
-    
-    NSUInteger sectionCount = [self.tableView numberOfSections];
-    if (sectionCount) {
-        
-        NSUInteger rowCount = [self.tableView numberOfRowsInSection:sectionCount-1];
-        if (rowCount) {
-            
-            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:rowCount-1 inSection:sectionCount-1];
-            [self.tableView scrollToRowAtIndexPath:indexPath
-                                  atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        }
-    }
+///tableview滚到最后
+//    NSUInteger sectionCount = [self.tableView numberOfSections];
+//    if (sectionCount) {
+//        
+//        NSUInteger rowCount = [self.tableView numberOfRowsInSection:sectionCount-1];
+//        if (rowCount) {
+//            
+//            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:rowCount-1 inSection:sectionCount-1];
+//            [self.tableView scrollToRowAtIndexPath:indexPath
+//                                  atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        }
+//    }
     
 }
 
@@ -348,8 +344,10 @@
     // Reload assets
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if(result) {
-            [self.assets addObject:result];
-            //            [self.assets insertObject:result atIndex:0];
+            ///图片倒序排列
+//            [self.assets addObject:result];
+            ///图片正序排列
+            [self.assets insertObject:result atIndex:0];
         }
     }];
     

@@ -103,7 +103,8 @@
 
 -(void)cancelTap:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 使用照片

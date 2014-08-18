@@ -71,14 +71,10 @@
         
     }
     
-    
-    
     NSString * string = [NSString stringWithFormat:FBCIRCLE_SHARE_URL,[@"我的分享" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[@"SQ5的高富帅版 2015款保时捷Macan试驾" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"http://img10.fblife.com/attachments/20140603/14017929195565.jpg.680x0.jpg",@"http://news.fblife.com/html/20140605/114628.html",@"",[SzkAPI getAuthkey]];
     
     
     NSLog(@"fenxiang ----   %@",string);
-    
-    
     
 }
 
@@ -91,12 +87,7 @@
 -(void)loadInfomationWithPage
 {
     __weak typeof(self) bself = self;
-    
-    //    if (_data_array)
-    //    {
-    //        [_data_array removeAllObjects];
-    //    }
-    
+
     if ([[[NSUserDefaults standardUserDefaults]objectForKey:USERID]integerValue ]==0) {
         
         return;
@@ -117,25 +108,8 @@
 #pragma mark--发表成功后刷新数据
 -(void)refreshBecauserUpdatasuccess:(NSNotification *)notification
 {
-    //    FBCircleModel * model = [notification.userInfo objectForKey:@"fbcirclemodel"];
-    //
-    //    for (int i = 0;i < self.data_array.count;i++)
-    //    {
-    //        FBCircleModel * aModel = [self.data_array objectAtIndex:i];
-    //
-    //        if ([model.fb_deteline isEqualToString:aModel.fb_deteline])
-    //        {
-    //            aModel.fb_tid = model.fb_tid;
-    //
-    //            [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:i inSection:0], nil] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //        }
-    //    }
-    //
-    
     __weak typeof(self) bself = self;
-    
-    //    [self.myTableView setContentOffset:CGPointMake(0,0) animated:YES];
-    
+        
     loadview.normalLabel.text = @"上拉加载更多";
     
     [_theModel initHttpRequestWithUid:[[NSUserDefaults standardUserDefaults] objectForKey:USERID] Page:1 WithType:1 WithCompletionBlock:^(NSMutableArray *array) {
@@ -195,15 +169,10 @@
     } WithFailedBlcok:^(NSString *string) {
         
         bself.personModel.person_username = [SzkAPI getUsername];
-        
         bself.personModel.person_uid = [SzkAPI getUid];
-        
         bself.personModel.person_face = [SzkAPI getUserFace];
-        
         [bself loadTableHeaderView];
-        
         [bself.myTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
     }];
 }
 
@@ -290,26 +259,16 @@
     
     [self loadPersonalData];
     
-    
     [self loadTableHeaderView];
     
-    
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64) style:UITableViewStylePlain];
-    
     _myTableView.delegate = self;
-    
     _myTableView.dataSource = self;
-    
     _myTableView.separatorColor = RGBCOLOR(204,204,204);
-    
     _myTableView.separatorInset = UIEdgeInsetsZero;
-    
     _myTableView.sectionHeaderHeight = 320;
-    
     _myTableView.scrollsToTop = YES;
-    
     _myTableView.tableHeaderView = headerView;
-    
     [self.view addSubview:_myTableView];
     
     
@@ -339,17 +298,11 @@
     
     
     _inputToolBarView = [[ChatInputView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480)-20-44,320,44)];
-    
     _inputToolBarView.myTextView.delegate = self;
-    
     _inputToolBarView.myTextView.returnKeyType = UIReturnKeySend;
-    
     _inputToolBarView.myTextView.textColor = RGBCOLOR(153,153,153);
-    
     _inputToolBarView.myTextView.scrollsToTop = NO;
-    
     _inputToolBarView.delegate = self;
-    
     [_inputToolBarView.sendButton setTitle:nil forState:UIControlStateNormal];
     
     [_inputToolBarView.sendButton setImage:[UIImage imageNamed:!isFace?@"biaoqing-icon-56_56.png":@"jianpan-icon-56_56.png"] forState:UIControlStateNormal];
@@ -376,19 +329,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HaveNewMessage:) name:COMEMESSAGES object:nil];
     
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout:) name:SUCCESSLOGOUT object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:SUCCESSLOGIN object:nil];
     
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(turnToThreeVC:) name:YINGYONGWAINOTIFICATION object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(haveReadMessage:) name:@"readMessageNotification" object:nil];
-    
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(haveReadMessage:) name:@"readMessageNotification" object:nil];    
 }
 
 
@@ -398,19 +345,16 @@
     
     if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5) {
         GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
-        
-        [self.navigationController pushViewController:gMessage animated:YES];
+        [self PushToViewController:gMessage WithAnimation:YES];
     }else if ([MessageType intValue] == 1 || [MessageType intValue] == 2)
     {
         MatchingAddressBookViewController * matchingV = [[MatchingAddressBookViewController alloc] init];
-        
-        [self.navigationController pushViewController:matchingV animated:YES];
+        [self PushToViewController:matchingV WithAnimation:YES];
         
     }else if ([MessageType intValue] == 6)
     {
         MessageViewController * message = [[MessageViewController alloc] init];
-        
-        [self.navigationController pushViewController:message animated:YES];
+        [self PushToViewController:message WithAnimation:YES];
     }
 }
 
@@ -537,21 +481,13 @@
     
     
     tixing_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,10,10)];
-    
     tixing_imageView.center = CGPointMake(28.5,13);
-    
     tixing_imageView.backgroundColor = [UIColor redColor];
-    
     tixing_imageView.layer.masksToBounds = YES;
-    
     tixing_imageView.hidden = YES;
-    
     tixing_imageView.layer.cornerRadius = 5;
-    
     [button_back addSubview:tixing_imageView];
-    
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    
     self.navigationItem.leftBarButtonItems=@[spaceButton,back_item];
 }
 
@@ -559,18 +495,12 @@
 {
     
     UIView * viewww = [[UIView alloc] initWithFrame:CGRectMake(10,0,40,40)];
-    
     viewww.backgroundColor = [UIColor clearColor];
     
-    
     right_button=[[UIButton alloc]initWithFrame:CGRectMake(0,0,40,40)];
-    
     right_button.backgroundColor = [UIColor clearColor];
-    
     [right_button addTarget:self action:@selector(rightDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-    
     [right_button setImage:[UIImage imageNamed:@"fabu-40_40.png"] forState:UIControlStateNormal];
-    
     [viewww addSubview:right_button];
     
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:viewww];
@@ -587,8 +517,7 @@
     GpersonallSettingViewController *_personalVC=[[GpersonallSettingViewController alloc]init];
     _personalVC.dic = [NSDictionary dictionaryWithDictionary:notification_dictionary];
     _personalVC.personModel = _personModel;
-    [self.navigationController pushViewController:_personalVC animated:YES];
-    
+    [self PushToViewController:_personalVC WithAnimation:YES];
     [notification_dictionary removeAllObjects];
     
     NSLog(@"消息推送   ---    %@",_personalVC.dic);
@@ -612,14 +541,7 @@
     
     UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说",nil];
     
-    [actionSheet showInView:self.view];
-    
-    //    MessageViewController * message = [[MessageViewController alloc] init];
-    //
-    //    ShowImagesViewController * showImage = [[ShowImagesViewController alloc] init];
-    //
-    //    [self.navigationController pushViewController:showImage animated:YES];
-    
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 #pragma mark--匹配通讯录
@@ -655,8 +577,7 @@
             {
                 MatchingAddressBookViewController *VCn=[[MatchingAddressBookViewController alloc]init];
                 VCn.str_title=@"匹配通讯录";
-                [self.navigationController pushViewController:[[MatchingAddressBookViewController alloc]init] animated:YES];
-                
+                [self PushToViewController:[[MatchingAddressBookViewController alloc]init] WithAnimation:YES];
             }
                 break;
             default:
@@ -834,13 +755,9 @@
     
     [self dismissViewControllerAnimated:YES completion:^{
         WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
-        
         WriteBlog.TempAllImageArray = allImageArray;
-        
         WriteBlog.TempAllAssesters = allAssesters;
-        
         WriteBlog.delegate = self;
-        
         WriteBlog.theType = WriteBlogWithImagesAndContent;
         
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
@@ -906,9 +823,6 @@
                  [ZSNApi saveImageToDocWith:url_string WithImage:image1];
              });
          }];
-        
-        
-        
     }else
     {
         
@@ -950,11 +864,6 @@
     UIGraphicsEndImageContext();
     return scaledImage;
 }
-
-
-
-
-
 
 
 #pragma mark - 图片回传协议方法
@@ -1010,10 +919,6 @@
     @finally {
         
     }
-    
-    
-    
-    
 }
 
 -(void)requestFinished:(ASIHTTPRequest *)request
@@ -1038,8 +943,6 @@
                 [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"gIsUpBanner"];
                 
             }
-            
-            
         }
     }
     @catch (NSException *exception) {
@@ -1048,11 +951,7 @@
     @finally {
         
     }
-    
-    
 }
-
-
 
 
 #pragma mark-UITableViewHeaderView
@@ -1064,15 +963,10 @@
     if (!headerView)
     {
         headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,isHaveNewMessage?360:306)];
-        
         bannerView = [[AsyncImageView alloc]  initWithFrame:CGRectMake(0,0,320,256)];
-        
         bannerView.backgroundColor = [UIColor whiteColor];
-        
         bannerView.tag = 319;
-        
         bannerView.userInteractionEnabled = YES;
-        
         
         UITapGestureRecognizer * doTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uploadPersonalBanner:)];
         
@@ -1085,26 +979,17 @@
         
         
         UIView * headerBackView = [[UIView alloc] initWithFrame:CGRectMake(234.5,205.5,75,75)];
-        
         headerBackView.layer.cornerRadius = 5;
-        
         headerBackView.layer.borderWidth = 0.5;
-        
         headerBackView.layer.borderColor = [RGBACOLOR(198, 196, 196, 0.75) CGColor];
-        
         headerBackView.backgroundColor = [UIColor whiteColor];
-        
         [headerView addSubview:headerBackView];
         
         
         user_header_imageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(234,205,70,70)];
-        
         user_header_imageView.center = CGPointMake(75.0/2,75.0/2);
-        
         user_header_imageView.layer.masksToBounds = YES;
-        
         user_header_imageView.tag = 320;
-        
         user_header_imageView.layer.cornerRadius = 5;
         
         UITapGestureRecognizer *tap_one=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dotap:)];
@@ -1115,36 +1000,22 @@
         
         [headerBackView addSubview:user_header_imageView];
         
-        
         userName_label = [[UILabel alloc] initWithFrame:CGRectMake(22,225,190,20)];
-        
         userName_label.textAlignment = NSTextAlignmentRight;
-        
         userName_label.layer.masksToBounds = NO;
-        
         userName_label.layer.shadowColor = [UIColor blackColor].CGColor;
-        
         userName_label.layer.shadowOffset = CGSizeMake(0,1);
-        
         userName_label.layer.shadowRadius = 0.5;
-        
         userName_label.layer.shadowOpacity = 0.8;
-        
         userName_label.font = [UIFont systemFontOfSize:18];
-        
         userName_label.textColor = [UIColor whiteColor];
-        
         userName_label.backgroundColor = [UIColor clearColor];
-        
         [headerView addSubview:userName_label];
         
         
         bottom_line_view = [[UIView alloc] initWithFrame:CGRectMake(0,isHaveNewMessage?359.5:319.5,320,0.5)];
-        
         bottom_line_view.backgroundColor = RGBCOLOR(233,233,233);
-        
         bottom_line_view.hidden = YES;
-        
         [headerView addSubview:bottom_line_view];
         
     }else
@@ -1218,15 +1089,13 @@
                 isHaveNewMessage = NO;
                 
                 GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
-                
-                [self.navigationController pushViewController:gMessage animated:YES];
+                [self PushToViewController:gMessage WithAnimation:YES];
                 
                 notificationDic = nil;
                 
                 [self loadTableHeaderView];
                 
                 self.myTableView.tableHeaderView = headerView;
-                
                 [self.myTableView reloadData];
             }
             @catch (NSException *exception) {
@@ -1239,16 +1108,12 @@
         
         
         [connectV setNoticeNumber:[[notificationDic objectForKey:@"aps"] objectForKey:@"badge"] Hearimg:[[notificationDic objectForKey:@"aps"] objectForKey:@"headimg"]];
-        
         connectV.tag = 567;
-        
         [headerView addSubview:connectV];
     }else
     {
         [connectV removeFromSuperview];
-        
         connectV = nil;
-        
         bottom_line_view.hidden = YES;
     }
     
@@ -1261,8 +1126,7 @@
     
     GmyFootViewController *_gmyVC=[[GmyFootViewController alloc]init];
     _gmyVC.userModel = _personModel;
-    [self.navigationController pushViewController:_gmyVC animated:YES];
-    
+    [self PushToViewController:_gmyVC WithAnimation:YES];
 }
 
 #pragma mark-UITableViewDelegate
@@ -1280,10 +1144,7 @@
         [test_cell setAllViews];
     }
     
-    //    float height = [test_cell returnCellHeightWith:[self.data_array objectAtIndex:indexPath.row]];
-    
     FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
-    
     float height = [test_cell returnCellHeightWith:model];
     
     return height;
@@ -1319,14 +1180,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    __weak typeof(self) bself = self;
-    
     FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
     
     model.isShowMenuView = NO;
-    
-    
-    NSLog(@"model.uid===%@",model.fb_tid);
     
     FBCircleDetailViewController * detailView = [[FBCircleDetailViewController alloc] init];
     
@@ -1335,8 +1191,7 @@
     [detailView reloadDataWhenBackWith:^{
         [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }];
-    
-    [self.navigationController pushViewController:detailView animated:YES];
+    [self PushToViewController:detailView WithAnimation:YES];
 }
 
 
@@ -1373,15 +1228,10 @@
             if ((model.rfb_tid.length == 0 || [model.rfb_tid isEqualToString:@"(null)"] || [model.rfb_tid isKindOfClass:[NSNull class]]) && [model.rfb_content isEqualToString:@"此内容已删除"])
             {
                 myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
-                
                 myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-50);
-                
                 [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"此内容已删除"];
-                
                 [self.view addSubview:myAlertView];
-                
                 [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1];
-                
                 
                 return;
                 
@@ -1422,9 +1272,7 @@
     UIAlertView * deleteAlert = [[UIAlertView alloc] initWithTitle:@"确定删除吗?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
     
     deleteAlert.tag = 100000;
-    
     [deleteAlert show];
-    
     
     deleteIndexPath = [self.myTableView indexPathForCell:cell];
 }
@@ -1433,9 +1281,6 @@
 -(void)deleteBlog
 {
     loading_alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"正在删除" delegate:nil cancelButtonTitle:@"" otherButtonTitles:nil,nil];
-    
-    //    [loading_alertView show];
-    
     
     FBCircleModel * model = [self.data_array objectAtIndex:deleteIndexPath.row];
     
@@ -1450,12 +1295,9 @@
     
     NSURLRequest * urlRequest = [[NSURLRequest alloc]  initWithURL:[NSURL URLWithString:fullUrl]];
     
-    
     AFHTTPRequestOperation * operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     
-    
     __block AFHTTPRequestOperation * request = operation;
-    
     
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
@@ -1469,15 +1311,10 @@
              if ([[allDic objectForKey:@"errcode"] intValue] == 0)
              {
                  NSLog(@"删除微博成功");
-                 
                  [FBCircleModel deleteCommentByTid:model.fb_tid];
-                 
                  [FBCircleModel deletePraiseByTid:model.fb_tid];
-                 
                  [FBCircleModel deleteBlogWithTid:model.fb_tid];
-                 
                  [FBCircleModel updateRfbTidid:model.fb_tid WithTid:@""];
-                 
                  
                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                      
@@ -1487,33 +1324,21 @@
                              aModel.rfb_tid = @"";
                          }
                      }
-                     
                  });
-                 
-                 
              }else
              {
                  NSLog(@"删除微博失败-----%@",[allDic objectForKey:@"errinfo"]);
                  
-                 
                  FBCirclePraiseModel * praise_model = [[FBCirclePraiseModel alloc] init];
-                 
                  praise_model.praise_dateline = [ZSNApi timechangeToDateline];
-                 
                  praise_model.praise_image_url = [SzkAPI getUserFace];
-                 
                  praise_model.praise_tid = model.fb_tid;
-                 
                  praise_model.praise_uid = [SzkAPI getUid];
-                 
                  praise_model.praise_username = [SzkAPI getUsername];
-                 
                  int result = [FBCircleModel addNOSendDeleteWith:praise_model];
                  
                  NSLog(@"添加删除缓存结果 ---   %d",result);
              }
-             
-             
          }
          @catch (NSException *exception) {
              
@@ -1522,16 +1347,7 @@
              
          }
          
-         
-         
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         
-         //         [loading_alertView removeFromSuperview];
-         //
-         //         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除失败，请重试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-         //
-         //         [alert show];
-         
          
          FBCirclePraiseModel * praise_model = [[FBCirclePraiseModel alloc] init];
          
@@ -1664,11 +1480,6 @@
          }else
          {
              NSLog(@"转发失败");
-             
-             //             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"转发失败" message:[allDic objectForKey:@"errinfo"] delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
-             //
-             //             [alertView show];
-             
              
              if (myAlertView)
              {
@@ -1807,8 +1618,6 @@
 }
 
 
-
-
 -(void)clickMenuTapWith:(FBCircleCustomCell *)cell
 {
     NSIndexPath * indexPath = [self.myTableView indexPathForCell:cell];
@@ -1921,15 +1730,10 @@
 	
 }
 
-
-
 #pragma mark-ChatInputViewDelegate
-
-
 - (void)FBCirclehandleWillShowKeyboard:(NSNotification *)notification
 {
     [self keyboardWillShowHide:notification];
-    
 }
 
 - (void)FBCirclehandleWillHideKeyboard:(NSNotification *)notification
@@ -1937,32 +1741,16 @@
     [self keyboardWillShowHide:notification];
 }
 
-
 -(void)FBCircleUserInfomationChanged:(NSNotification *)notification
 {
-    
-    
     user_header_imageView.image = [GlocalUserImage getUserFaceImage];
-    
-    
-    
     bannerView.image = [GlocalUserImage getUserBannerImage];
-    //    currentPage = 1;
-    //
-    //    [self loadInfomationWithPage];
-    //
-    //    [self loadTableHeaderView];
-    //
-    //    [self.myTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    ////    [self.myTableView reloadData];
 }
-
 
 -(void)pushToDetailBlogWith:(FBCircleModel *)model
 {
     
 }
-
 
 - (void)keyboardWillShowHide:(NSNotification *)notification
 {
@@ -2141,24 +1929,6 @@
     
     self.inputToolBarView.sendButton.enabled = ([textView.text trimWhitespace].length > 0);
 }
-
-//- (BOOL)textView:(UITextView *)txtView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-//{
-//    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound )
-//    {
-//        return YES;
-//    }
-//
-//
-//    [self sendPinglun];
-//
-//    [txtView resignFirstResponder];
-//
-//    isMyTextView = NO;
-//
-//    return NO;
-//}
-
 
 
 #pragma mark-ChatInputDelegate
