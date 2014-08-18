@@ -70,7 +70,7 @@
     num =0;
     
     //上下滚动的条
-    _line = [[UIImageView alloc]initWithFrame:CGRectMake(ScanKuangFrame.origin.x, ScanKuangFrame.origin.y, ScanKuangFrame.size.width, 2)];
+    _line = [[UIImageView alloc]initWithFrame:CGRectMake(40, 70+89-18, 240, 18)];
     [_line setImage:[UIImage imageNamed:@"fshan.png"]];
     [self.view addSubview:_line];
     
@@ -87,7 +87,7 @@
     if (upOrdown == NO) {
         num ++;
         
-        _line.frame = CGRectMake(ScanKuangFrame.origin.x, ScanKuangFrame.origin.y+2*num, 220, 2);
+        _line.frame = CGRectMake(40, 70+89-9+2*num, 240, 18);
         if (2*num == 220) {
             
             upOrdown = YES;
@@ -96,7 +96,7 @@
     }
     else {
         num --;
-        _line.frame = CGRectMake(ScanKuangFrame.origin.x, ScanKuangFrame.origin.y+2*num, 220, 2);
+        _line.frame = CGRectMake(40, 70+89-9+2*num, 240, 18);
         if (num == 0) {
             upOrdown = NO;
         }

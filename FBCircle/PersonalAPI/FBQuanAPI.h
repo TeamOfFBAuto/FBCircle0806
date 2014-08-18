@@ -240,6 +240,9 @@ alpha:(a)]
 //获取救援队的详细信息
 #define FBFOUND_HELPINFO @"http://quan.fblife.com/index.php?c=interface&a=getsos&authkey=%@&sid=%d"
 
+//根据authkey获取二维码
+#define FBFOUND_MYERWEIMA @"http://ucache.fblife.com/ucode/api.php?uid=%@"
+
 
 
 

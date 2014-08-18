@@ -905,6 +905,8 @@
 		E3E2FBB21990D48C0062A4F2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBB11990D48C0062A4F2 /* MessageUI.framework */; };
 		E3E2FBB41990D4980062A4F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBB31990D4980062A4F2 /* OpenGLES.framework */; };
 		E3E2FBB61990D4DB0062A4F2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBB51990D4DB0062A4F2 /* SystemConfiguration.framework */; };
+		E3F66CF919A1F22D00FBDCB8 /* GmPrepareNetData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F66CF819A1F22D00FBDCB8 /* GmPrepareNetData.m */; };
+		E3F66CFC19A2079200FBDCB8 /* GnearbyPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F66CFB19A2079200FBDCB8 /* GnearbyPersonCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1704,6 +1706,10 @@
 		E3E2FBB11990D48C0062A4F2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E3E2FBB31990D4980062A4F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		E3E2FBB51990D4DB0062A4F2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E3F66CF719A1F22D00FBDCB8 /* GmPrepareNetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmPrepareNetData.h; sourceTree = "<group>"; };
+		E3F66CF819A1F22D00FBDCB8 /* GmPrepareNetData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmPrepareNetData.m; sourceTree = "<group>"; };
+		E3F66CFA19A2079200FBDCB8 /* GnearbyPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GnearbyPersonCell.h; sourceTree = SOURCE_ROOT; };
+		E3F66CFB19A2079200FBDCB8 /* GnearbyPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GnearbyPersonCell.m; sourceTree = SOURCE_ROOT; };
 		EFC5F1F3A29F440FB92E1246 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2311,6 +2317,8 @@
 				E3A62B72199CA9C700C300A3 /* GmyErweimaViewController.m */,
 				E3AC5314199D8EBA007C7733 /* GJiuYuanDuiViewController.h */,
 				E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */,
+				E3F66CF719A1F22D00FBDCB8 /* GmPrepareNetData.h */,
+				E3F66CF819A1F22D00FBDCB8 /* GmPrepareNetData.m */,
 			);
 			path = FoundControllers;
 			sourceTree = "<group>";
@@ -2329,6 +2337,8 @@
 				E3A62B7C199CC87200C300A3 /* GcustomUseCarDownInfoCell.m */,
 				E30769F5199DE5DD00D4C451 /* GJiuYuanCell.h */,
 				E30769F6199DE5DD00D4C451 /* GJiuYuanCell.m */,
+				E3F66CFA19A2079200FBDCB8 /* GnearbyPersonCell.h */,
+				E3F66CFB19A2079200FBDCB8 /* GnearbyPersonCell.m */,
 			);
 			path = FoundViews;
 			sourceTree = "<group>";
@@ -4192,6 +4202,7 @@
 				56A64E04198F7B2C00451413 /* CustomChatViewCell.m in Sources */,
 				561731F019925F64001B8574 /* MyImagePickViewController.m in Sources */,
 				56A64ABC198F6AD800451413 /* GscanfViewController.m in Sources */,
+				E3F66CFC19A2079200FBDCB8 /* GnearbyPersonCell.m in Sources */,
 				56A6488C198F502700451413 /* NSString+Emoji.m in Sources */,
 				138EBEB31992512F005DB531 /* JoinBBSCell.m in Sources */,
 				138EBEAF1992512F005DB531 /* BBSTableCell.m in Sources */,
@@ -4235,6 +4246,7 @@
 				56A64803198F3A8B00451413 /* main.m in Sources */,
 				56A64B10198F6AD800451413 /* GloadingView.m in Sources */,
 				56A64B1A198F6AD800451413 /* UILabel+GautoMatchedText.m in Sources */,
+				E3F66CF919A1F22D00FBDCB8 /* GmPrepareNetData.m in Sources */,
 				56A64B22198F6AD800451413 /* GmyMessageTableViewCell.m in Sources */,
 				E3A73FDE199863E100C49CC6 /* GnearbyPersonViewController.m in Sources */,
 				56A64B88198F6BD400451413 /* LeftViewController.m in Sources */,

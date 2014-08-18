@@ -284,6 +284,8 @@
     //进行地图搜索相关操作
     if (sender.tag == 10) {//停车场
         
+//        _poisearch = [[BMKPoiSearch alloc]init];
+//        _poisearch.delegate = self;
         
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
