@@ -57,12 +57,10 @@
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) showLoadMore:NO];
     _table.backgroundColor = [UIColor clearColor];
-//    _table.delegate = self;
     _table.refreshDelegate = self;
     _table.dataSource = self;
     
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     [self.view addSubview:_table];
     
     //获取论坛基本信息
@@ -120,7 +118,7 @@
 - (void)clickToAddBBS
 {//张少南 这里需要论坛id
     SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
-    sendPostVC.fid = @"1";
+    sendPostVC.fid = self.bbsId;
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 
@@ -156,6 +154,7 @@
             _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
             
             weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+            weakTable.tableFooterView = [weakSelf createTableFooterView];
             
             weakSelf.titleLabel.text = _aBBSModel.name;
             
@@ -176,7 +175,6 @@
  */
 - (void)getBBSTopicList:(NSString *)bbsId
 {
-    __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId];
@@ -302,6 +300,17 @@
     return headerView;
 }
 
+/**
+ *  创建tableView的 headerView
+ */
+- (UIView *)createTableFooterView
+{
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
+    headerView.backgroundColor = [UIColor clearColor];
+    
+    return headerView;
+}
+
 
 #pragma mark - delegate
 
@@ -376,6 +385,8 @@
     {
         cell.bgView.layer.cornerRadius = 0.f;
     }
+    
+    cell.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
     

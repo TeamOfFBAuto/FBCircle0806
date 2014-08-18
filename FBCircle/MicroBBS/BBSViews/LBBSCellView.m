@@ -26,11 +26,11 @@
         _target = target;
         _action = action;
         
-        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(8+12, 10, 53, 53)];
+        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 10, 53, 53)];
         [self addSubview:_aImageView];
         
-        self.aTitleLabel = [LTools createLabelFrame:CGRectMake(_aImageView.right + 7 , 9, 200, 21) title:@"testlll" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        _aTitleLabel.font = [UIFont boldSystemFontOfSize:16];
+        self.aTitleLabel = [LTools createLabelFrame:CGRectMake(_aImageView.right + 7 , 9, 200 - 20, 21) title:@"testlll" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        _aTitleLabel.font = [UIFont systemFontOfSize:16];
         
         [self addSubview:_aTitleLabel];
         

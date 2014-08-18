@@ -31,6 +31,8 @@
     
     int search_tag;// 1 搜索论坛 2 搜索帖子
     BOOL push_tiezi;//是否帖子
+    
+    UITapGestureRecognizer *tap;
 }
 
 @end
@@ -82,7 +84,6 @@
     _table.refreshDelegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:_table];
     
     //数据展示table
@@ -100,7 +101,7 @@
     
     [self createMoveView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHidden)];
+    tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHidden)];
     tap.delegate = self;
     [self.view addGestureRecognizer:tap];
 }
@@ -289,6 +290,15 @@
             [_historyTable removeFromSuperview];
             
             [weakSelf searchKeyword:searchText isClear:YES];
+            
+            tap.enabled = NO;
+            
+        }else if (actionStyle == Search_BeginEdit){
+         
+            tap.enabled = YES;
+        }else if (actionStyle == Search_Cancel){
+            
+            tap.enabled = NO;
         }
         
     }];
@@ -378,6 +388,11 @@
     if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
         return NO;
     }
+    
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"SearchBBSCellContentView"]) {
+        return NO;
+    }
+    
     return  YES;
 }
 
@@ -399,14 +414,18 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (push_tiezi == NO) {
-        
+        BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
         MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-        bbsInfo.bbsId = @"1";
+        bbsInfo.bbsId = aModel.id;
         [self PushToViewController:bbsInfo WithAnimation:YES];
         
     }else
     {
+        TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+        
         BBSTopicController *topic = [[BBSTopicController alloc]init];
+        topic.tid = aModel.tid;
+        topic.fid = aModel.fid;
         [self PushToViewController:topic WithAnimation:YES];
     }
 }
@@ -513,6 +532,7 @@
         NSLog(@"cell %@",cell);
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.separatorInset = UIEdgeInsetsZero;
     BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
     

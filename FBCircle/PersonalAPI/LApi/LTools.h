@@ -75,6 +75,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 +(NSString *)timechangeToDateline;//转换为时间戳
 
++(NSString*)timestamp:(NSString*)myTime;//模糊时间,如几天前
+
 + (NSString *)currentTime;//当前时间 yyyy-mm-dd
 
 + (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;

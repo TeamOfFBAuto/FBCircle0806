@@ -209,11 +209,13 @@
         
         k = i % 4;
         line = i / 4;
+        
+        
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [btn setTitle:title forState:UIControlStateNormal];
         btn.frame = CGRectMake(80 * k, aY + 45 * line, 80, 45);
         [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        btn.backgroundColor = [UIColor whiteColor];
+        btn.backgroundColor = [UIColor colorWithHexString:@"f0f1f3"];
         [btn addTarget:self action:@selector(clickToSubClassifyBBS:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = 1000 + i;
         [bgScroll addSubview:btn];

@@ -9,9 +9,9 @@
 #import "PraiseMemberController.h"
 #import "PraiseMemberCell.h"
 
-@interface PraiseMemberController ()<UITableViewDelegate,UITableViewDataSource>
+@interface PraiseMemberController ()<UITableViewDelegate,UITableViewDataSource,RefreshDelegate>
 {
-    UITableView *_table;
+    RefreshTableView *_table;
 }
 
 
@@ -39,14 +39,17 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
 
     //数据展示table
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) style:UITableViewStylePlain];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
     _table.backgroundColor = [UIColor clearColor];
-    _table.delegate = self;
+    _table.refreshDelegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.view addSubview:_table];
     
+    //获取称赞者
+    
+    [self getZanList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,9 +60,66 @@
 #pragma mark - 事件处理
 
 #pragma mark - 网络请求
+
+/**
+ *  评论列表
+ */
+- (void)getZanList
+{
+    __weak typeof(RefreshTableView *)weakTable = _table;
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_ZAN_LIST,self.tid,_table.pageNum,L_PAGE_SIZE];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            NSArray *data = [dataInfo objectForKey:@"data"];
+            int total = [[dataInfo objectForKey:@"total"]integerValue];
+            
+            [weakTable reloadData:data total:total];
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic result %@",failDic);
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+        [weakTable loadFail];
+        
+        int erroCode = [[failDic objectForKey:@"errcode"]integerValue];
+        if (erroCode == 2) {
+            
+        }
+    }];
+}
+
+
 #pragma mark - 视图创建
 
 #pragma mark - delegate
+
+#pragma - mark RefreshDelegate <NSObject>
+
+- (void)loadNewData
+{
+    NSLog(@"loadNewData");
+    
+}
+
+- (void)loadMoreData
+{
+    NSLog(@"loadMoreData");
+}
+
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
+{
+    return 55;
+}
+
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,7 +141,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return _table.dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,9 +156,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
+    NSDictionary *aZan = [_table.dataArray objectAtIndex:indexPath.row];
+    
     [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:nil] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     
-    cell.aTitleLabel.text = @"越野狂人";
+    cell.aTitleLabel.text = [aZan objectForKey:@"username"];
     
     return cell;
     

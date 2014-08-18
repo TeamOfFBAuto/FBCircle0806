@@ -7,6 +7,7 @@
 //
 
 #import "HotTopicViewController.h"
+#import "BBSTopicController.h"
 #import "LTools.h"
 #import "HotTopicCell.h"
 #import "TopicModel.h"
@@ -53,7 +54,9 @@
     _table.separatorInset = UIEdgeInsetsMake(0, 1, 0, 0);
     [self.view addSubview:_table];
     
-    [self getTopic];
+//    [self getTopic];
+    
+    [_table showRefreshHeader:YES];
     
 }
 
@@ -114,6 +117,7 @@
         
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
         
+        [weakTable loadFail];
     }];
 }
 
@@ -136,10 +140,20 @@
 {
     NSLog(@"loadMoreData");
 }
+/**
+ *  帖子详情(从热门推荐进入)
+ */
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
     
+    topic.fid = aModel.fid;
+    topic.tid = aModel.tid;
+    
+    [self PushToViewController:topic WithAnimation:YES];
+
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

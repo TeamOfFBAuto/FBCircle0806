@@ -27,6 +27,7 @@
         [self createHeaderView];
         [self createFooterView];
         self.delegate = self;
+        
     }
     return self;
 }

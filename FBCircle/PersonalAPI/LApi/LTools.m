@@ -290,6 +290,49 @@
 
 #pragma - mark 小工具
 
++(NSString*)timestamp:(NSString*)myTime{
+    
+    NSString *timestamp;
+    time_t now;
+    time(&now);
+    
+    int distance = (int)difftime(now,  [myTime integerValue]);
+    if (distance < 0) distance = 0;
+    
+    if (distance < 60) {
+        timestamp = [NSString stringWithFormat:@"%d%@", distance, @"秒钟前"];
+    }
+    else if (distance < 60 * 60) {
+        distance = distance / 60;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance, @"分钟前"];
+    }
+    else if (distance < 60 * 60 * 24) {
+        distance = distance / 60 / 60;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance,@"小时前"];
+    }
+    else if (distance < 60 * 60 * 24 * 7) {
+        distance = distance / 60 / 60 / 24;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance,@"天前"];
+    }
+    else if (distance < 60 * 60 * 24 * 7 * 4) {
+        distance = distance / 60 / 60 / 24 / 7;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance, @"周前"];
+    }else
+    {
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+    }
+    
+    return timestamp;
+}
+
+
 //当前时间转换为 时间戳
 
 +(NSString *)timechangeToDateline

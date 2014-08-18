@@ -37,7 +37,7 @@
 		1366027B1990A82900F2BEEC /* jiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602621990A82900F2BEEC /* jiantou@2x.png */; };
 		1366027C1990A82900F2BEEC /* search-kuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602631990A82900F2BEEC /* search-kuang@2x.png */; };
 		1366027D1990A82900F2BEEC /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602641990A82900F2BEEC /* search@2x.png */; };
-		1366027E1990A82900F2BEEC /* car@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602661990A82900F2BEEC /* car@2x.png */; };
+		1366027E1990A82900F2BEEC /* car_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602661990A82900F2BEEC /* car_@2x.png */; };
 		1366027F1990A82900F2BEEC /* chahua@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602671990A82900F2BEEC /* chahua@2x.png */; };
 		136602801990A82900F2BEEC /* fly@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602681990A82900F2BEEC /* fly@2x.png */; };
 		136602811990A82900F2BEEC /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602691990A82900F2BEEC /* home@2x.png */; };
@@ -960,7 +960,7 @@
 		136602621990A82900F2BEEC /* jiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou@2x.png"; sourceTree = "<group>"; };
 		136602631990A82900F2BEEC /* search-kuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-kuang@2x.png"; sourceTree = "<group>"; };
 		136602641990A82900F2BEEC /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
-		136602661990A82900F2BEEC /* car@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car@2x.png"; sourceTree = "<group>"; };
+		136602661990A82900F2BEEC /* car_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car_@2x.png"; sourceTree = "<group>"; };
 		136602671990A82900F2BEEC /* chahua@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chahua@2x.png"; sourceTree = "<group>"; };
 		136602681990A82900F2BEEC /* fly@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly@2x.png"; sourceTree = "<group>"; };
 		136602691990A82900F2BEEC /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x.png"; sourceTree = "<group>"; };
@@ -1890,7 +1890,7 @@
 		136602651990A82900F2BEEC /* 01002我的论坛 */ = {
 			isa = PBXGroup;
 			children = (
-				136602661990A82900F2BEEC /* car@2x.png */,
+				136602661990A82900F2BEEC /* car_@2x.png */,
 				136602671990A82900F2BEEC /* chahua@2x.png */,
 				136602681990A82900F2BEEC /* fly@2x.png */,
 				136602691990A82900F2BEEC /* home@2x.png */,
@@ -3587,7 +3587,7 @@
 				56A64D92198F72E900451413 /* tianjia_button-100_60@2x.png in Resources */,
 				E3A62B79199CC41E00C300A3 /* fhome@2x.png in Resources */,
 				56A64D04198F72E900451413 /* pinglun-icon-66_24@2x.png in Resources */,
-				1366027E1990A82900F2BEEC /* car@2x.png in Resources */,
+				1366027E1990A82900F2BEEC /* car_@2x.png in Resources */,
 				56A64BE2198F6CA200451413 /* nav_bar_bg@2x.png in Resources */,
 				56A64AEA198F6AD800451413 /* geren_zuji_down212_212@2x.png in Resources */,
 				136602831990A82900F2BEEC /* photo@2x.png in Resources */,

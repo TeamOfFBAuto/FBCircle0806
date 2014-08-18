@@ -12,4 +12,6 @@
  */
 @interface PraiseMemberController : MyViewController
 
+@property(nonatomic,retain)NSString *tid;
+
 @end

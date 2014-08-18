@@ -49,8 +49,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     NSLog(@"auteykey %@",[SzkAPI getAuthkey]);
 }
@@ -58,8 +58,8 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidLoad
@@ -68,8 +68,8 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     self.title = @"微论坛";
     self.titleLabel.text = @"微论坛";
@@ -78,12 +78,9 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeText WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     [self.left_button addTarget:self action:@selector(clickToClassifyBBS) forControlEvents:UIControlEventTouchUpInside];
-
-    //搜索
-    [self createSearchView];
     
     //数据展示table
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 45 - 49 - 20) showLoadMore:NO];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0,0, 320, self.view.height - 44 - 49 - 20) showLoadMore:NO];
     _table.backgroundColor = [UIColor clearColor];
     _table.refreshDelegate = self;
     _table.dataSource = self;
@@ -302,6 +299,7 @@
         
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
         
+        [weakTable loadFail];
     }];
 }
 
@@ -312,7 +310,7 @@
 /**
  *  搜索view
  */
-- (void)createSearchView
+- (UIView *)createSearchView
 {
     UIView *search_bgview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
     search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
@@ -323,6 +321,7 @@
     bar.backgroundColor = [UIColor clearColor];
     bar.delegate = self;
     [search_bgview addSubview:bar];
+    return search_bgview;
 }
 
 - (UIView *)createTableHeaderView
@@ -330,9 +329,14 @@
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     headerView.backgroundColor = [UIColor clearColor];
     
+    //搜索view
+    
+    UIView *search = [self createSearchView];
+    [headerView addSubview:search];
+    
     //我的论坛
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(8, 20, 304, 80)];
+    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(8, 20 + 45, 304, 80)];
     bgView.layer.cornerRadius = 3.f;
     bgView.clipsToBounds = YES;
     [headerView addSubview:bgView];

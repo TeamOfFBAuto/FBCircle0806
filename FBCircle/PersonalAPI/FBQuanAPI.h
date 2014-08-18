@@ -173,18 +173,20 @@ alpha:(a)]
 
 #define FBCIRCLE_BBS_INFO @"http://quan.fblife.com/index.php?c=forum&a=getforum&fid=%@"//论坛基本信息
 
-//微论坛成员部分
+#pragma mark - 微论坛成员部分
 
 #define FBCIRCLE_BBS_MEMBER_JOIN @"http://quan.fblife.com/index.php?c=forum&a=joinforum&authkey=%@&fid=%@"//加入论坛
 #define FBCIRCLE_BBS_MEMBER_LEAVER @"http://quan.fblife.com/index.php?c=forum&a=quitforum&authkey=%@&fid=%@"//退出论坛
 #define FBCIRCLE_BBS_MEMBER_NUMBER @"http://quan.fblife.com/index.php?c=forum&a=forumuser&fid=%@&page=%d&ps=%d"//论坛成员数
 
-//搜索
+//
+#pragma mark - 搜索
 
 #define FBCIRCLE_SEARCH_BBS @"http://quan.fblife.com/index.php?c=forum&a=searchforum&keyword=%@&page=%d&ps=%d" //搜论坛
 #define FBCIRCLE_SEARCH_TOPIC @"http://quan.fblife.com/index.php?c=forum&a=searchthread&keyword=%@&page=%d&ps=%d" //搜帖子
 
-//微论坛主页 -- 帖子
+//
+#pragma mark - 微论坛主页 -- 帖子
 
 #define FBCIRCLE_TOPIC_LIST @"http://quan.fblife.com/index.php?c=forum&a=getthreads&fid=%@" //帖子列表
 #define FBCIRCLE_TOPIC_LIST_HOT @"http://quan.fblife.com/index.php?c=forum&a=topcomthreads" //热门帖子列表
@@ -197,14 +199,17 @@ alpha:(a)]
 
 #define FBCIRCLE_TOPIC_DELETE @"http://quan.fblife.com/index.php?c=forum&a=delthread&authkey=%@&fid=%@&tid=%@"//删除帖子
 
-//评论
+#define FBCIRCLE_TOPIC_ZAN_LIST @"http://quan.fblife.com/index.php?c=forum&a=getzan&tid=%@&page=%d&ps=%d"//帖子赞列表
+
+//
+#pragma  mark -  评论
 
 #define FBCIRCLE_COMMENT_ADD @"http://quan.fblife.com/index.php?c=forum&a=addcomment&authkey=%@&content=%@&fid=%@&tid=%@" //发表评论
 #define FBCIRCLE_COMMENT_LIST @"http://quan.fblife.com/index.php?c=forum&a=getcomment&tid=%@&page=%d&ps=%d" //评论列表
 
 
 
-#pragma - mark 创建论坛接口
+#pragma mark - 创建论坛接口
 
 #define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum&authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d"
 

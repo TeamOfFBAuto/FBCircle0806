@@ -11,6 +11,7 @@
 #import "HotTopicViewController.h"
 #import "ClassifyBBSController.h"
 #import "PraiseMemberController.h"
+#import "ShowImagesViewController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
@@ -18,12 +19,14 @@
 #import "SendPostsViewController.h"
 #import "TopicCommentModel.h"
 #import "BBSInfoModel.h"
+#import "TopicModel.h"
 
 typedef enum{
-    Action_Topic_Zan = 0,//赞帖
+    Action_Topic_Info = 0,//帖子基本信息
+    Action_Topic_Zan,//赞帖
     Action_Topic_Top,//置顶
-    Action_Topic_Top_Cancel//取消顶
-    
+    Action_Topic_Top_Cancel,//取消顶
+    Action_Topic_Del//删除帖子
 }Network_ACTION;
 
 @interface BBSTopicController ()<UITableViewDataSource,UITableViewDelegate,OHAttributedLabelDelegate>
@@ -33,13 +36,14 @@ typedef enum{
     
     LInputView *inputView;
     NSMutableArray *_dataArray;
-    RTLabel *height_Label;//计算高度
     
     NSMutableArray *rowHeights;//所有高度
     NSDictionary *emojiDic;//所有表情
     NSMutableArray *labelArr;//所有label
     
     UIButton *moreBtn;//点击加载更多
+    
+    TopicModel *aTopicModel;
 }
 
 @end
@@ -77,9 +81,6 @@ typedef enum{
     _table.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
     [self.view addSubview:_table];
     
-    _table.tableHeaderView = [self createTableHeaderView];
-    _table.tableFooterView = [self createTableFooterView];
-    
     [self createInputView];
     
     labelArr = [NSMutableArray array];
@@ -87,6 +88,12 @@ typedef enum{
     _dataArray = [NSMutableArray array];
     
     _pageNum = 1;
+    
+    //帖子信息
+    
+    [self networdAction:Action_Topic_Info];
+    
+    //评论列表
     [self getCommentList];
     
 }
@@ -103,6 +110,7 @@ typedef enum{
 {
     PraiseMemberController *praise = [[PraiseMemberController alloc]init];
     self.title = @"";
+    praise.tid = self.tid;
     [self PushToViewController:praise WithAnimation:YES];
 }
 
@@ -166,15 +174,17 @@ typedef enum{
  */
 - (void)clickToRecommend:(LButtonView *)btn
 {
+    __weak typeof(self)weakSelf = self;
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"取消置顶",@"删除"] images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {
             
             NSLog(@"取消置顶");
-            [self networdAction:Action_Topic_Top];
+            [weakSelf networdAction:Action_Topic_Top];
             
         }else if (buttonIndex == 1)
         {
             NSLog(@"删除");
+            [weakSelf networdAction:Action_Topic_Del];
         }
 
     }];
@@ -192,6 +202,7 @@ typedef enum{
 
 - (void)sendComment:(NSString *)text
 {
+    [inputView clearContent];
     
     TopicCommentModel *aModel = [[TopicCommentModel alloc]init];
     aModel.username = [SzkAPI getUsername];
@@ -202,6 +213,8 @@ typedef enum{
     [self createRichLabelWithMessage:text isInsert:YES];
     [_dataArray insertObject:aModel atIndex:0];
     [_table reloadData];
+    
+//    inputView.textView.text = @"<#string#>";
 }
 
 /**
@@ -255,20 +268,48 @@ typedef enum{
     }else if (action == Action_Topic_Top_Cancel)
     {
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TRIPTOP,[SzkAPI getAuthkey],self.fid,self.tid];
+    }else if (action == Action_Topic_Info)
+    {
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_INFO,self.tid,1,1];
+    }else if (action == Action_Topic_Del)
+    {
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_DELETE,[SzkAPI getAuthkey],self.fid,self.tid];
     }
+    
+    __weak typeof(UITableView *)weakTable = _table;
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
-            
+        
+        //帖子详情
+        if (action == Action_Topic_Info) {
+            NSDictionary *datainfo = [result objectForKey:@"datainfo"];
+            if ([datainfo isKindOfClass:[NSDictionary class]]) {
+                
+                NSDictionary *thread = [datainfo objectForKey:@"thread"];
+                if ([thread isKindOfClass:[NSDictionary class]]) {
+                    
+                    NSLog(@"topic info %@",thread);
+                    
+                    aTopicModel = [[TopicModel alloc]initWithDictionary:thread];
+                    
+                    weakTable.tableHeaderView = [self createTableHeaderView];
+                    weakTable.tableFooterView = [self createTableFooterView];
+                }
+            }
+        }else
+        {
+            if ([result isKindOfClass:[NSDictionary class]]) {
+                
+                [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+                
+            }
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"result %@",failDic);
-        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:self.view];
+        NSLog(@"fail result %@",failDic);
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
     }];
 }
 
@@ -409,20 +450,13 @@ typedef enum{
     [basic_view addSubview:numLabel];
     
     //精 帖
-    
-    NSArray *titles = @[@"改装商最好的广告 雪佛兰创酷",@"改装商雪佛兰创酷"];
-    
-    for (int i = 0; i < titles.count; i ++) {
-        
-        NSString *title = [titles objectAtIndex:i];
 
-        LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 + 40 * i, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:[UIImage imageNamed:@"jiantou_down"] title:title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
-        [basic_view addSubview:btnV];
-    }
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:[UIImage imageNamed:@"jiantou_down"] title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+    [basic_view addSubview:btnV];
     
     
     basic_view.backgroundColor = [UIColor whiteColor];
-    aFrame.size.height = 40 * titles.count + 40;
+    aFrame.size.height = 40 + 40;
     basic_view.frame = aFrame;
     return basic_view;
 }
@@ -444,7 +478,7 @@ typedef enum{
     [recommed_view addSubview:headImage];
     
     //楼主
-    NSString *name = @"楼主名a奥";
+    NSString *name = aTopicModel.username;
     
     UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(headImage.right + 10, headImage.top, [LTools widthForText:name font:14], 15) title:name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [recommed_view addSubview:nameLabel];
@@ -455,22 +489,30 @@ typedef enum{
     [hintBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     
     //时间
-    NSString *time = @"07-16";
+    NSString *time = [LTools timechange:aTopicModel.time];
     UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aFrame.size.width - 10 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:12], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
     [recommed_view addSubview:timeLabel];
     
     //正文
     
-    NSString *text = @"这是一个帖子,不知道有多长呢，请多少准备呢，卡机是肯定就安静SD卡垃圾阿三空间打开垃圾抗衰老的阿克苏经典款垃圾是考虑到啊开始打开了家SD卡垃圾啊卡三季度可";
+    NSString *text = aTopicModel.content;
     UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 2, aFrame.size.width - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 font:12]) title:text font:12 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     textLabel.numberOfLines = 0;
     [recommed_view addSubview:textLabel];
     
     //图片
     
-    NSArray *imageUrls = @[@"ll",@"ok",@"ok",@"ok",@"ok"];
+    NSArray *imageUrls = aTopicModel.img;
+    
+    __weak typeof(self)weakSelf = self;
+    
     LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 5, textLabel.width, 0) images:imageUrls imageIndex:^(int index) {
         NSLog(@"slectIndex %d",index);
+        
+        ShowImagesViewController *showBigVC=[[ShowImagesViewController alloc]init];
+        showBigVC.allImagesUrlArray= [NSMutableArray arrayWithArray:imageUrls];
+        showBigVC.currentPage = index ;
+        [weakSelf PushToViewController:showBigVC WithAnimation:YES];
     }];
     [recommed_view addSubview:nineView];
     
@@ -490,7 +532,7 @@ typedef enum{
     zanImage.image = [UIImage imageNamed:@"zhiding"];
     [zan_view addSubview:zanImage];
     
-    NSString *numberSter = @"112";
+    NSString *numberSter = [NSString stringWithFormat:@"%@",aTopicModel.zan_num];
     UILabel *zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
     [zan_view addSubview:zan_num_label];
     
@@ -505,7 +547,7 @@ typedef enum{
     time_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
     [recommed_view addSubview:time_view];
     
-    NSString *time_str = @"今天";
+    NSString *time_str = [LTools timestamp:aTopicModel.time];
     UILabel *time_Label = [LTools createLabelFrame:CGRectMake(10, 0, 100, time_view.height) title:time_str font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [time_view addSubview:time_Label];
     

@@ -166,8 +166,12 @@
 
 - (void)clearContent
 {
+    
     self.textView.text = @"";
     [self resetFrame];
+    [self resignFirstResponder];
+    
+    self.top = initFrameY;
 }
 
 - (void)sendBtnPress:(UIButton*)sender

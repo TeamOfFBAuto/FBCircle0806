@@ -9,6 +9,7 @@
 #import "MyBBSViewController.h"
 #import "SendPostsViewController.h"
 #import "MicroBBSInfoController.h"
+#import "CreateNewBBSViewController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
 #import "BBSInfoModel.h"
@@ -82,7 +83,7 @@
  */
 - (void)clickToAddBBS
 {
-    SendPostsViewController * sendPostVC = [[SendPostsViewController alloc] init];
+    CreateNewBBSViewController * sendPostVC = [[CreateNewBBSViewController alloc] init];
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 
