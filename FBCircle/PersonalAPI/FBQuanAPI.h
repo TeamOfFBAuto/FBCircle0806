@@ -221,19 +221,19 @@ alpha:(a)]
 #define BBS_UPLOAD_POSTS_URL @"http://quan.fblife.com/index.php?c=forum&a=addthread&authkey=%@&fid=%@&title=%@&content=%@&imgid=%@&address=%@"
 
 
+#pragma - mark 发现部分的接口
 
+//更新用户经纬度
+#define FBFOUND_UPDATAUSERLOCAL @"http://quan.fblife.com/index.php?c=interface&a=updateuserposition&authkey=%@&jing_lng=%f&wei_lat=%f"
 
+//附近的人得出按距离排序的整个数组
+#define FBFOUND_NEARBYPERSON @"http://quan.fblife.com/index.php?c=interface&a=getuseraround&authkey=%@"
 
+//根据坐标算出救援队位置距离列表
+#define FBFOUND_HELPLOCAL @"http://quan.fblife.com/index.php?c=interface&a=getsosaround&authkey=%@&page=%d&ps=%d"
 
-
-
-
-
-
-
-
-
-
+//获取救援队的详细信息
+#define FBFOUND_HELPINFO @"http://quan.fblife.com/index.php?c=interface&a=getsos&authkey=%@&sid=%d"
 
 
 

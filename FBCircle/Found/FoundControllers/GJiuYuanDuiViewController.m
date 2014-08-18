@@ -17,7 +17,36 @@
 
 @implementation GJiuYuanDuiViewController
 
+- (void)dealloc
+{
+    NSLog(@"%s",__FUNCTION__);
+}
 
+
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    [_mapView viewWillAppear];
+    
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [_mapView viewWillDisappear];
+    
+    
+    _mapView.delegate = nil; // 不用时，置nil
+    
+    _poisearch.delegate = nil; // 不用时，置nil
+    
+    _locService.delegate = nil;
+    
+//    for (UIView * view in _mapView.subviews) {
+//        [view removeFromSuperview];
+//    }
+    
+    
+}
 
 - (void)viewDidLoad
 {
@@ -64,6 +93,38 @@
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
     [_locService startUserLocationService];//启动LocationService
+    
+    
+    
+    
+    //下面信息view
+    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568-206, 320, 206)];
+    _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
+    
+    //底层view
+    UIView *downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
+    downBackView.backgroundColor = [UIColor whiteColor];
+    downBackView.layer.borderWidth = 0.5;
+    downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    downBackView.layer.cornerRadius = 5;
+    [_downInfoView addSubview:downBackView];
+    
+    
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.layer.borderWidth = 0.5;
+    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _tableView.layer.cornerRadius = 5;
+    //    _tableView.separatorColor = [UIColor clearColor];
+    [downBackView addSubview:_tableView];
+    
+    
+    
+    [self.view addSubview:_downInfoView];
+    
     
     
 }

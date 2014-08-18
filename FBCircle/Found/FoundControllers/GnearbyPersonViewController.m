@@ -7,6 +7,7 @@
 //
 
 #import "GnearbyPersonViewController.h"
+#import "GpersonInfoViewController.h"//用户信息界面
 
 @interface GnearbyPersonViewController ()
 
@@ -25,6 +26,35 @@
     [self.view addSubview:_tableView];
     
     
+}
+
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"identifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
+    }
+    return cell;
+    
+}
+
+-(CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath{
+    return 63;
+}
+
+
+
+
+
+-(void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.navigationController pushViewController:[[GpersonInfoViewController alloc]init] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -38,11 +38,14 @@
     
     _mapView.delegate = nil; // 不用时，置nil
     
+    
     _poisearch.delegate = nil; // 不用时，置nil
+    
     
     _locService.delegate = nil;
     
     
+
     
     
 }
@@ -281,9 +284,7 @@
     //进行地图搜索相关操作
     if (sender.tag == 10) {//停车场
         
-        //初始化检索对象
-        _poisearch =[[BMKPoiSearch alloc]init];
-        _poisearch.delegate = self;
+        
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
@@ -302,9 +303,7 @@
         
         
     }else if (sender.tag == 11){//加油站
-        //初始化检索对象
-        _poisearch =[[BMKPoiSearch alloc]init];
-        _poisearch.delegate = self;
+        
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
@@ -322,9 +321,7 @@
         }
         
     }else if (sender.tag == 12){//维修厂
-        //初始化检索对象
-        _poisearch =[[BMKPoiSearch alloc]init];
-        _poisearch.delegate = self;
+        
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;

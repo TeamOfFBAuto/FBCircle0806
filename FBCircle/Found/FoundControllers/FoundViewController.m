@@ -15,7 +15,7 @@
 #import "GnearbyPersonViewController.h"//附近的人
 
 
-#import "GpersonInfoViewController.h"//测试用户信息界面
+
 
 #import "GJiuYuanDuiViewController.h"//e族救援队
 
@@ -185,9 +185,8 @@
         [self presentViewController:[[GuseCarViewController alloc]init] animated:YES completion:^{
         }];
     }else if (indexPath.row ==0 && indexPath.section == 0){//附近的人
-//        [self.navigationController pushViewController:[[GnearbyPersonViewController alloc] init] animated:YES];
+        [self.navigationController pushViewController:[[GnearbyPersonViewController alloc] init] animated:YES];
         
-        [self.navigationController pushViewController:[[GpersonInfoViewController alloc]init] animated:YES];
     }else if (indexPath.row == 1 && indexPath.section == 1){//e族救援队
         [self presentViewController:[[GJiuYuanDuiViewController alloc]init] animated:YES completion:^{
             

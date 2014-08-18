@@ -31,4 +31,9 @@
     UITableView *_tableView;
     BOOL _isShowDownInfoView;
 }
+
+//协议属性
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+
+
 @end
