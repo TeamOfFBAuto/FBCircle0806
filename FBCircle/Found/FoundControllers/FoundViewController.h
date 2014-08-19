@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FoundViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface FoundViewController : MyViewController<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;//主tableview
     
 }
+
+-(void)pushWebViewWithStr:(NSString *)stringValue;
+
+-(void)pushMyerweimaVc;
+
 @end

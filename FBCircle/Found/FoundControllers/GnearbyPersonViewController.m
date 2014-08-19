@@ -48,6 +48,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(16, CGRectGetMaxY(titleLabel2.frame)+35, 320-16-16, 43);
     btn.backgroundColor = RGBCOLOR(36, 192, 38);
+    btn.layer.cornerRadius = 4;
     btn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [btn setTitle:@"进入附近的人" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(fujinderen) forControlEvents:UIControlEventTouchUpInside];
@@ -78,11 +79,25 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"identifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    GnearbyPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[GnearbyPersonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         
     }
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    cell.separatorInset = UIEdgeInsetsZero;
+    [cell loadCustomViewWithIndexPath:indexPath];//加载控件
+    [cell configNetDataWithIndexPath:indexPath];//填充数据
+    
+    __weak typeof (self)bself = self;
+    [cell setSendMessageBlock:^{
+        [bself.navigationController pushViewController:[[GpersonInfoViewController alloc]init] animated:YES];
+    }];
+    
     return cell;
     
 }

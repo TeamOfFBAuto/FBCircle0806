@@ -10,6 +10,9 @@
 //扫一扫界面
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+
+@class FoundViewController;
+
 @interface GmFoundScanViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate>
 {
     int num;
@@ -23,5 +26,6 @@
 @property (strong,nonatomic)AVCaptureVideoPreviewLayer * preview;
 @property (nonatomic, strong) UIImageView * line;
 
+@property(nonatomic,assign)FoundViewController *delegate;
 
 @end

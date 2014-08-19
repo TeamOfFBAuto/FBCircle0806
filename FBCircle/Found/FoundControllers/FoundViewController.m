@@ -14,10 +14,12 @@
 
 #import "GnearbyPersonViewController.h"//附近的人
 
-
+#import "FBCircleWebViewController.h"//扫一扫完成后跳转的页面
 
 
 #import "GJiuYuanDuiViewController.h"//e族救援队
+
+#import "GmyErweimaViewController.h"
 
 @interface FoundViewController ()
 
@@ -35,7 +37,7 @@
     
     self.view.backgroundColor = RGBCOLOR(246, 247, 249);
     
-    
+    self.titleLabel.text = @"发现";
     
     
     //主tableview
@@ -180,7 +182,12 @@
     NSLog(@"row:%d  section:%d",indexPath.row,indexPath.section);
     
     if (indexPath.row == 0 && indexPath.section == 2) {//扫一扫
-        [self.navigationController pushViewController:[[GmFoundScanViewController alloc]init] animated:YES];
+//        [self.navigationController pushViewController:[[GmFoundScanViewController alloc]init] animated:YES];
+        GmFoundScanViewController *foundScan = [[GmFoundScanViewController alloc]init];
+        foundScan.delegate = self;
+        [self presentViewController:foundScan animated:YES completion:^{
+            
+        }];
     }else if (indexPath.row == 0 && indexPath.section == 1){//用车服务
         [self presentViewController:[[GuseCarViewController alloc]init] animated:YES completion:^{
         }];
@@ -196,6 +203,28 @@
     
     
 }
+
+
+
+//代理方法
+-(void)pushWebViewWithStr:(NSString *)stringValue{
+    NSLog(@"%s",__FUNCTION__);
+    
+    FBCircleWebViewController *fbwebvc = [[FBCircleWebViewController alloc]init];
+    fbwebvc.web_url = stringValue;
+    
+    [self.navigationController pushViewController:fbwebvc animated:YES];
+    
+}
+
+
+-(void)pushMyerweimaVc{
+    GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
+    erweima.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:erweima animated:YES];
+}
+
+
 
 
 @end

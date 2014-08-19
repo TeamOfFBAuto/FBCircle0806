@@ -7,7 +7,8 @@
 //
 
 #import "GmFoundScanViewController.h"
-#import "GmyErweimaViewController.h"//二维码
+
+#import "FoundViewController.h"
 
 
 #define ScanKuangFrame CGRectMake(50, 70+89, 220, 220)
@@ -30,7 +31,23 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     
-    self.navigationItem.title = @"二维码";
+    //上面的view
+    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    topView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:topView];
+    UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12+20, 15, 22)];
+    backImv.backgroundColor = [UIColor orangeColor];
+    [topView addSubview:backImv];
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backImv.frame)+8, backImv.frame.origin.y, 34, 20)];
+    backLabel.textColor = [UIColor whiteColor];
+    backLabel.text = @"返回";
+    [topView addSubview:backLabel];
+    UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backLabel.frame)+65, backLabel.frame.origin.y, 52, 18)];
+    titleLable.font = [UIFont systemFontOfSize:17];
+    titleLable.text = @"二维码";
+    [topView addSubview:titleLable];
+    
+    
     
     //半透明的浮层
     UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64+5.4, 320, 568-64-6)];
@@ -187,15 +204,15 @@
     
     
     
-    //    [self dismissViewControllerAnimated:YES completion:^
-    //     {
-    //         [timer invalidate];
-    //         NSLog(@"123");
-    //         NSLog(@"%@",stringValue);
-    //
-    //         [self.delegete pushWebViewWithStr:stringValue];
-    //
-    //     }];
+    [self dismissViewControllerAnimated:YES completion:^
+     {
+         [timer invalidate];
+         NSLog(@"123");
+         NSLog(@"%@",stringValue);
+
+         [self.delegate pushWebViewWithStr:stringValue];
+
+     }];
     
     
 }
@@ -203,12 +220,13 @@
 
 
 
+
+
+
 #pragma mark - 点击我的二维码跳转
 -(void)myErweima{
     NSLog(@"%s",__FUNCTION__);
-    GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
-    erweima.tabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:erweima animated:YES];
+    [self.delegate pushMyerweimaVc];
     
 }
 
