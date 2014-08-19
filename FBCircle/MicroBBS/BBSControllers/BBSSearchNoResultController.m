@@ -35,7 +35,7 @@
     UILabel *hello = [LTools createLabelFrame:CGRectMake(0, 334/2.f - (iPhone5 ? 0 : 88), self.view.width, 20) title:@"越野e族联盟,微论坛尚未创建" font:16 align:NSTextAlignmentCenter textColor:[UIColor blackColor]];
     [self.view addSubview:hello];
     
-    UIButton *create_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake((self.view.width - 574/2.f)/2.f, hello.bottom + 35, 574/2.f, 83/2.f) normalTitle:nil backgroudImage:[UIImage imageNamed:@"chuangjian"] superView:nil target:self action:@selector(clickToCreateBBS:)];
+    UIButton *create_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake((self.view.width - 574/2.f)/2.f, hello.bottom + 35, 574/2.f, 83/2.f) normalTitle:nil image:nil backgroudImage:[UIImage imageNamed:@"chuangjian"] superView:nil target:self action:@selector(clickToCreateBBS:)];
     [[self view]addSubview:create_btn];
     
     custom_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 379/2.f, 225/2.f)];

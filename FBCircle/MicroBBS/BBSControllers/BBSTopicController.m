@@ -119,7 +119,7 @@ typedef enum{
 {
     NSLog(@"zan");
     
-    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"赞",@"评论"] images:@[[UIImage imageNamed:@"zhiding"],[UIImage imageNamed:@"zhiding"]] sheetStyle:Style_SideBySide action:^(NSInteger buttonIndex) {
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"赞",@"评论"] images:@[[UIImage imageNamed:@"add_zan-1"],[UIImage imageNamed:@"add_talk"]] sheetStyle:Style_SideBySide action:^(NSInteger buttonIndex) {
         
         if (buttonIndex == 0) {
             NSLog(@"赞");
@@ -483,7 +483,7 @@ typedef enum{
     UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(headImage.right + 10, headImage.top, [LTools widthForText:name font:14], 15) title:name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [recommed_view addSubview:nameLabel];
     
-    UIButton *hintBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(nameLabel.right + 5, headImage.top, 35, 15) normalTitle:@"楼主" backgroudImage:nil superView:recommed_view target:nil action:nil];
+    UIButton *hintBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(nameLabel.right + 5, headImage.top, 35, 15) normalTitle:@"楼主" image:nil backgroudImage:nil superView:recommed_view target:nil action:nil];
     hintBtn.backgroundColor = [UIColor colorWithHexString:@"5c7bbe"];
     hintBtn.layer.cornerRadius = 3.f;
     [hintBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
@@ -529,7 +529,7 @@ typedef enum{
     [zan_view addGestureRecognizer:tap];
     
     UIImageView *zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, (40 - 16)/2.0, 16, 16)];
-    zanImage.image = [UIImage imageNamed:@"zhiding"];
+    zanImage.image = [UIImage imageNamed:@"add_zan"];
     [zan_view addSubview:zanImage];
     
     NSString *numberSter = [NSString stringWithFormat:@"%@",aTopicModel.zan_num];
@@ -551,7 +551,7 @@ typedef enum{
     UILabel *time_Label = [LTools createLabelFrame:CGRectMake(10, 0, 100, time_view.height) title:time_str font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [time_view addSubview:time_Label];
     
-    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30, 5, 30, 30) normalTitle:@"赞" backgroudImage:nil superView:time_view target:self action:@selector(clickToZan:)];
+    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30, 5, 30, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:time_view target:self action:@selector(clickToZan:)];
     [zan_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     aFrame.size.height = time_view.bottom;
@@ -611,7 +611,7 @@ typedef enum{
 
     
     
-    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height - 15) normalTitle:@"查看更多评论..." backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
+    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height - 15) normalTitle:@"查看更多评论..." image:nil backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
     [moreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     moreBtn.titleLabel.font = [UIFont systemFontOfSize:14];

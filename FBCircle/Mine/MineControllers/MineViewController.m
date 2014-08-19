@@ -39,7 +39,7 @@
     [super viewDidLoad];
     
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bg_640_88"] forBarMetrics: UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"add_beijing"] forBarMetrics: UIBarMetricsDefault];
     
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     UIColor * cc = RGBCOLOR(91,138,59);

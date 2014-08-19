@@ -158,7 +158,8 @@
 + (UIButton *)createButtonWithType:(UIButtonType)buttonType
                              frame:(CGRect)aFrame
                              normalTitle:(NSString *)normalTitle
-                    backgroudImage:(UIImage *)image
+                             image:(UIImage *)normalImage
+                    backgroudImage:(UIImage *)bgImage
                          superView:(UIView *)superView
                             target:(id)target
                             action:(SEL)action
@@ -166,7 +167,8 @@
     UIButton *btn = [UIButton buttonWithType:buttonType];
     btn.frame = aFrame;
     [btn setTitle:normalTitle forState:UIControlStateNormal];
-    [btn setBackgroundImage:image forState:UIControlStateNormal];
+    [btn setImage:normalImage forState:UIControlStateNormal];
+    [btn setBackgroundImage:bgImage forState:UIControlStateNormal];
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:btn];
     return btn;

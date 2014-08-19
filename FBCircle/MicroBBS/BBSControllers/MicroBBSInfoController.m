@@ -64,7 +64,7 @@
 {
      __weak typeof(self)weakSelf = self;
     NSString *title1 = [NSString stringWithFormat:@"确定退出\"%@\"",infoModel.name];
-    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title1,@"退出",@"取消"] images:nil sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title1,@"退出",@"取消"] images:@[@"",[UIImage imageNamed:@"add_login"],[UIImage imageNamed:@"add_quxiao"]] sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
         
         if (buttonIndex == 1) {
             
@@ -160,10 +160,11 @@
     UIView *third = [self createThirdViewFrame:CGRectMake(18, second.bottom + 15, first.width, 0)];
     [self.view addSubview:third];
     
-    btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛" backgroudImage:nil superView:self.view target:self action:@selector(clickToLeave:)];
+    btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛"  image:nil backgroudImage:[UIImage imageNamed:@"add_tuichu"] superView:self.view target:self action:@selector(clickToLeave:)];
     [btn setTitle:@"加入微论坛" forState:UIControlStateSelected];
     
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
 }
 
 - (UIView *)createFirstViewFrame:(CGRect)aFrame
@@ -175,14 +176,14 @@
     firstView.backgroundColor = [UIColor whiteColor];
     
     UIImage *defaultImage = [UIImage imageNamed:@"Picture_default_image"];
-    LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, firstView.width, 75) leftImage:[LTools scaleToSizeWithImage:defaultImage size:CGSizeMake(35, 35)] rightImage:Nil title:infoModel.name target:Nil action:Nil lineDirection:Line_Down];
-    [firstView addSubview:btn];
+    LButtonView *btn1 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, firstView.width, 75) leftImage:[LTools scaleToSizeWithImage:defaultImage size:CGSizeMake(35, 35)] rightImage:Nil title:infoModel.name target:Nil action:Nil lineDirection:Line_Down];
+    [firstView addSubview:btn1];
     
-    [btn.imageView sd_setImageWithURL:[NSURL URLWithString:infoModel.headpic] placeholderImage:defaultImage];
+    [btn1.imageView sd_setImageWithURL:[NSURL URLWithString:infoModel.headpic] placeholderImage:defaultImage];
     
     //简介
     
-    UILabel *descripL = [LTools createLabelFrame:CGRectMake(10, btn.bottom + 10, aFrame.size.width - 20, [LTools heightForText:infoModel.intro width:aFrame.size.width - 20 font:14]) title:infoModel.intro font:14 align:NSTextAlignmentLeft textColor:[UIColor darkGrayColor]];
+    UILabel *descripL = [LTools createLabelFrame:CGRectMake(10, btn1.bottom + 10, aFrame.size.width - 20, [LTools heightForText:infoModel.intro width:aFrame.size.width - 20 font:14]) title:infoModel.intro font:14 align:NSTextAlignmentLeft textColor:[UIColor darkGrayColor]];
     descripL.numberOfLines = 0;
     [firstView addSubview:descripL];
     

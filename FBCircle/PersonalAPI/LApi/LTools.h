@@ -57,7 +57,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 + (UIButton *)createButtonWithType:(UIButtonType)buttonType
                              frame:(CGRect)aFrame
                        normalTitle:(NSString *)normalTitle
-                    backgroudImage:(UIImage *)image
+                             image:(UIImage *)normalImage
+                    backgroudImage:(UIImage *)bgImage
                          superView:(UIView *)superView
                             target:(id)target
                             action:(SEL)action;
