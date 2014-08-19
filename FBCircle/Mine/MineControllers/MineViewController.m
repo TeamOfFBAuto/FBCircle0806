@@ -4,7 +4,7 @@
 //
 //  Created by soulnear on 14-8-4.
 //  Copyright (c) 2014年 soulnear. All rights reserved.
-//
+//x
 
 #import "MineViewController.h"
 
@@ -243,10 +243,6 @@
         
         
         
-        
-        
-        
-        
         //用户名
         self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImageView.frame)+12, 10, 188, 18)];
         //self.userNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
@@ -465,11 +461,9 @@
     //    [fileM removeItemAtPath:[documentPathStr stringByAppendingString:userBanner] error:nil];
     
     
-    
     //    //清除图片
+    
     [[FullyLoaded sharedFullyLoaded] removeAllCacheDownloads];
-    
-    
     
     //上传标志位
     //    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"gIsUpBanner"];
