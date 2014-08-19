@@ -44,6 +44,14 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 - (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock;//处理请求结果
 
+/**
+ *  NSUserDefault 缓存
+ */
+//存
++ (void)cache:(id)dataInfo ForKey:(NSString *)key;
+//取
++ (id)cacheForKey:(NSString *)key;
+
 #pragma mark - 常用视图快速创建
 
 + (UIButton *)createButtonWithType:(UIButtonType)buttonType

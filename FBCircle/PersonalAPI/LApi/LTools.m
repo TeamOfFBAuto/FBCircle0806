@@ -63,6 +63,8 @@
     successBlock = completionBlock;
     failBlock = failedBlock;
     
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
     NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"requestUrl %@",newStr);
@@ -79,6 +81,8 @@
 
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         if (data.length > 0) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -130,6 +134,23 @@
         
     }];
 
+}
+
+#pragma mark - NSUserDefault缓存
+
+//存
++ (void)cache:(id)dataInfo ForKey:(NSString *)key
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:dataInfo forKey:key];
+    [defaults synchronize];
+}
+
+//取
++ (id)cacheForKey:(NSString *)key
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:key];
 }
 
 #pragma mark - 常用视图快速创建

@@ -22,6 +22,10 @@
 #import "BBSInfoModel.h"
 #import "TopicModel.h"
 
+#define CACHE_MY_BBS @"mybbs" //我的论坛
+#define CACHE_HOT_TOPIC @"hotTopic" //热门推荐
+#define CACHE_CONCERN_HOT @"concern_hot" //关注热门
+
 @interface MicroBBSViewController ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
@@ -29,8 +33,11 @@
     NSArray *_concern_hot_array;//关注热门
     NSArray *_hot_array;//热门
     
-    BOOL first_success;//第一部分请求成功
-    BOOL second_success;//第二部分请求成功
+    
+    BOOL my_bbs_success;//我的论坛
+    BOOL hot_recommend;//热门推荐
+    
+    UIView *headerView;
 }
 
 @end
@@ -49,17 +56,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     NSLog(@"auteykey %@",[SzkAPI getAuthkey]);
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidLoad
@@ -67,9 +65,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
-    
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     self.title = @"微论坛";
     self.titleLabel.text = @"微论坛";
@@ -90,9 +85,37 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
+    
+    //缓存数据
+    
+    NSDictionary *dataInfo = [LTools cacheForKey:CACHE_MY_BBS];
+    if (dataInfo) {
+        _myBBSArray = [self parseForMyBBS:dataInfo];
+        _table.tableHeaderView = [self createTableHeaderView];
+        
+        
+        dataInfo = [LTools cacheForKey:CACHE_HOT_TOPIC];
+        
+        if (dataInfo) {
+            _hot_array = [self parseTopic:dataInfo dataStyle:0];
+        }
+        
+         [self createSecond];
+    }
+    
+    dataInfo = [LTools cacheForKey:CACHE_CONCERN_HOT];
+    if (dataInfo) {
+        _concern_hot_array = [self parseTopic:dataInfo dataStyle:1];
+        [_table reloadData];
+    }
+    
+    
+    
     //我的论坛
     
     [self getMyBBS];
+    
+    [self getTopic:0];
     
     //我的关注热门
     
@@ -172,6 +195,65 @@
     [self PushToViewController:search WithAnimation:YES];
 }
 
+#pragma mark - 数据解析
+
+/**
+ *  我的论坛
+ */
+- (NSArray *)parseForMyBBS:(NSDictionary *)dataInfo
+{
+    NSArray *create = [dataInfo objectForKey:@"create"];
+    
+    NSMutableArray *arr_mine = [NSMutableArray arrayWithCapacity:create.count];
+    
+    for (NSDictionary *aDic in create) {
+        
+        [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+        
+        if (arr_mine.count >= 3) {
+            NSLog(@"arr_mine.count >= 3");
+            break ;
+        }
+    }
+    
+    NSArray *join = [dataInfo objectForKey:@"join"];
+    for (NSDictionary *aDic in join) {
+        
+        [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+        
+        if (arr_mine.count >= 3) {
+            NSLog(@"arr_mine.count >= 3");
+            break ;
+        }
+    }
+    
+    return arr_mine;
+}
+
+/**
+ *  推荐热门和关注热门
+ *  @param dataStyle 区分
+ */
+- (NSArray *)parseTopic:(NSDictionary *)result dataStyle:(int)dataStyle
+{
+    NSArray *dataInfo = [result objectForKey:@"datainfo"];
+    
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+    for (NSDictionary *aDic in dataInfo) {
+        
+        if ([aDic isKindOfClass:[NSDictionary class]]) {
+            int max = (dataStyle == 0) ? 2 : 15;
+            
+            if (arr.count < max) {
+                TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                [arr addObject:aModel];
+            }
+        }
+        
+    }
+    return arr;
+}
+
 #pragma mark - 网络请求
 
 /**
@@ -179,7 +261,10 @@
  */
 - (void)getMyBBS
 {
+    //先读取缓存数据
+    
     __weak typeof(self)weakSelf = self;
+    __weak typeof(RefreshTableView *)weakTable = _table;
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],1,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -189,36 +274,20 @@
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
+            [LTools cache:dataInfo ForKey:CACHE_MY_BBS];
+            
             //一共需要三个,优先“创建的论坛”,不够再用“加入的论坛”
             
-            NSArray *create = [dataInfo objectForKey:@"create"];
             
-            NSMutableArray *arr_mine = [NSMutableArray arrayWithCapacity:create.count];
+            _myBBSArray = [weakSelf parseForMyBBS:dataInfo];
             
-            for (NSDictionary *aDic in create) {
-                
-                [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
-                
-                if (arr_mine.count >= 3) {
-                    NSLog(@"arr_mine.count >= 3");
-                    break ;
-                }
+            weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+            
+            my_bbs_success = YES;
+            
+            if (hot_recommend) {
+                [weakSelf createSecond];
             }
-            
-            NSArray *join = [dataInfo objectForKey:@"join"];
-            for (NSDictionary *aDic in join) {
-                
-                [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
-                
-                if (arr_mine.count >= 3) {
-                    NSLog(@"arr_mine.count >= 3");
-                    break ;
-                }
-            }
-            
-            _myBBSArray = arr_mine;
-            
-            [weakSelf getTopic:0];
         }
         
         
@@ -253,42 +322,30 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSArray *dataInfo = [result objectForKey:@"datainfo"];
-        
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
-        for (NSDictionary *aDic in dataInfo) {
-            
-            if ([aDic isKindOfClass:[NSDictionary class]]) {
-                int max = (dataStyle == 0) ? 2 : 15;
-                
-                if (arr.count < max) {
-                    TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
-                    [arr addObject:aModel];
-                }
-            }
-            
-        }
         
         if (dataStyle == 0) {
             //热门帖子
             
-            _hot_array = arr;
+            [LTools cache:result ForKey:CACHE_HOT_TOPIC];
             
-            weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+            hot_recommend = YES;
             
-            first_success = YES;
+            _hot_array = [self parseTopic:result dataStyle:dataStyle];
+            
+            if (my_bbs_success) {
+                [weakSelf createSecond];
+            }
             
         }else if (dataStyle == 1)
         {
             //关注帖子
             
-            _concern_hot_array = arr;
+            [LTools cache:result ForKey:CACHE_CONCERN_HOT];
             
-//            [weakTable reloadData];
+            _concern_hot_array = [self parseTopic:result dataStyle:dataStyle];
+                        
+            [weakTable reloadData:nil total:0];
             
-            [weakTable reloadData:arr total:0];
-            
-            second_success = YES;
         }
         
         
@@ -324,7 +381,12 @@
 
 - (UIView *)createTableHeaderView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+    if (headerView) {
+        [headerView removeFromSuperview];
+        headerView = nil;
+    }
+    
+    headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     headerView.backgroundColor = [UIColor clearColor];
     
     //搜索view
@@ -367,6 +429,16 @@
         
     }
     
+    headerView.frame = CGRectMake(0, 0, 320, bgView.bottom + 15);
+    
+    return headerView;
+}
+
+/**
+ *  创建热门推荐部分
+ */
+- (void)createSecond
+{
     //热门推荐
     
     UIView *bgView2 = [[UIView alloc]init];
@@ -398,10 +470,11 @@
         }
     }
     
-    bgView2.frame = CGRectMake(8, bgView.bottom + 15, 304, section2.height + 75 * _hot_array.count);
+    bgView2.frame = CGRectMake(8, headerView.height, 304, section2.height + 75 * _hot_array.count);
+    
     headerView.frame = CGRectMake(0, 0, 320, bgView2.bottom + 15);
     
-    return headerView;
+    _table.tableHeaderView = headerView;
 }
 
 
@@ -424,6 +497,8 @@
     //我的论坛
     
     [self getMyBBS];
+    
+    [self getTopic:0];
     
     //我的关注热门
     
@@ -516,7 +591,8 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"BBSTableCell" owner:self options:nil]objectAtIndex:0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row == _concern_hot_array.count - 1) {
+    
+    if (indexPath.row == _concern_hot_array.count) {
         
         cell.bgView.layer.cornerRadius = 3.f;
     }else
