@@ -75,7 +75,7 @@
     
     self.titleLabel.text = self.messageInfo.othername;
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     _theModel = [[ChatModel alloc] init];
     
@@ -86,7 +86,7 @@
     _currentPage = 1;
     
     
-    _mytableView = [[UITableView alloc] initWithFrame:CGRectMake(0,6,320,(iPhone5?568:480)-20-44-6-44) style:UITableViewStylePlain];
+    _mytableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-20-44-44) style:UITableViewStylePlain];
     
     self.mytableView.delegate = self;
     

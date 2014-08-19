@@ -72,7 +72,7 @@
         self.assetsGroups = [NSMutableArray array];
         
         // Table View
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,6,320,iPhone5?568:480) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64) style:UITableViewStylePlain];
         tableView.dataSource = self;
         tableView.delegate = self;
         //        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -166,11 +166,12 @@
         spaceBar.width = MY_MACRO_NAME?-5:5;
         
         
-        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,31/2,32/2)];
+        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,44,44)];
         
         [button_back addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
-        
-        [button_back setBackgroundImage:[UIImage imageNamed:@"logIn_close.png"] forState:UIControlStateNormal];
+        [button_back setTitle:@"取消" forState:UIControlStateNormal];
+        button_back.titleLabel.font = [UIFont systemFontOfSize:15];
+//        [button_back setBackgroundImage:[UIImage imageNamed:@"logIn_close.png"] forState:UIControlStateNormal];
         
         UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
         

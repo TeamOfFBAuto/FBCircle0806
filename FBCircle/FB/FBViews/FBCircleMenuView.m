@@ -22,7 +22,7 @@
         
         self.clipsToBounds = YES;
                 
-        NSArray * imageArray = [NSArray arrayWithObjects:@"pinglun-xin_up-24_24.png",@"pinglun-pinglun_up24_24.png",@"pinglun-zhuanfa_up-24_24.png",@"pinglun-xin-down-24_24.png",@"pinglun-pinglun-down-24_24.png",@"pinglun-zhuanfa-down-24_24.png",nil];
+        NSArray * imageArray = [NSArray arrayWithObjects:@"pinglun-xin_up-24_24.png",@"pinglun-pinglun_up24_24.png",@"pinglun-zhuanfa_up-24_24.png",@"pinglun-xin-down-24_24.png",@"pinglun-pinglun_up24_24.png",@"pinglun-zhuanfa_up-24_24.png",nil];
         
         
         NSArray * contentArray = [NSArray arrayWithObjects:@"赞",@"评论",@"转发",nil];
@@ -30,23 +30,14 @@
         for (int i = 0;i < 3;i++) {
             
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-            
             button.frame = CGRectMake((106+1)*i,0,106,38);
-            
             button.tag = 100 + i;
-            
             [button setBackgroundImage:[UIImage imageNamed:@"pinglun-bg1-up-212_76.png"] forState:UIControlStateNormal];
-            
             [button setBackgroundImage:[UIImage imageNamed:@"pinglun-bg1-down212_76.png"] forState:UIControlStateHighlighted];
-            
             [button setImage:[UIImage imageNamed:[imageArray objectAtIndex:i]] forState:UIControlStateNormal];
-            
             [button setImage:[UIImage imageNamed:[imageArray objectAtIndex:3+i]] forState:UIControlStateHighlighted];
-            
             [button setTitle:[contentArray objectAtIndex:i] forState:UIControlStateNormal];
-            
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            
             button.titleLabel.font = [UIFont systemFontOfSize:13];
             
 //            if (i == 0 && isZan) {

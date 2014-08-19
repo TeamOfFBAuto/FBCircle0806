@@ -886,6 +886,7 @@
 		56AE78DA1998905300FE869E /* BBSAddMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56AE78D91998905300FE869E /* BBSAddMemberCell.m */; };
 		56AE78DC1998912C00FE869E /* bbs_add_member_xuanzhong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56AE78DB1998912C00FE869E /* bbs_add_member_xuanzhong@2x.png */; };
 		56AE78DD1998912C00FE869E /* bbs_add_member_xuanzhong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56AE78DB1998912C00FE869E /* bbs_add_member_xuanzhong@2x.png */; };
+		56AFD61819A33297005125F6 /* ZActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 56AFD61719A33297005125F6 /* ZActionSheet.m */; };
 		56B31E6F1994B70B00F68FE4 /* tablecell_acessory_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56B31E6E1994B70B00F68FE4 /* tablecell_acessory_image@2x.png */; };
 		56B31E701994B70B00F68FE4 /* tablecell_acessory_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56B31E6E1994B70B00F68FE4 /* tablecell_acessory_image@2x.png */; };
 		56D6E32F199B12BF00607DC5 /* CreateBBSChooseIconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D6E32E199B12BF00607DC5 /* CreateBBSChooseIconViewController.m */; };
@@ -1632,6 +1633,8 @@
 		56AE78D81998905300FE869E /* BBSAddMemberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSAddMemberCell.h; sourceTree = "<group>"; };
 		56AE78D91998905300FE869E /* BBSAddMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSAddMemberCell.m; sourceTree = "<group>"; };
 		56AE78DB1998912C00FE869E /* bbs_add_member_xuanzhong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bbs_add_member_xuanzhong@2x.png"; sourceTree = "<group>"; };
+		56AFD61619A33297005125F6 /* ZActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZActionSheet.h; sourceTree = "<group>"; };
+		56AFD61719A33297005125F6 /* ZActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZActionSheet.m; sourceTree = "<group>"; };
 		56B31E6E1994B70B00F68FE4 /* tablecell_acessory_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tablecell_acessory_image@2x.png"; sourceTree = "<group>"; };
 		56D6E32D199B12BF00607DC5 /* CreateBBSChooseIconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBBSChooseIconViewController.h; sourceTree = "<group>"; };
 		56D6E32E199B12BF00607DC5 /* CreateBBSChooseIconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBBSChooseIconViewController.m; sourceTree = "<group>"; };
@@ -2601,6 +2604,7 @@
 		56A64871198F502700451413 /* ZSNAPI */ = {
 			isa = PBXGroup;
 			children = (
+				5617145819A1D71E002DB2C7 /* BBSClassify.plist */,
 				56A64872198F502700451413 /* FBCirclePromptView.h */,
 				56A64873198F502700451413 /* FBCirclePromptView.m */,
 				56A64874198F502700451413 /* FBCircleUploadData.h */,
@@ -2615,7 +2619,8 @@
 				56A6487D198F502700451413 /* ZSNAlertView.m */,
 				56A6487E198F502700451413 /* ZSNApi.h */,
 				56A6487F198F502700451413 /* ZSNApi.m */,
-				5617145819A1D71E002DB2C7 /* BBSClassify.plist */,
+				56AFD61619A33297005125F6 /* ZActionSheet.h */,
+				56AFD61719A33297005125F6 /* ZActionSheet.m */,
 			);
 			path = ZSNAPI;
 			sourceTree = "<group>";
@@ -4271,6 +4276,7 @@
 				56A64B8A198F6BD400451413 /* LoginViewController.m in Sources */,
 				56A64B4D198F6BC700451413 /* AddFriendCustomCell.m in Sources */,
 				56A64AB6198F6AD800451413 /* GpersonallSettingViewController.m in Sources */,
+				56AFD61819A33297005125F6 /* ZActionSheet.m in Sources */,
 				56A64B12198F6AD800451413 /* GlocalUserImage.m in Sources */,
 				56A648E6198F512A00451413 /* FMResultSet.m in Sources */,
 				136D3AA81990C6D90052E808 /* LRefreshTableHeaderView.m in Sources */,
@@ -4688,8 +4694,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBCircle/FBCircle-Prefix.pch";
 				INFOPLIST_FILE = "FBCircle/FBCircle-Info.plist";
@@ -4713,8 +4719,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBCircle/FBCircle-Prefix.pch";
 				INFOPLIST_FILE = "FBCircle/FBCircle-Info.plist";

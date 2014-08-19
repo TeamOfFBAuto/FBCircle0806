@@ -16,8 +16,8 @@
 	<key>normal</key>
 	<array>
 		<string>户外</string>
-		<string>摩托</string>
 		<string>宠物</string>
+		<string>摩托</string>
 		<string>文学</string>
 		<string>文玩</string>
 		<string>茶道</string>

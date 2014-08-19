@@ -91,11 +91,24 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(FBCircleDetailhandleWillShowKeyboard:)
+												 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(FBCircleDetailhandleWillHideKeyboard:)
+												 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     
     [self.inputToolBarView.myTextView resignFirstResponder];
     
@@ -165,17 +178,6 @@
     [_inputToolBarView.sendButton setTitle:nil forState:UIControlStateNormal];
     
     [_inputToolBarView.sendButton setImage:[UIImage imageNamed:isFace?@"biaoqing-icon-56_56.png":@"jianpan-icon-56_56.png"] forState:UIControlStateNormal];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(FBCircleDetailhandleWillShowKeyboard:)
-												 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(FBCircleDetailhandleWillHideKeyboard:)
-												 name:UIKeyboardWillHideNotification
-                                               object:nil];
     
 
     if ((_theModel.fb_tid.length == 0 || [_theModel.fb_tid isEqualToString:@"(null)"] || [_theModel isKindOfClass:[NSNull class]])&&![_flag isEqualToString:@"test"])

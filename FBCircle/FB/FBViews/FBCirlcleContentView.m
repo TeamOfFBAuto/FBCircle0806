@@ -270,8 +270,6 @@
     
     float cellHeight = 30;
     
-    NSLog(@"yonghu tou xiang -----  %@",theInfo.fb_face);
-    
     [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
     
     _userName_label.text = theInfo.fb_username;
@@ -284,7 +282,7 @@
     
     cellHeight = cellHeight + 10 + optimumsSize.height;
     
-    contentFrame.size.height = optimumsSize.height;
+    contentFrame.size.height = optimumsSize.height+3;
     
     _content_label.frame = contentFrame;
     

@@ -23,6 +23,7 @@
 #import "GlocalUserImage.h"
 #import "GupData.h"
 #import "NSString+Emoji.h"
+#import "ZActionSheet.h"
 
 
 #define INPUT_HEIGHT 44.0f
@@ -61,21 +62,14 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [self.inputToolBarView.myTextView resignFirstResponder];
-    
+    [self.tabBarController.tabBar setHidden:NO];
     NSString *string_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:AUTHERKEY]];
     //判断登录条件
     if (string_authkey.length==0||[string_authkey isEqualToString:@"(null)"]) {
         LoginViewController *loginV=[[LoginViewController alloc]init];
         UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:loginV];
         [self presentViewController:nav animated:NO completion:NULL];
-        
     }
-    
-    NSString * string = [NSString stringWithFormat:FBCIRCLE_SHARE_URL,[@"我的分享" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[@"SQ5的高富帅版 2015款保时捷Macan试驾" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"http://img10.fblife.com/attachments/20140603/14017929195565.jpg.680x0.jpg",@"http://news.fblife.com/html/20140605/114628.html",@"",[SzkAPI getAuthkey]];
-    
-    
-    NSLog(@"fenxiang ----   %@",string);
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -213,11 +207,13 @@
     //   [self matchingAddressBook];
     loadsucess=YES;
     
-    UIImageView * titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,26,23)];
-    
-    titleImageView.image = [UIImage imageNamed:@"fb-52_46.png"];
-    
-    self.navigationItem.titleView = titleImageView;
+//    UIImageView * titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,26,23)];
+//    
+//    titleImageView.image = [UIImage imageNamed:@"fb-52_46.png"];
+//    
+//    self.navigationItem.titleView = titleImageView;
+
+    self.titleLabel.text = @"fb圈";
     
     [self.navigationController.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
     
@@ -237,7 +233,7 @@
     
     self.view.backgroundColor=RGBCOLOR(214,214,214);
     
-    [self setupLeftMenuButton];
+//    [self setupLeftMenuButton];
     [self setupRightMenuButton];
     
     
@@ -261,7 +257,7 @@
     
     [self loadTableHeaderView];
     
-    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64) style:UITableViewStylePlain];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64-49) style:UITableViewStylePlain];
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
     _myTableView.separatorColor = RGBCOLOR(204,204,204);
@@ -434,7 +430,7 @@
     
     AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-//    [appdelegate.uploadData cancelAllRequest];//张少南 这里需要修改
+    [appdelegate.uploadData cancelAllRequest];//张少南 这里需要修改
     
     
     
@@ -539,9 +535,15 @@
     }];
     
     
-    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说",nil];
+//    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说",nil];
+//    
+//    [actionSheet showFromTabBar:self.tabBarController.tabBar];
     
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    
+    
+    ZActionSheet * actionSheet = [[ZActionSheet alloc] initWithTitle:nil buttonTitles:[NSArray arrayWithObjects:@"拍照",@"从手机相册选择",@"说说",nil] buttonColor:[UIColor greenColor] CancelTitle:@"取消" CancelColor:RGBCOLOR(245,245,245) actionBackColor:RGBCOLOR(236,237,241)];
+    actionSheet.delegate = self;
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow WithAnimation:YES];
 }
 
 #pragma mark--匹配通讯录
@@ -586,6 +588,92 @@
     }
 }
 #pragma mark - UIActionSheetDelegate
+
+-(void)zactionSheet:(ZActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [UIView animateWithDuration:0.4 delay:0 options:0 animations: ^{
+        
+        right_button.transform = CGAffineTransformIdentity;
+    } completion: ^(BOOL completed) {
+        
+    }];
+    
+    
+    switch (buttonIndex)
+    {
+        case 1:
+        {
+            NSLog(@"拍照");
+            
+            isUpdataBanner = NO;
+            
+            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            {
+                UIImagePickerController * pickerC = [[UIImagePickerController alloc] init];
+                pickerC.delegate = self;
+                pickerC.allowsEditing = NO;
+                pickerC.sourceType = sourceType;
+                [self presentViewController:pickerC animated:YES completion:nil];
+            }
+            else
+            {
+                NSLog(@"模拟其中无法打开照相机,请在真机中使用");
+            }
+            
+        }
+            break;
+        case 2:
+        {
+            isUpdataBanner = NO;
+            
+            NSLog(@"从手机相册选择");
+            
+            if (!imagePickerController)
+            {
+                imagePickerController = nil;
+            }
+            
+            imagePickerController = [[QBImagePickerController alloc] init];
+            imagePickerController.delegate = self;
+            imagePickerController.allowsMultipleSelection = YES;
+            
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+            
+            [self presentViewController:navigationController animated:YES completion:NULL];
+            
+        }
+            break;
+        case 3:
+        {
+            NSLog(@"说说");
+            
+            WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
+            
+            WriteBlog.theType = WriteBlogWithContent;
+            
+            WriteBlog.delegate = self;
+            
+            UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
+            
+            [self presentViewController:nav animated:YES completion:^{
+                
+            }];
+            
+            
+        }
+            break;
+        case 0:
+        {
+            NSLog(@"取消");
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -1586,7 +1674,7 @@
     
     [FBCircleModel addPraiseWith:praiseModel withtid:info.fb_tid];
     
-    [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
+    [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
     
     
     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_PRAISE_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],model.fb_tid];
@@ -1639,7 +1727,7 @@
     
     model.isShowMenuView = !model.isShowMenuView;
     
-    [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
     
     history_selected_menu_page = indexPath.row;
 }
@@ -1984,7 +2072,7 @@
             {
                 AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 
-//                [appdelegate.uploadData upload];//张少南 这里需要修改
+                [appdelegate.uploadData upload];//张少南 这里需要修改
             }
                 break;
             case AFNetworkReachabilityStatusUnknown:

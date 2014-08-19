@@ -71,12 +71,10 @@
     [self.view addSubview:self.myTableView];
     
     _theModel = [[MessageModel alloc] init];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
+    
     [self loadMessageData];
 }
+
 
 
 
@@ -167,7 +165,6 @@
         
         isnewfbnotification = NO;
         
-//        [self.navigationController pushViewController:messageVC animated:YES];
         [self PushToViewController:messageVC WithAnimation:YES];
     }else
     {
@@ -179,7 +176,6 @@
         
         chatViewController.otherHeaderImage = model.otherFaceImage;
         
-//        [self.navigationController pushViewController:chatViewController animated:YES];
         [self PushToViewController:chatViewController WithAnimation:YES];
     }
     

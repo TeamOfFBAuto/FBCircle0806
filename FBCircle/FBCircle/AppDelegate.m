@@ -63,12 +63,11 @@
     
     navc2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"微论坛" image:[UIImage imageNamed:@"unselected_small_bbs_icon.png"] selectedImage:[UIImage imageNamed:@"selected_small_bbs_icon_image.png"]];
     
-    navc3.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"消息" image:[UIImage imageNamed:@"unselected_message_icon.png"] selectedImage:[UIImage imageNamed:@"selected_message_icon.png"]];
+    navc3.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"聊天" image:[UIImage imageNamed:@"unselected_message_icon.png"] selectedImage:[UIImage imageNamed:@"selected_message_icon.png"]];
     
     navc4.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:[UIImage imageNamed:@"unselected_found_image.png"] selectedImage:[UIImage imageNamed:@"selected_found_image.png"]];
     
     navc5.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"unselected_mine_image.png"] selectedImage:[UIImage imageNamed:@"selected_mine_image.png"]];
-    
     
     
     UITabBarController * tabbarVC = [[UITabBarController alloc] init];
@@ -76,7 +75,7 @@
     tabbarVC.viewControllers = [NSArray arrayWithObjects:navc1,navc2,navc3,navc4,navc5,nil];
     
     tabbarVC.selectedIndex = 0;
-    
+    tabbarVC.tabBar.backgroundImage = FBCIRCLE_NAVIGATION_IMAGE;
     
     
     

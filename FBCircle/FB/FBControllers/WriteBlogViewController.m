@@ -67,15 +67,10 @@
     
     isShowLocation = YES;
     
-    self.rightString = @"发送";
-    
-    
-    //
-    //    self.leftString = @"取消";
-    //
-    //    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeText WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    self.rightString = @"发表";
     
     [ self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    self.my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
     
     
     self.titleLabel.text = self.theType==WriteBlogWithContent?@"发表说说":@"发表图片";

@@ -42,7 +42,6 @@
     NSString * path = [[NSBundle mainBundle] pathForResource:@"BBSClassify" ofType:@"plist"];
     
     NSDictionary * dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
-    NSLog(@"dictionary ----   %@",dictionary);
     NSArray * special = [dictionary objectForKey:@"special"];
     NSArray * normal = [dictionary objectForKey:@"normal"];
     
