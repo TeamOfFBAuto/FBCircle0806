@@ -33,8 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.rightImageName = @"fbcircle_web_zhuanfa46_40.png";
+    //张少南 这里需要一个图片
+    self.rightImageName = @"pinglun-zhuanfa_up-24_24.png";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     

@@ -503,7 +503,7 @@
             showBigVC.allImagesUrlArray=arry_url;
             
             showBigVC.currentPage = index-1;
-            VCtest.hidesBottomBarWhenPushed = YES;
+            showBigVC.hidesBottomBarWhenPushed = YES;
             [VCtest.navigationController pushViewController:showBigVC animated:YES];
         }];
         
@@ -752,7 +752,7 @@
         
         webVC.web_url = _myModel.rfb_zan_num;
         
-        VCtest.hidesBottomBarWhenPushed = YES;
+        webVC.hidesBottomBarWhenPushed = YES;
         
         [VCtest.navigationController pushViewController:webVC animated:YES];
         
@@ -764,7 +764,7 @@
         
         detail.isForward = YES;
         
-        VCtest.hidesBottomBarWhenPushed = YES;
+        detail.hidesBottomBarWhenPushed = YES;
         
         [VCtest.navigationController pushViewController:detail animated:YES];
     }
@@ -1604,7 +1604,7 @@
     
     friendView.passUserid = theUid;
     
-    VCtest.hidesBottomBarWhenPushed = YES;
+    friendView.hidesBottomBarWhenPushed = YES;
     
     [VCtest.navigationController pushViewController:friendView animated:YES];
 }

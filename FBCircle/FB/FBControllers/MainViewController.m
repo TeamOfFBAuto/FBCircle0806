@@ -62,7 +62,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [self.inputToolBarView.myTextView resignFirstResponder];
-    [self.tabBarController.tabBar setHidden:NO];
     NSString *string_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:AUTHERKEY]];
     //判断登录条件
     if (string_authkey.length==0||[string_authkey isEqualToString:@"(null)"]) {
@@ -219,7 +218,7 @@
     
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    spaceButton.width = -10;
+    spaceButton.width = MY_MACRO_NAME?-5:5;;
     
     //  [self.navigationController pushViewController:[[MatchingAddressBookViewController alloc]init] animated:YES];
     //注册成功或者用户第一次登录，会匹配通讯录
@@ -234,8 +233,7 @@
     self.view.backgroundColor=RGBCOLOR(214,214,214);
     
 //    [self setupLeftMenuButton];
-    [self setupRightMenuButton];
-    
+    [self setupRightMenuButton];    
     
     _data_array = [NSMutableArray array];
     
@@ -490,10 +488,10 @@
 -(void)setupRightMenuButton
 {
     
-    UIView * viewww = [[UIView alloc] initWithFrame:CGRectMake(10,0,40,40)];
+    UIView * viewww = [[UIView alloc] initWithFrame:CGRectMake(0,0,38/2,37.0/2)];
     viewww.backgroundColor = [UIColor clearColor];
     
-    right_button=[[UIButton alloc]initWithFrame:CGRectMake(0,0,40,40)];
+    right_button=[[UIButton alloc]initWithFrame:CGRectMake(0,0,38/2,37.0/2)];
     right_button.backgroundColor = [UIColor clearColor];
     [right_button addTarget:self action:@selector(rightDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
     [right_button setImage:[UIImage imageNamed:@"fabu-40_40.png"] forState:UIControlStateNormal];
@@ -502,7 +500,7 @@
     UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:viewww];
     
     self.navigationItem.rightBarButtonItems = @[spaceButton,back_item];
-    
+ 
     
     //    [self.navigationController.navigationBar addSubview:right_button];
     

@@ -73,10 +73,11 @@
     
     self.navigationController.navigationBarHidden=NO;
     
-    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 21)];
+    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.textColor = [UIColor whiteColor];
-    
+    _titleLabel.backgroundColor = [UIColor clearColor];
+    _titleLabel.font = [UIFont systemFontOfSize:18];
     self.navigationItem.titleView = _titleLabel;
    
 }
@@ -85,7 +86,7 @@
 {
     if (theType == MyViewControllerLeftbuttonTypeBack)
     {
-        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
+        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,30,44)];
         [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [button_back setImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
         UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
@@ -119,7 +120,7 @@
     {
         self.left_button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _left_button.frame = CGRectMake(0,0,100,44);
+        _left_button.frame = CGRectMake(0,0,60,44);
         
         _left_button.titleLabel.textAlignment = NSTextAlignmentRight;
         
@@ -127,7 +128,7 @@
         
         _left_button.titleLabel.font = [UIFont systemFontOfSize:15];
         [_left_button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        [_left_button setTitleColor:RGBCOLOR(91,138,59) forState:UIControlStateNormal];
+        [_left_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //        [_left_button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         
         [_left_button addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -218,7 +219,7 @@
         
 //        _my_right_button.backgroundColor = [UIColor orangeColor];
         
-        self.navigationItem.rightBarButtonItems = @[spaceButton,rightBarButton];;
+        self.navigationItem.rightBarButtonItems = @[spaceButton,rightBarButton];
         
     }else
     {
