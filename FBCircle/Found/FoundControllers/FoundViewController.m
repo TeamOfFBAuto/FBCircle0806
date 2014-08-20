@@ -217,8 +217,9 @@
     
 }
 
-
 -(void)pushMyerweimaVc{
+    
+    
     GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
     erweima.tabBarController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:erweima animated:YES];

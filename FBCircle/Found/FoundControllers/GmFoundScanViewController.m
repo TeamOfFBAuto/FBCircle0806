@@ -35,13 +35,25 @@
     UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
     topView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:topView];
+    //返回view
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 74, 64)];
+    backView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *ttt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tttback)];
+    [backView addGestureRecognizer:ttt];
+    [topView addSubview:backView];
+    //返回箭头
     UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12+20, 15, 22)];
     backImv.backgroundColor = [UIColor orangeColor];
-    [topView addSubview:backImv];
+    backImv.userInteractionEnabled = YES;
+    [backView addSubview:backImv];
+    //返回文字
     UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backImv.frame)+8, backImv.frame.origin.y, 34, 20)];
     backLabel.textColor = [UIColor whiteColor];
+    backLabel.userInteractionEnabled = YES;
     backLabel.text = @"返回";
-    [topView addSubview:backLabel];
+    [backView addSubview:backLabel];
+    
+    //title
     UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backLabel.frame)+65, backLabel.frame.origin.y, 52, 18)];
     titleLable.font = [UIFont systemFontOfSize:17];
     titleLable.text = @"二维码";
@@ -226,10 +238,21 @@
 #pragma mark - 点击我的二维码跳转
 -(void)myErweima{
     NSLog(@"%s",__FUNCTION__);
-    [self.delegate pushMyerweimaVc];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate pushMyerweimaVc];
+    }];
+    
     
 }
 
+
+//点击返回按钮的跳转
+-(void)tttback{
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
 
 
 @end
