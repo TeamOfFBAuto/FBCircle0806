@@ -96,12 +96,21 @@ typedef enum{
     //评论列表
     [self getCommentList];
     
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    _table.delegate = nil;
+    _table.dataSource = nil;
+    _table = nil;
 }
 #pragma mark - 事件处理
 
@@ -229,6 +238,9 @@ typedef enum{
     url = [url stringByReplacingEmojiUnicodeWithCheatCodes];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -279,6 +291,9 @@ typedef enum{
     __weak typeof(UITableView *)weakTable = _table;
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         
@@ -322,6 +337,9 @@ typedef enum{
     __weak typeof(UITableView *)weakTable = _table;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,self.tid,_pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -363,6 +381,9 @@ typedef enum{
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
