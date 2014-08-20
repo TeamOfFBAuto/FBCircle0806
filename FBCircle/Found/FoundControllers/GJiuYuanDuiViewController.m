@@ -98,7 +98,7 @@
     
     
     //下面信息view
-    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568-206, 320, 206)];
+    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
     
     //底层view
@@ -126,6 +126,13 @@
     [self.view addSubview:_downInfoView];
     
     
+    
+    
+    //每隔一段时间 更新用户位置
+    timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateMyLocal) userInfo:nil repeats:YES];
+    
+    
+    [timer fire];
     
 }
 
@@ -187,8 +194,54 @@
 }
 
 
+#pragma mark - 定位代理方法
+
+//在地图View将要启动定位时，会调用此函数
+- (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView
+{
+	NSLog(@"start locate");
+}
 
 
+//用户方向更新后，会调用此函数
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+{
+    [_mapView updateLocationData:userLocation];
+    _guserLocation = userLocation;
+    NSLog(@"heading is %@",userLocation.heading);
+}
+
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    _guserLocation = userLocation;
+    
+    [_mapView updateLocationData:userLocation];
+}
+
+
+//定位失败后，会调用此函数
+- (void)mapView:(BMKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
+    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [al show];
+}
+
+
+
+
+#pragma mark -救援队网络请求
+-(void)getJiuyuandui{
+    
+}
+
+
+#pragma mark - 上传自己的经纬度
+-(void)updateMyLocal{
+    NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+}
 
 #pragma mark - 地图view代理方法 BMKMapViewDelegate
 /**

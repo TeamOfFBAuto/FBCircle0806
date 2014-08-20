@@ -30,6 +30,9 @@
     UIView *_downInfoView;
     UITableView *_tableView;
     BOOL _isShowDownInfoView;
+    
+    
+    NSTimer * timer;
 }
 
 //协议属性
