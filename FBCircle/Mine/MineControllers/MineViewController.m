@@ -51,7 +51,8 @@
     
     self.navigationController.navigationBar.titleTextAttributes = dict;
     
-    self.navigationItem.title=@"我";
+//    self.navigationItem.title=@"我";
+    self.titleLabel.text=@"我";
     
     self.iconArr=[NSArray arrayWithObjects:@"fbMetongxunlu.png",@"fbMeclock.png",@"fbMeclear.png",@"fbMeyijian.png",@"fbMefb.png", nil];
     

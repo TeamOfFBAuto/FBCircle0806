@@ -23,7 +23,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MineViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
+@interface MineViewController : MyViewController<UITableViewDataSource,UITableViewDelegate>{
 
 
     UITableView *mainTab;
