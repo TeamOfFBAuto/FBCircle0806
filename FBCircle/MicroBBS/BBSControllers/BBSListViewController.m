@@ -74,6 +74,7 @@
 
 - (void)dealloc
 {
+    _table.dataSource = nil;
     _table.refreshDelegate = nil;
     _table = nil;
 }
@@ -89,7 +90,7 @@
 - (void)clickToBBSInfo:(UIGestureRecognizer *)tap
 {
     MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-    bbsInfo.bbsId = @"1";
+    bbsInfo.bbsId = self.bbsId;
     [self PushToViewController:bbsInfo WithAnimation:YES];
 }
 
@@ -151,7 +152,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -186,7 +187,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -200,7 +201,6 @@
                 [arr addObject:aModel];
             }
             
-//            [weakTable reloadData];
             [weakTable reloadData:arr total:0];
         }
         

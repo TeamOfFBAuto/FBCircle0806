@@ -22,7 +22,7 @@
         
         self.frame = [UIScreen mainScreen].bounds;
         
-        self.window.windowLevel = UIAlertViewStyleDefault;
+        self.window.windowLevel = UIWindowLevelAlert;
         
         bgView = [[UIView alloc]init];
         [self addSubview:bgView];
@@ -34,6 +34,7 @@
         if (style == Style_Normal) {
             
             self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+            
             self.alpha = 0.0;
             
             bgView.backgroundColor = [UIColor clearColor];
@@ -176,6 +177,21 @@
 
 - (void)hidden
 {
+    if (aStyle == Style_Bottom) {
+       CGRect aFrame = bgView.frame;
+        
+        [UIView animateWithDuration:2 animations:^{
+            
+//            aFrame.size.height = 0;
+            
+            bgView.frame = aFrame;
+            
+            self.alpha = 0.0;
+            
+        }];
+        
+    }
+    
     [self removeFromSuperview];
 }
 

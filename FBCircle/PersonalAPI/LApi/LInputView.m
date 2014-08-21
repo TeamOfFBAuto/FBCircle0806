@@ -12,7 +12,7 @@
 #define KLEFT 54 //左距离
 #define KTOP 7 //上
 
-#define FONT_SIZE 16 //输入框字体大小
+#define FONT_SIZE 14 //输入框字体大小
 
 #define UPDARE_HEIGHT 44 //使用系统navigationBar时,高度需要减去此
 
@@ -260,7 +260,7 @@
                      animations:^{
                          
                          CGRect aFrame = self.frame;
-                         aFrame.origin.y = initFrameY;
+                         aFrame.origin.y = initFrameY - (self.height - SELF_HEIGHT);//框内有内容也能正常显示
                          self.frame = aFrame;
                          current_FrameY = aFrame.origin.y;//记录当前y
                      } completion:nil];
@@ -321,13 +321,12 @@
     text_Frame.size.height = newHeight;
     self.textView.frame = text_Frame;
     
+    NSLog(@"newheight %f",newHeight);
     CGRect input_Frame = self.frame;
     input_Frame.size.height = SELF_HEIGHT - TEXT_HEIGHT + newHeight;
     input_Frame.origin.y = current_KeyBoard_Y - input_Frame.size.height - UPDARE_HEIGHT - 20;
     
     self.frame = input_Frame;
-    
-    NSLog(@"resetFrame %f",input_Frame.origin.y);
     
     if (toolBlock) {
         toolBlock(3);

@@ -8,6 +8,7 @@
 
 #import "PraiseMemberController.h"
 #import "PraiseMemberCell.h"
+#import "GRXX4ViewController.h"
 
 @interface PraiseMemberController ()<UITableViewDelegate,UITableViewDataSource,RefreshDelegate>
 {
@@ -77,7 +78,7 @@
     __weak typeof(RefreshTableView *)weakTable = _table;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_ZAN_LIST,self.tid,_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -125,7 +126,10 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSDictionary *aZan = [_table.dataArray objectAtIndex:indexPath.row];
+    GRXX4ViewController *_grc=[[GRXX4ViewController alloc]init];
+    _grc.passUserid=[aZan objectForKey:@"uid"];
+    [self PushToViewController:_grc WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

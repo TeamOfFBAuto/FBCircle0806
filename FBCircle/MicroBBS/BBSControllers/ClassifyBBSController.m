@@ -129,7 +129,7 @@
     __weak typeof(self)weakSelf = self;
     
     LTools *tool = [[LTools alloc]initWithUrl:FBCIRCLE_MICROBBS_BBSCLASS isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];

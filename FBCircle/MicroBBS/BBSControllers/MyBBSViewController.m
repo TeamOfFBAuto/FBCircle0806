@@ -35,11 +35,6 @@
     }
     return self;
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    _table.refreshDelegate = nil;
-    _table = nil;
-}
 
 - (void)viewDidLoad
 {
@@ -100,12 +95,11 @@
 {
     __weak typeof(_table)weakTable = _table;
     __weak typeof(self)weakSelf = self;
-//    @"BDBWMVMwUTUFOgNvVi1TPVYkBnsPMVtnCWtZew8+AG9WOQ=="
+
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    
-    [cancelArray addObject:tool];
-    
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];

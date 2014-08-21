@@ -36,7 +36,7 @@
 {
     self.delegate = nil;
     _refreshHeaderView.delegate = nil;
-    NSLog(@"%@ dealloc",self);
+    NSLog(@"%@ dealloc",NSStringFromClass([self class]));
 }
 
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show

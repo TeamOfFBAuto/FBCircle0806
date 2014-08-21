@@ -92,12 +92,9 @@ typedef enum{
     //帖子信息
     
     [self networdAction:Action_Topic_Info];
-    
-    //评论列表
+//
+//    //评论列表
     [self getCommentList];
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,6 +109,7 @@ typedef enum{
     _table.dataSource = nil;
     _table = nil;
 }
+
 #pragma mark - 事件处理
 
 //进入称赞者页
@@ -239,8 +237,6 @@ typedef enum{
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    [cancelArray addObject:tool];
-    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -289,10 +285,9 @@ typedef enum{
     }
     
     __weak typeof(UITableView *)weakTable = _table;
+    __weak typeof(self) weakSelf = self;
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    
-    [cancelArray addObject:tool];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
@@ -309,22 +304,22 @@ typedef enum{
                     
                     aTopicModel = [[TopicModel alloc]initWithDictionary:thread];
                     
-                    weakTable.tableHeaderView = [self createTableHeaderView];
-                    weakTable.tableFooterView = [self createTableFooterView];
+                    weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+                    weakTable.tableFooterView = [weakSelf createTableFooterView];
                 }
             }
         }else
         {
             if ([result isKindOfClass:[NSDictionary class]]) {
                 
-                [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+                [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:weakSelf.view];
                 
             }
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"fail result %@",failDic);
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
     }];
 }
 
@@ -335,10 +330,9 @@ typedef enum{
 - (void)getCommentList
 {
     __weak typeof(UITableView *)weakTable = _table;
+    __weak typeof(self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,self.tid,_pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    
-    [cancelArray addObject:tool];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
@@ -365,7 +359,7 @@ typedef enum{
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic result %@",failDic);
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
         int erroCode = [[failDic objectForKey:@"errcode"]integerValue];
         if (erroCode == 2) {
             [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
@@ -381,9 +375,7 @@ typedef enum{
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    
-    [cancelArray addObject:tool];
-    
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -401,7 +393,7 @@ typedef enum{
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
         
     }];
 }

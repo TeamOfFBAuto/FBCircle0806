@@ -85,6 +85,9 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
+    UIView *footer_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+    footer_view.backgroundColor = [UIColor clearColor];
+    _table.tableFooterView = footer_view;
     
     //缓存数据
     
@@ -109,17 +112,7 @@
         [_table reloadData];
     }
     
-    
-    
-    //我的论坛
-    
-    [self getMyBBS];
-    
-    [self getTopic:0];
-    
-    //我的关注热门
-    
-    [self getTopic:1];
+    [self loadNewData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -210,9 +203,8 @@
         
         [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
         
-        if (arr_mine.count >= 3) {
-            NSLog(@"arr_mine.count >= 3");
-            break ;
+        if (arr_mine.count == 3) {
+            return arr_mine;
         }
     }
     
@@ -221,9 +213,8 @@
         
         [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
         
-        if (arr_mine.count >= 3) {
-            NSLog(@"arr_mine.count >= 3");
-            break ;
+        if (arr_mine.count == 3) {
+            return arr_mine;
         }
     }
     
@@ -268,26 +259,32 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],1,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-            [LTools cache:dataInfo ForKey:CACHE_MY_BBS];
-            
-            //一共需要三个,优先“创建的论坛”,不够再用“加入的论坛”
-            
-            
-            _myBBSArray = [weakSelf parseForMyBBS:dataInfo];
-            
-            weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+            NSDictionary *oldDataInfo = [LTools cacheForKey:CACHE_MY_BBS];
             
             my_bbs_success = YES;
             
-            if (hot_recommend) {
-                [weakSelf createSecond];
+            if ([dataInfo JSONString].length != [oldDataInfo JSONString].length) {
+                
+                NSLog(@"CACHE_MY_BBS 有更新");
+                
+                [LTools cache:dataInfo ForKey:CACHE_MY_BBS];
+                
+                //一共需要三个,优先“创建的论坛”,不够再用“加入的论坛”
+                
+                _myBBSArray = [weakSelf parseForMyBBS:dataInfo];
+                
+                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+                
+                if (hot_recommend) {
+                    [weakSelf createSecond];
+                }
             }
         }
         
@@ -321,33 +318,46 @@
     }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         
         if (dataStyle == 0) {
             //热门帖子
             
-            [LTools cache:result ForKey:CACHE_HOT_TOPIC];
-            
             hot_recommend = YES;
+
+            NSDictionary *oldDataInfo = [LTools cacheForKey:CACHE_HOT_TOPIC];
             
-            _hot_array = [self parseTopic:result dataStyle:dataStyle];
-            
-            if (my_bbs_success) {
-                [weakSelf createSecond];
+            if ([result JSONString].length != [oldDataInfo JSONString].length)
+            {
+                NSLog(@"CACHE_HOT_TOPIC 有更新");
+                
+                [LTools cache:result ForKey:CACHE_HOT_TOPIC];
+                
+                _hot_array = [self parseTopic:result dataStyle:dataStyle];
+                
+                if (my_bbs_success) {
+                    [weakSelf createSecond];
+                }
             }
             
         }else if (dataStyle == 1)
         {
             //关注帖子
+            NSDictionary *oldDataInfo = [LTools cacheForKey:CACHE_CONCERN_HOT];
             
-            [LTools cache:result ForKey:CACHE_CONCERN_HOT];
+            if ([result JSONString].length != [oldDataInfo JSONString].length)
+            {
+                NSLog(@"CACHE_HOT_TOPIC 有更新");
+                
+                [LTools cache:result ForKey:CACHE_CONCERN_HOT];
+                
+                _concern_hot_array = [self parseTopic:result dataStyle:dataStyle];
+                
+            }
             
-            _concern_hot_array = [self parseTopic:result dataStyle:dataStyle];
-                        
             [weakTable reloadData:nil total:0];
-            
         }
         
         
@@ -381,6 +391,29 @@
     return search_bgview;
 }
 
+/**
+ *  计算我的论坛最佳宽度
+ */
+- (CGFloat)fitWidth:(NSArray *)arr
+{
+    if (arr.count <= 1) {
+        return 300.f;
+    }
+    NSString *title1 = ((BBSInfoModel *)[arr objectAtIndex:0]).name;
+    NSString *title2 = ((BBSInfoModel *)[arr objectAtIndex:1]).name;
+    
+    NSString *title3 = @"";
+    if (arr.count == 3) {
+        title3 = ((BBSInfoModel *)[arr objectAtIndex:2]).name;
+    }
+    
+    if (title1.length <= 6 && title2.length <= 6 && title3.length <= 6) {
+        return 100.f;
+    }
+    
+    return 150.f;
+}
+
 - (UIView *)createTableHeaderView
 {
     if (headerView) {
@@ -410,25 +443,28 @@
     secondBgView.backgroundColor = [UIColor whiteColor];
     [bgView addSubview:secondBgView];
     
+    CGFloat aWidth = [self fitWidth:_myBBSArray];
+    
     for (int i = 0 ; i < _myBBSArray.count; i ++) {
         
-        NSString *title = ((BBSInfoModel *)[_myBBSArray objectAtIndex:i]).name;
-        
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [btn setTitle:title forState:UIControlStateNormal];
-        [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-        btn.frame = CGRectMake(100 * i, 0, 100, 40);
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [secondBgView addSubview:btn];
-        btn.tag = 100 + i;
-        [btn addTarget:self action:@selector(clickToBBSList:) forControlEvents:UIControlEventTouchUpInside];
-        
-        if (i != 2) {
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(btn.right, 10, 1, 20)];
-            line.backgroundColor = [UIColor colorWithHexString:@"dfdfdf"];
-            [secondBgView addSubview:line];
+        if ((i + 1) * aWidth <= 300) {
+            NSString *title = ((BBSInfoModel *)[_myBBSArray objectAtIndex:i]).name;
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [btn setTitle:title forState:UIControlStateNormal];
+            [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+            btn.frame = CGRectMake(aWidth * i, 0, aWidth, 40);
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [secondBgView addSubview:btn];
+            btn.tag = 100 + i;
+            [btn addTarget:self action:@selector(clickToBBSList:) forControlEvents:UIControlEventTouchUpInside];
+            
+            if (i != 2 && i != (300 / aWidth - 1)) {
+                UIView *line = [[UIView alloc]initWithFrame:CGRectMake(btn.right, 10, 1, 20)];
+                line.backgroundColor = [UIColor colorWithHexString:@"dfdfdf"];
+                [secondBgView addSubview:line];
+            }
         }
-        
     }
     
     headerView.frame = CGRectMake(0, 0, 320, bgView.bottom + 15);
@@ -466,8 +502,8 @@
         [cell_view setCellWithModel:aModel];
         
         if (i < 1) {
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 0.5)];
-            line.backgroundColor = [UIColor lightGrayColor];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 1)];
+            line.backgroundColor = [UIColor colorWithHexString:@"dfdfdf"];
             [bgView2 addSubview:line];
         }
     }

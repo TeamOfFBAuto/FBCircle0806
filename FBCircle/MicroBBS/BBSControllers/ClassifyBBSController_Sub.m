@@ -87,7 +87,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_CLSSIFYBBS_SUB,[SzkAPI getAuthkey],_table.pageNum,L_PAGE_SIZE,classId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -127,7 +127,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];

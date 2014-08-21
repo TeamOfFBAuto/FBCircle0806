@@ -83,7 +83,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_NUMBER,bbsId,_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cancelArray addObject:tool];
+        
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];

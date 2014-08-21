@@ -58,20 +58,6 @@
     self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    //取消所有网络请求
-    for (id tool in cancelArray) {
-        
-        if ([tool isKindOfClass:[LTools class]]) {
-            [tool cancelRequest];
-        }
-    }
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -79,8 +65,6 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.view.backgroundColor = RGBCOLOR(214,214,214);
-
-    cancelArray = [NSMutableArray array];
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spaceButton.width = MY_MACRO_NAME?-5:5;
@@ -281,6 +265,7 @@
 
 -(void)back
 {
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
