@@ -17,6 +17,7 @@
 #import "ASIFormDataRequest.h"
 #import "FBCircleModel.h"
 #import "FBQuanAlertView.h"
+#import "WeiBoFaceScrollView.h"
 
 typedef enum{
     WriteBlogWithImagesAndContent = 0,
@@ -33,7 +34,7 @@ typedef enum{
 
 
 
-@interface WriteBlogViewController : MyViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIAlertViewDelegate,ASIHTTPRequestDelegate>
+@interface WriteBlogViewController : MyViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIAlertViewDelegate,ASIHTTPRequestDelegate,expressionDelegate,ZActionSheetDelegate>
 {
     UILabel * placeHolderLable;
     

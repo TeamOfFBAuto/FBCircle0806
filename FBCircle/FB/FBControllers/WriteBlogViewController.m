@@ -11,9 +11,13 @@
 #import "FriendAttribute.h"
 
 
+
 @interface WriteBlogViewController ()
 {
     QBImagePickerController * imagePickerController;
+    UIView * contentView;
+    UIView * _face_back_view;
+    WeiBoFaceScrollView * faceScrollView;
 }
 
 @end
@@ -48,11 +52,21 @@
     
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden=NO;
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenKeyBoard:) name:UIKeyboardWillHideNotification object:nil];
 }
 
--(void)back
+-(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)leftButtonClick:(UIButton *)button
+{
+    [self.myTextView resignFirstResponder];
+    
     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"确认取消发送?" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是",nil];
     
     alertView.tag = 417;
@@ -68,8 +82,9 @@
     isShowLocation = YES;
     
     self.rightString = @"发表";
+    self.leftString = @"取消";
     
-    [ self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    [ self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeText WithRightButtonType:MyViewControllerRightbuttonTypeText];
     self.my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
     
     
@@ -98,19 +113,97 @@
     
     self.myTableView.tableFooterView = vvvv;
     
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
+    
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0,(iPhone5?568:480)-64,320,42)];
+    contentView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:contentView];
+    contentView.layer.borderColor = RGBCOLOR(206,206,206).CGColor;
+    contentView.layer.borderWidth = 0.5;
+    UIButton * smile_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    smile_button.frame = CGRectMake(5,0,58,42);
+    [smile_button setImage:[UIImage imageNamed:@"write_blog_smil.png"] forState:UIControlStateNormal];
+    [smile_button setImage:[UIImage imageNamed:@"write_blog_jianpan.png"] forState:UIControlStateSelected];
+    [smile_button addTarget:self action:@selector(switchSmileAndKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:smile_button];
+    
+    _face_back_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,215)];
+    
+    faceScrollView = [[WeiBoFaceScrollView alloc] initWithFrame:CGRectMake(0,0,320,215) target:self];
+    faceScrollView.delegate = self;
+    faceScrollView.bounces = NO;
+    faceScrollView.contentSize = CGSizeMake(320*1,0);//设置有多少页表情
+    [_face_back_view addSubview:faceScrollView];
+
 }
 
--(void)leftButtonClick:(UIButton *)sender
+#pragma mark - 弹出键盘
+-(void)showKeyBoard:(NSNotification *)notification
 {
-    [self.myTextView resignFirstResponder];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self keyboardWillShowHide:notification];
 }
+
+#pragma mark - 收回键盘
+-(void)hiddenKeyBoard:(NSNotification *)notification
+{
+    [self keyboardWillShowHide:notification];
+}
+
+
+- (void)keyboardWillShowHide:(NSNotification *)notification
+{
+    CGRect keyboardRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+	UIViewAnimationCurve curve = [[notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+	double duration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    [UIView animateWithDuration:duration
+                          delay:0.0f
+                        options:[ZSNApi animationOptionsForCurve:curve]
+                     animations:^{
+                         CGFloat keyboardY = [self.view convertRect:keyboardRect fromView:nil].origin.y;
+                         
+                         CGRect inputViewFrame = contentView.frame;
+                         
+                         CGFloat inputViewFrameY = keyboardY - inputViewFrame.size.height;
+                         
+                         if(self.view.frame.size.height == keyboardY)
+                             inputViewFrameY = keyboardY;
+                         
+                         contentView.frame = CGRectMake(inputViewFrame.origin.x,
+                                                                  inputViewFrameY,
+                                                                  inputViewFrame.size.width,
+                                                                  inputViewFrame.size.height);
+                         
+                     }
+                     completion:^(BOOL finished) {
+                     }];
+}
+
+
+#pragma mark - 切换键盘表情
+
+-(void)switchSmileAndKeyBoard:(UIButton *)button
+{
+    button.selected = !button.selected;
+    
+    [_myTextView resignFirstResponder];
+    
+    _myTextView.inputView = button.selected?_face_back_view:nil;
+    
+    [_myTextView becomeFirstResponder];
+    
+}
+
+#pragma mark - 选择表情
+
+-(void)expressionClickWith:(NewFaceView *)faceView faceName:(NSString *)name
+{
+    NSMutableString * temp_string = [NSMutableString stringWithFormat:@"%@",_myTextView.text];
+    
+    [temp_string insertString:name atIndex:_myTextView.selectedRange.location];
+    
+    _myTextView.text = temp_string;
+}
+
 
 
 -(void)doButton:(UIButton *)sender
@@ -649,9 +742,13 @@
         return;
     }
     
-    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",nil];
+//    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",nil];
+//    
+//    [actionSheet showInView:self.view];
     
-    [actionSheet showInView:self.view];
+    ZActionSheet * actionSheet = [[ZActionSheet alloc] initWithTitle:nil buttonTitles:[NSArray arrayWithObjects:@"拍照",@"从手机相册选择",nil] buttonColor:RGBCOLOR(0,203,4) CancelTitle:@"取消" CancelColor:RGBCOLOR(245,245,245) actionBackColor:RGBCOLOR(236,237,241)];
+    actionSheet.delegate = self;
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow WithAnimation:YES];
 }
 
 
@@ -667,10 +764,10 @@
 
 #pragma mark-UIActionSheetDelegate
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)zactionSheet:(ZActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
-        case 0:
+        case 1:
         {
             UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -688,7 +785,7 @@
             
         }
             break;
-        case 1:
+        case 2:
         {
             if (!imagePickerController)
             {
@@ -706,7 +803,7 @@
             
         }
             break;
-        case 2:
+        case 0:
             NSLog(@"取消");
             break;
             
@@ -734,27 +831,16 @@
     }
     
     FBCircleModel * circleModel = [[FBCircleModel alloc] init];
-    
     circleModel.fb_uid = [SzkAPI getUid];
-    
     circleModel.fb_username = [SzkAPI getUsername];
-    
     circleModel.fb_face = [SzkAPI getUserFace];
-    
     circleModel.fb_content = self.myTextView.text;
-    
     circleModel.fb_deteline = [ZSNApi timechangeToDateline];
-    
     circleModel.fb_image = self.allImageArray;
-    
     circleModel.fb_imageid = [self returnAllImageUrlWithImage:self.allImageArray];
-    
     circleModel.fb_area = area_string;
-    
     circleModel.fb_lng = [NSString stringWithFormat:@"%f",longitude];
-    
     circleModel.fb_lat = [NSString stringWithFormat:@"%f",lattitude];
-    
     circleModel.fb_authkey = [SzkAPI getAuthkey];
     
     

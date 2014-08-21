@@ -29,8 +29,8 @@
     if (self)
     {
         self.frame = [UIScreen mainScreen].bounds;
-        
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.0];
+        self.window.windowLevel = UIWindowLevelStatusBar+1;
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doTap:)];
         [self addGestureRecognizer:tap];
@@ -156,6 +156,8 @@
         _content_view.frame = content_frame;
     }
     [view addSubview:self];
+    
+//    self.window.windowLevel = UIWindowLevelAlert;
 }
 
 #pragma mark - 试图消失

@@ -9,6 +9,11 @@
 #import "MessageViewController.h"
 
 @interface MessageViewController ()
+{
+    EGORefreshTableHeaderView * _refreshHeaderView;
+    
+    BOOL _reloading;
+}
 
 @end
 
@@ -35,6 +40,8 @@
     
     [_theModel loadInfomationWithBlock:^(NSMutableArray *array)
      {
+         [bself doneLoadingTableViewData];
+         
          bself.data_array = [NSMutableArray arrayWithArray:array];
          
          [bself.myTableView reloadData];
@@ -59,16 +66,22 @@
     //    }
     
     self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-20-44-49) style:UITableViewStylePlain];
-    
     self.myTableView.delegate = self;
-    
     self.myTableView.dataSource = self;
-    
     self.myTableView.rowHeight = 60;
-    
     self.myTableView.separatorInset = UIEdgeInsetsZero;
-    
     [self.view addSubview:self.myTableView];
+    
+    if (_refreshHeaderView == nil)
+    {
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0-_myTableView.bounds.size.height, self.view.frame.size.width, _myTableView.bounds.size.height)];
+		view.delegate = self;
+		//[tab_pinglunliebiao addSubview:view];
+		_refreshHeaderView = view;
+	}
+	[_refreshHeaderView refreshLastUpdatedDate];
+    [_myTableView addSubview:_refreshHeaderView];
+    
     
     _theModel = [[MessageModel alloc] init];
     
@@ -182,6 +195,50 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
+
+#pragma mark-UIScrollViewDelegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+#pragma mark-下拉刷新的代理
+- (void)reloadTableViewDataSource
+{
+    _reloading = YES;
+}
+- (void)doneLoadingTableViewData
+{
+    _reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_myTableView];
+    
+}
+
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    [self loadMessageData];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return ccif data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
 
 
 -(void)checkallmynotification

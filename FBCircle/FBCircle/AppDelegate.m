@@ -121,6 +121,41 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
+    
+    
+    //判断网络是否可用
+    //开启监控
+    //[[AFNetworkActivityIndicatorManager sharedManager]setEnabled:YES];
+    AFNetworkReachabilityManager *afnrm =[AFNetworkReachabilityManager sharedManager];
+    [afnrm startMonitoring];
+    //设置网络状况监控后的代码块
+    [afnrm setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch ([[AFNetworkReachabilityManager sharedManager]networkReachabilityStatus]) {
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"WiFi");
+                [_uploadData upload];
+                [_uploadData uploadBannerAndFace];
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"WWAN");
+                [_uploadData upload];
+                [_uploadData uploadBannerAndFace];
+                break;
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"Unknown");
+                
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"NotReachable");
+                
+                break;
+            default:
+                break;
+        }
+    }];
+    
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -19,6 +19,7 @@
 @synthesize myTableView = _myTableView;
 @synthesize data_array = _data_array;
 @synthesize name_Label = _name_Label;
+@synthesize icon_num = _icon_num;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,13 +54,26 @@
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
     [self.view addSubview:_myTableView];
+    
+    
+    
 }
 
+
+-(void)chooseTypeBlock:(CreateBBSChooseTypeBlock)theType
+{
+    chooseType_block = theType;
+}
 
 #pragma mark - 完成
 
 -(void)submitData:(UIButton *)sender
 {
+    if (chooseType_block)
+    {
+        chooseType_block([_data_array objectAtIndex:currentPage],currentPage);
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -115,8 +129,6 @@
     last_cell.accessoryType = UITableViewCellAccessoryNone;
     
     currentPage = indexPath.row;
-    
-    _name_Label.text = [_data_array objectAtIndex:indexPath.row];
 }
 
 

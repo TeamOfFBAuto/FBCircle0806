@@ -45,7 +45,7 @@
     
     UIImage * image = [UIImage imageNamed:theType == MyChatViewCellTypeOutgoing ?@"duihua2-66_82.png":@"duihua1-66_82.png"];
     
-    _background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(theType == MyChatViewCellTypeOutgoing?(320 - point.x - 70):50,34,point.x+20,point.y+8)];
+    _background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(theType == MyChatViewCellTypeOutgoing?(320 - point.x - 75):55,34,point.x+20,point.y+8)];
     
     _background_imageView.userInteractionEnabled = YES;
     
@@ -179,7 +179,7 @@
                 
                 
                 
-                CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?12:7,theHeight?theHeight:8,250,50);
+                CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?12:7,theHeight?theHeight:6,200,50);
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
@@ -242,7 +242,7 @@
                 
                 
                 
-                CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?10:5,theHeight?theHeight:5,250,50);
+                CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?10:5,theHeight?theHeight:6,200,50);
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
@@ -262,9 +262,9 @@
                 
                 theWidth = optimumSize.width>theWidth?optimumSize.width:theWidth;
                 
-                if (optimumSize.width >= 240 || optimumSize.width == 0)
+                if (optimumSize.width >= 190 || optimumSize.width == 0)
                 {
-                    theWidth = 245;
+                    theWidth = 200;
                 }
             }
         }

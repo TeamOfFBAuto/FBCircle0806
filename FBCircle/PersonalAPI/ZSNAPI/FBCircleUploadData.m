@@ -186,7 +186,7 @@
      }];
     
     
-    [operation start]; 
+    [operation start];
 }
 
 
@@ -226,7 +226,7 @@
      }];
     
     [requestOpration start];
-
+    
 }
 
 
@@ -272,7 +272,7 @@
      }];
     
     [requestOpration start];
-
+    
     
     
 }
@@ -328,7 +328,7 @@
         
         NSArray * image_array = [model.fb_imageid componentsSeparatedByString:@"||"];
         
-//        NSLog(@"image_array ----   %@",image_array);
+        //        NSLog(@"image_array ----   %@",image_array);
         
         NSString * path = [ZSNApi docImagePath];
         
@@ -359,40 +359,40 @@
         
         
         
-//        for (int i = 0;i < image_array.count;i++)
-//        {
-//            NSString *imgurl=[NSString stringWithFormat:@"%@",[image_array objectAtIndex:i]];
-//            
-//            NSURL *referenceURL = [NSURL URLWithString:imgurl];
-//            
-//            __block UIImage *returnValue = nil;
-//            [library assetForURL:referenceURL resultBlock:^(ALAsset *asset)
-//             {
-//                 
-//                 //returnValue = [UIImage imageWithCGImage:[asset thumbnail]]; //Retain Added
-//                 ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-//                 
-//                 CGImageRef imgRef = [assetRep fullScreenImage];
-//                 
-//                 returnValue=[UIImage imageWithCGImage:imgRef
-//                                                 scale:assetRep.scale
-//                                           orientation:(UIImageOrientation)assetRep.orientation];
-//                 [allImageArray addObject:returnValue];
-//                 
-//                 if (i == image_array.count -1)
-//                 {
-//                     model.fb_image = allImageArray;
-//                     
-//                     NSLog(@"fb_image-----------%@",model.fb_content);
-//                     
-//                     [self uploadBlogWith:model];
-//                 }
-//                 
-//             } failureBlock:^(NSError *error)
-//             {
-//                 // error handling
-//             }];
-//        }
+        //        for (int i = 0;i < image_array.count;i++)
+        //        {
+        //            NSString *imgurl=[NSString stringWithFormat:@"%@",[image_array objectAtIndex:i]];
+        //
+        //            NSURL *referenceURL = [NSURL URLWithString:imgurl];
+        //
+        //            __block UIImage *returnValue = nil;
+        //            [library assetForURL:referenceURL resultBlock:^(ALAsset *asset)
+        //             {
+        //
+        //                 //returnValue = [UIImage imageWithCGImage:[asset thumbnail]]; //Retain Added
+        //                 ALAssetRepresentation *assetRep = [asset defaultRepresentation];
+        //
+        //                 CGImageRef imgRef = [assetRep fullScreenImage];
+        //
+        //                 returnValue=[UIImage imageWithCGImage:imgRef
+        //                                                 scale:assetRep.scale
+        //                                           orientation:(UIImageOrientation)assetRep.orientation];
+        //                 [allImageArray addObject:returnValue];
+        //
+        //                 if (i == image_array.count -1)
+        //                 {
+        //                     model.fb_image = allImageArray;
+        //
+        //                     NSLog(@"fb_image-----------%@",model.fb_content);
+        //
+        //                     [self uploadBlogWith:model];
+        //                 }
+        //
+        //             } failureBlock:^(NSError *error)
+        //             {
+        //                 // error handling
+        //             }];
+        //        }
     }else
     {
         [self uploadBlogWith:model];
@@ -435,7 +435,7 @@
     
     NSLog(@"上传图片的url  ——--  %@",fullURL);
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
-//    request.delegate = self;
+    //    request.delegate = self;
     request.tag = 1;
     
     [request setRequestMethod:@"POST"];
@@ -464,7 +464,7 @@
         {
             UIImage *image=[_allImageArray objectAtIndex:i];
             
-          //  UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
+            //  UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
             
             data = UIImageJPEGRepresentation(image,0.5);
             
@@ -527,36 +527,36 @@
 {
     NSLog(@"发送微博url ----  %@",urlString);
     
-//    SzkLoadData *_loaddata=[[SzkLoadData alloc]init];
-//    [_loaddata SeturlStr:urlString block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
-//        
-//        
-//        if (errcode==0)
-//        {
-//            //张少南  这个地方需要一个tid
-//            
-//            model.fb_tid = @"111";
-//                        
-//            NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:model,@"fbcirclemodel",nil];
-//            
-//            int delete_result = [FBCircleModel deleteBlogByDateLine:model.fb_deteline];
-//            
-//            NSLog(@"删除数据结果----%d",delete_result);
-//            
-//            [[NSNotificationCenter defaultCenter]postNotificationName:SUCCESSUPDATA object:model userInfo:dic];
-//        
-//            NSLog(@"发送成功");
-//            
-//            
-//        }else
-//        {
-//           int result = [FBCircleModel addWeiBoContentWithInfo:model];
-//
-//            NSLog(@"添加到数据库--%d==code==%d==%@",result,errcode,errorindo);
-//        }
-//    }];
-//    
-//    
+    //    SzkLoadData *_loaddata=[[SzkLoadData alloc]init];
+    //    [_loaddata SeturlStr:urlString block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
+    //
+    //
+    //        if (errcode==0)
+    //        {
+    //            //张少南  这个地方需要一个tid
+    //
+    //            model.fb_tid = @"111";
+    //
+    //            NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:model,@"fbcirclemodel",nil];
+    //
+    //            int delete_result = [FBCircleModel deleteBlogByDateLine:model.fb_deteline];
+    //
+    //            NSLog(@"删除数据结果----%d",delete_result);
+    //
+    //            [[NSNotificationCenter defaultCenter]postNotificationName:SUCCESSUPDATA object:model userInfo:dic];
+    //
+    //            NSLog(@"发送成功");
+    //
+    //
+    //        }else
+    //        {
+    //           int result = [FBCircleModel addWeiBoContentWithInfo:model];
+    //
+    //            NSLog(@"添加到数据库--%d==code==%d==%@",result,errcode,errorindo);
+    //        }
+    //    }];
+    //
+    //
     
     
     
@@ -566,33 +566,33 @@
     __block AFHTTPRequestOperation * request = operation;
     
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-    {
-        NSDictionary * allDic = [operation.responseString objectFromJSONString];
-        
-        if ([[allDic objectForKey:@"errcode"] intValue] == 0)
-        {
-            model.fb_tid = @"111";
-            
-            NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:model,@"fbcirclemodel",nil];
-            
-            int delete_result = [FBCircleModel deleteBlogByDateLine:model.fb_deteline];
-            
-            NSLog(@"删除数据结果----%d",delete_result);
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:SUCCESSUPDATA object:model userInfo:dic];
-            
-            NSLog(@"发送成功");
-
-        }else
-        {
-            NSLog(@"发送失败 ---  %@",[allDic objectForKey:@"errinfo"]);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
-        int result = [FBCircleModel addWeiBoContentWithInfo:model];
-        
-        NSLog(@"添加到数据库--%d==code====",result);
-    }];
+     {
+         NSDictionary * allDic = [operation.responseString objectFromJSONString];
+         
+         if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+         {
+             model.fb_tid = @"111";
+             
+             NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:model,@"fbcirclemodel",nil];
+             
+             int delete_result = [FBCircleModel deleteBlogByDateLine:model.fb_deteline];
+             
+             NSLog(@"删除数据结果----%d",delete_result);
+             
+             [[NSNotificationCenter defaultCenter]postNotificationName:SUCCESSUPDATA object:model userInfo:dic];
+             
+             NSLog(@"发送成功");
+             
+         }else
+         {
+             NSLog(@"发送失败 ---  %@",[allDic objectForKey:@"errinfo"]);
+         }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         int result = [FBCircleModel addWeiBoContentWithInfo:model];
+         
+         NSLog(@"添加到数据库--%d==code====",result);
+     }];
     
     [operation start];
 }
@@ -635,21 +635,21 @@
 
 //-(void)sendBlogWithUrl:(NSString *)urlString
 //{
-//    
+//
 //    SzkLoadData *_loaddata=[[SzkLoadData alloc]init];
 //    [_loaddata SeturlStr:urlString block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
 //        if (errcode==0)
 //        {
 //            NSLog(@"发表成功");
-//            
+//
 //            int delete_result = [FBCircleModel deleteBlogByDateLine:_myModel.fb_deteline];
-//            
+//
 //            NSLog(@"删除数据结果----%d",delete_result);
-//            
+//
 //        }else
 //        {
 //            int result = [FBCircleModel addWeiBoContentWithInfo:_myModel];
-//            
+//
 //            NSLog(@"添加到数据库----%d",result);
 //        }
 //    }];
@@ -666,34 +666,34 @@
 
 
 
-//#pragma mark - 联网时上传未上传成功的banner face
-//
-//-(void)uploadBannerAndFace
-//{
-//    //上传banner
-//    NSString *banner = [[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpBanner"];
-//
-//    NSLog(@"%@",banner);
-//
-//    if ([banner isEqualToString:@"yes"] && [GlocalUserImage getUserBannerImage]) {
-//
-//        GupData *up =[[GupData alloc]init];
-//
-//        [up upUserBanner];
-//
-//    }
-//
-//
-//    //上传face
-//    NSString *touxiang = [[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpFace"];
-//    if ([touxiang isEqualToString:@"yes"] && [GlocalUserImage getUserFaceImage]) {
-//
-//        GupData *up =[[GupData alloc]init];
-//        
-//        [up upUserFace];
-//        
-//    }
-//}
+#pragma mark - 联网时上传未上传成功的banner face
+
+-(void)uploadBannerAndFace
+{
+    //上传banner
+    NSString *banner = [[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpBanner"];
+    
+    NSLog(@"%@",banner);
+    
+    if ([banner isEqualToString:@"yes"] && [GlocalUserImage getUserBannerImage]) {
+        
+        GupData *up =[[GupData alloc]init];
+        
+        [up upUserBanner];
+        
+    }
+    
+    
+    //上传face
+    NSString *touxiang = [[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpFace"];
+    if ([touxiang isEqualToString:@"yes"] && [GlocalUserImage getUserFaceImage]) {
+        
+        GupData *up =[[GupData alloc]init];
+        
+        [up upUserFace];
+        
+    }
+}
 
 
 

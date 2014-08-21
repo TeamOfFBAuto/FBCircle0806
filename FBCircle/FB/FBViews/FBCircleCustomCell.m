@@ -453,7 +453,7 @@
     
     _userName_label.text = theInfo.fb_username;
     
-    _content_label.text = [theInfo.fb_content stringByReplacingEmojiCheatCodesWithUnicode];
+    _content_label.text = [ZSNApi FBImageChange:[theInfo.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
     
     CGRect contentFrame = _content_label.frame;
     
@@ -688,7 +688,7 @@
         
         CGSize zanOptimusize = [_zan_label optimumSize];
         
-        _zan_label.frame = CGRectMake(_zan_label.frame.origin.x,menu_background_height + 6,_zan_label.frame.size.width,zanOptimusize.height+10);
+        _zan_label.frame = CGRectMake(_zan_label.frame.origin.x,menu_background_height + 4,_zan_label.frame.size.width,zanOptimusize.height+10);
         
         menu_background_height += zanOptimusize.height + 12;
     }
@@ -707,7 +707,7 @@
         
         float commentHeight = [_commentView setAllViewsWith:theInfo.fb_comment_array];
         
-        _commentView.frame = CGRectMake(_commentView.frame.origin.x,menu_background_height + 7,_commentView.frame.size.width,commentHeight);
+        _commentView.frame = CGRectMake(_commentView.frame.origin.x,menu_background_height + 5,_commentView.frame.size.width,commentHeight);
         
         _comment_line_view.frame = CGRectMake(0,menu_background_height,320,0.5);
         

@@ -118,7 +118,9 @@
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        if (messageModelBlock) {
+            messageModelBlock([NSMutableArray array]);
+        }
     }];
     
     [requestOperation start];

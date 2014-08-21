@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^CreateBBSChooseTypeBlock)(NSString * string,int index);
+
+
 @interface CreateBBSChooseTypeViewController : MyViewController<UITableViewDelegate,UITableViewDataSource>
 {
-    
+    CreateBBSChooseTypeBlock chooseType_block;
 }
 
 
@@ -19,6 +22,11 @@
 @property(nonatomic,strong)NSMutableArray * data_array;
 
 @property(nonatomic,strong)UILabel * name_Label;
+
+@property(nonatomic,assign)int icon_num;
+
+
+-(void)chooseTypeBlock:(CreateBBSChooseTypeBlock)theType;
 
 
 @end

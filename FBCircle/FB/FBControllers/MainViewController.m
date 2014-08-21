@@ -213,6 +213,7 @@
 //    self.navigationItem.titleView = titleImageView;
 
     self.titleLabel.text = @"fb圈";
+    self.title = @"fb圈";
     
     [self.navigationController.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
     
@@ -538,10 +539,10 @@
 //    [actionSheet showFromTabBar:self.tabBarController.tabBar];
     
     
-    
-    ZActionSheet * actionSheet = [[ZActionSheet alloc] initWithTitle:nil buttonTitles:[NSArray arrayWithObjects:@"拍照",@"从手机相册选择",@"说说",nil] buttonColor:[UIColor greenColor] CancelTitle:@"取消" CancelColor:RGBCOLOR(245,245,245) actionBackColor:RGBCOLOR(236,237,241)];
+    ZActionSheet * actionSheet = [[ZActionSheet alloc] initWithTitle:nil buttonTitles:[NSArray arrayWithObjects:@"拍照",@"从手机相册选择",@"说说",nil] buttonColor:RGBCOLOR(0,203,4) CancelTitle:@"取消" CancelColor:RGBCOLOR(245,245,245) actionBackColor:RGBCOLOR(236,237,241)];
     actionSheet.delegate = self;
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow WithAnimation:YES];
+    
 }
 
 #pragma mark--匹配通讯录
@@ -2020,9 +2021,7 @@
 #pragma mark-ChatInputDelegate
 
 -(void)sendMessageToSomeBodyWith:(NSString *)content
-{
-    
-    
+{    
     isFace = !isFace;
     
     [_inputToolBarView.sendButton setImage:[UIImage imageNamed:!isFace?@"biaoqing-icon-56_56.png":@"jianpan-icon-56_56.png"] forState:UIControlStateNormal];

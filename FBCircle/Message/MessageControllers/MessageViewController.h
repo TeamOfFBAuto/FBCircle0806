@@ -12,7 +12,7 @@
 #import "ChatViewController.h"
 #import "GmyMessageViewController.h"
 
-@interface MessageViewController : MyViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MessageViewController : MyViewController<UITableViewDelegate,UITableViewDataSource,EGORefreshTableHeaderDelegate>
 {
     UIImageView *    _tixing_label ;
     

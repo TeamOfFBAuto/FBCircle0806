@@ -23,21 +23,17 @@ typedef void(^ZSNAlertViewBlock)(NSString * theString);
 
 @property(nonatomic,strong)UILabel * forward_label;
 
-@property(nonatomic,strong)UIView * up_line_view;
-
 @property(nonatomic,strong)AsyncImageView * imageView;
 
 @property(nonatomic,strong)UILabel * userName_label;
 
-@property(nonatomic,strong)UILabel * content_label;
+@property(nonatomic,strong)RTLabel * content_label;
 
 @property(nonatomic,strong)UITextField * textField;
 
 @property(nonatomic,strong)UIButton * cancel_button;
 
 @property(nonatomic,strong)UIButton * done_button;
-
-@property(nonatomic,strong)UIView * down_line_view;
 
 
 

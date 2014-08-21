@@ -33,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //张少南 这里需要一个图片
+    //张少南 这里需要一个转发图片
     self.rightImageName = @"pinglun-zhuanfa_up-24_24.png";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];

@@ -81,6 +81,9 @@
     
     self.view.backgroundColor = RGBCOLOR(240,241,243);
     
+    icon_num = 1;
+    type_num = 1;
+    
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
     tapGestureRecognizer.cancelsTouchesInView = NO;
@@ -305,13 +308,13 @@
     if (theType == 0)///加载图片icon
     {
         iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(256,9.5,25,25)];
-        iconImage.image = [UIImage imageNamed:@"brid"];//张少南  这里需要修改下默认图片
+        iconImage.image = [UIImage imageNamed:@"mirco_icon_1.png"];//张少南  这里需要修改下默认图片
         [inputView addSubview:iconImage];
         
     }else
     {
         sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
-        sub_label.text = @"必选";
+        sub_label.text = @"汽车";
         sub_label.textAlignment = NSTextAlignmentLeft;
         sub_label.backgroundColor = [UIColor clearColor];
         sub_label.font = [UIFont systemFontOfSize:17];
@@ -341,18 +344,25 @@
         {
             NSLog(@"跳转到选择图标界面");
             
-            CreateBBSChooseIconViewController * chooseIcon = [[CreateBBSChooseIconViewController alloc] init];
-            
-            chooseIcon.delegate = self;
-            
-            [self PushToViewController:chooseIcon WithAnimation:YES];
+//            CreateBBSChooseIconViewController * chooseIcon = [[CreateBBSChooseIconViewController alloc] init];
+//            
+//            chooseIcon.delegate = self;
+//            
+//            [self PushToViewController:chooseIcon WithAnimation:YES];
             
         }
             break;
         case 1://跳转到选择分类界面
         {
             CreateBBSChooseTypeViewController * chooseType = [[CreateBBSChooseTypeViewController alloc] init];
-            chooseType.name_Label = sub_label;
+            
+            [chooseType chooseTypeBlock:^(NSString *string, int index)
+            {
+                NSLog(@"妈的 ---   %@ --  %d",string,index);
+                sub_label.text = string;
+                iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mirco_icon_%d.png",index+1]];
+            }];
+            
             [self PushToViewController:chooseType WithAnimation:YES];
         }
             break;
