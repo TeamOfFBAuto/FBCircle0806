@@ -47,7 +47,8 @@
     /**
      *  上面的半透明黑条
      */
-    
+    [self setHidesBottomBarWhenPushed:YES];
+
     
     _mainTabV.frame=CGRectMake(0, 0, 320, iPhone5?568-64:480-64);
     _searchTabV.hidden=YES;
@@ -58,13 +59,21 @@
 
 
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [self setHidesBottomBarWhenPushed:YES];
+    [super viewDidDisappear:animated];
+}
+
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     self.rightImageName=@"tianjiahaoyou-36_36.png";
-    self.title=@"我的好友";
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+    self.titleLabel.text=@"通讯录";
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
     myfirendListArr=[NSMutableArray array];
 

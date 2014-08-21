@@ -75,6 +75,10 @@
     tabbarVC.viewControllers = [NSArray arrayWithObjects:navc1,navc2,navc3,navc4,navc5,nil];
     
     tabbarVC.selectedIndex = 0;
+    
+  //  tabbarVC.tabBar.tintColor=[UIColor redColor];
+    
+    
     tabbarVC.tabBar.backgroundImage = FBCIRCLE_TABBAR_BACK_IMAGE;
     
     
