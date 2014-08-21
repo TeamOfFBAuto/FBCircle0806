@@ -72,6 +72,12 @@
     
 }
 
+- (void)dealloc
+{
+    _table.refreshDelegate = nil;
+    _table = nil;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -145,6 +151,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [cancelArray addObject:tool];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
@@ -179,6 +186,7 @@
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [cancelArray addObject:tool];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];

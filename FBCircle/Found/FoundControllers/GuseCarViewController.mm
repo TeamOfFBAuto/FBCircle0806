@@ -134,7 +134,7 @@
    
     
     //下面信息view
-    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568-206, 320, 206)];
+    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
     
     //底层view
@@ -284,9 +284,6 @@
     //进行地图搜索相关操作
     if (sender.tag == 10) {//停车场
         
-//        _poisearch = [[BMKPoiSearch alloc]init];
-//        _poisearch.delegate = self;
-        
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
@@ -329,7 +326,7 @@
         option.pageIndex = curPage;
         option.pageCapacity = 100;
         option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
-        option.keyword = @"维修厂";
+        option.keyword = @"汽车维修";
         BOOL flag = [_poisearch poiSearchNearBy:option];
         if(flag)
         {

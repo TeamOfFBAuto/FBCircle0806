@@ -32,6 +32,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    self.delegate = nil;
+    _refreshHeaderView.delegate = nil;
+    NSLog(@"%@ dealloc",self);
+}
+
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show
 {
     self = [super initWithFrame:frame];
@@ -168,6 +175,8 @@
 - (void)finishReloadigData
 {
     NSLog(@"finishReloadigData完成加载");
+    
+    
 
     _reloading = NO;
     if (_refreshHeaderView) {
@@ -175,7 +184,20 @@
         self.isReloadData = NO;
     }
     
-    [self reloadData];
+    
+    @try {
+        
+        [self reloadData];
+        
+    }
+    @catch (NSException *exception) {
+        
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        
+    }
+    
     //如果有更多数据，重新设置footerview  frame
     if (self.isHaveMoreData)
     {
@@ -295,11 +317,6 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     return cell;
-}
-
-- (void)dealloc
-{
-    
 }
 
 

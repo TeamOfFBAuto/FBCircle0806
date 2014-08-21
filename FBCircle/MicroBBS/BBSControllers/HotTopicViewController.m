@@ -69,6 +69,7 @@
 - (void)dealloc
 {
     _table.refreshDelegate = nil;
+    _table = nil;
 }
 
 #pragma mark - 事件处理
@@ -85,7 +86,7 @@
 
 - (void)getTopic
 {
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
 
     NSString *url;
@@ -98,6 +99,7 @@
     }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [cancelArray addObject:tool];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSArray *dataInfo = [result objectForKey:@"datainfo"];

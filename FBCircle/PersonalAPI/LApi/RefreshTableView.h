@@ -28,7 +28,7 @@
 
 @property (nonatomic,retain)LRefreshTableHeaderView * refreshHeaderView;
 
-@property (nonatomic,assign)id<RefreshDelegate>refreshDelegate;
+@property (nonatomic,weak)id<RefreshDelegate>refreshDelegate;
 @property (nonatomic,assign)BOOL                        isReloadData;      //是否是下拉刷新数据
 @property (nonatomic,assign)BOOL                        reloading;         //是否正在loading
 @property (nonatomic,assign)BOOL                        isLoadMoreData;    //是否是载入更多

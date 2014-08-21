@@ -59,6 +59,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc
+{
+    _table.refreshDelegate = nil;
+    _table = nil;
+}
 #pragma mark - 事件处理
 
 #pragma mark - 网络请求
@@ -71,6 +77,7 @@
     __weak typeof(RefreshTableView *)weakTable = _table;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_ZAN_LIST,self.tid,_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [cancelArray addObject:tool];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
