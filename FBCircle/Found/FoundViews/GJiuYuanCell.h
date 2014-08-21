@@ -13,7 +13,16 @@
 @interface GJiuYuanCell : UITableViewCell
 
 @property(nonatomic,strong)UIImageView *titielImav;//图标
+@property(nonatomic,strong)UILabel *contentLabel;//内容labal
 
+
+
+
+//加载控件
 -(void)loadViewWithIndexPath:(NSIndexPath*)theIndexPath;
+
+//填充数据
+-(void)configWithDataModel:(BMKPoiInfo*)poiModel indexPath:(NSIndexPath*)TheIndexPath;
+
 
 @end

@@ -154,6 +154,8 @@
     
     [cell loadViewWithIndexPath:indexPath];
     
+    [cell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -300,16 +302,11 @@
         _isFire = NO;
         
         
-        
     }];
     
     
     
 }
-
-
-
-
 
 
 #pragma mark - 地图view代理方法 BMKMapViewDelegate
