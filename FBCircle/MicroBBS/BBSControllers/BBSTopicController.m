@@ -108,6 +108,18 @@ typedef enum{
     _table.delegate = nil;
     _table.dataSource = nil;
     _table = nil;
+    
+    inputView = nil;
+    moreBtn = nil;
+    
+    for (int i = 0; i < labelArr.count; i ++) {
+        UILabel *ll = [labelArr objectAtIndex:i];
+        ll = nil;
+        NSLog(@"ll %@",ll);
+    }
+    
+    [labelArr removeAllObjects];
+    labelArr = nil;
 }
 
 #pragma mark - 事件处理
@@ -410,9 +422,11 @@ typedef enum{
     
     if (isInsert) {
         [labelArr insertObject:label atIndex:0];
+        label = nil;
     }else
     {
         [labelArr addObject:label];
+        label = nil;
     }
     
     if (isInsert) {

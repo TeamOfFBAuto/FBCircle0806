@@ -34,9 +34,14 @@
 
 - (void)dealloc
 {
+    self.dataArray = nil;
+    self.loadingIndicator = nil;
+    self.normalLabel = nil;
+    self.loadingLabel = nil;
     self.delegate = nil;
     _refreshHeaderView.delegate = nil;
-    NSLog(@"%@ dealloc",NSStringFromClass([self class]));
+    _refreshHeaderView = nil;
+    NSLog(@"%s dealloc",__FUNCTION__);
 }
 
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show
@@ -183,7 +188,6 @@
         [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self];
         self.isReloadData = NO;
     }
-    
     
     @try {
         

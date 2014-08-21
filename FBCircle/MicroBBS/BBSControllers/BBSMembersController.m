@@ -61,7 +61,11 @@
 }
 - (void)dealloc
 {
+    self.bbs_id = nil;
     _table.refreshDelegate = nil;
+    _table.dataSource = nil;
+    _table = nil;
+    btn2 = nil;
 }
 
 #pragma mark - 事件处理

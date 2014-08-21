@@ -115,6 +115,15 @@
 - (void)dealloc
 {
     _table.refreshDelegate = nil;
+    _table.delegate = nil;
+    _table.dataSource = nil;
+    
+    _historyTable.delegate = nil;
+    _historyTable.dataSource = nil;
+    _historyTable = nil;
+    navigationView = nil;
+    searchView = nil;
+    move = nil;
 }
 
 #pragma mark - 事件处理
