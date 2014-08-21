@@ -18,6 +18,8 @@
     int num;
     BOOL upOrdown;
     NSTimer * timer;
+    
+    
 }
 @property (strong,nonatomic)AVCaptureDevice * device;
 @property (strong,nonatomic)AVCaptureDeviceInput * input;

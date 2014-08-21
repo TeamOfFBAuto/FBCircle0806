@@ -56,6 +56,7 @@
     //title
     UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backLabel.frame)+65, backLabel.frame.origin.y, 52, 18)];
     titleLable.font = [UIFont systemFontOfSize:17];
+    titleLable.textColor = [UIColor whiteColor];
     titleLable.text = @"二维码";
     [topView addSubview:titleLable];
     
@@ -104,6 +105,8 @@
     [self.view addSubview:_line];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
+    
+    
     
     
     [timer fire];

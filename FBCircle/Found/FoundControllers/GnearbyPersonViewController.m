@@ -58,23 +58,31 @@
     [self.view addSubview:btn];
     
     
+    //定位
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    [_locService startUserLocationService];//启动LocationService
+    
     _pageCapacity = 20;
+    
+    
+    
+    
 }
 
 
 -(void)fujinderen{
-    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
-    _tableView.refreshDelegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:_tableView];
     
-    [_tableView showRefreshHeader:YES];
+    //每隔一段时间 更新用户位置
+    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocal) userInfo:nil repeats:YES];
+    [timer fire];
+
 }
 
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return _dataArray.count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -91,7 +99,7 @@
     
     cell.separatorInset = UIEdgeInsetsZero;
     [cell loadCustomViewWithIndexPath:indexPath];//加载控件
-    [cell configNetDataWithIndexPath:indexPath];//填充数据
+    [cell configNetDataWithIndexPath:indexPath dataArray:_dataArray];//填充数据
     
     __weak typeof (self)bself = self;
     [cell setSendMessageBlock:^{
@@ -112,8 +120,8 @@
     
     NSString *api = [NSString stringWithFormat:FBFOUND_NEARBYPERSON,[SzkAPI getAuthkey]];
     
-    //请求用户通知接口
-    NSLog(@"请求用户通知接口:%@",api);
+    //请求附近的人接口
+    NSLog(@"请求附近的人接口:%@",api);
     
     __weak typeof (self)bself = self;
     
@@ -199,6 +207,65 @@
     return 65;
 }
 
+
+
+#pragma mark - 上传自己的经纬度
+-(void)updateMyLocal{
+    NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+    
+    NSLog(@"%@",api);
+    
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
+        NSLog(@"%@",dic);
+        
+        _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
+        _tableView.refreshDelegate = self;
+        _tableView.dataSource = self;
+        [self.view addSubview:_tableView];
+        
+        [_tableView showRefreshHeader:YES];
+    }];
+    
+    
+    
+}
+
+
+#pragma mark - 定位代理方法
+
+//在地图View将要启动定位时，会调用此函数
+- (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView
+{
+	NSLog(@"start locate");
+}
+
+
+//用户方向更新后，会调用此函数
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+{
+//    [_mapView updateLocationData:userLocation];
+    _guserLocation = userLocation;
+    NSLog(@"heading is %@",userLocation.heading);
+}
+
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    _guserLocation = userLocation;
+    
+//    [_mapView updateLocationData:userLocation];
+    
+    if (!_isFire) {
+        _isFire = YES;
+        [timer fire];
+    }
+}
 
 
 - (void)didReceiveMemoryWarning

@@ -899,6 +899,7 @@
 		E3208ABA19A43D210099C829 /* GnearbyPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208AB519A43D210099C829 /* GnearbyPersonCell.m */; };
 		E3208ABB19A43D210099C829 /* GcustomUseCarDownInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208AB719A43D210099C829 /* GcustomUseCarDownInfoCell.m */; };
 		E3208ABD19A43D8D0099C829 /* GJiuYuanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208ABC19A43D8D0099C829 /* GJiuYuanCell.m */; };
+		E33BAC9119A490BC00401587 /* GBMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */; };
 		E384CB6C19925DCF002E7D71 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */; };
 		E384CBAA19925E08002E7D71 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E384CBA919925E08002E7D71 /* mapapi.bundle */; };
 		E3A62B63199CA2FE00C300A3 /* fcar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3A62B5E199CA2FE00C300A3 /* fcar@2x.png */; };
@@ -1652,6 +1653,8 @@
 		E3208AB719A43D210099C829 /* GcustomUseCarDownInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomUseCarDownInfoCell.m; sourceTree = "<group>"; };
 		E3208AB819A43D210099C829 /* GJiuYuanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJiuYuanCell.h; sourceTree = "<group>"; };
 		E3208ABC19A43D8D0099C829 /* GJiuYuanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJiuYuanCell.m; sourceTree = "<group>"; };
+		E33BAC8F19A490BC00401587 /* GBMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMKPointAnnotation.h; sourceTree = "<group>"; };
+		E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMKPointAnnotation.m; sourceTree = "<group>"; };
 		E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E384CB6E19925E07002E7D71 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		E384CB6F19925E07002E7D71 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
@@ -2367,6 +2370,8 @@
 				E3A62B72199CA9C700C300A3 /* GmyErweimaViewController.m */,
 				E3AC5314199D8EBA007C7733 /* GJiuYuanDuiViewController.h */,
 				E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */,
+				E33BAC8F19A490BC00401587 /* GBMKPointAnnotation.h */,
+				E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */,
 				E3F66CF719A1F22D00FBDCB8 /* GmPrepareNetData.h */,
 				E3F66CF819A1F22D00FBDCB8 /* GmPrepareNetData.m */,
 			);
@@ -3418,12 +3423,12 @@
 		E3208AB219A43CFF0099C829 /* FoundViews */ = {
 			isa = PBXGroup;
 			children = (
+				E3208AB819A43D210099C829 /* GJiuYuanCell.h */,
 				E3208ABC19A43D8D0099C829 /* GJiuYuanCell.m */,
 				E3208AB419A43D210099C829 /* GnearbyPersonCell.h */,
 				E3208AB519A43D210099C829 /* GnearbyPersonCell.m */,
 				E3208AB619A43D210099C829 /* GcustomUseCarDownInfoCell.h */,
 				E3208AB719A43D210099C829 /* GcustomUseCarDownInfoCell.m */,
-				E3208AB819A43D210099C829 /* GJiuYuanCell.h */,
 			);
 			path = FoundViews;
 			sourceTree = "<group>";
@@ -4407,6 +4412,7 @@
 				134164641993731E00189A46 /* BBSListCell.m in Sources */,
 				1320A7F4199B6A0800EB955B /* RegexKitLite.m in Sources */,
 				56A64840198F430600451413 /* FoundViewController.m in Sources */,
+				E33BAC9119A490BC00401587 /* GBMKPointAnnotation.m in Sources */,
 				56A64A3D198F69A800451413 /* FBCircleDetailCommentsView.m in Sources */,
 				56A64B82198F6BD400451413 /* AboutFBQuanViewController.m in Sources */,
 				56A64AAE198F6AD800451413 /* GfeiHaoyouFootViewController.m in Sources */,

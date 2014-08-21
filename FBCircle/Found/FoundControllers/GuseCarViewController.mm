@@ -355,6 +355,9 @@
         
 		for (int i = 0; i < poiResultList.poiInfoList.count; i++) {
             BMKPoiInfo* poi = [poiResultList.poiInfoList objectAtIndex:i];
+            
+            NSLog(@"%f %f",poi.pt.latitude,poi.pt.longitude);
+            
             BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
             item.coordinate = poi.pt;
             item.title = poi.name;
@@ -410,6 +413,15 @@
 }
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
+    
+    
+    if (_isShowDownInfoView) {
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            _downInfoView.frame = CGRectMake(0, 568, 320, 206);
+        }];
+    }
+    
     [mapView bringSubviewToFront:view];
     [mapView setNeedsDisplay];
 }

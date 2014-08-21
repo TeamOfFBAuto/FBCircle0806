@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
+
+//救援队界面 下面弹出框内的tableview 自定义cell
 #import <UIKit/UIKit.h>
 
 @interface GJiuYuanCell : UITableViewCell

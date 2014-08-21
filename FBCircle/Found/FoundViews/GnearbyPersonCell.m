@@ -61,7 +61,7 @@
 }
 
 //填充数据
--(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath{
+-(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array{
     NSLog(@"%s",__FUNCTION__);
     
     NSLog(@"dddd");

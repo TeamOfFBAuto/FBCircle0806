@@ -32,11 +32,23 @@
     BOOL _isShowDownInfoView;
     
     
+    //底层弹上来的view
+    UIView *_downBackView;
+    
+    
     NSTimer * timer;
+    BOOL _isFire;
+    
+    
+    //信息字典
+    NSMutableDictionary *_poiAnnotationDic;
 }
 
 //协议属性
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+
+
+@property(nonatomic,strong)BMKPoiInfo *tableViewCellDataModel;
 
 
 @end

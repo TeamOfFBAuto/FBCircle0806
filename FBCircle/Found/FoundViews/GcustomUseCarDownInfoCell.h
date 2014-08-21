@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
+//用车服务界面 下面弹出框内的tableview 自定义cell
 #import <UIKit/UIKit.h>
 
 @interface GcustomUseCarDownInfoCell : UITableViewCell

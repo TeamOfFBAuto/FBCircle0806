@@ -1,3 +1,4 @@
+
 //
 //  GJiuYuanDuiViewController.m
 //  FBCircle
@@ -9,6 +10,9 @@
 #import "GJiuYuanDuiViewController.h"
 #import "GJiuYuanCell.h"
 
+#import "BMapKit.h"
+
+#import "GBMKPointAnnotation.h"
 
 
 @interface GJiuYuanDuiViewController ()
@@ -102,25 +106,12 @@
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
     
     //底层view
-    UIView *downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
-    downBackView.backgroundColor = [UIColor whiteColor];
-    downBackView.layer.borderWidth = 0.5;
-    downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    downBackView.layer.cornerRadius = 5;
-    [_downInfoView addSubview:downBackView];
-    
-    
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.layer.borderWidth = 0.5;
-    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    _tableView.layer.cornerRadius = 5;
-    //    _tableView.separatorColor = [UIColor clearColor];
-    [downBackView addSubview:_tableView];
-    
+    _downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
+    _downBackView.backgroundColor = [UIColor whiteColor];
+    _downBackView.layer.borderWidth = 0.5;
+    _downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _downBackView.layer.cornerRadius = 5;
+    [_downInfoView addSubview:_downBackView];
     
     
     [self.view addSubview:_downInfoView];
@@ -131,8 +122,16 @@
     //每隔一段时间 更新用户位置
     timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateMyLocal) userInfo:nil repeats:YES];
     
+    _isFire = NO;
     
-    [timer fire];
+    
+    
+    _poiAnnotationDic  = [[NSMutableDictionary alloc]init];
+    
+    
+    
+    
+    
     
 }
 
@@ -219,6 +218,11 @@
     _guserLocation = userLocation;
     
     [_mapView updateLocationData:userLocation];
+    
+    if (!_isFire) {
+        _isFire = YES;
+        [timer fire];
+    }
 }
 
 
@@ -235,13 +239,78 @@
 #pragma mark -救援队网络请求
 -(void)getJiuyuandui{
     
+    NSString *api = [NSString stringWithFormat:FBFOUND_HELPLOCAL,[SzkAPI getAuthkey],1,100];
+    
+    NSLog(@"%@",api);
+    
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
+        NSLog(@"%@",dataDic);
+        
+        // 清楚屏幕中所有的annotation
+        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+        [_mapView removeAnnotations:array];
+        
+        
+        NSArray *modelArray = [dataDic objectForKey:@"datainfo"];
+        
+        for (int i = 0; i < modelArray.count; i++) {
+            NSDictionary *modelInfo = [modelArray objectAtIndex:1];
+            BMKPoiInfo *poi = [[BMKPoiInfo alloc]init];
+            poi.name = [modelInfo objectForKey:@"name"];
+            poi.address = [modelInfo objectForKey:@"address"];
+            poi.phone = [modelInfo objectForKey:@"phone"];
+            poi.uid = [modelInfo objectForKey:@"id"];
+            poi.postcode = [modelInfo objectForKey:@"owner"];//救援队联系人
+            CLLocationCoordinate2D pt = CLLocationCoordinate2DMake([[modelInfo objectForKey:@"wei_lat"]floatValue], [[modelInfo objectForKey:@"jing_lng"]floatValue]);
+            poi.pt = pt;
+            
+            
+            [_poiAnnotationDic setObject:poi forKey:poi.name];
+            
+            BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+            item.coordinate = poi.pt;
+            item.title = poi.name;
+            item.subtitle = poi.address;
+            
+            
+            
+//            GBMKPointAnnotation *item = [[GBMKPointAnnotation alloc]init];
+//            item.coordinate = poi.pt;
+//            item.title = poi.name;
+//            item.phone = poi.phone;
+//            item.owner = poi.postcode;
+            
+            
+            NSLog(@"%@",item.title);
+            
+            [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
+            
+            
+            if(i == 0){
+                //将第一个点的坐标移到屏幕中央
+                _mapView.centerCoordinate = poi.pt;
+            }
+        }
+        
+        [timer invalidate];
+        _isFire = NO;
+        
+        
+        
+    }];
+    
+    
+    
 }
 
 
-#pragma mark - 上传自己的经纬度
--(void)updateMyLocal{
-    NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
-}
+
+
+
 
 #pragma mark - 地图view代理方法 BMKMapViewDelegate
 /**
@@ -275,8 +344,18 @@
     
     return annotationView;
 }
+#pragma mark - 点击标注执行的方法
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
+    
+    NSLog(@"%s",__FUNCTION__);
+    
+    if (_isShowDownInfoView) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _downInfoView.frame = CGRectMake(0, 568, 320, 206);
+        }];
+    }
+    
     [mapView bringSubviewToFront:view];
     [mapView setNeedsDisplay];
 }
@@ -294,6 +373,25 @@
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
 {
     NSLog(@"paopaoclick");
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.layer.borderWidth = 0.5;
+    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _tableView.layer.cornerRadius = 5;
+    [_downBackView addSubview:_tableView];
+    
+    NSLog(@"---------%@",[view.annotation title]);
+    NSLog(@"---------%@",[view.annotation subtitle]);
+    
+    BMKPoiInfo *poi = [_poiAnnotationDic objectForKey:[view.annotation title]];
+    NSLog(@"%@",poi.postcode);
+    NSLog(@"%@",poi.phone);
+    
+    self.tableViewCellDataModel = poi;
+    
     
     if (!_isShowDownInfoView) {
         [UIView animateWithDuration:0.3 animations:^{
@@ -327,6 +425,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+#pragma mark - 上传自己的经纬度
+-(void)updateMyLocal{
+    NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+    
+    NSLog(@"%@",api);
+    
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
+        NSLog(@"%@",dic);
+        
+        [self getJiuyuandui];
+    }];
+    
+    
+    
+}
 
 
 @end
