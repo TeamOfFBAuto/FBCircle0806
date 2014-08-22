@@ -50,8 +50,6 @@
     
     //获取称赞者
     
-//    [self getZanList];
-    
     [_table showRefreshHeader:YES];
 }
 
@@ -64,6 +62,7 @@
 - (void)dealloc
 {
     _table.refreshDelegate = nil;
+    _table.dataSource = nil;
     _table = nil;
 }
 #pragma mark - 事件处理

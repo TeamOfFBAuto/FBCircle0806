@@ -43,6 +43,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc
+{
+    btn = nil;
+    infoModel = nil;
+}
+
 #pragma mark - 事件处理
 //添加成员
 - (void)clickToAddMember:(LButtonView *)sender
@@ -241,10 +248,5 @@
 #pragma mark - delegate
 
 #pragma mark - UITableViewDelegate
-
--(void)dealloc
-{
-    
-}
 
 @end

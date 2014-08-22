@@ -70,6 +70,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    _tuijian_Arr = nil;//第一部分 推荐
+    _normal_Array = nil;//第二部分 正常
+    search_bgview = nil;
+    bgScroll = nil;
+    second_bgView = nil;//第二部分背景view
+}
+
 #pragma mark - 事件处理
 
 /**

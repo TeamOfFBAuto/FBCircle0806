@@ -54,8 +54,6 @@
     _table.separatorInset = UIEdgeInsetsMake(0, 1, 0, 0);
     [self.view addSubview:_table];
     
-//    [self getTopic];
-    
     [_table showRefreshHeader:YES];
     
 }
@@ -69,6 +67,7 @@
 - (void)dealloc
 {
     _table.refreshDelegate = nil;
+    _table.dataSource = nil;
     _table = nil;
 }
 
@@ -86,7 +85,7 @@
 
 - (void)getTopic
 {
-//    __weak typeof(self)weakSelf = self;
+    __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
 
     NSString *url;
@@ -118,7 +117,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
         
         [weakTable loadFail];
     }];

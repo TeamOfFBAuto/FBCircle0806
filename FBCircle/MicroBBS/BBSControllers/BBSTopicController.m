@@ -112,14 +112,14 @@ typedef enum{
     inputView = nil;
     moreBtn = nil;
     
-    for (int i = 0; i < labelArr.count; i ++) {
-        UILabel *ll = [labelArr objectAtIndex:i];
-        ll = nil;
-        NSLog(@"ll %@",ll);
-    }
-    
-    [labelArr removeAllObjects];
     labelArr = nil;
+    
+    _dataArray = nil;
+    
+    rowHeights = nil;//所有高度
+    emojiDic = nil;//所有表情
+    
+    aTopicModel = nil;
 }
 
 #pragma mark - 事件处理
@@ -356,6 +356,7 @@ typedef enum{
                 TopicCommentModel *aModel = [[TopicCommentModel alloc]initWithDictionary:aDic];
                 aModel.content = [aModel.content stringByReplacingEmojiCheatCodesWithUnicode];
                 [_dataArray addObject:aModel];
+                aModel = nil;
             }
             [weakTable reloadData];
             

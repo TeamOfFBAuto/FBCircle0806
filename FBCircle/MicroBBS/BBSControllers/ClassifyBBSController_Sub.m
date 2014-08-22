@@ -64,7 +64,9 @@
 - (void)dealloc
 {
     _table.refreshDelegate = nil;
+    _table.dataSource = nil;
     _table = nil;
+    _dataArray = nil;
 }
 
 #pragma mark - 事件处理

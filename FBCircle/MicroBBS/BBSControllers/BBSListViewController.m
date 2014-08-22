@@ -77,6 +77,7 @@
     _table.dataSource = nil;
     _table.refreshDelegate = nil;
     _table = nil;
+    _aBBSModel = nil;
 }
 
 - (void)didReceiveMemoryWarning
