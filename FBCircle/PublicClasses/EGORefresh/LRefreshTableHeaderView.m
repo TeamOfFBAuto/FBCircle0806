@@ -82,7 +82,7 @@
 
 - (void)refreshLastUpdatedDate {
 	
-	if ([_delegate respondsToSelector:@selector(egoRefreshTableDataSourceLastUpdated:)]) {
+	if (_delegate && [_delegate respondsToSelector:@selector(egoRefreshTableDataSourceLastUpdated:)]) {
 		
 		NSDate *date = [_delegate egoRefreshTableDataSourceLastUpdated:self];
         
@@ -170,7 +170,7 @@
 	} else if (scrollView.isDragging) {
 		
 		BOOL _loading = NO;
-		if ([_delegate respondsToSelector:@selector(egoRefreshTableDataSourceIsLoading:)]) {
+		if (_delegate && [_delegate respondsToSelector:@selector(egoRefreshTableDataSourceIsLoading:)]) {
 			_loading = [_delegate egoRefreshTableDataSourceIsLoading:self];
 		}
 		
@@ -190,13 +190,13 @@
 	
 	BOOL _loading = NO;
    
-	if ([_delegate respondsToSelector:@selector(egoRefreshTableDataSourceIsLoading:)]) {
+	if (_delegate && [_delegate respondsToSelector:@selector(egoRefreshTableDataSourceIsLoading:)]) {
 		_loading = [_delegate egoRefreshTableDataSourceIsLoading:self];
 	}
 	
 	if (scrollView.contentOffset.y <= - 65.0f && !_loading) {
 
-		if ([_delegate respondsToSelector:@selector(egoRefreshTableDidTriggerRefresh:)]) {
+		if (_delegate && [_delegate respondsToSelector:@selector(egoRefreshTableDidTriggerRefresh:)]) {
 			[_delegate egoRefreshTableDidTriggerRefresh:EGORefreshHeader];
 		}
 		[self setState:L_EGOOPullRefreshLoading];
