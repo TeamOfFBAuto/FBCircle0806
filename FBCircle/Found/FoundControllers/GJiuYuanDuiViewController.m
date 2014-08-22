@@ -59,22 +59,23 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     //导航栏
-    UIView *navigationbar = [[UIView alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    UIView *navigationbar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
     navigationbar.backgroundColor = [UIColor blackColor];
     [self.view addSubview:navigationbar];
     
     
     //导航栏上的返回按钮和titile
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(0, 0, 70, 44);
+    backBtn.frame = CGRectMake(35, 20, 70, 44);
+    backBtn.backgroundColor = [UIColor redColor];
     [backBtn addTarget:self action:@selector(gBackBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [backBtn setTitle:@"发现" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     backBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [navigationbar addSubview:backBtn];
     
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(125, 0, 70, 44)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(125, 20, 70, 44)];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font =  [UIFont boldSystemFontOfSize:16.0f];
     titleLabel.textColor = [UIColor whiteColor];
@@ -106,7 +107,7 @@
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
     
     //底层view
-    _downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
+    _downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 206-12-14)];
     _downBackView.backgroundColor = [UIColor whiteColor];
     _downBackView.layer.borderWidth = 0.5;
     _downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
@@ -163,7 +164,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 4;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -179,7 +180,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%d",indexPath.row);
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:@"13301072337" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [al show];
     }
@@ -371,7 +372,7 @@
 {
     NSLog(@"paopaoclick");
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 206-12-14) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor whiteColor];

@@ -47,6 +47,10 @@
         self.contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titielImav.frame)+19, self.titielImav.frame.origin.y, 187, 14)];
     }else if (theIndexPath.row == 2){
         self.titielImav.frame = CGRectMake(18, 15, 15, 15);
+        [self.titielImav setImage:[UIImage imageNamed:@"fgeren.png"]];
+        self.contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titielImav.frame)+19, self.titielImav.frame.origin.y, 187, 14)];
+    }else if (theIndexPath.row == 3){
+        self.titielImav.frame = CGRectMake(18, 15, 15, 15);
         [self.titielImav setImage:[UIImage imageNamed:@"ftel.png"]];
         self.contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titielImav.frame)+19, self.titielImav.frame.origin.y, 187, 14)];
     }
@@ -66,6 +70,8 @@
     }else if (TheIndexPath.row == 1){
         self.contentLabel.text = poiModel.address;
     }else if (TheIndexPath.row == 2){
+        self.contentLabel.text = poiModel.postcode;
+    }else if (TheIndexPath.row == 3){
         self.contentLabel.text = poiModel.phone;
     }
     
