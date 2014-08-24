@@ -937,6 +937,7 @@
 		56D6E334199B468200607DC5 /* brid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D6E333199B468200607DC5 /* brid@2x.png */; };
 		56D6E335199B468200607DC5 /* brid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D6E333199B468200607DC5 /* brid@2x.png */; };
 		B15A5508DFA84914A2D845DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3093716B5174DF29B814680 /* libPods.a */; };
+		E313148B19AA5A7C0041F998 /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E313148A19AA5A7C0041F998 /* GMAPI.m */; };
 		E315DF4F199C5E3B00EA9109 /* GpersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E315DF4E199C5E3B00EA9109 /* GpersonInfoViewController.m */; };
 		E3208ABA19A43D210099C829 /* GnearbyPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208AB519A43D210099C829 /* GnearbyPersonCell.m */; };
 		E3208ABB19A43D210099C829 /* GcustomUseCarDownInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208AB719A43D210099C829 /* GcustomUseCarDownInfoCell.m */; };
@@ -1710,6 +1711,8 @@
 		56D6E331199B13AE00607DC5 /* CreateBBSChooseIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBBSChooseIconCell.m; sourceTree = "<group>"; };
 		56D6E333199B468200607DC5 /* brid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brid@2x.png"; sourceTree = "<group>"; };
 		D3093716B5174DF29B814680 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E313148919AA5A7C0041F998 /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
+		E313148A19AA5A7C0041F998 /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
 		E315DF4D199C5E3B00EA9109 /* GpersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonInfoViewController.h; sourceTree = "<group>"; };
 		E315DF4E199C5E3B00EA9109 /* GpersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpersonInfoViewController.m; sourceTree = "<group>"; };
 		E3208AB419A43D210099C829 /* GnearbyPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GnearbyPersonCell.h; sourceTree = "<group>"; };
@@ -2949,6 +2952,8 @@
 		56A64A8D198F6AD800451413 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E313148919AA5A7C0041F998 /* GMAPI.h */,
+				E313148A19AA5A7C0041F998 /* GMAPI.m */,
 				56A64A8E198F6AD800451413 /* GloadingView.h */,
 				56A64A8F198F6AD800451413 /* GloadingView.m */,
 				56A64A90198F6AD800451413 /* GlocalUserImage.h */,
@@ -4553,6 +4558,7 @@
 				1320A7F4199B6A0800EB955B /* RegexKitLite.m in Sources */,
 				56A64840198F430600451413 /* FoundViewController.m in Sources */,
 				E33BAC9119A490BC00401587 /* GBMKPointAnnotation.m in Sources */,
+				E313148B19AA5A7C0041F998 /* GMAPI.m in Sources */,
 				56A64A3D198F69A800451413 /* FBCircleDetailCommentsView.m in Sources */,
 				56A64B82198F6BD400451413 /* AboutFBQuanViewController.m in Sources */,
 				56A64AAE198F6AD800451413 /* GfeiHaoyouFootViewController.m in Sources */,

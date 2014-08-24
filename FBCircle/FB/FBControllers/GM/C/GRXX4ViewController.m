@@ -977,12 +977,7 @@
     NSLog(@"在此上传用户设置的地区信息");
     
     
-    if (self.province.length!=0&&self.city.length!=0) {
-        
-        [self testdiqu];
-        
-    }
-    
+    [self testdiqu];
     
 }
 
@@ -1120,11 +1115,17 @@
     
     
     if (component == 0) {
+        self.province = _data[row][@"State"];
+        if ([self.province isEqualToString:@"省份"]) {
+            self.province = @"";
+        }
         return _data[row][@"State"];
-        
     } else if (component == 1) {
-        
         NSArray * cities = _data[_flagRow][@"Cities"];
+        self.city = cities[row][@"city"];
+        if ([self.city isEqualToString:@"市区县"]) {
+            self.city =@"";
+        }
         return cities[row][@"city"];
         
     }
@@ -1136,44 +1137,21 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
+    
     if (component == 0) {
         _flagRow = row;
-        _str1 = _data[row][@"State"];
-        NSLog(@"%@",_str1);
-        //给控件赋值str1
-        if ([_str1 isEqualToString:@"省份"]) {
-            _str1 = @"";
-        }
-        self.diqu = _str1;
-        self.province = _str1;//上传
-        _isChooseArea = YES;
-        
-        
     } else if (component == 1) {
-        _str2 = _data[_flagRow][@"Cities"][row][@"city"];
-        if ([_str2 isEqualToString:@"市区县"]) {
-            _str2 = @"";
-        }
-        _str3 = [_str1 stringByAppendingString:_str2];
-        NSLog(@"%@",_str3);
-        //给控件赋值str3;
-        self.diqu = _str3;
-        self.city = _str2;//上传
-        _isChooseArea = YES;
-        
         
     }
-    
-    
-    
+
     [pickerView reloadAllComponents];
     
     
-    
-    
-    
-    
 }
+
+
+
+
 
 #pragma mark - 上传头像(图片)
 

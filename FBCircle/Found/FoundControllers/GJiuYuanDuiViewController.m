@@ -65,11 +65,16 @@
     
     
     //导航栏上的返回按钮和titile
+    UIImageView *fanhuiImv = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fanhui-daohanglan-20_38.png"] highlightedImage:nil];
+    fanhuiImv.frame = CGRectMake(15, 33, 10, 19);
+    [navigationbar addSubview:fanhuiImv];
+    
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(35, 20, 70, 44);
-    backBtn.backgroundColor = [UIColor redColor];
+    backBtn.frame = CGRectMake(25, 23, 70, 44);
+//    backBtn.backgroundColor = [UIColor redColor];
     [backBtn addTarget:self action:@selector(gBackBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [backBtn setTitle:@"发现" forState:UIControlStateNormal];
+    [backBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 4, 32)];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     backBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [navigationbar addSubview:backBtn];

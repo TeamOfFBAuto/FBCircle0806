@@ -9,6 +9,7 @@
 #import "GuseCarViewController.h"
 #import "GcustomUseCarDownInfoCell.h"//底层view自定义cell
 
+
 @interface GuseCarViewController ()
 
 @end
@@ -63,26 +64,37 @@
     
     _isShowDownInfoView = NO;
     
+    
+    
     //导航栏
-    UIView *navigationbar = [[UIView alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    UIView *navigationbar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
     navigationbar.backgroundColor = [UIColor blackColor];
     [self.view addSubview:navigationbar];
     
+    
     //导航栏上的返回按钮和titile
+    UIImageView *fanhuiImv = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fanhui-daohanglan-20_38.png"] highlightedImage:nil];
+    fanhuiImv.frame = CGRectMake(15, 33, 10, 19);
+    [navigationbar addSubview:fanhuiImv];
+    
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(0, 0, 70, 44);
+    backBtn.frame = CGRectMake(25, 23, 70, 44);
+    //    backBtn.backgroundColor = [UIColor redColor];
     [backBtn addTarget:self action:@selector(gBackBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [backBtn setTitle:@"发现" forState:UIControlStateNormal];
+    [backBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 4, 32)];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     backBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [navigationbar addSubview:backBtn];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(125, 0, 70, 44)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(125, 20, 70, 44)];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font =  [UIFont boldSystemFontOfSize:16.0f];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.text = @"用车服务";
     [navigationbar addSubview:titleLabel];
+    
+    
     
     
     
@@ -137,26 +149,8 @@
     _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
     
-    //底层view
-    UIView *downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
-    downBackView.backgroundColor = [UIColor whiteColor];
-    downBackView.layer.borderWidth = 0.5;
-    downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    downBackView.layer.cornerRadius = 5;
-    [_downInfoView addSubview:downBackView];
     
-
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.layer.borderWidth = 0.5;
-    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    _tableView.layer.cornerRadius = 5;
-//    _tableView.separatorColor = [UIColor clearColor];
-    [downBackView addSubview:_tableView];
-    
+    _poiAnnotationDic = [[NSMutableDictionary alloc]initWithCapacity:1];
     
     
     [self.view addSubview:_downInfoView];
@@ -188,6 +182,7 @@
     
     
     [cell loadViewWithIndexPath:indexPath];
+    [cell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
     
     return cell;
 }
@@ -284,10 +279,20 @@
     //进行地图搜索相关操作
     if (sender.tag == 10) {//停车场
         
+        
+        if (_isShowDownInfoView) {
+            [UIView animateWithDuration:0.3 animations:^{
+                _downInfoView.frame = CGRectMake(0, 568, 320, 206);
+            } completion:^(BOOL finished) {
+                _isShowDownInfoView = !_isShowDownInfoView;
+            }];
+        }
+        
+        
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
-        option.pageCapacity = 100;
+        option.pageCapacity = 20;
         option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
             option.keyword = @"停车场";
             BOOL flag = [_poisearch poiSearchNearBy:option];
@@ -302,6 +307,16 @@
         
         
     }else if (sender.tag == 11){//加油站
+        
+        
+        if (_isShowDownInfoView) {
+            [UIView animateWithDuration:0.3 animations:^{
+                _downInfoView.frame = CGRectMake(0, 568, 320, 206);
+            } completion:^(BOOL finished) {
+                _isShowDownInfoView = !_isShowDownInfoView;
+            }];
+        }
+        
         
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
@@ -320,6 +335,17 @@
         }
         
     }else if (sender.tag == 12){//维修厂
+        
+        
+        if (_isShowDownInfoView) {
+            [UIView animateWithDuration:0.3 animations:^{
+                _downInfoView.frame = CGRectMake(0, 568, 320, 206);
+            } completion:^(BOOL finished) {
+                _isShowDownInfoView = !_isShowDownInfoView;
+            }];
+        }
+        
+        
         
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
@@ -352,22 +378,31 @@
     
     if (error == BMK_SEARCH_NO_ERROR) {
         
-        
-		for (int i = 0; i < poiResultList.poiInfoList.count; i++) {
-            BMKPoiInfo* poi = [poiResultList.poiInfoList objectAtIndex:i];
+        for (int i = 0; i < poiResultList.poiInfoList.count; i++) {
             
-            NSLog(@"%f %f",poi.pt.latitude,poi.pt.longitude);
+            BMKPoiInfo *poi = [poiResultList.poiInfoList objectAtIndex:i];
             
-            BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+            NSLog(@"%@",poi.name);
+            NSLog(@"%@",poi.address);
+            NSLog(@"%@",poi.phone);
+            [_poiAnnotationDic setObject:poi forKey:poi.name];
+            
+            BMKPointAnnotation *item = [[BMKPointAnnotation alloc]init];
             item.coordinate = poi.pt;
             item.title = poi.name;
+            item.subtitle = poi.address;
             [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
+            
             if(i == 0)
             {
                 //将第一个点的坐标移到屏幕中央
                 _mapView.centerCoordinate = poi.pt;
             }
-		}
+            
+            
+        }
+  
+        
 	} else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
         
         
@@ -439,6 +474,36 @@
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
 {
     NSLog(@"paopaoclick");
+    
+    
+    //底层view
+    UIView *downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
+    downBackView.backgroundColor = [UIColor whiteColor];
+    downBackView.layer.borderWidth = 0.5;
+    downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    downBackView.layer.cornerRadius = 5;
+    [_downInfoView addSubview:downBackView];
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.layer.borderWidth = 0.5;
+    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _tableView.layer.cornerRadius = 5;
+    [downBackView addSubview:_tableView];
+    
+    
+    
+    NSLog(@"---------%@",[view.annotation title]);
+    NSLog(@"---------%@",[view.annotation subtitle]);
+    
+    BMKPoiInfo *poi = [_poiAnnotationDic objectForKey:[view.annotation title]];
+    NSLog(@"%@",poi.postcode);
+    NSLog(@"%@",poi.phone);
+    
+    self.tableViewCellDataModel = poi;
+    
     
     if (!_isShowDownInfoView) {
         [UIView animateWithDuration:0.3 animations:^{

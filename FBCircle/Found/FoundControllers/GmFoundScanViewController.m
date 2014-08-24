@@ -43,21 +43,22 @@
     [topView addSubview:backView];
     //返回箭头
     UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12+20, 15, 22)];
-    backImv.backgroundColor = [UIColor orangeColor];
+    [backImv setImage:[UIImage imageNamed:@"fanhui-daohanglan-20_38.png"]];
     backImv.userInteractionEnabled = YES;
     [backView addSubview:backImv];
     //返回文字
     UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backImv.frame)+8, backImv.frame.origin.y, 34, 20)];
     backLabel.textColor = [UIColor whiteColor];
     backLabel.userInteractionEnabled = YES;
-    backLabel.text = @"返回";
+    backLabel.text = @"发现";
     [backView addSubview:backLabel];
     
     //title
-    UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backLabel.frame)+65, backLabel.frame.origin.y, 52, 18)];
-    titleLable.font = [UIFont systemFontOfSize:17];
+    UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backLabel.frame)+65, backLabel.frame.origin.y+2, 52, 18)];
+    
     titleLable.textColor = [UIColor whiteColor];
     titleLable.text = @"二维码";
+    titleLable.font = [UIFont boldSystemFontOfSize:17];
     [topView addSubview:titleLable];
     
     

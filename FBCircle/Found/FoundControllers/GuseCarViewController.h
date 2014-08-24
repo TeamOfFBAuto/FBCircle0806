@@ -28,10 +28,15 @@
     UIView *_downInfoView;
     UITableView *_tableView;
     BOOL _isShowDownInfoView;
+    
+    
+    //信息字典
+    NSMutableDictionary *_poiAnnotationDic;
 }
 
 @property(nonatomic,strong)NSMutableArray *btnArray;//上面三个按钮的数组
 
+@property(nonatomic,strong)BMKPoiInfo *tableViewCellDataModel;
 
 //协议属性
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;

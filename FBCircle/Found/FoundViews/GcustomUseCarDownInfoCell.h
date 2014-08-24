@@ -14,11 +14,14 @@
 
 
 @property(nonatomic,strong)UIImageView *titielImav;//图标
+@property(nonatomic,strong)UILabel *contentLabel;//内容label
 
-
+//加载视图
 -(void)loadViewWithIndexPath:(NSIndexPath*)theIndexPath;
 
--(CGFloat)configDataWithIndexPath:(NSIndexPath *)indexPath;
+
+//填充数据
+-(void)configWithDataModel:(BMKPoiInfo*)poiModel indexPath:(NSIndexPath*)TheIndexPath;
 
 
 @end
