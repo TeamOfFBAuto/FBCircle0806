@@ -29,6 +29,8 @@
 
 @property(nonatomic,assign)int inForum;//是否在此论坛中
 
+@property(nonatomic,assign)int inforum;//是否在此论坛中(论坛信息页)
+
 @property(nonatomic,retain)NSString *fid;
 
 

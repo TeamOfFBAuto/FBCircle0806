@@ -173,7 +173,7 @@
     
     NSDictionary *aZan = [_table.dataArray objectAtIndex:indexPath.row];
     
-    [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:nil] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:[aZan objectForKey:@"head"]] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     
     cell.aTitleLabel.text = [aZan objectForKey:@"username"];
     

@@ -12,7 +12,7 @@
  */
 typedef void(^CellBlock)(NSString *topicId);
 
-@class BBSSubModel;
+@class BBSInfoModel;
 @interface JoinBBSCell : UITableViewCell
 {
     CellBlock cellBlock;
@@ -27,6 +27,6 @@ typedef void(^CellBlock)(NSString *topicId);
 
 - (IBAction)clickToJoin:(id)sender;
 
-- (void)setCellDataWithModel:(BBSSubModel *)aModel cellBlock:(CellBlock)aBlock;
+- (void)setCellDataWithModel:(BBSInfoModel *)aModel cellBlock:(CellBlock)aBlock;
 
 @end

@@ -248,9 +248,24 @@
 //存
 + (void)cache:(id)dataInfo ForKey:(NSString *)key
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:dataInfo forKey:key];
-    [defaults synchronize];
+    
+    @try {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:nil forKey:key];
+        [defaults setObject:dataInfo forKey:key];
+        [defaults synchronize];
+        
+    }
+    @catch (NSException *exception) {
+        
+        NSLog(@"exception %@",exception);
+        
+    }
+    @finally {
+        
+    }
+    
 }
 
 //取

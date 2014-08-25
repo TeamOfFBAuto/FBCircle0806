@@ -28,6 +28,8 @@
 @property(nonatomic,retain)NSString *isdel;//
 @property(nonatomic,retain)NSString *imgid;//图片id
 
+@property(nonatomic,retain)NSString *authorhead;//用户头像
+
 @property(nonatomic,retain)NSString *zan_num;//赞个数
 
 //热门推荐

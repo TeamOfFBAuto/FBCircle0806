@@ -26,6 +26,9 @@
 {
     RefreshTableView *_table;
     BBSInfoModel *_aBBSModel;
+    NSArray *top_array;//置顶帖子
+    
+    int _inforum;//是否在论坛中
 }
 
 @end
@@ -62,9 +65,6 @@
     
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:_table];
-    
-    //获取论坛基本信息
-    [self getBBSInfoId:self.bbsId];
     
     //帖子列表
     
@@ -140,7 +140,7 @@
 
 - (void)clickJoinBBS:(UIButton *)sender
 {
-    
+    [self JoinBBSId:self.bbsId];
 }
 
 
@@ -151,7 +151,7 @@
     __weak typeof(self)weakSelf = self;
     __weak typeof(UITableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId,[SzkAPI getUid]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
 
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -172,7 +172,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         
     }];
 }
@@ -184,9 +184,10 @@
  */
 - (void)getBBSTopicList:(NSString *)bbsId
 {
+    __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId,[SzkAPI getUid]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -195,25 +196,84 @@
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-            NSArray *data = [dataInfo objectForKey:@"data"];
-            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
-            for (NSDictionary *aDic in data) {
-                TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
-                [arr addObject:aModel];
+            NSDictionary *data = [dataInfo objectForKey:@"data"];
+            
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                
+                NSArray *top = [data objectForKey:@"top"];
+                NSMutableArray *arr = [NSMutableArray arrayWithCapacity:top.count];
+                for (NSDictionary *aDic in top) {
+                    TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                    [arr addObject:aModel];
+                }
+                
+                top_array = [NSArray arrayWithArray:arr];
+                
+                NSArray *nomal = [data objectForKey:@"nomal"];
+                
+                [arr removeAllObjects];
+                
+                for (NSDictionary *aDic in nomal) {
+                    TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                    [arr addObject:aModel];
+                }
+                
+                 [weakTable reloadData:arr total:0];
             }
             
-            [weakTable reloadData:arr total:0];
+            int inforum = [[dataInfo objectForKey:@"inforum"]intValue];
+            
+            _inforum = inforum;
+            
+            NSDictionary *foruminfo = [dataInfo objectForKey:@"foruminfo"];
+            
+            if ([foruminfo isKindOfClass:[NSDictionary class]]) {
+                
+                _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
+                
+                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+                weakTable.tableFooterView = [weakSelf createTableFooterView];
+                
+                weakSelf.titleLabel.text = _aBBSModel.name;
+                
+            }
+           
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         [weakTable loadFail];
         
     }];
 }
 
+/**
+ *  加入论坛
+ *
+ *  @param bbsId 论坛id
+ */
+- (void)JoinBBSId:(NSString *)bbsId
+{
+//    __weak typeof(self)weakSelf = self;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        
+        [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
+    
+}
 
 
 #pragma mark - 视图创建
@@ -247,7 +307,7 @@
     [basic_view addSubview:line_h];
     
     
-    UILabel *topicLabel = [LTools createLabelFrame:CGRectMake(line_h.right + 5, titleLabel.bottom,25, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+    UILabel *topicLabel = [LTools createLabelFrame:CGRectMake(line_h.right + 5, titleLabel.bottom,25, 25) title:@"帖子" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:topicLabel];
     
     UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.thread_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
@@ -265,21 +325,19 @@
  */
 - (UIView *)createRecommendViewFrame:(CGRect)aFrame
 {
-    NSArray *titles = @[@"改装商最好的广告 雪佛兰创酷",@"阿喀琉斯就打开啦"];
-    
     UIView *recommed_view = [[UIView alloc]init];
     recommed_view.backgroundColor = [UIColor whiteColor];
     recommed_view.layer.cornerRadius = 3.f;
     
-    for (int i = 0; i < titles.count; i ++) {
+    for (int i = 0; i < top_array.count; i ++) {
        
-        NSString *title = [titles objectAtIndex:i];
+        TopicModel *aModel = [top_array objectAtIndex:i];
         
-        LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 * i, 304, 40) leftImage:[UIImage imageNamed:@"qi"] title:title target:self action:@selector(clickToRecommend:)];
+        LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 * i, 304, 40) leftImage:[UIImage imageNamed:@"qi"] title:aModel.title target:self action:@selector(clickToRecommend:)];
         [recommed_view addSubview:btnV];
     }
     
-    aFrame.size.height = 40 * titles.count;
+    aFrame.size.height = 40 * top_array.count;
     recommed_view.frame = aFrame;
     
     return recommed_view;
@@ -303,7 +361,13 @@
     [headerView addSubview:recommed_view];
     
     
-    UIButton *btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(8, recommed_view.bottom + 15, 304, 93 / 2.f) normalTitle:nil image:nil backgroudImage:[UIImage imageNamed:@"jiaruluntan"] superView:headerView target:self action:@selector(clickJoinBBS:)];
+    UIButton *btn;
+    
+    if (_inforum == 0) {
+        btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(8, recommed_view.bottom + 15, 304, 93 / 2.f) normalTitle:nil image:nil backgroudImage:[UIImage imageNamed:@"jiaruluntan"] superView:headerView target:self action:@selector(clickJoinBBS:)];
+        
+        self.navigationItem.rightBarButtonItems= nil;
+    }
     
     headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15 + 15 + btn.height + 15);
     

@@ -349,11 +349,22 @@
             
             if ([result JSONString].length != [oldDataInfo JSONString].length)
             {
-                NSLog(@"CACHE_HOT_TOPIC 有更新");
+                NSLog(@"CACHE_CONCERN_HOT 有更新");
                 
-                [LTools cache:result ForKey:CACHE_CONCERN_HOT];
+                @try{
+                    
+                    [LTools cache:result ForKey:CACHE_CONCERN_HOT];
+                    
+                    _concern_hot_array = [self parseTopic:result dataStyle:dataStyle];
+
+                }
+                @catch(NSException *exception) {
+                    NSLog(@"异常错误是:%@", exception);
+                }  
+                @finally {  
+                    
+                }
                 
-                _concern_hot_array = [self parseTopic:result dataStyle:dataStyle];
                 
             }
             

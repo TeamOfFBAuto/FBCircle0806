@@ -10,6 +10,7 @@
 #import "PraiseMemberCell.h"
 #import "BBSMemberModel.h"
 #import "BBSAddMemberViewController.h"
+#import "GRXX4ViewController.h"
 
 @interface BBSMembersController ()<RefreshDelegate,UITableViewDelegate>
 {
@@ -155,7 +156,10 @@
 }
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    BBSMemberModel *aMember = [_table.dataArray objectAtIndex:indexPath.row];
+    GRXX4ViewController *_grc=[[GRXX4ViewController alloc]init];
+    _grc.passUserid=aMember.uid;
+    [self PushToViewController:_grc WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
@@ -214,11 +218,11 @@
     lFrame.origin.x = cell.aImageView.right + 5;
     cell.aTitleLabel.frame = lFrame;
     
-    [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:nil] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
-    
     BBSMemberModel *aMember = [_table.dataArray objectAtIndex:indexPath.row];
     
     cell.aTitleLabel.text = aMember.username;
+    
+    [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:aMember.userface] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     
     return cell;
     

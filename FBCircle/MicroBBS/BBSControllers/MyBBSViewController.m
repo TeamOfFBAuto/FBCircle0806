@@ -8,7 +8,7 @@
 
 #import "MyBBSViewController.h"
 #import "SendPostsViewController.h"
-#import "MicroBBSInfoController.h"
+#import "BBSListViewController.h"
 #import "CreateNewBBSViewController.h"
 #import "MyBBSCell.h"
 #import "LTools.h"
@@ -200,10 +200,12 @@
     {
         aModel = [joinArray objectAtIndex:indexPath.row];
     }
-    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-    bbsInfo.bbsId = aModel.fid;
-    [self PushToViewController:bbsInfo WithAnimation:YES];
+    
+    BBSListViewController *list = [[BBSListViewController alloc]init];
+    list.bbsId = aModel.fid;
+    [self PushToViewController:list WithAnimation:YES];
 }
+
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
     return 45;

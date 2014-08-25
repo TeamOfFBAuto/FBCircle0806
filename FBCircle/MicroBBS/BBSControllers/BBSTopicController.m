@@ -29,6 +29,14 @@ typedef enum{
     Action_Topic_Del//删除帖子
 }Network_ACTION;
 
+typedef enum{
+    
+    Inforum_Creater = 0,//帖子创建者
+    Inforum_BBSOwner, //坛主
+    Inforum_Others //其他普通用户
+    
+}USER_INFORUM;
+
 @interface BBSTopicController ()<UITableViewDataSource,UITableViewDelegate,OHAttributedLabelDelegate>
 {
     UITableView *_table;
@@ -43,7 +51,13 @@ typedef enum{
     
     UIButton *moreBtn;//点击加载更多
     
-    TopicModel *aTopicModel;
+    TopicModel *aTopicModel;//帖子
+    BBSInfoModel *infoModel;//论坛
+    
+    NSString *zan_String;//赞人员
+    UILabel *zan_names_label;//称赞人员label
+    
+    USER_INFORUM user_Inform;//用户身份
 }
 
 @end
@@ -87,14 +101,11 @@ typedef enum{
     rowHeights = [NSMutableArray array];
     _dataArray = [NSMutableArray array];
     
-    _pageNum = 1;
+    _pageNum = 1;//从第二页开始
     
     //帖子信息
     
     [self networdAction:Action_Topic_Info];
-//
-//    //评论列表
-    [self getCommentList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,8 +176,6 @@ typedef enum{
 
 - (void)clickToMore:(UIButton *)sender
 {
-    _pageNum ++;
-    
     [self getCommentList];
 }
 /**
@@ -193,8 +202,22 @@ typedef enum{
  */
 - (void)clickToRecommend:(LButtonView *)btn
 {
+    NSArray *titles;
+    if (user_Inform == Inforum_BBSOwner) {
+        
+        titles = @[@"置顶",@"删除"];
+        
+    }else if (user_Inform == Inforum_Creater){
+        
+       titles = @[@"删除"];
+        
+    }else if (user_Inform == Inforum_Others){
+        
+        return;
+    }
+    
     __weak typeof(self)weakSelf = self;
-    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[@"取消置顶",@"删除"] images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {
             
             NSLog(@"取消置顶");
@@ -203,7 +226,9 @@ typedef enum{
         }else if (buttonIndex == 1)
         {
             NSLog(@"删除");
-            [weakSelf networdAction:Action_Topic_Del];
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定删除帖子？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alert show];
         }
 
     }];
@@ -213,9 +238,40 @@ typedef enum{
 
 - (void)clickJoinBBS:(UIButton *)sender
 {
-    
+   
 }
 
+#pragma mark - 数据解析
+/**
+ *  评论数据解析
+ */
+- (void)parseComment:(NSDictionary *)comment
+{
+    
+    if ([comment isKindOfClass:[NSDictionary class]]) {
+        NSArray *data = [comment objectForKey:@"data"];
+        for (NSDictionary *aDic in data) {
+            
+            TopicCommentModel *aModel = [[TopicCommentModel alloc]initWithDictionary:aDic];
+            aModel.content = [aModel.content stringByReplacingEmojiCheatCodesWithUnicode];
+            [_dataArray addObject:aModel];
+            aModel = nil;
+        }
+        [_table reloadData];
+        
+        int total = [[comment objectForKey:@"total"]integerValue];
+        if (total > _pageNum) {
+            
+            _pageNum ++;
+            
+        }else
+        {
+            [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
+            moreBtn.userInteractionEnabled = NO;
+        }
+    }
+
+}
 
 #pragma mark - 网络请求
 
@@ -290,7 +346,7 @@ typedef enum{
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TRIPTOP,[SzkAPI getAuthkey],self.fid,self.tid];
     }else if (action == Action_Topic_Info)
     {
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_INFO,self.tid,1,1];
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_INFO,self.tid,1,L_PAGE_SIZE,[SzkAPI getUid]];
     }else if (action == Action_Topic_Del)
     {
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_DELETE,[SzkAPI getAuthkey],self.fid,self.tid];
@@ -309,16 +365,76 @@ typedef enum{
             NSDictionary *datainfo = [result objectForKey:@"datainfo"];
             if ([datainfo isKindOfClass:[NSDictionary class]]) {
                 
+                //帖子详情
+                
                 NSDictionary *thread = [datainfo objectForKey:@"thread"];
                 if ([thread isKindOfClass:[NSDictionary class]]) {
                     
                     NSLog(@"topic info %@",thread);
                     
                     aTopicModel = [[TopicModel alloc]initWithDictionary:thread];
-                    
-                    weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-                    weakTable.tableFooterView = [weakSelf createTableFooterView];
                 }
+                
+                //用户是否在论坛中(决定用户权限) 0-不在，1-创建者，2-普通用户
+                
+                int inforum = [[datainfo objectForKey:@"inforum"]intValue];
+                
+                if (inforum == 0) {
+                    
+                    [LTools showMBProgressWithText:@"当前用户不在该论坛" addToView:self.view];
+                }else if (inforum == 1)
+                {
+                    NSLog(@"创建者--坛主");
+                    
+                    user_Inform = Inforum_BBSOwner;
+                    
+                }else if (inforum == 2)
+                {
+                    NSLog(@"普通用户");
+                    
+                    //判断和本帖子关系
+                    
+                    if ([aTopicModel.uid isEqualToString:[SzkAPI getUid]]) {
+                        //是本帖子创建者,可以删除,不可以置顶
+                        user_Inform = Inforum_Creater;
+                        
+                    }else
+                    {
+                        user_Inform = Inforum_Others;
+                    }
+                }
+                
+                //赞 人员
+                
+                NSDictionary *zan = [datainfo objectForKey:@"zan"];
+                if ([zan isKindOfClass:[NSDictionary class]]) {
+                    NSArray *data = [zan objectForKey:@"data"];
+                    
+                    NSMutableArray *arr = [NSMutableArray array];
+                    for (NSDictionary *aDic in data) {
+                        NSString *zan_name = [aDic objectForKey:@"username"];
+                        [arr addObject:zan_name];
+                    }
+                    
+                    zan_String = [arr componentsJoinedByString:@"、"];
+                }
+
+                
+                //帖子所在论坛信息
+                
+                NSDictionary *foruminfo = [datainfo objectForKey:@"foruminfo"];
+                
+                infoModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
+                
+                
+                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+                weakTable.tableFooterView = [weakSelf createTableFooterView];
+                
+                //帖子评论
+                
+                NSDictionary *comment = [datainfo objectForKey:@"comment"];
+                
+                [weakSelf parseComment:comment];
             }
         }else
         {
@@ -326,6 +442,23 @@ typedef enum{
                 
                 [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:weakSelf.view];
                 
+            }
+            
+            //添加 赞 人员name
+            if (action == Action_Topic_Zan)
+            {
+                NSMutableString *zan = [NSMutableString stringWithString:zan_names_label.text];
+                
+                if (zan.length == 0) {
+                    
+                    [zan appendString:[SzkAPI getUsername]];
+                    
+                }else
+                {
+                    [zan appendString:[NSString stringWithFormat:@"、%@",[SzkAPI getUsername]]];
+                }
+                
+                zan_names_label.text = zan;
             }
         }
         
@@ -341,7 +474,7 @@ typedef enum{
  */
 - (void)getCommentList
 {
-    __weak typeof(UITableView *)weakTable = _table;
+//    __weak typeof(UITableView *)weakTable = _table;
     __weak typeof(self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,self.tid,_pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -349,26 +482,8 @@ typedef enum{
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
-        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
-            NSArray *data = [dataInfo objectForKey:@"data"];
-            for (NSDictionary *aDic in data) {
-                
-                TopicCommentModel *aModel = [[TopicCommentModel alloc]initWithDictionary:aDic];
-                aModel.content = [aModel.content stringByReplacingEmojiCheatCodesWithUnicode];
-                [_dataArray addObject:aModel];
-                aModel = nil;
-            }
-            [weakTable reloadData];
-            
-            int total = [[dataInfo objectForKey:@"total"]integerValue];
-            if (total > _pageNum) {
-                
-            }else
-            {
-                [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
-                moreBtn.userInteractionEnabled = NO;
-            }
-        }
+        
+        [weakSelf parseComment:dataInfo];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic result %@",failDic);
@@ -386,7 +501,7 @@ typedef enum{
     __weak typeof(self)weakSelf = self;
     __weak typeof(UITableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId,[SzkAPI getUid]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
         
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -406,7 +521,7 @@ typedef enum{
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:weakSelf.view];
         
     }];
 }
@@ -470,16 +585,22 @@ typedef enum{
     basic_view.layer.cornerRadius = 3.f;
     
     //论坛name
-    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(10, 0, 150, 40) title:@"汽车联赛" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(10, 0, 150, 40) title:infoModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [basic_view addSubview:nameLabel];
     
     //帖子数
-    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 * 2, 40) title:@"5678帖子" font:13 align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"90a1cd"]];
+    NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
+    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 * 2, 40) title:title font:13 align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"90a1cd"]];
     [basic_view addSubview:numLabel];
     
     //精 帖
 
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:[UIImage imageNamed:@"jiantou_down"] title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+    UIImage *rightImage = [UIImage imageNamed:@"jiantou_down"];
+    if (user_Inform == Inforum_Others) {
+        rightImage = nil;
+    }
+    
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
     [basic_view addSubview:btnV];
     
     
@@ -502,7 +623,7 @@ typedef enum{
     
     //头像
     UIImageView *headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 40, 40)];
-    [headImage sd_setImageWithURL:[NSURL URLWithString:@"<#string#>"] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    [headImage sd_setImageWithURL:[NSURL URLWithString:aTopicModel.authorhead] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     [recommed_view addSubview:headImage];
     
     //楼主
@@ -564,8 +685,8 @@ typedef enum{
     UILabel *zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
     [zan_view addSubview:zan_num_label];
     
-    NSString *names = @"越野小豆、胡桃、小猴玩、猴子请来的逗比、卡卡拉卡拉";
-    UILabel *zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240, zan_view.height) title:names font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
+    NSString *names = zan_String;
+    zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240, zan_view.height) title:names font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
     [zan_view addSubview:zan_names_label];
     
     //时间
@@ -648,6 +769,15 @@ typedef enum{
 
 
 #pragma mark - delegate
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self networdAction:Action_Topic_Del];
+    }
+}
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

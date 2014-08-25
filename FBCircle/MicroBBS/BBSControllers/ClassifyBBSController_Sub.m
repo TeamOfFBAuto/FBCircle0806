@@ -11,6 +11,7 @@
 #import "BBSSearchController.h"
 #import "JoinBBSCell.h"
 #import "BBSInfoModel.h"
+#import "BBSListViewController.h"
 
 @interface ClassifyBBSController_Sub ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
@@ -194,12 +195,12 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    BBSSubModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
-//
-//    MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-//    bbsInfo.bbsId = aModel.id;
-//    [self PushToViewController:bbsInfo WithAnimation:YES];
+    BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    BBSListViewController *list = [[BBSListViewController alloc]init];
+    list.bbsId = aModel.id;
+    [self PushToViewController:list WithAnimation:YES];
 }
+
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
     return 75;
@@ -231,7 +232,7 @@
     
     __weak typeof(self)weakSelf = self;
     __weak typeof(JoinBBSCell *)weakCell = cell;
-    BBSSubModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel cellBlock:^(NSString *topicId) {
         NSLog(@"join topic id %@",topicId);
         [weakSelf JoinBBSId:topicId];

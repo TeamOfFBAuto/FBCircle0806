@@ -69,13 +69,22 @@
 //退出论坛
 - (void)clickToLeave:(UIButton *)sender
 {
+    if (sender.selected) {
+        
+        //加入论坛
+        
+        [self leaveOrJoinBBS:NO];
+        
+        return;
+    }
+    
      __weak typeof(self)weakSelf = self;
     NSString *title1 = [NSString stringWithFormat:@"确定退出\"%@\"",infoModel.name];
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:@[title1,@"退出",@"取消"] images:@[@"",[UIImage imageNamed:@"add_login"],[UIImage imageNamed:@"add_quxiao"]] sheetStyle:Style_Bottom action:^(NSInteger buttonIndex) {
         
         if (buttonIndex == 1) {
             
-            [weakSelf leaveOrJoinBBS:!sender.selected];
+            [weakSelf leaveOrJoinBBS:YES];
         }
         
     }];
@@ -84,11 +93,12 @@
 
 #pragma mark - 网络请求
 
+
 - (void)getBBSInfoId:(NSString *)bbsId
 {
     __weak typeof(self)weakSelf = self;
 
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId,[SzkAPI getUid]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -129,7 +139,7 @@
         
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSString *errinfo = [result objectForKey:@"errinfo"];
+//        NSString *errinfo = [result objectForKey:@"errinfo"];
         int errcode = [[result objectForKey:@"errcode"]integerValue];
         
         if (errcode == 0) {
@@ -138,12 +148,10 @@
             
             [LTools showMBProgressWithText:info addToView:weakSelf.view];
             
-            btn.selected = NO;
+            btn.selected = leave;
             
+            NSLog(@"erroinfo %@",[result objectForKey:@"errinfo"]);
         }
-
-        
-        [LTools showMBProgressWithText:errinfo addToView:weakSelf.view];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
@@ -171,6 +179,20 @@
     
     btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(18, third.bottom + 15, first.width, 40) normalTitle:@"退出微论坛"  image:nil backgroudImage:[UIImage imageNamed:@"add_tuichu"] superView:self.view target:self action:@selector(clickToLeave:)];
     [btn setTitle:@"加入微论坛" forState:UIControlStateSelected];
+    
+    int inforum = infoModel.inforum;
+    
+    NSLog(@"inforum %d",inforum);
+    
+    if (inforum == 0) {
+        
+        btn.selected = YES;
+        
+    }else
+    {
+        btn.selected = NO;
+    }
+    
     
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];

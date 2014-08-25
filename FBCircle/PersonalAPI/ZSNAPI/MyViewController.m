@@ -28,7 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+       self.navigationController.interactivePopGestureRecognizer.enabled = NO;
         
     }
     return self;
