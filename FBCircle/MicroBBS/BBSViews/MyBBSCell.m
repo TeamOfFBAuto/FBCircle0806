@@ -25,7 +25,7 @@
 
 -(void)setCellWithModel:(BBSInfoModel *)aModel
 {
-    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    self.aImageView.image = [LTools imageForBBSId:aModel.fid];
     self.nameLabel.text = aModel.name;
     self.numLabel.text = aModel.newthread_num;
     NSString *numText = @"0";

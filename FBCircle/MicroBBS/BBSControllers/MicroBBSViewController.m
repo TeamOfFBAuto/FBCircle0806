@@ -201,7 +201,13 @@
     
     for (NSDictionary *aDic in create) {
         
-        [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+        //status:论坛状态（0:正常   1:删除    2:审核中）
+            
+        int status = [[aDic objectForKey:@"forum_status"]integerValue];
+        if (status == 0) {
+            
+            [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+        }
         
         if (arr_mine.count == 3) {
             return arr_mine;
@@ -211,7 +217,16 @@
     NSArray *join = [dataInfo objectForKey:@"join"];
     for (NSDictionary *aDic in join) {
         
-        [arr_mine addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+        int status = [[aDic objectForKey:@"forum_status"]integerValue];
+        if (status == 0) {
+            
+            BBSInfoModel *info = [[BBSInfoModel alloc]initWithDictionary:aDic];
+            
+            if (info.name.length > 0) {
+                [arr_mine addObject:info];
+            }
+            
+        }
         
         if (arr_mine.count == 3) {
             return arr_mine;
@@ -561,13 +576,16 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TopicModel *aModel = [_concern_hot_array objectAtIndex:indexPath.row - 1];
-    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    if (indexPath.row >= 1) {
+        TopicModel *aModel = [_concern_hot_array objectAtIndex:indexPath.row - 1];
+        BBSTopicController *topic = [[BBSTopicController alloc]init];
+        
+        topic.fid = aModel.fid;
+        topic.tid = aModel.tid;
+        
+        [self PushToViewController:topic WithAnimation:YES];
+    }
     
-    topic.fid = aModel.fid;
-    topic.tid = aModel.tid;
-    
-    [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

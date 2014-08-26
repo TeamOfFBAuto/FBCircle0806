@@ -24,7 +24,7 @@
 @property(nonatomic,retain)NSString *comment_num;//
 @property(nonatomic,retain)NSString *time;//
 @property(nonatomic,retain)NSString *ip;//
-@property(nonatomic,retain)NSString *status;//论坛状态（0:正常   1:删除    2:审核中）
+@property(nonatomic,retain)NSString *status;//论坛状态（0:正常   1:删除    2:审核中）或者 0：正常；1：精华；9：置顶；
 @property(nonatomic,retain)NSString *isdel;//
 @property(nonatomic,retain)NSString *imgid;//图片id
 

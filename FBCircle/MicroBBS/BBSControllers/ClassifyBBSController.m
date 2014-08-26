@@ -195,12 +195,28 @@
     int line = 0;
     for (int i = 0 ; i < titles.count; i ++) {
         NSString *title = ((BBSModel *)[titles objectAtIndex:i]).classname;
+        
+        NSRange range = [title rangeOfString:@"（"];
+        if (range.location > 0) {
+            
+            NSArray *arr = [title componentsSeparatedByString:@"（"];
+            
+            if (arr.count > 0) {
+                title = [arr objectAtIndex:0];
+            }
+        }
+        
+//        NSMutableString *tt = [NSMutableString stringWithString:title];
+//        [tt replaceOccurrencesOfString:@"）" withString:@")" options:0 range:NSMakeRange(0, tt.length)];
+//        [tt replaceOccurrencesOfString:@"（" withString:@"(" options:0 range:NSMakeRange(0, tt.length)];
         NSString *imageUrl = ((BBSModel *)[titles objectAtIndex:i]).classpic;
+        
         
         k = i % 4;
         line = i / 4;
         
-        LButtonView *lBtn = [[LButtonView alloc]initWithFrame:CGRectMake(10 + (5 + 72) * k,15 + (15 + 72) * line, 72, 67) imageUrl:imageUrl placeHolderImage:[UIImage imageNamed:@"defaultPlaceHolder"] title:title target:self action:@selector(clickToSubClassifyBBS:)];
+        LButtonView *lBtn = [[LButtonView alloc]initWithFrame:CGRectMake(10 + (5 + 72) * k,15 + (15 + 72) * line, 72, 67) imageUrl:nil placeHolderImage:nil title:title target:self action:@selector(clickToSubClassifyBBS:)];
+        lBtn.imageView.image = [LTools imageForBBSId:imageUrl];
         lBtn.tag = 100 + i;
         
         [bgScroll addSubview:lBtn];
@@ -211,7 +227,7 @@
 - (void)createSecondViewWithDataArray:(NSArray *)array
 {
     _normal_Array = array;
-    CGFloat aY = [bgScroll viewWithTag:(_normal_Array.count + 100 - 1)].bottom + 15;
+    CGFloat aY = [bgScroll viewWithTag:(_tuijian_Arr.count + 100 - 1)].bottom + 15;
     int k = 0;
     int line = 0;
     for (int i = 0; i < array.count; i ++) {

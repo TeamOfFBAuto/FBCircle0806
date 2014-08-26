@@ -34,7 +34,7 @@
     topicId = aModel.id;
     cellBlock = aBlock;
     
-    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    self.imageView.image = [LTools imageForBBSId:aModel.id];
     self.aTitleLabel.text = aModel.name;
     self.memeberLabel.text = aModel.member_num;
     self.topicLabel.text = aModel.thread_num;

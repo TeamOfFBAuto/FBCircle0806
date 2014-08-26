@@ -289,6 +289,10 @@
         NSURL *url = [NSURL URLWithString:str];
         [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             
+            
+            if (data == nil) {
+                return ;
+            }
             //json字典
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             

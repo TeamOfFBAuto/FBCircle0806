@@ -15,6 +15,8 @@
 {
     BBSInfoModel *infoModel;
     UIButton *btn;//加入或者退出按钮
+    
+    UIImageView *iconImageV;
 }
 
 @end
@@ -206,11 +208,9 @@
     firstView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     firstView.backgroundColor = [UIColor whiteColor];
     
-    UIImage *defaultImage = [UIImage imageNamed:@"Picture_default_image"];
+    UIImage *defaultImage = [LTools imageForBBSId:infoModel.id];
     LButtonView *btn1 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, firstView.width, 75) leftImage:[LTools scaleToSizeWithImage:defaultImage size:CGSizeMake(35, 35)] rightImage:Nil title:infoModel.name target:Nil action:Nil lineDirection:Line_Down];
     [firstView addSubview:btn1];
-    
-    [btn1.imageView sd_setImageWithURL:[NSURL URLWithString:infoModel.headpic] placeholderImage:defaultImage];
     
     //简介
     
@@ -254,11 +254,12 @@
     firstView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     firstView.backgroundColor = [UIColor whiteColor];
     
-    LButtonView *btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:@"修改微论坛图标" target:self action:@selector(clickToMember:) lineDirection:Line_Down];
+    LButtonView *btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"nil"] title:@"微论坛图标" target:self action:@selector(clickToMember:) lineDirection:Line_Down];
     [firstView addSubview:btn2];
+    btn2.userInteractionEnabled = NO;
     
-    UIImageView *iconImageV = [[UIImageView alloc]initWithFrame:CGRectMake(firstView.width - 33 - 24, (43-24)/2.f, 24, 24)];
-    iconImageV.image = [UIImage imageNamed:@"new"];
+    iconImageV = [[UIImageView alloc]initWithFrame:CGRectMake(firstView.width - 33 - 24, (43-24)/2.f, 24, 24)];
+    iconImageV.image = [LTools imageForBBSId:self.bbsId];
     [firstView addSubview:iconImageV];
     
     aFrame.size.height = btn2.bottom;

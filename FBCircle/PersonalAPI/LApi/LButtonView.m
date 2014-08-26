@@ -34,6 +34,8 @@
         [_imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:defaulImage];
         [self addSubview:_imageView];
         
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
         self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, _imageView.bottom, self.width, 18)];
         _titleLabel.font = [UIFont systemFontOfSize:14];
         _titleLabel.textAlignment = NSTextAlignmentCenter;

@@ -130,4 +130,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 //查询
 - (NSArray*)queryDataClassType:(NSString *)classType pageSize:(int)pageSize andOffset:(int)currentPage unique:(NSString *)unique;
 
+#pragma mark - 分类论坛图片获取
+
++ (UIImage *)imageForBBSId:(NSString *)bbsId;
+
 @end

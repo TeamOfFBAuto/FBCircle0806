@@ -116,14 +116,27 @@
             
             NSMutableArray *arr_join = [NSMutableArray arrayWithCapacity:join.count];
             NSMutableArray *arr_create = [NSMutableArray arrayWithCapacity:create.count];
+            
+            //status:论坛状态（0:正常   1:删除    2:审核中）
             for (NSDictionary *aDic in join) {
                 
-                [arr_join addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+                int status = [[aDic objectForKey:@"forum_status"]integerValue];
+                if (status == 0) {
+                    
+                    BBSInfoModel *info = [[BBSInfoModel alloc]initWithDictionary:aDic];
+                    
+                    if (info.name.length > 0) {
+                        [arr_join addObject:info];
+                    }
+                }
             }
             
             for (NSDictionary *aDic in create) {
                 
-                [arr_create addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+                int status = [[aDic objectForKey:@"forum_status"]integerValue];
+                if (status == 0) {
+                    [arr_create addObject:[[BBSInfoModel alloc]initWithDictionary:aDic]];
+                }
             }
             
             [weakSelf reloadDataWithCreateArr:arr_create joinArr:arr_join total:total];
@@ -133,7 +146,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         
         [weakTable loadFail];
     }];

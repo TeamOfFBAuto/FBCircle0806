@@ -804,4 +804,16 @@
 //    return NO;
 //}
 //
+
+
+#pragma mark - 分类论坛图片获取
+
++ (UIImage *)imageForBBSId:(NSString *)bbsId
+{
+    NSString *name = [NSString stringWithFormat:@"mirco_icon_%@",bbsId];
+    UIImage *image = [UIImage imageNamed:name];
+    return image;
+}
+
+
 @end

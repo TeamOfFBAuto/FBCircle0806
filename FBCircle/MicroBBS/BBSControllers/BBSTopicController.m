@@ -56,6 +56,7 @@ typedef enum{
     
     NSString *zan_String;//赞人员
     UILabel *zan_names_label;//称赞人员label
+    UILabel *zan_num_label;//赞个数
     
     USER_INFORUM user_Inform;//用户身份
 }
@@ -202,10 +203,23 @@ typedef enum{
  */
 - (void)clickToRecommend:(LButtonView *)btn
 {
+    BOOL ding = YES;//是否需要顶
+    
+    if ([aTopicModel.status integerValue] == 9)
+    {
+        ding = NO;
+    }
+    
     NSArray *titles;
     if (user_Inform == Inforum_BBSOwner) {
         
-        titles = @[@"置顶",@"删除"];
+        if (ding) {
+            titles = @[@"置顶",@"删除"];
+        }else
+        {
+            titles = @[@"取消置顶",@"删除"];
+        }
+        
         
     }else if (user_Inform == Inforum_Creater){
         
@@ -220,8 +234,17 @@ typedef enum{
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {
             
-            NSLog(@"取消置顶");
-            [weakSelf networdAction:Action_Topic_Top];
+            if (ding) {
+                
+                [weakSelf networdAction:Action_Topic_Top];
+                NSLog(@"置顶");
+
+            }else
+            {
+                [weakSelf networdAction:Action_Topic_Top_Cancel];
+                NSLog(@"取消置顶");
+
+            }
             
         }else if (buttonIndex == 1)
         {
@@ -459,6 +482,7 @@ typedef enum{
                 }
                 
                 zan_names_label.text = zan;
+                zan_num_label.text = [NSString stringWithFormat:@"%d",[zan componentsSeparatedByString:@"、"].count];
             }
         }
         
@@ -600,7 +624,23 @@ typedef enum{
         rightImage = nil;
     }
     
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:[UIImage imageNamed:@"jing"] rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+    
+    UIImage *aImage = nil;
+    
+    if ([aTopicModel.status integerValue] == 1) { //精
+        
+        aImage = [UIImage imageNamed:@"jing"];
+        
+    }else if ([aTopicModel.status integerValue] == 9){ //顶
+        
+        aImage = [UIImage imageNamed:@"qi"];
+        
+    }else //正常
+    {
+        
+    }
+    
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
     [basic_view addSubview:btnV];
     
     
@@ -682,7 +722,7 @@ typedef enum{
     [zan_view addSubview:zanImage];
     
     NSString *numberSter = [NSString stringWithFormat:@"%@",aTopicModel.zan_num];
-    UILabel *zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
+    zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
     [zan_view addSubview:zan_num_label];
     
     NSString *names = zan_String;

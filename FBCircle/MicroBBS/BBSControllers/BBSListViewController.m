@@ -135,7 +135,11 @@
  */
 - (void)clickToRecommend:(LButtonView *)btn
 {
-    
+    TopicModel *aModel = [top_array objectAtIndex:btn.tag - 10];
+    BBSTopicController *topic = [[BBSTopicController alloc]init];
+    topic.fid = aModel.fid;
+    topic.tid = aModel.tid;
+    [self PushToViewController:topic WithAnimation:YES];
 }
 
 - (void)clickJoinBBS:(UIButton *)sender
@@ -289,7 +293,7 @@
     
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 53, 53)];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:_aBBSModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    imageView.image = [LTools imageForBBSId:_aBBSModel.id];
     [basic_view addSubview:imageView];
     
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
@@ -335,6 +339,7 @@
         
         LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 * i, 304, 40) leftImage:[UIImage imageNamed:@"qi"] title:aModel.title target:self action:@selector(clickToRecommend:)];
         [recommed_view addSubview:btnV];
+        btnV.tag = 10 + i;
     }
     
     aFrame.size.height = 40 * top_array.count;
@@ -369,7 +374,15 @@
         self.navigationItem.rightBarButtonItems= nil;
     }
     
-    headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15 + 15 + btn.height + 15);
+    CGFloat aheight = 15 + 15;
+    if (btn == nil) {
+        aheight -= 15;
+    }
+    if (top_array.count == 0) {
+        aheight -= 15;
+    }
+    
+    headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + btn.height + 15 + aheight);
     
     return headerView;
 }
