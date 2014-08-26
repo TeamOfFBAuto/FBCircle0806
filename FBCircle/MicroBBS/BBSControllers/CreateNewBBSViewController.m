@@ -95,7 +95,7 @@
     
     [self.view addSubview:inputView];
     
-    NSArray * contentArray = [NSArray arrayWithObjects:@"选择微论坛的图标",@"微论坛分类",nil];
+    NSArray * contentArray = [NSArray arrayWithObjects:@"微论坛的图标",@"微论坛分类",nil];
     
     for (int i = 0;i < 2;i++)
     {
@@ -358,9 +358,10 @@
             
             [chooseType chooseTypeBlock:^(NSString *string, int index)
             {
-                NSLog(@"妈的 ---   %@ --  %d",string,index);
                 sub_label.text = string;
                 iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mirco_icon_%d.png",index+1]];
+                icon_num = index+1;
+                type_num = index+1;
             }];
             
             [self PushToViewController:chooseType WithAnimation:YES];
