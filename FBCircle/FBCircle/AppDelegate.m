@@ -1,7 +1,7 @@
 //
 //  AppDelegate.m
 //  FBCircle
-//越野e族
+//越野e族s
 //  Created by soulnear on 14-8-4.
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //szk
