@@ -41,10 +41,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    
-    
-    
-    
+
     
     //设置左右barBtn样式
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeDelete];
@@ -64,7 +61,7 @@
     
     //主tableview
     self.navigationItem.title = @"个人信息";
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 6, 320, iPhone5?568:480) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
@@ -83,9 +80,9 @@
     
     //上面灰色的条
     
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
+//    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
+//    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
+//    [self.view addSubview:heitiao];
     
     UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
     backPickView.backgroundColor = [UIColor whiteColor];

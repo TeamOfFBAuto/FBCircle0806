@@ -42,6 +42,9 @@
     
     //信息字典
     NSMutableDictionary *_poiAnnotationDic;
+    
+    //拨号
+    NSString *_phoneNum;
 }
 
 //协议属性

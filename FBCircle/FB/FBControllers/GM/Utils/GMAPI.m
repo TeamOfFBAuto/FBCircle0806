@@ -20,4 +20,19 @@
     
     return temp;
 }
+
+
+
++(NSString *)exchangeStringForDeleteNULLWithWeiTianXie:(id)sender{
+    NSString * temp = [NSString stringWithFormat:@"%@",sender];
+    
+    if (temp.length == 0 || [temp isEqualToString:@"<null>"] || [temp isEqualToString:@"null"] || [temp isEqualToString:@"(null)"])
+    {
+        temp = @"未填写";
+    }
+    
+    return temp;
+}
+
+
 @end

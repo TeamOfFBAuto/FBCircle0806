@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
-
+//附近的人个人信息
 //用户详细资料
 #import <UIKit/UIKit.h>
 #import "FBCirclePersonalModel.h"
@@ -14,7 +14,7 @@
 #import "FBCircleModel.h"
 
 
-@interface GpersonInfoViewController : UIViewController
+@interface GpersonInfoViewController : MyViewController
 
 @property(nonatomic,strong)NSString *passUserid;//上个界面传过来的userid 用于判断是否为好友
 @property(nonatomic,strong)NSString *userName;//用户名 用于添加好友

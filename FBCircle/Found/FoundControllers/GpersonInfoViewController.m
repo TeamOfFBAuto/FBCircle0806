@@ -6,7 +6,10 @@
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
+
 #import "GpersonInfoViewController.h"
+
+#import "GMAPI.h"
 
 @interface GpersonInfoViewController ()
 
@@ -30,8 +33,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    // 加载视图
-    [self loadCustomView];
+    self.titleLabel.text = @"详细信息";
+    
     
     //请求网络数据
     [self prepareNetData];
@@ -54,6 +57,7 @@
 
 #pragma mark - 加载控件
 -(void)loadCustomView{
+    
     //头像 名字 的背景view==========================================================
     UIView *nameView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 66)];
     [self.view addSubview:nameView];
@@ -61,14 +65,14 @@
     
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 46, 46)];
-    self.userFaceImv.backgroundColor = [UIColor redColor];
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:self.personModel.person_face]];
     [nameView addSubview:self.userFaceImv];
     
     //姓名
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, CGRectGetMinY(self.userFaceImv.frame)+13, 200, 16)];
-    nameLabel.backgroundColor = [UIColor redColor];
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font = [UIFont systemFontOfSize:15];
+    nameLabel.text = self.personModel.person_username;
     [nameView addSubview:nameLabel];
     
     //分割线
@@ -97,7 +101,8 @@
         if (i == 0) {//地区
             tLabel.frame = CGRectMake(12, 18, 50, 13);
             self.userAreaLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tLabel.frame)+14, tLabel.frame.origin.y, 205, 13)];
-            self.userAreaLabel.backgroundColor = [UIColor orangeColor];
+            NSString *diqu = [self.personModel.person_province stringByAppendingString:self.personModel.person_city];
+            self.userAreaLabel.text = [GMAPI exchangeStringForDeleteNULLWithWeiTianXie:diqu];
             self.userAreaLabel.font = [UIFont boldSystemFontOfSize:12];
             self.userAreaLabel.textColor = RGBCOLOR(143, 143, 143);
             [infoView addSubview:self.userAreaLabel];
@@ -112,7 +117,7 @@
             self.gexingqianmingLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tLabel.frame)+14, tLabel.frame.origin.y, 205, 13)];
             self.gexingqianmingLabel.font = [UIFont boldSystemFontOfSize:12];
             self.gexingqianmingLabel.textColor = RGBCOLOR(143, 143, 143);
-            self.gexingqianmingLabel.backgroundColor = [UIColor orangeColor];
+            self.gexingqianmingLabel.text = [GMAPI exchangeStringForDeleteNULLWithWeiTianXie:self.personModel.person_words];
             [infoView addSubview:self.gexingqianmingLabel];
             
             
@@ -133,7 +138,6 @@
     
     //展示图片的view
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(62+14, 112, 182, 56)];
-    view.backgroundColor = [UIColor redColor];
     
     //足迹展示图片的数组
     NSMutableArray *imavMutableArray = [NSMutableArray arrayWithCapacity:1];
@@ -170,7 +174,6 @@
             
             NSLog(@"图片地址%@",str);
             
-            //UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(200-self.imaCount*65, 5, 60, 60)];
             //创建展示图片iamge
             UIImageView *imv = [[UIImageView alloc]init];
             
@@ -203,10 +206,10 @@
     //遍历数组 倒着放图片
     for (int i = 0; i<self.imaCount; i++) {
         UIImageView *imv = imavMutableArray[self.imaCount-i-1];
-        imv.frame = CGRectMake(200-(i+1)*65, 5, 56, 56);
+        imv.frame = CGRectMake(200-(i+1)*63-10, 0, 56, 56);
         [view addSubview:imv];
     }
-    //view.backgroundColor = [UIColor redColor];
+    
     [infoView addSubview:view];
     
     
@@ -240,12 +243,20 @@
         btn.tag = 11;
     }
     
-    [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(bttnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:btn];
 }
 
 
+
+-(void)bttnClick:(UIButton*)sender{
+    if (sender.tag == 10) {
+        
+    }else if (sender.tag == 11){
+        
+    }
+}
 
 
 
@@ -262,10 +273,12 @@
         [self.personModel loadPersonWithUid:self.passUserid WithBlock:^(FBCirclePersonalModel *model) {
             bself.personModel = model;
             bself.userName = model.person_username;
-            
-            
             NSLog(@"%@",model.person_gender);
             
+            for (UIView *view in self.view.subviews) {
+                [view removeFromSuperview];
+            }
+            [bself loadCustomView];
            
         } WithFailedBlcok:^(NSString *string) {
             
@@ -275,6 +288,12 @@
         FBCircleModel *fbModel = [[FBCircleModel alloc]init];
         [fbModel initHttpRequestWithUid:self.passUserid Page:1 WithType:2 WithCompletionBlock:^( NSMutableArray *array) {
             bself.wenzhangArray = array;
+            for (UIView *view in self.view.subviews) {
+                [view removeFromSuperview];
+            }
+            
+            [bself loadCustomView];
+            
         } WithFailedBlock:^(NSString *operation) {
             
         }];

@@ -17,6 +17,7 @@ typedef void (^sendMessageBlock)();
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//用户头像
 @property(nonatomic,strong)UILabel *userNameLabel;//用户姓名
+@property(nonatomic,strong)NSString *userId;//用户id
 @property(nonatomic,strong)UILabel *userDistanceAndTimeLabel;//距离和时间Label
 @property(nonatomic,strong)UIButton *btn;//按钮
 @property(nonatomic,copy)sendMessageBlock sendMessageBlock;//代码块block

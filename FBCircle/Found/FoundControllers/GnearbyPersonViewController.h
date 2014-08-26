@@ -10,7 +10,7 @@
 //附近的人
 #import <UIKit/UIKit.h>
 
-@interface GnearbyPersonViewController : UIViewController<RefreshDelegate,UITableViewDataSource,BMKLocationServiceDelegate>
+@interface GnearbyPersonViewController : MyViewController<RefreshDelegate,UITableViewDataSource,BMKLocationServiceDelegate>
 {
     RefreshTableView *_tableView;//主tableview
     

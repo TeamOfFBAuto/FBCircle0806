@@ -12,4 +12,5 @@
 
 +(NSString *)exchangeStringForDeleteNULL:(id)sender;
 
++(NSString *)exchangeStringForDeleteNULLWithWeiTianXie:(id)sender;
 @end

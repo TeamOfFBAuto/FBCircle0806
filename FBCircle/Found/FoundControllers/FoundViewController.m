@@ -192,7 +192,8 @@
         [self presentViewController:[[GuseCarViewController alloc]init] animated:YES completion:^{
         }];
     }else if (indexPath.row ==0 && indexPath.section == 0){//附近的人
-        [self.navigationController pushViewController:[[GnearbyPersonViewController alloc] init] animated:YES];
+        GnearbyPersonViewController *gnearByVC = [[GnearbyPersonViewController alloc] init];
+        [self PushToViewController:gnearByVC WithAnimation:YES];
         
     }else if (indexPath.row == 1 && indexPath.section == 1){//e族救援队
         [self presentViewController:[[GJiuYuanDuiViewController alloc]init] animated:YES completion:^{

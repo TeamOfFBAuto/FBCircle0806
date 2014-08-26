@@ -70,7 +70,8 @@
     
     
     //设置navigation的titile
-    self.navigationItem.title = @"我的足迹";
+    self.titleLabel.text = @"我的足迹";
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     
     
     
@@ -78,22 +79,10 @@
     self.userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userid"];
     
     
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
     //主tableveiw
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-44) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-//    _tableView.sectionFooterHeight = 0.0f;//设置Grouped类型的tableview的不同section之间的距离
-//    _tableView.sectionHeaderHeight = 0.0f;
     
     
 
@@ -102,11 +91,6 @@
     _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
     
-    
-    
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
     
     
     

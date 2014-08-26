@@ -320,7 +320,7 @@
     if (theGRXXtype == GRXX1) {//自己
         if (theIndexPath.row == 6) {
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.frame = CGRectMake(10, iPhone5?80:10, 300, 42);
+            btn.frame = CGRectMake(10, iPhone5?23:10, 300, 42);
             
 //            btn.layer.cornerRadius = 5;//设置那个圆角的有多圆
 //            btn.layer.borderWidth = 0.5;//设置边框的宽度，当然可以不要
@@ -352,7 +352,7 @@
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setTitle:@"发消息" forState:UIControlStateNormal];
-            btn.frame = CGRectMake(10, iPhone5?80:10, 300, 42);
+            btn.frame = CGRectMake(10, iPhone5?23:10, 300, 42);
             [btn addTarget:self action:@selector(faxiaoxi) forControlEvents:UIControlEventTouchUpInside];
             self.faxiaoxiBtn = btn;
             
@@ -364,7 +364,7 @@
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setTitle:@"添加为好友" forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(jiahaoyou) forControlEvents:UIControlEventTouchUpInside];
-            btn.frame = CGRectMake(10, iPhone5?80:10, 300, 42);
+            btn.frame = CGRectMake(10, iPhone5?23:10, 300, 42);
             
             self.jiahaoyouBtn = btn;
             
@@ -377,7 +377,7 @@
         if (theIndexPath.row == 6) {
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setTitle:@"正在添加中" forState:UIControlStateNormal];
-            btn.frame = CGRectMake(10, iPhone5?80:10, 300, 42);
+            btn.frame = CGRectMake(10, iPhone5?23:10, 300, 42);
             
             self.jiahaoyouBtn = btn;
             self.jiahaoyouBtn.userInteractionEnabled = NO;
@@ -389,7 +389,7 @@
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setTitle:@"接受" forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(yaoqing) forControlEvents:UIControlEventTouchUpInside];
-            btn.frame = CGRectMake(10, iPhone5?80:10, 300, 42);
+            btn.frame = CGRectMake(10, iPhone5?23:10, 300, 42);
             
             self.yaoqingBtn = btn;
             

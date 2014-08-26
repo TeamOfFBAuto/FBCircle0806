@@ -35,6 +35,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.titleLabel.text = @"附近的人";
+    
     UILabel *titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(62, 158, 210, 14)];
     titleLabel1.font = [UIFont systemFontOfSize:14];
     titleLabel1.textColor = RGBCOLOR(106, 113, 128);
@@ -73,8 +75,15 @@
 
 -(void)fujinderen{
     
+//    GpersonInfoViewController *ginfo = [[GpersonInfoViewController alloc]init];
+//    ginfo.passUserid = @"1088641";
+//    
+//    [self.navigationController pushViewController:ginfo animated:YES];
+    
+    
+    
     //每隔一段时间 更新用户位置
-    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocal) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
     [timer fire];
 
 }
@@ -102,8 +111,11 @@
     [cell configNetDataWithIndexPath:indexPath dataArray:_dataArray];//填充数据
     
     __weak typeof (self)bself = self;
+    __block NSString *celluserid = cell.userId;
     [cell setSendMessageBlock:^{
-        [bself.navigationController pushViewController:[[GpersonInfoViewController alloc]init] animated:YES];
+        GpersonInfoViewController *gp = [[GpersonInfoViewController alloc]init];
+        gp.passUserid = celluserid;
+        [bself.navigationController pushViewController:gp  animated:YES];
     }];
     
     return cell;
@@ -210,7 +222,7 @@
 
 
 #pragma mark - 上传自己的经纬度
--(void)updateMyLocal{
+-(void)updateMyLocalNear{
     NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
     
     NSLog(@"%@",api);

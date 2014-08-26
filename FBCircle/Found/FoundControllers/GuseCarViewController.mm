@@ -10,6 +10,9 @@
 #import "GcustomUseCarDownInfoCell.h"//底层view自定义cell
 
 
+#import "GMAPI.h"
+
+
 @interface GuseCarViewController ()
 
 @end
@@ -136,13 +139,17 @@
     _poisearch.delegate = self;
     
     
-    
     //定位
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
     [_locService startUserLocationService];//启动LocationService
     
     
+    
+    //判断是否开启定位
+    if ([CLLocationManager locationServicesEnabled]==NO) {
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"定位服务已被关闭，开启定位请前往 设置->隐私->定位服务" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+    }
    
     
     //下面信息view
@@ -208,8 +215,18 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%d",indexPath.row);
     if (indexPath.row == 2) {
-        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:@"13301072337" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [al show];
+        
+        if ([[GMAPI exchangeStringForDeleteNULL:self.tableViewCellDataModel.phone]isEqualToString:@"暂无"]) {
+            
+        }else{
+            NSString *phoneStr = [self.tableViewCellDataModel.phone stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            NSString *phoneStr1 = [phoneStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+            
+            _phoneNum = [NSString stringWithFormat:@"%@",phoneStr1];
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneStr1 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [al show];
+        }
+        
     }
     
 }
@@ -218,7 +235,8 @@
     
     //0取消    1确定
     if (buttonIndex == 1) {
-        
+        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",_phoneNum];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
     }
 }
 
