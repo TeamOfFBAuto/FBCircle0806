@@ -1,7 +1,7 @@
 //
 //  FBCircleCustomCell.m
 //  FBCircle
-//
+//  fbcircle
 //  Created by soulnear on 14-5-19.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
