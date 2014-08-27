@@ -21,6 +21,10 @@
 
 #import "GmyErweimaViewController.h"
 
+
+#import "GshoppingWebViewController.h"
+
+
 @interface FoundViewController ()
 
 @end
@@ -200,6 +204,9 @@
             
         }];
     
+    }else if (indexPath.row ==0 && indexPath.section == 3){//购物
+        GshoppingWebViewController *webvc = [[GshoppingWebViewController alloc]init];
+        [self PushToViewController:webvc WithAnimation:YES];
     }
     
     
