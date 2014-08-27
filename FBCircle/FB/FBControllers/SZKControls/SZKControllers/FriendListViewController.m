@@ -33,8 +33,7 @@
 {
     NSLog(@"rightbutton==");
     
-    AddFriendViewController *_addFriendVC=[[AddFriendViewController alloc]init];
-    [self.navigationController pushViewController:_addFriendVC animated:NSYearCalendarUnit];
+ 
     
 }
 
@@ -71,9 +70,10 @@
 {
     [super viewDidLoad];
 
-    self.rightImageName=@"tianjiahaoyou-36_36.png";
+   // self.rightImageName=@"tianjiahaoyou-36_36.png";
     self.titleLabel.text=@"通讯录";
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+    self.rightString=@"添加朋友";
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     myfirendListArr=[NSMutableArray array];
 
@@ -149,6 +149,14 @@
 }
 
 
+#pragma mark--添加好友
+
+-(void)submitData:(UIButton *)sender
+{
+    AddFriendViewController *_addFriendVC=[[AddFriendViewController alloc]init];
+    [self.navigationController pushViewController:_addFriendVC animated:NSYearCalendarUnit];
+    
+}
 
 
 #pragma mark-把搜索和进入推荐列表的放到一起作为tabV的headerView
