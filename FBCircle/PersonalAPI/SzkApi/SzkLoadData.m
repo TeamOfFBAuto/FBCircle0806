@@ -48,6 +48,11 @@
     // NSArray *dicinfo=[_data objectFromJSONData];
     self.mydicinfo=[_data objectFromJSONData];
     
+    
+    NSLog(@"self.mydicinfo==%@",self.mydicinfo);
+    
+    
+    
     if ([[self.mydicinfo objectForKey:@"errcode"] integerValue]==0) {
         NSArray *array_=[self.mydicinfo objectForKey:@"datainfo"];
         

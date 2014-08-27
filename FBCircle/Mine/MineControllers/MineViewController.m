@@ -53,14 +53,13 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"add_beijing"] forBarMetrics: UIBarMetricsDefault];
     
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    UIColor * cc = RGBCOLOR(91,138,59);
+ //   UIColor * cc = RGBCOLOR(91,138,59);
     
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
-    
-    
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
     
     
-    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+  //  self.navigationController.navigationBar.titleTextAttributes = dict;
     
 //    self.navigationItem.title=@"我";
     self.titleLabel.text=@"我";
@@ -80,7 +79,7 @@
     [super loadView];
     
  
-    mainTab=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
+    mainTab=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480-44-49)];
     mainTab.delegate=self;
     mainTab.dataSource=self;
     mainTab.separatorColor=[UIColor clearColor];
@@ -109,11 +108,7 @@
         self.userNameLabel.text = self.personModel.person_username;
         self.userWordsLabel.text = self.personModel.person_words;
         
-   
-        
-        
-        
-        
+ 
         
     } WithFailedBlcok:^(NSString *string) {
         
@@ -128,7 +123,14 @@
     GRXX4ViewController *grxx4 = [[GRXX4ViewController alloc]init];
     //grxx4.isPersonalSettingClicked = YES;
     grxx4.passUserid = [SzkAPI getUid];
+    
+    [self setHidesBottomBarWhenPushed:YES] ;
+    
+
     [self.navigationController pushViewController:grxx4 animated:YES];
+    
+    
+    
     
 }
 #pragma mark--tableviewDelegateAndDatesource
