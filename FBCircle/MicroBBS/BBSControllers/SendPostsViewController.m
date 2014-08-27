@@ -519,7 +519,6 @@
         
         [allImageArray addObject:image];
         
-        NSLog(@"image ---  %f ---   %f",image.size.width,image.size.height);
         [allAssesters addObject:[[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"]];
     }
     
@@ -542,7 +541,6 @@
         
         UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
         
-        NSLog(@"image1 ---  %f  ---  %f",image1.size.width,image1.size.height);
         [allImageArray addObject:newImage];
         
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
