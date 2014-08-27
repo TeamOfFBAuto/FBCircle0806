@@ -168,6 +168,7 @@
     
     
     NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],name_tf.text,introduction_tf.text,icon_num,type_num];
+    NSLog(@"创建微论坛接口 ---  %@",fullUrl);
     NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
     

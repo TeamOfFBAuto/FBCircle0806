@@ -253,7 +253,7 @@
         line = i / 4;
         
         LButtonView *lBtn = [[LButtonView alloc]initWithFrame:CGRectMake(10 + (5 + 72) * k,15 + (15 + 72) * line, 72, 67) imageUrl:nil placeHolderImage:nil title:title target:self action:@selector(clickToSubClassifyBBS:)];
-        lBtn.imageView.image = [LTools imageForBBSId:imageUrl];
+        lBtn.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"classification_big%@",imageUrl]];
         lBtn.tag = 100 + i;
         
         [bgScroll addSubview:lBtn];
