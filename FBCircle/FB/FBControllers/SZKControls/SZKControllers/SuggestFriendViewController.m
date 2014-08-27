@@ -36,7 +36,9 @@
     [super viewDidLoad];
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    self.navigationItem.title=self.str_title;
+//    self.navigationItem.title=self.str_title;
+    
+    self.titleLabel.text=self.str_title;
     
     _arrayInfo=[NSMutableArray array];
     

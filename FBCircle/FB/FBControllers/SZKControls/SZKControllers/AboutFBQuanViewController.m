@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
     
-    self.title=@"关于fb圈";
-     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeDelete];
+    self.titleLabel.text=@"关于fb圈";
+     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeDelete];
     
     imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iPhone5?@"":@""]];
     imageView.frame = CGRectMake(0,0,320,iPhone5?1008/2:832/2);

@@ -43,12 +43,12 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     //设置navigation的titile
-    self.navigationItem.title = @"系统通知";
+    self.titleLabel.text = @"系统通知";
     
-    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    _tableView.tableHeaderView = v;
-    v.backgroundColor = RGBCOLOR(229, 229, 229);
-    [self.view addSubview:v];
+//    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
+//    _tableView.tableHeaderView = v;
+//    v.backgroundColor = RGBCOLOR(229, 229, 229);
+//    [self.view addSubview:v];
     
     
     //主tableview

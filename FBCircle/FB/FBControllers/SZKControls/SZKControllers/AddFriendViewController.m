@@ -55,8 +55,8 @@
     array_logoimg=[NSArray arrayWithObjects:@"tongxunlu-icon-94_94.png",@"weixin-icon-94_94.png",@"duanxin-icon-94_94.png", nil];
 
     _array_searchResault=[NSArray array];
-      self.title=@"添加好友";
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+      self.titleLabel.text=@"添加好友";
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
 	// Do any additional setup after loading the view.
 }
