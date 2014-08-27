@@ -126,7 +126,7 @@
     
     //地图
     _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 88+20, 320, iPhone5?568-88-20:480-88-20)];
-    [_mapView setZoomLevel:15];// 设置地图级别
+    [_mapView setZoomLevel:13];// 设置地图级别
     _mapView.isSelectedAnnotationViewFront = YES;
     _mapView.delegate = self;//设置代理
     _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态

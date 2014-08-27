@@ -45,6 +45,11 @@
     
     //拨号
     NSString *_phoneNum;
+    
+    
+    ///所有救援队信息的tableview
+    UITableView *_allJiuyuanduiTableView;
+    
 }
 
 //协议属性

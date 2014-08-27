@@ -525,7 +525,7 @@
     Grxx4Vc.personModel = self.userModel;
     //Grxx4Vc.isPersonalSettingClicked = NO;//不是个人设置跳转的个人信息界面
     //Grxx4Vc.isSearch = NO;//不是搜索界面跳转的个人信息界面
-    [self.navigationController pushViewController:Grxx4Vc animated:YES];
+    [self PushToViewController:Grxx4Vc WithAnimation:YES];
     
 }
 

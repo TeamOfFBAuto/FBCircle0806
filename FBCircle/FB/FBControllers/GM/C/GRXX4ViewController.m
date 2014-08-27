@@ -307,7 +307,7 @@
                 
             }];
         }else if (indexPath.row == 6){
-            __weak typeof (self)bself = self;
+//            __weak typeof (self)bself = self;
             [cell setfaxiaoxiClickedBlock:^{
                 NSLog(@"发消息");
 //                [bself faxiaoxiBlockMethod];//张少南 发消息的先注释掉
@@ -907,8 +907,13 @@
         
         
         
+
+        self.tabBarController.selectedIndex = 0;
+        
         MainViewController *mainVc = [self.navigationController.viewControllers objectAtIndex:0];
         [self.navigationController popToViewController:mainVc animated:YES];
+        
+        
     }
     
 }

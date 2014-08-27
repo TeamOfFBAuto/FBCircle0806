@@ -16,6 +16,13 @@
 #import "GMAPI.h"
 
 
+#import "GallJiuyuanduiTableViewCell.h"
+
+typedef enum{
+    perJiuyanduiInfoTableView = 2013,
+    allJiuyuanduiInfoTableView = 2014
+}downTableViewType;
+
 @interface GJiuYuanDuiViewController ()
 
 @end
@@ -148,25 +155,37 @@
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"dd";
-    GJiuYuanCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[GJiuYuanCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    if (tableView.tag == perJiuyanduiInfoTableView) {
+        static NSString *identifier = @"dd";
+        GJiuYuanCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[GJiuYuanCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.separatorInset = UIEdgeInsetsMake(0,53,0,0);
+        
+        
+        [cell loadViewWithIndexPath:indexPath];
+        
+        [cell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
+        return cell;
+    }else if (tableView.tag == allJiuyuanduiInfoTableView){
+        static NSString *all = @"alljiuyuan";
+        GallJiuyuanduiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:all];
+        if (!cell) {
+            cell = [[GallJiuyuanduiTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:all];
+        }
+        return cell;
+        
     }
     
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
+    return [[UITableViewCell alloc]init];
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.separatorInset = UIEdgeInsetsMake(0,53,0,0);
-    
-    
-    [cell loadViewWithIndexPath:indexPath];
-    
-    [cell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
-    
-    return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
@@ -189,19 +208,23 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%d",indexPath.row);
-    
-    if (indexPath.row == 3) {
-        if ([[GMAPI exchangeStringForDeleteNULL:self.tableViewCellDataModel.phone]isEqualToString:@"暂无"]) {
+    if (tableView.tag == perJiuyanduiInfoTableView) {
+        if (indexPath.row == 3) {
+            if ([[GMAPI exchangeStringForDeleteNULL:self.tableViewCellDataModel.phone]isEqualToString:@"暂无"]) {
+                
+            }else{
+                NSString *phoneStr = [self.tableViewCellDataModel.phone stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                NSString *phoneStr1 = [phoneStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+                _phoneNum = phoneStr1;
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneStr1 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                [al show];
+            }
             
-        }else{
-            NSString *phoneStr = [self.tableViewCellDataModel.phone stringByReplacingOccurrencesOfString:@"(" withString:@""];
-            NSString *phoneStr1 = [phoneStr stringByReplacingOccurrencesOfString:@")" withString:@""];
-            _phoneNum = phoneStr1;
-            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneStr1 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            [al show];
         }
+    }else if (tableView.tag == allJiuyuanduiInfoTableView){
         
     }
+    
     
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -299,14 +322,6 @@
             item.subtitle = poi.address;
             
             
-            
-//            GBMKPointAnnotation *item = [[GBMKPointAnnotation alloc]init];
-//            item.coordinate = poi.pt;
-//            item.title = poi.name;
-//            item.phone = poi.phone;
-//            item.owner = poi.postcode;
-            
-            
             NSLog(@"%@",item.title);
             
             [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
@@ -359,6 +374,17 @@
     // 设置是否可以拖拽
     annotationView.draggable = NO;
     
+    
+    
+//    //加载所有救援队的tableview
+//    _allJiuyuanduiTableView = nil;
+//    _allJiuyuanduiTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, iPhone5?568-216:480-216, 320, 216) style:UITableViewStylePlain];
+//    _allJiuyuanduiTableView.delegate = self;
+//    _allJiuyuanduiTableView.dataSource = self;
+//    _allJiuyuanduiTableView.tag = allJiuyuanduiInfoTableView;
+//    [self.view addSubview:_allJiuyuanduiTableView];
+    
+    
     return annotationView;
 }
 #pragma mark - 点击标注执行的方法
@@ -398,6 +424,7 @@
     _tableView.layer.borderWidth = 0.5;
     _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
     _tableView.layer.cornerRadius = 5;
+    _tableView.tag = perJiuyanduiInfoTableView;
     [_downBackView addSubview:_tableView];
     
     NSLog(@"---------%@",[view.annotation title]);

@@ -41,6 +41,14 @@
     
     
     [self setHidesBottomBarWhenPushed:NO];
+    
+    
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    [self loadView];
+    [self prepareNetData];
 
 
 }
@@ -68,7 +76,6 @@
     
     self.titleArr=[NSArray arrayWithObjects:@"通讯录",@"我的足迹",@"清除缓存",@"意见反馈",@"关于fb圈", nil];
     
-    [self prepareNetData];
 
     
     
@@ -390,7 +397,7 @@
 
             GmyFootViewController *gmyFootVC = [[GmyFootViewController alloc]init];
 
-            [self.navigationController pushViewController:gmyFootVC animated:YES];
+            [self PushToViewController:gmyFootVC WithAnimation:YES];
 
             
         }
@@ -421,9 +428,8 @@
         case 4:{
             
             AboutFBQuanViewController *_aboutV=[[AboutFBQuanViewController alloc]init];
-            [self setHidesBottomBarWhenPushed:YES] ;
 
-            [self.navigationController pushViewController:_aboutV animated:YES];
+            [self PushToViewController:_aboutV WithAnimation:YES];
 
             
         }
