@@ -78,7 +78,7 @@
     myfirendListArr=[NSMutableArray array];
 
     
-    //1
+    //1fhalfBlackV
     _mainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:480-64)];
     [self.view addSubview:_mainTabV];
    [_mainTabV registerClass:[FriendListCell class] forCellReuseIdentifier:@"identifier"];
@@ -109,10 +109,6 @@
     
     
     
-    
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
     
     
     __weak typeof(self) _weakself=self;

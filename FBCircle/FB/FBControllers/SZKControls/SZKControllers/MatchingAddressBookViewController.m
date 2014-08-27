@@ -118,10 +118,7 @@
     _theFbquanalertV.hidden=YES;
     [self.view addSubview:_theFbquanalertV];
     
-    
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
+
     
     
 

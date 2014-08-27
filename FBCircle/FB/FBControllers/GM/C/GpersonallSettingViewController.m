@@ -76,11 +76,7 @@
 //    topTiao.backgroundColor = RGBCOLOR(229, 229, 229);
 //    [self.view addSubview:topTiao];
     
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
-    
-    
+  
     
     //头像 和 用户名 能点击部位
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

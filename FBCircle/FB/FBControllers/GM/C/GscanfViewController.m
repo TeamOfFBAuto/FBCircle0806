@@ -42,9 +42,7 @@
     titleLabel.textColor = RGBCOLOR(92, 137, 63);
     [self.view addSubview:titleLabel];
     
-    UIView *heitiao=[[UIView alloc]initWithFrame:CGRectMake(0, 64, 320, 6)];
-    heitiao.backgroundColor=RGBACOLOR(220, 220, 220, 0.7);
-    [self.view addSubview:heitiao];
+
     
     
     
@@ -84,7 +82,7 @@
     
     
     //四个角
-    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, CGRectGetMaxY(heitiao.frame)+89, 220, 220)];
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 6+89, 220, 220)];
     imageView.image = [UIImage imageNamed:@"saoyisao_440_440.png"];
     [self.view addSubview:imageView];
     

@@ -456,13 +456,14 @@
 
 - (void)clearTmpPics
 {
-    [[SDImageCache sharedImageCache] clearDisk];
     
     //    [[SDImageCache sharedImageCache] clearMemory];//可有可无
     
     float tmpSize = [[SDImageCache sharedImageCache] getSize];
     
-    
+    [[SDImageCache sharedImageCache] clearDisk];
+
+    NSLog(@"size?===%f",tmpSize);
     
     //    //document路径
     //    NSString *documentPathStr = [GlocalUserImage documentFolder];
@@ -483,9 +484,10 @@
     //    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"gIsUpBanner"];
     //    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"gIsUpFace"];
     
+    tmpSize=tmpSize/1024;
     
     
-    NSString *clearCacheName = tmpSize >= 1 ? [NSString stringWithFormat:@"清理缓存(%.2fM)",tmpSize] : [NSString stringWithFormat:@"清理缓存(%.2fK)",tmpSize * 1024];
+    NSString *clearCacheName =  [NSString stringWithFormat:@"清理缓存(%.2fKb)",tmpSize];
     
     UIAlertView *_alert=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:clearCacheName delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
     [_alert show];
