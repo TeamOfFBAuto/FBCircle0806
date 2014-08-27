@@ -39,11 +39,8 @@
         if (!_headerImageView) {
             
             _headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(12,11,40,40)];
-            
             _headerImageView.layer.masksToBounds = YES;
-            
             _headerImageView.layer.cornerRadius = 5;
-            
             [self addSubview:_headerImageView];
         }else
         {
@@ -53,15 +50,10 @@
         
         if (!_userName_label) {
             _userName_label = [[UILabel alloc] initWithFrame:CGRectMake(64,11,200,18)];
-            
             _userName_label.textAlignment = NSTextAlignmentLeft;
-            
-            _userName_label.textColor = RGBCOLOR(91,138,59);
-            
+            _userName_label.textColor = RGBCOLOR(3,3,3);
             _userName_label.font = [UIFont systemFontOfSize:15];
-            
             _userName_label.backgroundColor = [UIColor clearColor];
-            
             [self addSubview:_userName_label];
         }else
         {
@@ -71,15 +63,10 @@
         
         if (!_content_label) {
             _content_label = [[RTLabel alloc] initWithFrame:CGRectMake(64,36,247,13)];
-            
             _content_label.textAlignment = NSTextAlignmentLeft;
-            
             _content_label.textColor = RGBCOLOR(4,4,4);
-            
             _content_label.backgroundColor = [UIColor clearColor];
-            
             _content_label.font = [UIFont systemFontOfSize:14];
-            
             [self addSubview:_content_label];
         }else
         {
@@ -133,7 +120,7 @@
             
             _rUserName_label.textAlignment = NSTextAlignmentLeft;
             
-            _rUserName_label.textColor = RGBCOLOR(153,153,153);
+            _rUserName_label.textColor = RGBCOLOR(88,106,152);
             
             _rUserName_label.font = [UIFont systemFontOfSize:13];
             
@@ -148,15 +135,10 @@
         
         if (!_rContent_label) {
             _rContent_label = [[RTLabel alloc] initWithFrame:CGRectMake(54,28,235,20)];
-            
             _rContent_label.textAlignment = NSTextAlignmentLeft;
-            
-            _rContent_label.textColor = RGBCOLOR(86,86,86);
-            
+            _rContent_label.textColor = RGBCOLOR(3,3,3);
             _rContent_label.backgroundColor = [UIColor clearColor];
-            
             _rContent_label.font = [UIFont systemFontOfSize:13];
-            
             [_forwardBackGroundImageView addSubview:_rContent_label];
         }else
         {

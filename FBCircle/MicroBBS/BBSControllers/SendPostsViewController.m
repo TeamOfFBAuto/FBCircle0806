@@ -68,18 +68,16 @@
 }
 
 
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-//}
-//
-//
-//-(void)viewWillDisappear:(BOOL)animated
-//{
-////    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-////    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-//}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+
+}
 
 
 - (void)viewDidLoad
@@ -461,7 +459,7 @@
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-        pickerC.modalPresentationStyle = UIModalPresentationFullScreen;
+//        pickerC.modalPresentationStyle = UIModalPresentationFullScreen;
         pickerC.delegate = self;
         pickerC.allowsEditing = YES;
         pickerC.sourceType = sourceType;
@@ -521,7 +519,7 @@
         
         [allImageArray addObject:image];
         
-        
+        NSLog(@"image ---  %f ---   %f",image.size.width,image.size.height);
         [allAssesters addObject:[[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"]];
     }
     
@@ -542,7 +540,10 @@
         
         UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        [allImageArray addObject:image1];
+        UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
+        
+        NSLog(@"image1 ---  %f  ---  %f",image1.size.width,image1.size.height);
+        [allImageArray addObject:newImage];
         
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )

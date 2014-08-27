@@ -96,7 +96,7 @@
         
         _userName_label.textAlignment = NSTextAlignmentLeft;
         
-        _userName_label.textColor = RGBCOLOR(91,138,59);
+        _userName_label.textColor = RGBCOLOR(3,3,3);
         
         _userName_label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
         
@@ -178,7 +178,7 @@
         
         _rUserName_label.textAlignment = NSTextAlignmentLeft;
         
-        _rUserName_label.textColor = RGBCOLOR(153,153,153);
+        _rUserName_label.textColor = RGBCOLOR(88,105,152);
         
         _rUserName_label.font = [UIFont systemFontOfSize:13];
         
@@ -196,7 +196,7 @@
         
         _rContent_label.textAlignment = NSTextAlignmentLeft;
         
-        _rContent_label.textColor = RGBCOLOR(86,86,86);
+        _rContent_label.textColor = RGBCOLOR(3,3,3);
         
         _rContent_label.backgroundColor = [UIColor clearColor];
         
@@ -354,7 +354,9 @@
         
         _zan_label.imageHeight = 14;
         
-        _zan_label.textColor = RGBCOLOR(125,166,96);
+        _zan_label.rt_color = @"#030303";
+        
+        _zan_label.textColor = RGBCOLOR(3,3,3);
         
         _zan_label.backgroundColor = [UIColor clearColor];
         
@@ -1545,7 +1547,7 @@
 
 -(NSString *)returnZanStringWith:(NSMutableArray *)array WithTotalNum:(NSString *)theCount
 {
-    NSString * zanString = [NSString stringWithFormat:@"<img src=\"fb_zan_28_28.png\">     </img>%@  ",theCount];
+    NSString * zanString = [NSString stringWithFormat:@"<img src=\"pinglun-xin-down-24_24.png\">     </img>%@  ",theCount];
     
     for (int i = 0;i < array.count;i++)
     {

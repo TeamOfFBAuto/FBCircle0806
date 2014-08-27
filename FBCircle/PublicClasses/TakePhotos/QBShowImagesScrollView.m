@@ -53,7 +53,7 @@
         //        [self.layer setBorderWidth:1.0];
         //        [self.layer setBorderColor:[[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:.25] CGColor]];
         
-        
+        NSLog(@"theImage ---  %f ---  %f",theImage.size.width,theImage.size.width);
         
         // create the image view
         _locationImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];

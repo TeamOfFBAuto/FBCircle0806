@@ -45,7 +45,9 @@
         
         label.lineSpacing = 3;
         
-        label.textColor = RGBCOLOR(100,100,100);
+        label.rt_color = @"#576a9a";
+        
+        label.textColor = RGBCOLOR(3,3,3);
         
         label.backgroundColor = [UIColor clearColor];
         

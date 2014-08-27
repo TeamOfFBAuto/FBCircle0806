@@ -86,7 +86,7 @@
 -(void)setNavgationBar
 {
     
-    navImageView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,70)];
+    navImageView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,64)];
     
     navImageView.backgroundColor = RGBCOLOR(229,229,229);
     

@@ -69,7 +69,7 @@
             
             _userName_label.textAlignment = NSTextAlignmentLeft;
             
-            _userName_label.textColor = RGBCOLOR(72,145,57);
+            _userName_label.textColor = RGBCOLOR(3,3,3);
             
             _userName_label.font = [UIFont systemFontOfSize:14];
             

@@ -873,7 +873,9 @@
         
         UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        [allImageArray addObject:image1];
+        UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
+        
+        [allImageArray addObject:newImage];
         
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         

@@ -101,7 +101,7 @@ typedef enum
 @property (nonatomic, assign) BOOL highlighted;
 @property(nonatomic,assign)float imageHeight;
 @property(nonatomic,assign)float imageWidth;
-
+@property(nonatomic,strong)NSString * rt_color;
 // set text
 - (void)setText:(NSString*)text;
 + (RTLabelExtractedComponent*)extractTextStyleFromText:(NSString*)data paragraphReplacement:(NSString*)paragraphReplacement;

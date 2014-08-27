@@ -573,7 +573,7 @@
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
+    UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(720,960)];
     
     [_allImageArray addObject:newImage];
     
@@ -713,7 +713,9 @@
         [bself reloadImagesView];
     }];
     
-    [self.navigationController pushViewController:PreviewDelete animated:YES];
+    [self presentViewController:PreviewDelete animated:YES completion:NULL];
+    
+//    [self.navigationController pushViewController:PreviewDelete animated:YES];
 }
 
 

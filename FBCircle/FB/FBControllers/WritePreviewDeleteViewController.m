@@ -38,7 +38,7 @@
 -(void)setNavgationBar
 {
     
-    navImageView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,70)];
+    navImageView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,64)];
     
     navImageView.backgroundColor = RGBCOLOR(229,229,229);
     
@@ -66,7 +66,7 @@
     
     title_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,150,64)];
     
-    title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",_currentPage+1,self.AllImagesArray.count];
+    title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",self.AllImagesArray.count,_currentPage+1];
     
     title_label.font = TITLEFONT;
     
@@ -182,7 +182,7 @@
     // 根据当前的x坐标和页宽度计算出当前页数
     _currentPage = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
-    title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",_currentPage+1,self.AllImagesArray.count];
+    title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",self.AllImagesArray.count,_currentPage+1];
 }
 
 
@@ -242,7 +242,7 @@
             
             [self loadAllViews];
             
-            title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",_currentPage+1,self.AllImagesArray.count];
+            title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",self.AllImagesArray.count,_currentPage+1];
             
             _myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
         }

@@ -38,7 +38,7 @@
         }
         
         if (!_praise_imageView) {
-            _praise_imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fbquanzan.png"]];
+            _praise_imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pinglun-xin-down-24_24.png"]];
             
             _praise_imageView.center = CGPointMake(27,33);
             

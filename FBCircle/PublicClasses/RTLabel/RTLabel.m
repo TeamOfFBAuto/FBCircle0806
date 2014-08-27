@@ -137,7 +137,7 @@ void RunDelegateDeallocCallback(void* refCon);
 @implementation RTLabel
 @synthesize imageHeight = _imageHeight;
 @synthesize imageWidth = _imageWidth;
-
+@synthesize rt_color = _rt_color;
 
 - (id)initWithFrame:(CGRect)_frame
 {
@@ -278,7 +278,7 @@ void RunDelegateDeallocCallback(void* refCon);
 					[self applyFontAttributes:self.linkAttributes toText:attrString atPosition:component.position withLength:[component.text length]];
 				}else
 				{
-                    [self applyColor:@"#7da660" toText:attrString atPosition:component.position withLength:[component.text length]];
+                    [self applyColor:_rt_color.length?_rt_color:@"#7da660" toText:attrString atPosition:component.position withLength:[component.text length]];
 				}
 			}
 			
