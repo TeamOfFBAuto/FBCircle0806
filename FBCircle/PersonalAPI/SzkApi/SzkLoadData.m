@@ -49,7 +49,7 @@
     self.mydicinfo=[_data objectFromJSONData];
     
     
-    NSLog(@"self.mydicinfo==%@",self.mydicinfo);
+   // NSLog(@"self.mydicinfo==%@",self.mydicinfo);
     
     
     
