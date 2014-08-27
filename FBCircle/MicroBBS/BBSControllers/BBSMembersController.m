@@ -37,7 +37,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
     
-    self.titleLabel.text = @"论坛成员列表";
+    self.titleLabel.text = @"论坛成员";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     

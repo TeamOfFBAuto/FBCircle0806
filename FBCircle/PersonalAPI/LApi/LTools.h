@@ -26,15 +26,21 @@
 
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
+typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent);//版本更新
+
 @interface LTools : NSObject<NSURLConnectionDelegate,NSURLConnectionDataDelegate>
 {
     urlRequestBlock successBlock;
     urlRequestBlock failBlock;
+    versionBlock aVersionBlock;
+    
     NSString *requestUrl;
     NSData *requestData;
     BOOL isPostRequest;//是否是post请求
     
     NSURLConnection *connection;
+    
+    NSString *_appid;
 }
 
 + (id)shareInstance;
@@ -47,6 +53,12 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 - (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock;//处理请求结果
 
 - (void)cancelRequest;
+
+/**
+ *  版本更新
+ */
++ (void)versionForAppid:(NSString *)appid Block:(void(^)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent))version;//是否有新版本、新版本更新下地址
+
 
 /**
  *  NSUserDefault 缓存
@@ -92,11 +104,14 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 + (NSString *)currentTime;//当前时间 yyyy-mm-dd
 
++ (BOOL)needUpdateForHours:(CGFloat)hours recordDate:(NSDate *)recordDate;//计算既定时间段是否需要更新
+
 + (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 
 + (NSString *)NSStringNotNull:(NSString *)text;
 
-+ (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;
++ (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;//关键词高亮
+
 
 #pragma mark - 验证有效性
 

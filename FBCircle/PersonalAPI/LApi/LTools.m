@@ -90,6 +90,69 @@
     [connection cancel];
 }
 
+#pragma mark - 版本更新信息
+
++ (void)versionForAppid:(NSString *)appid Block:(void(^)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent))version//是否有新版本、新版本更新下地址
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    //test FBLife 605673005
+    NSString *url = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appid];
+    
+    NSString *newStr = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"requestUrl %@",newStr);
+    NSURL *urlS = [NSURL URLWithString:newStr];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        if (data.length > 0) {
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:Nil];
+            //appStore 版本
+            NSString *newVersion = [[[dic objectForKey:@"results"] objectAtIndex:0]objectForKey:@"version"];
+            NSString *updateContent = [[[dic objectForKey:@"results"] objectAtIndex:0]objectForKey:@"releaseNotes"];
+            //本地版本
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            NSString *currentVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+            NSString *downUrl = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id%@?mt=8",appid];
+            BOOL isNew = NO;
+            if (newVersion && ([newVersion compare:currentVersion] == 1)) {
+                isNew = YES;
+            }
+            version(isNew,downUrl,updateContent);
+            
+        }else
+        {
+            NSLog(@"data 为空 connectionError %@",connectionError);
+            
+            NSString *errInfo = @"网络有问题,请检查网络";
+            switch (connectionError.code) {
+                case NSURLErrorNotConnectedToInternet:
+                    
+                    errInfo = @"无网络连接";
+                    break;
+                case NSURLErrorTimedOut:
+                    
+                    errInfo = @"网络连接超时";
+                    break;
+                default:
+                    break;
+            }
+            
+            NSDictionary *failDic = @{ERROR_INFO: errInfo};
+            
+            NSLog(@"version erro %@",failDic);
+            
+        }
+        
+    }];
+
+}
+
 #pragma mark - NSURLConnectionDataDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -533,6 +596,34 @@
     
     NSLog(@"时间 === %@",date);
     return date;
+}
+
+/**
+ *  是否需要更新
+ *
+ *  @param hours      时间间隔
+ *  @param recordDate 上次记录时间
+ *
+ *  @return 是否需要更新
+ */
++ (BOOL)needUpdateForHours:(CGFloat)hours recordDate:(NSDate *)recordDate
+{
+    if (recordDate) {
+        
+        NSTimeInterval timeIn = [recordDate timeIntervalSinceNow];
+        
+        CGFloat daySeconds = hours * 60 * 60.f;//秒数
+        
+        if ((timeIn * -1) >= daySeconds) { //预定时间
+            
+            return YES;
+        }else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 //alert 提示

@@ -12,6 +12,9 @@
 #import "BBSSearchController.h"
 #import "BBSModel.h"
 
+#define CACHE_BBS_CLSSIFY @"classfiy" //论坛分类缓存
+#define CACHE_BBS_TIME @"classTime" //论坛分类缓存时间
+
 @interface ClassifyBBSController ()<UISearchBarDelegate>
 {
     NSArray *_tuijian_Arr;//第一部分 推荐
@@ -58,9 +61,22 @@
     bgScroll.showsVerticalScrollIndicator = YES;
     [self.view addSubview:bgScroll];
     
-    //创建第一部分
+
+    NSDictionary *dataInfo = [LTools cacheForKey:CACHE_BBS_CLSSIFY];
+    if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+        
+        [self parseBBSClass:dataInfo];
+        
+        BOOL need = [LTools needUpdateForHours:7 * 24 recordDate:[LTools cacheForKey:CACHE_BBS_TIME]];
     
-    [self getBBSClass];
+        if (need) {
+            [self getBBSClass];
+        }
+        
+    }else
+    {
+        [self getBBSClass];
+    }
     
 }
 
@@ -129,6 +145,32 @@
     [self PushToViewController:search WithAnimation:YES];
 }
 
+#pragma mark - 数据解析
+
+
+- (void)parseBBSClass:(NSDictionary *)dataInfo
+{
+    NSArray *tuijian = [dataInfo objectForKey:@"tuijian"];
+    NSArray *normal = [dataInfo objectForKey:@"nomal"];
+    
+    NSMutableArray *arr_tuijian = [NSMutableArray arrayWithCapacity:dataInfo.count];
+    NSMutableArray *arr_normal = [NSMutableArray arrayWithCapacity:dataInfo.count];
+    for (NSDictionary *aDic in tuijian) {
+        
+        [arr_tuijian addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+    }
+    
+    for (NSDictionary *aDic in normal) {
+        
+        [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+        
+    }
+    
+    [self createFirstViewWithTitles:arr_tuijian];
+    [self createSecondViewWithDataArray:arr_normal];
+
+}
+
 #pragma mark - 网络请求
 /**
  *  官方论坛分类
@@ -144,24 +186,19 @@
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-            NSArray *tuijian = [dataInfo objectForKey:@"tuijian"];
-            NSArray *normal = [dataInfo objectForKey:@"nomal"];
+            [LTools cache:dataInfo ForKey:CACHE_BBS_CLSSIFY];
+            [LTools cache:[NSDate date] ForKey:CACHE_BBS_TIME];
             
-            NSMutableArray *arr_tuijian = [NSMutableArray arrayWithCapacity:dataInfo.count];
-            NSMutableArray *arr_normal = [NSMutableArray arrayWithCapacity:dataInfo.count];
-            for (NSDictionary *aDic in tuijian) {
-                
-                [arr_tuijian addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+            
+            for (int i = 0; i < bgScroll.subviews.count; i ++) {
+                UIView *aView = [bgScroll.subviews objectAtIndex:i];
+                [aView removeFromSuperview];
+                aView = nil;
+                NSLog(@"aview %@",aView);
             }
             
-            for (NSDictionary *aDic in normal) {
-                
-                [arr_normal addObject:[[BBSModel alloc]initWithDictionary:aDic]];
-
-            }
+            [weakSelf parseBBSClass:dataInfo];
             
-            [weakSelf createFirstViewWithTitles:arr_tuijian];
-            [weakSelf createSecondViewWithDataArray:arr_normal];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

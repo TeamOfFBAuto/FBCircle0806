@@ -7,7 +7,7 @@
 //
 
 #import "BBSSearchController.h"
-#import "MicroBBSInfoController.h"
+#import "BBSListViewController.h"
 #import "BBSSearchNoResultController.h"
 #import "BBSTopicController.h"
 #import "BBSInfoModel.h"
@@ -425,9 +425,9 @@
 {
     if (push_tiezi == NO) {
         BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
-        MicroBBSInfoController *bbsInfo = [[MicroBBSInfoController alloc]init];
-        bbsInfo.bbsId = aModel.id;
-        [self PushToViewController:bbsInfo WithAnimation:YES];
+        BBSListViewController *list = [[BBSListViewController alloc]init];
+        list.bbsId = aModel.id;
+        [self PushToViewController:list WithAnimation:YES];
         
     }else
     {
