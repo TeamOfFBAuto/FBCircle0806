@@ -307,10 +307,11 @@
                 
             }];
         }else if (indexPath.row == 6){
-//            __weak typeof (self)bself = self;
+            __weak typeof (self)bself = self;
             [cell setfaxiaoxiClickedBlock:^{
-                NSLog(@"发消息");
-//                [bself faxiaoxiBlockMethod];//张少南 发消息的先注释掉
+                NSLog(@"在此处设置发消息的block");
+                
+                [bself faxiaoxiBlockMethod];//张少南 发消息的先注释掉
             }];
         }
         
@@ -735,31 +736,31 @@
 
 
 //张少南 跳到消息的，先注释掉
-//-(void)faxiaoxiBlockMethod{
-//#pragma 在此设置发消息的跳转
-//    
-//    
-//    
-//    ChatViewController * chatVC = [[ChatViewController alloc] init];
-//    
-//    MessageModel * messageInfo = [[MessageModel alloc] init];
-//    
-//    messageInfo.othername = self.personModel.person_username;
-//    
-//    messageInfo.otheruid = self.personModel.person_uid;
-//    
-//    messageInfo.to_uid = self.personModel.person_uid;
-//    
-//    messageInfo.to_username = self.personModel.person_username;
-//    
-//    chatVC.messageInfo = messageInfo;
-//    chatVC.otherHeaderImage = self.personModel.person_face;
-//    
-//    NSLog(@"%@",chatVC.otherHeaderImage);
-//    
-//    [self.navigationController pushViewController:chatVC animated:YES];
-//    
-//}
+-(void)faxiaoxiBlockMethod{
+#pragma 在此设置发消息的跳转
+    
+    
+    
+    ChatViewController * chatVC = [[ChatViewController alloc] init];
+    
+    MessageModel * messageInfo = [[MessageModel alloc] init];
+    
+    messageInfo.othername = self.personModel.person_username;
+    
+    messageInfo.otheruid = self.personModel.person_uid;
+    
+    messageInfo.to_uid = self.personModel.person_uid;
+    
+    messageInfo.to_username = self.personModel.person_username;
+    
+    chatVC.messageInfo = messageInfo;
+    chatVC.otherHeaderImage = self.personModel.person_face;
+    
+    NSLog(@"%@",chatVC.otherHeaderImage);
+    
+    [self.navigationController pushViewController:chatVC animated:YES];
+    
+}
 
 
 
