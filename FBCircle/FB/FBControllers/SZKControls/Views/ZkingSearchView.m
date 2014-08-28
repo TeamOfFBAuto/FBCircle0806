@@ -18,7 +18,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        
         _imgshortbg=[[UIImage alloc]init];
         _imgshortbg=theimgShort;
         

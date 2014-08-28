@@ -16,9 +16,11 @@
 
 #import "MatchingAddressBookViewController.h"
 
+#import "GmFoundScanViewController.h"
+
 @interface AddFriendViewController (){
- NSArray *array_title;
-    NSArray *array_logoimg;
+ NSMutableArray *array_title;
+    NSMutableArray *array_logoimg;
 }
 
 @end
@@ -51,8 +53,37 @@
     [super viewDidLoad];
     _isnavgationBarhiden=YES;
     
-    array_title=[NSArray arrayWithObjects:@"从手机通讯录添加",@"通过微信",@"通过短信", nil];
-    array_logoimg=[NSArray arrayWithObjects:@"tongxunlu-icon-94_94.png",@"weixin-icon-94_94.png",@"duanxin-icon-94_94.png", nil];
+    array_logoimg=[NSMutableArray array];
+    
+    array_title=[NSMutableArray array];
+    
+    NSArray *arr1=[NSArray arrayWithObject:@"添加手机联系人"];
+    NSArray *arr2=[NSArray arrayWithObject:@"扫一扫添加好友"];
+    NSArray *arr3=[NSArray arrayWithObjects:@"通过微信",@"通过短信", nil];
+    
+    [array_title addObject:arr1];
+    
+    [array_title addObject:arr2];
+    
+    [array_title addObject:arr3];
+
+    
+    
+
+    
+    
+    NSArray *arr10=[NSArray arrayWithObject:@"tongxunlu-icon-94_94.png"];
+    NSArray *arr20=[NSArray arrayWithObject:@"qsaoyisao@2x.png"];
+    NSArray *arr30=[NSArray arrayWithObjects:@"weixin-icon-94_94.png",@"duanxin-icon-94_94.png", nil];
+    
+    
+    [array_logoimg addObject:arr10];
+    
+    [array_logoimg addObject:arr20];
+    
+    [array_logoimg addObject:arr30];
+    
+    
 
     _array_searchResault=[NSArray array];
       self.titleLabel.text=@"添加好友";
@@ -67,8 +98,9 @@
     _mainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
     [self.view addSubview:_mainTabV];
     _mainTabV.delegate=self;
-    _mainTabV.separatorColor=RGBCOLOR(225, 225, 225);
+    _mainTabV.separatorColor=[UIColor clearColor];
     _mainTabV.dataSource=self;
+    _mainTabV.backgroundColor=RGBCOLOR(236, 237, 240);
     //2
     _searchTabV=[[UITableView alloc]initWithFrame:CGRectMake(0, 75, 320, iPhone5?568-75:480-75)];
     [self.view addSubview:_searchTabV];
@@ -93,12 +125,14 @@
 -(void)ReceiveMytabHeaderV{
     
     UIView *aviews=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320,54)];
+    aviews.backgroundColor=  RGBCOLOR(230  , 230, 230);
+
         
         __weak typeof(self) __weakself=self;
         
         //开始搜索
         
-    ZkingSearchView * _zkingSearchV=[[ZkingSearchView alloc]initWithFrame:CGRectMake(0, 12, 320, 30) imgBG:[UIImage imageNamed:@"longSearch592_60.png"] shortimgbg:[UIImage imageNamed:@"shortSearch486_60.png"]  imgLogo:[UIImage imageNamed:@""] placeholder:@"搜索好友" ZkingSearchViewBlocs:^(NSString *strSearchText, int tag) {
+    ZkingSearchView * _zkingSearchV=[[ZkingSearchView alloc]initWithFrame:CGRectMake(0, 12, 320, 30) imgBG:[UIImage imageNamed:@"longSearch592_60.png"] shortimgbg:[UIImage imageNamed:@"shortSearch486_60.png"]  imgLogo:[UIImage imageNamed:@""] placeholder:@"请输入用户名/手机号码搜索朋友" ZkingSearchViewBlocs:^(NSString *strSearchText, int tag) {
             
             [__weakself searchFriendWithname:strSearchText thetag:tag];
             
@@ -203,7 +237,7 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     if (tableView==_mainTabV) {
-        return 2;
+        return 3;
         
     }else{
         return 1;
@@ -214,7 +248,7 @@
     
     NSInteger number=0;
     if (tableView==_mainTabV) {
-        number=section==0?1:2;
+        number=[[array_logoimg objectAtIndex:section] count];
     }else{
         number=_array_searchResault.count;
     }
@@ -241,15 +275,25 @@
             cell.selectionStyle=UITableViewCellSelectionStyleGray;
 
         }
-       
-        [cell AddFriendCustomCellSetimg:[array_logoimg objectAtIndex:indexPath.section+indexPath.row] title:[array_title objectAtIndex:indexPath.section+indexPath.row]];
         
-        //[cell setFriendAttribute:[[FriendAttribute alloc] init]];
+        if (indexPath.section==2&&indexPath.row==0) {
+            [cell AddFriendCustomCellSetimg:[[array_logoimg objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] title:[[array_title objectAtIndex:indexPath.section  ] objectAtIndex:indexPath.row] theAddFriendCustomCellType:AddFriendCustomCellTypeone];
+
+        }else{
+            [cell AddFriendCustomCellSetimg:[[array_logoimg objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] title:[[array_title objectAtIndex:indexPath.section  ] objectAtIndex:indexPath.row] theAddFriendCustomCellType:FBQuanAlertViewTypeother];
+
+        
+        }
+       
+        
+        
+        
+//
         return cell;
 
         
     }else{
-        static NSString *stridentifier=@"identifier";
+        static NSString *stridentifier=@"identifiers";
         
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:stridentifier];
         
@@ -283,7 +327,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return 71;
+    return 46;
 
 }
 
@@ -294,15 +338,27 @@
             return nil;
         }else{
             
-            UIView *aview=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-            UILabel *label_aha=[[UILabel alloc]initWithFrame:CGRectMake(12, 0, 320-24, 25)];
-            [aview addSubview:label_aha];
-            label_aha.text=@"   邀请好友";
+            
+            
+//            UIView *aview=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+            UILabel *label_aha=[[UILabel alloc]initWithFrame:CGRectMake(0 ,0, 320-24, 30)];
+//            [aview addSubview:label_aha];
+            
+            if (section==1) {
+
+            }else{
+            
+                label_aha.text=@"   邀请好友";
+
+            }
+            
+            
             label_aha.textAlignment=NSTextAlignmentLeft;
             label_aha.font=[UIFont systemFontOfSize:13];
-            label_aha.backgroundColor=RGBCOLOR(250, 250, 250);
+            label_aha.backgroundColor=RGBCOLOR(236, 237, 240);
+            label_aha.textColor=RGBCOLOR(156, 156, 161);
             
-            return aview;
+            return label_aha;
             
         }
     }else{
@@ -316,7 +372,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
     if (tableView==_mainTabV) {
-        return section==0?0:25;
+        return section==0?0:30;
 
     }else{
         return 0;
@@ -339,7 +395,19 @@
             suggestVC.str_title=@"从手机通讯录添加";
             [self.navigationController pushViewController:suggestVC animated:YES];
             
-        }else{
+        }else if(indexPath.section==1){
+        
+            NSLog(@"xxx跳转到你猜");
+            
+            GmFoundScanViewController *gmscanVC=[[GmFoundScanViewController alloc]init];
+            
+            [self presentViewController:gmscanVC animated:YES completion:^{
+                
+            }];
+        }
+        
+        
+        else{
             switch (indexPath.row) {
                 case 0:
                 {
