@@ -39,7 +39,7 @@
 
 
 
-@interface GmyFootViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,EGORefreshTableHeaderDelegate,UIScrollViewDelegate,QBImagePickerControllerDelegate,MLImageCropDelegate>
+@interface GmyFootViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,EGORefreshTableHeaderDelegate,UIScrollViewDelegate,QBImagePickerControllerDelegate,MLImageCropDelegate,WriteBlogViewControllerDelegate>
 
 {
     UITableView *_tableView;//主tableview

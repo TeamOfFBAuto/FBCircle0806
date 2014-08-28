@@ -669,22 +669,23 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary*)info{
     
     //判断是否点击加号
-    if (_isJiaHaoPick) {//是点击加号
-        
+    if (_isJiaHaoPick) {//点击加号
+        NSLog(@"info ------   %@",info);
         NSMutableArray * allImageArray = [NSMutableArray array];
         
         NSMutableArray * allAssesters = [[NSMutableArray alloc] init];
         
         UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        [allImageArray addObject:image1];
+        UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
+        
+        [allImageArray addObject:newImage];
         
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         
         [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
          {
              //here is your URL : assetURL
-             [allAssesters addObject:[assetURL absoluteString]];
              
              NSString * url_string = [[assetURL absoluteString] stringByReplacingOccurrencesOfString:@"/" withString:@""];
              
@@ -692,34 +693,29 @@
              
              [allAssesters addObject:url_string];
              
+             
+             [picker dismissViewControllerAnimated:YES completion:^{
+                 WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
+                 
+                 WriteBlog.TempAllImageArray = allImageArray;
+                 
+                 WriteBlog.TempAllAssesters = allAssesters;
+                 
+                 WriteBlog.delegate = self;
+                 
+                 WriteBlog.theType = WriteBlogWithImagesAndContent;
+                 
+                 UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
+                 
+                 [self presentViewController:nav animated:YES completion:^{
+                     
+                 }];
+             }];
+             
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                  [ZSNApi saveImageToDocWith:url_string WithImage:image1];
              });
          }];
-        
-        
-        
-        [picker dismissViewControllerAnimated:YES completion:^{
-            WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
-            
-            WriteBlog.TempAllImageArray = allImageArray;
-            
-            WriteBlog.TempAllAssesters = allAssesters;
-            
-            WriteBlog.theType = WriteBlogWithImagesAndContent;
-            
-            UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
-            
-           [self presentViewController:nav animated:YES completion:^{
-            
-           }];
-        }];
-        
-        
-        
-        
-        _isJiaHaoPick = NO;
-        
     }else{//更换topviewImage不是点击加号
         
         [UIApplication sharedApplication].statusBarHidden = NO;

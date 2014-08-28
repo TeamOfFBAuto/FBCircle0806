@@ -230,6 +230,24 @@ typedef enum{
         return;
     }
     
+    
+    if (titles.count == 1) {
+        __weak typeof(self)weakSelf = self;
+        LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
+            if (buttonIndex == 0) {
+                
+                NSLog(@"删除");
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定删除帖子？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                [alert show];
+            }
+            
+        }];
+        
+        [sheet showFromView:btn];
+        return;
+    }
+    
     __weak typeof(self)weakSelf = self;
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {

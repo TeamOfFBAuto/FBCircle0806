@@ -41,10 +41,12 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-
+    
+    
     
     //设置左右barBtn样式
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeDelete];
+    
     
     
     
@@ -985,6 +987,9 @@
 #pragma mark - UIActionSheetDelegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+//    UINavigationBar *navcBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+//    navcBar.backgroundColor = [UIColor redColor];
+//    picker.navigationBar = navcBar;
     picker.delegate = self;
     //picker.allowsEditing = YES;
     switch (buttonIndex) {
