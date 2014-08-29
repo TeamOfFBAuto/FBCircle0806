@@ -617,10 +617,13 @@ typedef enum{
 
         NSLog(@"inputText %@",inputText);
         
-        if (inputText.length > 0) {
+        if ([LTools NSStringIsNull:inputText] == NO) {
             
             [weakSelf addComment:inputText];
             
+        }else
+        {
+            [LTools showMBProgressWithText:@"评论内容不可以为空" addToView:self.view];
         }
         
     }];

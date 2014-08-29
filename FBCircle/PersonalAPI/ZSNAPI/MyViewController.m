@@ -90,9 +90,10 @@
     
     if (theType == MyViewControllerLeftbuttonTypeBack)
     {
-        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,30,44)];
+        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
         [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         [button_back setImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
+        button_back.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
         self.navigationItem.leftBarButtonItems=@[spaceButton,back_item];
     }else if (theType == MyViewControllerLeftbuttonTypelogo)

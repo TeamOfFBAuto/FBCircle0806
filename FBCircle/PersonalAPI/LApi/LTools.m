@@ -682,6 +682,16 @@
     return string;
 }
 
++ (BOOL)NSStringIsNull:(NSString *)string
+{
+    NSMutableString *str = [NSMutableString stringWithString:string];
+    [str replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, str.length)];
+    if (str.length == 0) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma - mark 切图
 
 +(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size{

@@ -120,6 +120,7 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;//关键词高亮
 
++ (BOOL)NSStringIsNull:(NSString *)string;//判断字符串是否全为空格
 
 #pragma mark - 验证有效性
 
