@@ -48,6 +48,16 @@
      }];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadMessageData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
+}
 
 - (void)viewDidLoad
 {
@@ -85,7 +95,7 @@
     
     _theModel = [[MessageModel alloc] init];
     
-    [self loadMessageData];
+    
 }
 
 
@@ -181,6 +191,8 @@
         [self PushToViewController:messageVC WithAnimation:YES];
     }else
     {
+        _tixing_label.hidden = YES;
+        
         MessageModel * model = [self.data_array objectAtIndex:indexPath.row-1];
         
         ChatViewController * chatViewController = [[ChatViewController alloc] init];

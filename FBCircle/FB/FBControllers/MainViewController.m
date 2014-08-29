@@ -639,7 +639,7 @@
             
             imagePickerController = [[QBImagePickerController alloc] init];
             imagePickerController.delegate = self;
-            imagePickerController.allowsMultipleSelection = YES;
+            imagePickerController.allowsMultipleSelection = NO;
             
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
             
@@ -2190,7 +2190,7 @@
     
     _acts.tag = 601;
     
-    [_acts showInView:self.view];
+    [_acts showInView:self.tabBarController.tabBar];
 }
 
 

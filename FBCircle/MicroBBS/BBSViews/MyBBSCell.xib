@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2iU-xh-gxx">
-                        <rect key="frame" x="52" y="44" width="284" height="0.5"/>
+                        <rect key="frame" x="52" y="44" width="284" height="1"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
@@ -49,7 +49,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="car.png" width="25" height="26"/>
+        <image name="car.png" width="73" height="68"/>
         <image name="jiantou.png" width="8" height="13"/>
     </resources>
 </document>

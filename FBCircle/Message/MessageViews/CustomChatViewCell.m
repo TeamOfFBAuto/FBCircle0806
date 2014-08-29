@@ -246,7 +246,7 @@
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
-                content_label.text = [[self replaceSpaceWithString:[ZSNApi FBImageChange:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
+                content_label.text = [[ZSNApi FBImageChange:clean_string] stringByReplacingEmojiCheatCodesWithUnicode];
                                 
                 content_label.font = [UIFont systemFontOfSize:14];
                 
@@ -261,7 +261,6 @@
                 theHeight = theHeight + optimumSize.height + 5;
                 
                 theWidth = optimumSize.width>theWidth?optimumSize.width:theWidth;
-                
                 if (optimumSize.width >= 190 || optimumSize.width == 0)
                 {
                     theWidth = 200;

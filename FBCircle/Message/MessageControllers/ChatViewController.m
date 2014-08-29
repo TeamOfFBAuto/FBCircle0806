@@ -55,8 +55,6 @@
         
         ChatModel * model2 = [bself.data_array objectAtIndex:(bself.data_array.count - 1)];
         
-        NSLog(@"什么呀这是 ---   %@  -----   %@",model1.msg_id,model2.msg_id);
-
         if ([model1.msg_id intValue] > [model2.msg_id intValue]) {
             [bself setupWith:array WithCount:count];
         }
