@@ -42,7 +42,8 @@
     }
     
     
-    
+    self.titleLabel.text = @"个人资料";
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     
     //设置左右barBtn样式
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeDelete];

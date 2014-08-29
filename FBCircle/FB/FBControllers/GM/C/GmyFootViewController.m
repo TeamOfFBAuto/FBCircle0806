@@ -10,7 +10,8 @@
 #import "GRXX4ViewController.h"
 
 #import "GlocalUserImage.h"
-#import "GcustomImagePickerViewController.h"
+//判断系统版本
+#define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 
 @interface GmyFootViewController ()
 
@@ -34,7 +35,15 @@
     [super viewWillAppear:YES];
     _isJiaHaoPick = NO;
     //[self prepareNetDataWithPage:1];
+    if (IOS7_OR_LATER) {
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
 }
+
+
+
 
 
 - (void)viewDidLoad
@@ -671,62 +680,14 @@
     
     //判断是否点击加号
     if (_isJiaHaoPick) {//点击加号
-        NSLog(@"info ------   %@",info);
-        NSMutableArray * allImageArray = [NSMutableArray array];
-        
-        NSMutableArray * allAssesters = [[NSMutableArray alloc] init];
-        
-        UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
-        
-        UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
-        
-        [allImageArray addObject:newImage];
-        
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-        [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
-         {
-             //here is your URL : assetURL
-             
-             NSString * url_string = [[assetURL absoluteString] stringByReplacingOccurrencesOfString:@"/" withString:@""];
-             
-             url_string = [url_string stringByAppendingString:@".png"];
-             
-             [allAssesters addObject:url_string];
-             
-             
-             [picker dismissViewControllerAnimated:YES completion:^{
-                 WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
-                 
-                 WriteBlog.TempAllImageArray = allImageArray;
-                 
-                 WriteBlog.TempAllAssesters = allAssesters;
-                 
-                 WriteBlog.delegate = self;
-                 
-                 WriteBlog.theType = WriteBlogWithImagesAndContent;
-                 
-                 UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
-                 
-                 [self presentViewController:nav animated:YES completion:^{
-                     
-                 }];
-             }];
-             
-             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-                 [ZSNApi saveImageToDocWith:url_string WithImage:image1];
-             });
-         }];
+
     }else{//更换topviewImage不是点击加号
         
         [UIApplication sharedApplication].statusBarHidden = NO;
         NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
         
         if ([mediaType isEqualToString:@"public.image"]) {
-            
-            
-            
-            
+       
             //压缩图片 不展示原图
             UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
             
@@ -744,9 +705,6 @@
             //[imageCrop showWithAnimation:NO];
             picker.navigationBar.hidden = YES;
             [picker pushViewController:imageCrop animated:YES];
-            
-            
-            
             
             
         }
@@ -972,11 +930,14 @@
                 
                 break;
             case 1://相册
+            {
                 picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            
+                
                 [self presentViewController:picker animated:YES completion:^{
                     
                 }];
+            }
+                
                 break;
                 
             case 2://取消
