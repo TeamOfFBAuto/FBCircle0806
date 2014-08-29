@@ -262,6 +262,8 @@
 {
 //    __weak typeof(self)weakSelf = self;
     
+    __weak typeof(RefreshTableView *)weakTable = _table;
+    
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -269,7 +271,14 @@
         NSLog(@"result %@",result);
         
         [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
-        
+        int errcode = [[result objectForKey:@"errcode"]integerValue];
+        if (errcode == 0) {
+            
+            [_table.tableHeaderView removeFromSuperview];
+            
+            _inforum = 1;
+            weakTable.tableHeaderView = [self createTableHeaderView];
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);

@@ -27,7 +27,7 @@
 @property(nonatomic,retain)NSString *uptime;//更新时间
 @property(nonatomic,retain)NSString *dateline;//创建时间
 
-@property(nonatomic,assign)int inForum;//是否在此论坛中
+@property(nonatomic,assign)int inForum;//是否在此论坛中 (决定用户权限) 0-不在，1-创建者，2-普通用户
 
 @property(nonatomic,assign)int inforum;//是否在此论坛中(论坛信息页)
 

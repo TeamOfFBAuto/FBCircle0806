@@ -12,6 +12,7 @@
 #import "ClassifyBBSController.h"
 #import "PraiseMemberController.h"
 #import "ShowImagesViewController.h"
+#import "BBSListViewController.h"
 
 #import "LTools.h"
 #import "LSecionView.h"
@@ -230,15 +231,15 @@ typedef enum{
         return;
     }
     
-    
+    __weak typeof(self)weakSelf = self;
     if (titles.count == 1) {
-        __weak typeof(self)weakSelf = self;
+        
         LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
             if (buttonIndex == 0) {
                 
                 NSLog(@"删除");
                 
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定删除帖子？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定删除帖子？" delegate:weakSelf cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                 [alert show];
             }
             
@@ -248,7 +249,6 @@ typedef enum{
         return;
     }
     
-    __weak typeof(self)weakSelf = self;
     LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {
             
@@ -280,6 +280,18 @@ typedef enum{
 - (void)clickJoinBBS:(UIButton *)sender
 {
    
+}
+
+/**
+ *  进入帖子列表
+ *
+ *  @param sender
+ */
+- (void)clickToBBSList:(id)sender
+{
+    BBSListViewController *list = [[BBSListViewController alloc]init];
+    list.bbsId = self.fid;
+    [self PushToViewController:list WithAnimation:YES];
 }
 
 #pragma mark - 数据解析
@@ -627,12 +639,16 @@ typedef enum{
     basic_view.layer.cornerRadius = 3.f;
     
     //论坛name
-    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(10, 0, 150, 40) title:infoModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+//    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(10, 0, 150, 40) title:infoModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+//    [basic_view addSubview:nameLabel];
+    
+    LButtonView *nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_Down];
     [basic_view addSubview:nameLabel];
     
     //帖子数
     NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
-    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 * 2, 40) title:title font:13 align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"90a1cd"]];
+    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10, 40) title:title font:13 align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"90a1cd"]];
+    numLabel.backgroundColor= [UIColor clearColor];
     [basic_view addSubview:numLabel];
     
     //精 帖
