@@ -177,7 +177,7 @@
             UIButton *suggestFriendButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 54, 320, 94/2)];
             [_SearchheaderV addSubview:suggestFriendButton];
             [suggestFriendButton addTarget:self action:@selector(turnToSuggestFriendVC) forControlEvents:UIControlEventTouchUpInside];
-            [suggestFriendButton setTitle:@"推荐好友" forState:UIControlStateNormal];
+            [suggestFriendButton setTitle:@"新的朋友" forState:UIControlStateNormal];
                    suggestFriendButton.titleLabel.font=[UIFont systemFontOfSize:15];
             [suggestFriendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [suggestFriendButton setImage:[UIImage imageNamed:@"tuijianhaoyou-94_94.png"] forState:UIControlStateNormal];
@@ -292,7 +292,7 @@
 -(void)turnToSuggestFriendVC{
     
     SuggestFriendViewController *_matchingVC=[[SuggestFriendViewController alloc]init];
-    _matchingVC.str_title=@"推荐好友";
+    _matchingVC.str_title=@"新的朋友";
     [self.navigationController pushViewController:_matchingVC animated:YES];
     
 }
@@ -416,7 +416,7 @@
         
         _label.backgroundColor=[UIColor grayColor];
         
-        _label.backgroundColor=RGBCOLOR(250, 250, 250);
+        _label.backgroundColor=RGBCOLOR(240, 240, 210);
         
         [aview addSubview:_label];
     }else{
