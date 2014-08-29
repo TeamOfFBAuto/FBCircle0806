@@ -29,6 +29,8 @@
 
 #import "MLImageCrop.h"
 
+@class MainViewController;
+
 @interface GRXX4ViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,UIAlertViewDelegate,MLImageCropDelegate>
 
 {
@@ -102,9 +104,9 @@
 @property(nonatomic,assign)BOOL isGmyFootPass;//是否是我的足迹界面跳转过来的
 
 
+@property(nonatomic,assign)BOOL isMinVc;//是否从tabbar最后的我里跳转过来的
 
-
-
+@property(nonatomic,assign)BOOL isTuichuDenglu;//是否点击的是退出登录
 
 
 

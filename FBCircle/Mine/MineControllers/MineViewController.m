@@ -53,8 +53,8 @@
     
 
     [self loadView];
+    
     [self prepareNetData];
-
 
 }
 
@@ -115,8 +115,7 @@
         [self.userFaceImageView setImageWithURL:[NSURL URLWithString:self.personModel.person_face] placeholderImage:[UIImage imageNamed:@"headimg150_150.png"]];
         self.userNameLabel.text = self.personModel.person_username;
         self.userWordsLabel.text = self.personModel.person_words;
-        
- 
+        [mainTab reloadData];
         
     } WithFailedBlcok:^(NSString *string) {
         
@@ -129,6 +128,7 @@
 #pragma 头像点击跳转个人设置
 -(void)doTap{
     GRXX4ViewController *grxx4 = [[GRXX4ViewController alloc]init];
+    grxx4.isMinVc = YES;
     //grxx4.isPersonalSettingClicked = YES;
     grxx4.passUserid = [SzkAPI getUid];
     

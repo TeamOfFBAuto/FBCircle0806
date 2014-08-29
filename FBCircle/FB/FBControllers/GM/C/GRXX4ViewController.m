@@ -12,6 +12,8 @@
 
 #import "MainViewController.h"
 
+#import "MineViewController.h"
+
 
 
 @interface GRXX4ViewController ()
@@ -27,6 +29,16 @@
     
     NSLog(@"%s",__FUNCTION__);
 }
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    if (self.isTuichuDenglu) {
+        self.tabBarController.selectedIndex = 0;
+    }
+}
+
+
 
 
 - (void)viewDidLoad
@@ -108,8 +120,8 @@
     
     
     
-//    //判断是否为好友 判断完成之后请求网络数据
-//    
+    //判断是否为好友 判断完成之后请求网络数据
+    
 //    //开启监控
 //    [[AFNetworkActivityIndicatorManager sharedManager]setEnabled:YES];
 //    [[AFNetworkReachabilityManager sharedManager]startMonitoring];
@@ -137,7 +149,8 @@
 //        }
 //    }];
     
-//   [self panduanIsFriend];
+    [self panduanIsFriend];
+
     
 }
 
@@ -912,11 +925,19 @@
         
         
         
-
-        self.tabBarController.selectedIndex = 0;
         
-        MainViewController *mainVc = [self.navigationController.viewControllers objectAtIndex:0];
-        [self.navigationController popToViewController:mainVc animated:YES];
+        
+        
+        if (self.isMinVc) {
+            self.isTuichuDenglu = YES;
+            MineViewController *mineVc = [self.navigationController.viewControllers objectAtIndex:0];
+            mineVc.personModel = nil;
+            [self.navigationController popToViewController:mineVc animated:YES];
+        }else{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        }
+        
         
         
     }
