@@ -22,6 +22,9 @@
 
 - (void)dealloc
 {
+    
+    
+    
     NSLog(@"%s",__FUNCTION__);
 }
 
@@ -105,36 +108,36 @@
     
     
     
-    //判断是否为好友 判断完成之后请求网络数据
+//    //判断是否为好友 判断完成之后请求网络数据
+//    
+//    //开启监控
+//    [[AFNetworkActivityIndicatorManager sharedManager]setEnabled:YES];
+//    [[AFNetworkReachabilityManager sharedManager]startMonitoring];
+//    //设置网络状况监控后的代码块
+//    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+//        switch ([[AFNetworkReachabilityManager sharedManager]networkReachabilityStatus]) {
+//            case AFNetworkReachabilityStatusReachableViaWiFi:
+//                NSLog(@"WiFi");
+//                [self panduanIsFriend];
+//                break;
+//            case AFNetworkReachabilityStatusReachableViaWWAN:
+//                NSLog(@"WWAN");
+//                [self panduanIsFriend];
+//                break;
+//            case AFNetworkReachabilityStatusUnknown:
+//                NSLog(@"Unknown");
+//                
+//                
+//                break;
+//            case AFNetworkReachabilityStatusNotReachable:
+//                NSLog(@"NotReachable");
+//                break;
+//            default:
+//                break;
+//        }
+//    }];
     
-    //开启监控
-    [[AFNetworkActivityIndicatorManager sharedManager]setEnabled:YES];
-    [[AFNetworkReachabilityManager sharedManager]startMonitoring];
-    //设置网络状况监控后的代码块
-    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        switch ([[AFNetworkReachabilityManager sharedManager]networkReachabilityStatus]) {
-            case AFNetworkReachabilityStatusReachableViaWiFi:
-                NSLog(@"WiFi");
-                [self panduanIsFriend];
-                break;
-            case AFNetworkReachabilityStatusReachableViaWWAN:
-                NSLog(@"WWAN");
-                [self panduanIsFriend];
-                break;
-            case AFNetworkReachabilityStatusUnknown:
-                NSLog(@"Unknown");
-                
-                
-                break;
-            case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"NotReachable");
-                break;
-            default:
-                break;
-        }
-    }];
-    
-   
+//   [self panduanIsFriend];
     
 }
 
@@ -797,10 +800,8 @@
         
         //请求文章数据
         FBCircleModel *fbModel = [[FBCircleModel alloc]init];
+        self.fbModel = fbModel;
         [fbModel initHttpRequestWithUid:self.passUserid Page:1 WithType:2 WithCompletionBlock:^( NSMutableArray *array) {
-            
-            
-            
             
             bself.wenzhangArray = array;
             [btableView reloadData];

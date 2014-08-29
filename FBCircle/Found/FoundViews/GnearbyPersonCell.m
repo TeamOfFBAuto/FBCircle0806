@@ -63,8 +63,8 @@
 //填充数据
 -(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array{
     NSLog(@"%s",__FUNCTION__);
-    
-    self.userId = @"1088641";
+    NSString *userid = [NSString stringWithFormat:@"%@",array[theIndexPath.row]];
+    self.userId = userid;
     NSLog(@"dddd");
 }
 

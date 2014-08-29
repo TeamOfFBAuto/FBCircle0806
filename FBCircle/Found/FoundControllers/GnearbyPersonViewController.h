@@ -21,5 +21,8 @@
     
     NSTimer * timer;
     BOOL _isFire;
+    
+    
+    NSArray *_userids;//获取到的用户的ids
 }
 @end

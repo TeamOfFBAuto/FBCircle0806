@@ -69,6 +69,7 @@
 
 
 @property(nonatomic,strong)FBCirclePersonalModel *personModel;//展示信息数据源
+@property(nonatomic,strong)FBCircleModel *fbModel;//文章请求
 
 
 @property(nonatomic,strong)NSMutableArray *wenzhangArray;//用于展示足迹的三张图片数组

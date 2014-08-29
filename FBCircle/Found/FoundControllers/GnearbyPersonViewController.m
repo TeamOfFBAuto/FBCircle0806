@@ -77,7 +77,7 @@
 
     
     //每隔一段时间 更新用户位置
-    timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
     [timer fire];
 
 }
@@ -137,27 +137,35 @@
         NSLog(@"%@",result);
         
         NSArray *dataInfoArray = [result objectForKey:@"datainfo"];
+        _userids = [NSArray arrayWithArray:dataInfoArray];
         
-        if (dataInfoArray.count < _pageCapacity) {
-            
-            _tableView.isHaveMoreData = NO;
-        }else
-        {
-            _tableView.isHaveMoreData = YES;
-        }
+        
+//        if (dataInfoArray.count < _pageCapacity) {
+//            
+//            _tableView.isHaveMoreData = NO;
+//        }else
+//        {
+//            _tableView.isHaveMoreData = YES;
+//        }
         
         
         [bself reloadData:dataInfoArray isReload:_tableView.isReloadData];
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        if (_tableView.isReloadData) {
-            
-            _page --;
-            
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
-        }
+//        if (_tableView.isReloadData) {
+//            
+//            _page --;
+//            
+//            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+//        }
     }];
 }
 
+
+
+//通过多个uid获取用户信息
+-(void)getUsersInfoWithUids:(NSArray *)userids{
+    
+}
 
 #pragma mark - 下拉刷新上提加载更多
 /**

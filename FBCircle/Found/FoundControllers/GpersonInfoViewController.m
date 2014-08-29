@@ -204,11 +204,11 @@
     }
     
     //遍历数组 倒着放图片
-    for (int i = 0; i<self.imaCount; i++) {
-        UIImageView *imv = imavMutableArray[self.imaCount-i-1];
-        imv.frame = CGRectMake(200-(i+1)*63-10, 0, 56, 56);
-        [view addSubview:imv];
-    }
+//    for (int i = 0; i<self.imaCount; i++) {
+//        UIImageView *imv = imavMutableArray[self.imaCount-i-1];
+//        imv.frame = CGRectMake(200-(i+1)*63-10, 0, 56, 56);
+//        [view addSubview:imv];
+//    }
     
     [infoView addSubview:view];
     
