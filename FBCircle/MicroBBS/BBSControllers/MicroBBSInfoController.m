@@ -146,6 +146,9 @@
         
         if (errcode == 0) {
             
+            //加入论坛状态通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:@{@"joinState":[NSNumber numberWithBool:leave],@"bbsId":self.bbsId}];
+            
             NSString *info = leave ? @"退出论坛成功" : @"加入论坛成功";
             
             [LTools showMBProgressWithText:info addToView:weakSelf.view];

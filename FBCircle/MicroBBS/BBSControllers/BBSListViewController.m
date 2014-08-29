@@ -70,10 +70,14 @@
     
     [self getBBSTopicList:self.bbsId];
     
+    //更新数据
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTopic:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateJoinState:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _table.dataSource = nil;
     _table.refreshDelegate = nil;
     _table = nil;
@@ -85,7 +89,36 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 #pragma mark - 事件处理
+
+/**
+ *  通知更新数据
+ *
+ */
+-(void)updateTopic:(NSNotification *)sender
+{
+    [_table showRefreshHeader:NO];
+}
+/**
+ *  通知更新加入论坛状态
+ */
+- (void)updateJoinState:(NSNotification *)sender
+{
+    BOOL leave = [[sender.userInfo objectForKey:@"joinState"]boolValue];
+    if (leave) {
+        
+        _inforum = 0;
+        
+    }else{
+        _inforum = 1;
+    }
+    
+    [_table.tableHeaderView removeFromSuperview];
+    
+    _table.tableHeaderView = [self createTableHeaderView];
+}
 
 //论坛信息页
 - (void)clickToBBSInfo:(UIGestureRecognizer *)tap
@@ -278,6 +311,9 @@
             
             _inforum = 1;
             weakTable.tableHeaderView = [self createTableHeaderView];
+            
+            //加入论坛通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:@{@"joinState": @"1",@"bbsId":self.bbsId}];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -417,7 +453,7 @@
 {
     NSLog(@"loadNewData");
     //获取论坛基本信息
-    [self getBBSInfoId:self.bbsId];
+//    [self getBBSInfoId:self.bbsId];
     
     //帖子列表
     

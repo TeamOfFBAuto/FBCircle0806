@@ -118,6 +118,18 @@
 }
 
 
+-(void)showRefreshNoOffset
+{
+    _isReloadData = YES;
+    
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewData)]) {
+        
+        self.pageNum = 1;
+        [_refreshDelegate performSelector:@selector(loadNewData)];
+    }
+}
+
+
 #pragma mark - EGORefreshTableDelegate
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos
 {

@@ -38,6 +38,8 @@
     BOOL hot_recommend;//热门推荐
     
     UIView *headerView;
+    
+    BOOL _needRefresh;
 }
 
 @end
@@ -58,6 +60,13 @@
     [super viewWillAppear:animated];
     
     NSLog(@"auteykey %@",[SzkAPI getAuthkey]);
+    
+    if (_needRefresh) {
+        
+        [_table showRefreshNoOffset];
+        
+        _needRefresh = NO;
+    }
 }
 
 - (void)viewDidLoad
@@ -113,6 +122,10 @@
     }
     
     [self loadNewData];
+    
+    //更新数据
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,6 +134,11 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - 事件处理
+
+- (void)updateBBS:(NSNotification *)sender
+{
+    _needRefresh = YES;
+}
 
 //进入我的论坛
 

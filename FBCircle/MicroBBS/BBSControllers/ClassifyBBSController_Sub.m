@@ -16,7 +16,7 @@
 @interface ClassifyBBSController_Sub ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
-    NSArray *_dataArray;
+    BOOL _needRefresh;//是否需要更新
 }
 
 @end
@@ -30,6 +30,18 @@
         // Custom initialization
     }
     return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (_needRefresh) {
+    
+        [_table showRefreshNoOffset];
+        
+        _needRefresh = NO;
+    }
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
@@ -54,6 +66,8 @@
     [self.view addSubview:_table];
     
     [_table showRefreshHeader:YES];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateJoinState:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,13 +78,18 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     _table.refreshDelegate = nil;
     _table.dataSource = nil;
     _table = nil;
-    _dataArray = nil;
 }
 
 #pragma mark - 事件处理
+
+- (void)updateJoinState:(NSNotification *)sender
+{
+    _needRefresh = YES;
+}
 
 /**
  *  搜索页
@@ -133,11 +152,14 @@
         
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         
-        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+        if ([result isKindOfClass:[NSDictionary class]]) {
             
-            [LTools showMBProgressWithText:[result objectForKey:@"ERRO_INFO"] addToView:self.view];
+            int erroCode = [[result objectForKey:@"errcode"]integerValue];
+            if (erroCode == 0) {
+                //加入论坛通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:nil];
+            }
         }
         
         

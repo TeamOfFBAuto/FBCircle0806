@@ -332,6 +332,8 @@
             
             if ([[allDic objectForKey:@"errcode"] intValue] == 0)
             {
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_TOPICLIST object:nil];
+                
                 [bself.navigationController popViewControllerAnimated:YES];
             }else
             {

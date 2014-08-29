@@ -49,6 +49,8 @@
 -(void)showRefreshHeader:(BOOL)animated;//代码出发刷新
 - (void)finishReloadigData;
 
+-(void)showRefreshNoOffset;//无偏移刷新数据
+
 - (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据
 - (void)loadFail;//请求数据失败
 

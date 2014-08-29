@@ -24,6 +24,14 @@
 #define L_PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
+//通知
+
+#define NOTIFICATION_UPDATE_TOPICLIST @"TOPIC_LIST" //帖子列表更新通知
+#define NOTIFICATION_UPDATE_BBS_JOINSTATE @"BBS_JOINSTATE" //论坛加入状态通知
+
+//是否需要更新
+#define UPDATE_BBSSUB_LIST @"UPDATE_BBSSUB_LIST" //是否论坛加入状态列表
+
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent);//版本更新

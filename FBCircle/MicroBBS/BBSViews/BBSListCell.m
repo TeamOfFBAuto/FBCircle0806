@@ -26,7 +26,12 @@
 - (void)setCellDataWithModel:(TopicModel *)aModel
 {
     self.aTitleLabel.text = aModel.title;
-    self.nameAndAddressLabel.text = [NSString stringWithFormat:@"%@  |  %@",aModel.username,aModel.address];
+    
+    NSString *address = [LTools NSStringNotNull:aModel.address];
+    
+    NSString *str = [address isEqualToString:@""] ? [NSString stringWithFormat:@"%@",aModel.username] : [NSString stringWithFormat:@"%@  |  %@",aModel.username,aModel.address];
+    
+    self.nameAndAddressLabel.text = str;
     self.timeAndCommentLabel.text = [NSString stringWithFormat:@"%@  |   %@评论",[ZSNApi timestamp:aModel.time],aModel.comment_num];
 //    小野人  |  广东 佛山
 //    13分钟前  |   10评论

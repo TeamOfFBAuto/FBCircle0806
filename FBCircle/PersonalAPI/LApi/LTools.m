@@ -652,6 +652,8 @@
 {
     if (![text isKindOfClass:[NSString class]]) {
         return @"";
+    }else if ([text isEqualToString:@"(null)"]){
+        return @"";
     }
     return text;
 }
