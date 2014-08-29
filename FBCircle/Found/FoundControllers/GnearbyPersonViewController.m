@@ -83,7 +83,7 @@
     
     
     //每隔一段时间 更新用户位置
-    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
     [timer fire];
 
 }
@@ -268,7 +268,7 @@
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+//    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     _guserLocation = userLocation;
     
 //    [_mapView updateLocationData:userLocation];

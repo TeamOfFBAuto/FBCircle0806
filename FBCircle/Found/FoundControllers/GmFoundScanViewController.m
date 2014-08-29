@@ -224,8 +224,6 @@
      {
          [timer invalidate];
          NSLog(@"123");
-         
-         
          NSLog(@"%@",stringValue);
          
          

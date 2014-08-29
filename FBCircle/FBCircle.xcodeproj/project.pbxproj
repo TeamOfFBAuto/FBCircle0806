@@ -947,6 +947,7 @@
 		56D6E335199B468200607DC5 /* brid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D6E333199B468200607DC5 /* brid@2x.png */; };
 		B15A5508DFA84914A2D845DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3093716B5174DF29B814680 /* libPods.a */; };
 		E30CDF9D19ADC94900719F58 /* GallJiuyuanduiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E30CDF9C19ADC94900719F58 /* GallJiuyuanduiTableViewCell.m */; };
+		E30E0A5719AF1DBD00B16307 /* GcustomImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30E0A5619AF1DBD00B16307 /* GcustomImagePickerViewController.m */; };
 		E313148B19AA5A7C0041F998 /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E313148A19AA5A7C0041F998 /* GMAPI.m */; };
 		E315DF4F199C5E3B00EA9109 /* GpersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E315DF4E199C5E3B00EA9109 /* GpersonInfoViewController.m */; };
 		E3208ABA19A43D210099C829 /* GnearbyPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208AB519A43D210099C829 /* GnearbyPersonCell.m */; };
@@ -1739,6 +1740,8 @@
 		D3093716B5174DF29B814680 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E30CDF9B19ADC94900719F58 /* GallJiuyuanduiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GallJiuyuanduiTableViewCell.h; sourceTree = "<group>"; };
 		E30CDF9C19ADC94900719F58 /* GallJiuyuanduiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GallJiuyuanduiTableViewCell.m; sourceTree = "<group>"; };
+		E30E0A5519AF1DBD00B16307 /* GcustomImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomImagePickerViewController.h; sourceTree = "<group>"; };
+		E30E0A5619AF1DBD00B16307 /* GcustomImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomImagePickerViewController.m; sourceTree = "<group>"; };
 		E313148919AA5A7C0041F998 /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
 		E313148A19AA5A7C0041F998 /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
 		E315DF4D199C5E3B00EA9109 /* GpersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonInfoViewController.h; sourceTree = "<group>"; };
@@ -2944,6 +2947,8 @@
 				56A64A60198F6AD800451413 /* GscanfViewController.m */,
 				56A64A61198F6AD800451413 /* GupData.h */,
 				56A64A62198F6AD800451413 /* GupData.m */,
+				E30E0A5519AF1DBD00B16307 /* GcustomImagePickerViewController.h */,
+				E30E0A5619AF1DBD00B16307 /* GcustomImagePickerViewController.m */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -4638,6 +4643,7 @@
 				56A648E8198F512A00451413 /* EGORefreshTableHeaderView.m in Sources */,
 				5617321119926004001B8574 /* QBImagePickerAssetCell.m in Sources */,
 				1383367219949DDD00F73194 /* LInputView.m in Sources */,
+				E30E0A5719AF1DBD00B16307 /* GcustomImagePickerViewController.m in Sources */,
 				56A64B94198F6BD400451413 /* RegistViewController.m in Sources */,
 				56A64B63198F6BC700451413 /* ZKingLoadingView.m in Sources */,
 				56A64ABE198F6AD800451413 /* GupData.m in Sources */,

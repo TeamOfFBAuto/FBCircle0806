@@ -10,6 +10,7 @@
 #import "GRXX4ViewController.h"
 
 #import "GlocalUserImage.h"
+#import "GcustomImagePickerViewController.h"
 
 @interface GmyFootViewController ()
 
@@ -889,9 +890,6 @@
 #pragma mark - UIActionSheetDelegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    
-    
-    
     if (actionSheet.tag == 100) {//加号
         _isJiaHaoPick = YES;
         switch (buttonIndex) {
@@ -953,18 +951,14 @@
                 _isJiaHaoPick = NO;
                 break;
         }
-        
-        
-        
-        
-        
+
         
         
     }else{//点击topView
         
         UIImagePickerController *picker = [[UIImagePickerController alloc]init];
         picker.delegate = self;
-        
+        [picker.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
         switch (buttonIndex) {
             case 0://拍照
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -978,8 +972,8 @@
                 
                 break;
             case 1://相册
-                picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-                
+                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            
                 [self presentViewController:picker animated:YES completion:^{
                     
                 }];
@@ -991,6 +985,7 @@
             default:
                 break;
         }
+        
     }
     
 }
