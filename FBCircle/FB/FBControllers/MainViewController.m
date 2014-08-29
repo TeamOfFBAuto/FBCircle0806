@@ -1717,6 +1717,7 @@
     
     FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
     
+    
     if (history_selected_menu_page != -1 && history_selected_menu_page != indexPath.row)
     {
         FBCircleModel * history_model = [self.data_array objectAtIndex:history_selected_menu_page];
