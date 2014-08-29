@@ -82,8 +82,6 @@
     {
         NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
         
-//        NSLog(@"image_string ----   %@ ---  %d",image_string,image_string.length);
-        
         if (image_string.length > 0)
         {
             [dictionary setObject:image_string forKey:@"link"];
@@ -434,9 +432,9 @@
                 
             }else
             {
-                //                if (fbCircleFailedBlock) {
-                //                    fbCircleFailedBlock(@"");
-                //                }
+                if (fbCircleFailedBlock) {
+                    fbCircleFailedBlock(@"");
+                }
             }
         }
         @catch (NSException *exception) {

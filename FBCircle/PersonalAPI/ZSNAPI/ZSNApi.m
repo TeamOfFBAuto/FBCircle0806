@@ -73,6 +73,17 @@
 }
 
 
+//按比例缩放
++(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+///
 +(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size{
     // 创建一个bitmap的context
     // 并把它设置成为当前正在使用的context

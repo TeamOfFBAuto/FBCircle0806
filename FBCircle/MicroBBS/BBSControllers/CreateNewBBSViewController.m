@@ -308,7 +308,7 @@
     
     if (theType == 0)///加载图片icon
     {
-        iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(256,9.5,25,25)];
+        iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(280,9.5,25,25)];
         iconImage.image = [UIImage imageNamed:@"mirco_icon_1.png"];//张少南  这里需要修改下默认图片
         [inputView addSubview:iconImage];
         
@@ -321,12 +321,12 @@
         sub_label.font = [UIFont systemFontOfSize:17];
         sub_label.textColor = RGBCOLOR(31,31,31);
         [inputView addSubview:sub_label];
+        
+        UIImageView * arrow_imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell_acessory_image.png"]];
+        arrow_imageView.center = CGPointMake(298,frame.size.height/2);
+        [inputView addSubview:arrow_imageView];
     }
     
-    
-    UIImageView * arrow_imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell_acessory_image.png"]];
-    arrow_imageView.center = CGPointMake(298,frame.size.height/2);
-    [inputView addSubview:arrow_imageView];
     
     return inputView;
 }

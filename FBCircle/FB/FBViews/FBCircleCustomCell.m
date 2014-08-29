@@ -373,8 +373,6 @@
         
         [_PictureViews setthebloc:^(NSInteger index) {
             
-            NSLog(@"index===%ld",(long)index);
-            
             UIViewController *VCtest=(UIViewController *)self.delegate;
             ShowImagesViewController *showBigVC=[[ShowImagesViewController alloc]init];
             showBigVC.allImagesUrlArray=arry_url;

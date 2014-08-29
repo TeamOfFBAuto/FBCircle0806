@@ -147,7 +147,6 @@
         }else
         {
             NSMutableString * urlString = [NSMutableString stringWithFormat:@"%@",[array objectAtIndex:i]];
-            
             [imageView loadImageFromURL:urlString withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
         }
         

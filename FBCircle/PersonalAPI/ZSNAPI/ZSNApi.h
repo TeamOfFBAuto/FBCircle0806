@@ -20,8 +20,11 @@
 
 +(NSArray *)exChangeFriendListByOrder:(NSMutableArray *)theArray;
 
-
+///裁剪图片
 +(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size;
+///按比例缩放图片
++(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize;
+
 
 +(NSString *)returnUrl:(NSString *)theUrl;
 +(NSString *)returnMiddleUrl:(NSString *)theUrl;

@@ -328,8 +328,6 @@
         
         NSArray * image_array = [model.fb_imageid componentsSeparatedByString:@"||"];
         
-        //        NSLog(@"image_array ----   %@",image_array);
-        
         NSString * path = [ZSNApi docImagePath];
         
         
@@ -341,15 +339,14 @@
                 NSString *filePath2 = [path stringByAppendingPathComponent:imgurl];
                 
                 UIImage *image = [UIImage imageWithContentsOfFile:filePath2];
-                
-                if (image) {
+                if (image)
+                {
                     [allImageArray addObject:image];
-                }
-                
-                
+                }                
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                
                 model.fb_image = allImageArray;
                 
                 [self uploadBlogWith:model];
@@ -463,7 +460,7 @@
         for (int i = 0;i < _allImageArray.count; i++)
         {
             UIImage *image=[_allImageArray objectAtIndex:i];
-            
+//            NSLog(@"张少南 -----   %f ----   %f ---  %@",image.size.width,image.size.height,image);
             //  UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
             
             data = UIImageJPEGRepresentation(image,0.5);

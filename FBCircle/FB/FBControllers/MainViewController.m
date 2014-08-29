@@ -639,7 +639,7 @@
             
             imagePickerController = [[QBImagePickerController alloc] init];
             imagePickerController.delegate = self;
-            imagePickerController.allowsMultipleSelection = NO;
+            imagePickerController.allowsMultipleSelection = YES;
             
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
             
@@ -827,7 +827,6 @@
         UIImage * image = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerOriginalImage"];
         
         UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
-        
         [allImageArray addObject:newImage];
         
         NSURL * url = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"];
@@ -870,15 +869,13 @@
     
     if (!isUpdataBanner)
     {
-        NSLog(@"info ------   %@",info);
         NSMutableArray * allImageArray = [NSMutableArray array];
         
         NSMutableArray * allAssesters = [[NSMutableArray alloc] init];
         
         UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
-        
         UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
-        
+        NSLog(@"newImagew == %f ==%f ----  %@",newImage.size.width,newImage.size.height,newImage);
         [allImageArray addObject:newImage];
         
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -913,7 +910,7 @@
              }];
              
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-                 [ZSNApi saveImageToDocWith:url_string WithImage:image1];
+                 [ZSNApi saveImageToDocWith:url_string WithImage:newImage];
              });
          }];
     }else
@@ -1189,7 +1186,7 @@
                 [self loadTableHeaderView];
                 
                 self.myTableView.tableHeaderView = headerView;
-                [self.myTableView reloadData];
+//                [self.myTableView reloadData];
             }
             @catch (NSException *exception) {
                 
@@ -1717,6 +1714,7 @@
     
     FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
     
+    model.isShowMenuView = !model.isShowMenuView;
     
     if (history_selected_menu_page != -1 && history_selected_menu_page != indexPath.row)
     {
@@ -1729,9 +1727,6 @@
             [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0],nil] withRowAnimation:UITableViewRowAnimationFade];
         }
     }
-    
-    
-    model.isShowMenuView = !model.isShowMenuView;
     
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
     
