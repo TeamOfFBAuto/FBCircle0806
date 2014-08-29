@@ -384,7 +384,7 @@
         if ([[arrayinfoaddress objectAtIndex:section] count]==0) {
             return 0;
         }else{
-            return 25;
+            return 23;
         }
         
     }else{
@@ -396,12 +396,12 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
   
-    UIView *aview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 25)];
+    UIView *aview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 23)];
 
     if (tableView==_mainTabV) {
         aview.backgroundColor=[UIColor whiteColor];
         
-        UIView *lingV=[[UIView alloc]initWithFrame:CGRectMake(12, 24.5, 320-24, 0.5)];
+        UIView *lingV=[[UIView alloc]initWithFrame:CGRectMake(12, 22.5, 320-24, 0.5)];
         lingV.backgroundColor=RGBCOLOR(225, 225, 225);
         [aview addSubview:lingV];
         
@@ -410,13 +410,17 @@
         lingV2.backgroundColor=RGBCOLOR(225, 225, 225);
         [aview addSubview:lingV2];
         
-        UILabel *_label=[[UILabel alloc]initWithFrame:CGRectMake(12, 0.5, 320-24, 24)];
+        UILabel *_label=[[UILabel alloc]initWithFrame:CGRectMake(12, 0.5, 320-24, 22)];
         
         _label.text=[NSString stringWithFormat:@"    %c",'A'+section];
         
         _label.backgroundColor=[UIColor grayColor];
         
-        _label.backgroundColor=RGBCOLOR(240, 240, 210);
+        _label.textColor=RGBACOLOR(123, 123, 129, 1);
+        
+        _label.font=[UIFont systemFontOfSize:12];
+        
+        _label.backgroundColor=RGBCOLOR(236, 236, 244);
         
         [aview addSubview:_label];
     }else{

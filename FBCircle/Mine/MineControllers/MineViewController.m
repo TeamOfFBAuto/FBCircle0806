@@ -47,6 +47,11 @@
         [view removeFromSuperview];
     }
     
+    self.iconArr=[NSArray arrayWithObjects:@"fbMetongxunlu.png",@"fbMeclock.png",@"fbMeclear.png",@"fbMeyijian.png",@"fbMefb.png", nil];
+    
+    self.titleArr=[NSArray arrayWithObjects:@"通讯录",@"我的足迹",@"清除缓存",@"意见反馈",@"关于fb圈", nil];
+    
+
     [self loadView];
     [self prepareNetData];
 
@@ -71,11 +76,6 @@
     
 //    self.navigationItem.title=@"我";
     self.titleLabel.text=@"我";
-    
-    self.iconArr=[NSArray arrayWithObjects:@"fbMetongxunlu.png",@"fbMeclock.png",@"fbMeclear.png",@"fbMeyijian.png",@"fbMefb.png", nil];
-    
-    self.titleArr=[NSArray arrayWithObjects:@"通讯录",@"我的足迹",@"清除缓存",@"意见反馈",@"关于fb圈", nil];
-    
 
     
     
@@ -83,6 +83,7 @@
 }
 
 -(void)loadView{
+    
     [super loadView];
     
  
