@@ -57,9 +57,9 @@
      uid = 355696;
      uname = ivyandrich;
      */
+    self.selected_button.selected = NO;
     
-    
-    [_headImageV setImageWithURL:[NSURL URLWithString:FriendAttributemodel.face] placeholderImage:[UIImage imageNamed:@"xiaotouxiang_92_92.png"]];
+    [_headImageV sd_setImageWithURL:[NSURL URLWithString:FriendAttributemodel.face] placeholderImage:[UIImage imageNamed:@"xiaotouxiang_92_92.png"]];
     _nameLabel.text=FriendAttributemodel.uname;
     
 }

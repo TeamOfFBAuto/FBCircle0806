@@ -233,7 +233,6 @@
     //    } else {
     //        self.imageView.image = [self tintedThumbnail];
     //    }
-    
     [self.delegate assetView:self didChangeSelectionState:self.selected];
 }
 

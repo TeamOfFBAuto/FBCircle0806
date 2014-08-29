@@ -107,7 +107,7 @@
     // [self getmyFriendList];
     self.navigationController.navigationBarHidden=NO;
     
-    _mainTabV.frame=CGRectMake(0,44, 320,(iPhone5?568:480)-64);
+//    _mainTabV.frame=CGRectMake(0,44, 320,(iPhone5?568:480)-64);
     _searchTabV.hidden=YES;
     [arrayOfSearchResault removeAllObjects];
     [_searchTabV reloadData];
@@ -165,7 +165,7 @@
     
     
     //1
-    _mainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0,44, 320,(iPhone5?568:480)-64-44)];
+    _mainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0,44,320,(iPhone5?568:480)-64-44)];
     [self.view addSubview:_mainTabV];
     [_mainTabV registerClass:[BBSAddMemberCell class] forCellReuseIdentifier:@"identifier"];
     
@@ -381,7 +381,11 @@
         FriendAttribute *_model=[[arrayinfoaddress objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         
         [cell setFriendAttribute:_model];
-        
+    
+        if ([name_array containsObject:_model])
+        {
+            cell.selected_button.selected = YES;
+        }
     }else{
         
         FriendAttribute *_model=[arrayOfSearchResault objectAtIndex:indexPath.row];

@@ -744,6 +744,10 @@
         return;
     }
     
+    
+    [self.myTextView resignFirstResponder];
+    
+    
 //    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",nil];
 //    
 //    [actionSheet showInView:self.view];
@@ -838,7 +842,7 @@
     circleModel.fb_face = [SzkAPI getUserFace];
     circleModel.fb_content = self.myTextView.text;
     circleModel.fb_deteline = [ZSNApi timechangeToDateline];
-    circleModel.fb_image = self.allImageArray;
+    circleModel.fb_image = [NSMutableArray arrayWithArray:self.allImageArray];
     circleModel.fb_imageid = [self returnAllImageUrlWithImage:self.allImageArray];
     circleModel.fb_area = area_string;
     circleModel.fb_lng = [NSString stringWithFormat:@"%f",longitude];

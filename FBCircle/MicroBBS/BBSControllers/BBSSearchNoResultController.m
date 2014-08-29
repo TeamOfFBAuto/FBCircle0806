@@ -7,6 +7,7 @@
 //
 
 #import "BBSSearchNoResultController.h"
+#import "CreateNewBBSViewController.h"
 
 @interface BBSSearchNoResultController ()
 {
@@ -62,7 +63,8 @@
 
 - (void)clickToCreateBBS:(UIButton *)sender
 {
-    
+    CreateNewBBSViewController * createBBS = [[CreateNewBBSViewController alloc] init];
+    [self.navigationController pushViewController:createBBS animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

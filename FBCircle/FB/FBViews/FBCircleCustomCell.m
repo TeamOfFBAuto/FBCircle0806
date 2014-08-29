@@ -198,10 +198,9 @@
     
     if (!_menu_button) {
         _menu_button = [UIButton buttonWithType:UIButtonTypeCustom];
-        _menu_button.frame = CGRectMake(250,0,60,30);
+        _menu_button.frame = CGRectMake(276,0,45,30);
         [_menu_button setImage:[UIImage imageNamed:@"pinglun-icon-66_24.png"] forState:UIControlStateNormal];
         _menu_button.backgroundColor=[UIColor clearColor];
-        _menu_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_menu_button addTarget:self action:@selector(clickMenuTap:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_menu_button];
     }

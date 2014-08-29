@@ -31,7 +31,8 @@
 
 -(void)back
 {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 
@@ -54,15 +55,15 @@
     [navImageView addSubview:daohangView];
     
     
-//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
-//    
-//    [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [button_back setBackgroundImage:[UIImage imageNamed:@"FBQuanBackImage.png"] forState:UIControlStateNormal];
-//    
-//    button_back.center = CGPointMake(20,42);
-//    
-//    [daohangView addSubview:button_back];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
+    
+    [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+    [button_back setBackgroundImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
+    
+    button_back.center = CGPointMake(20,42);
+    
+    [daohangView addSubview:button_back];
     
     title_label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,150,64)];
     
@@ -84,7 +85,7 @@
     
     chooseButton.frame = CGRectMake(0,0,50,30);
     
-    [chooseButton setTitle:@"完成" forState:UIControlStateNormal];
+    [chooseButton setTitle:@"删除" forState:UIControlStateNormal];
     
     [chooseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
@@ -163,15 +164,13 @@
     ///图片预览完成
     
     
-    [self dismissViewControllerAnimated:YES completion:NULL];
+//    [self dismissViewControllerAnimated:YES completion:NULL];
     
     
-/*删除这张照片
     
     UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"要删除这张照片吗?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" otherButtonTitles:nil,nil];
     
     [actionSheet showInView:self.view];
- */
 }
 
 #pragma mark-UIScrollViewDelegate
@@ -228,10 +227,9 @@
                 preViewBlock(_currentPage);
             }
             
-            
             if (self.AllImagesArray.count ==  0)
             {
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:NULL];
             }
             
             

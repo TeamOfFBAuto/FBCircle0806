@@ -450,6 +450,7 @@
 
 - (void)done
 {
+    NSLog(@"-=-=-=----   %d",self.selectedAssets.array.count);
     [self.delegate assetCollectionViewController:self didFinishPickingAssets:self.selectedAssets.array];
 }
 
@@ -752,16 +753,11 @@
         {
             currentPage--;
             
-            [self.selectedAssets removeObject:asset];
+            int ass_index = [self.assetsView_array indexOfObject:[NSString stringWithFormat:@"%d",assetIndex+1]];
+            
+            [self.selectedAssets removeObjectAtIndex:ass_index];
             
             [self.assetsView_array removeObject:[NSString stringWithFormat:@"%d",assetIndex+1]];
-            
-//            for (int i = 0;i < self.assetsView_array.count;i++)
-//            {
-//                QBImagePickerAssetView * assetV = (QBImagePickerAssetView *)[self.assetsView_array objectAtIndex:i];
-//                
-//                [assetV.overlayImageView setNumberLabel:[NSString stringWithFormat:@"%d",i+1]];
-//            }
             
             [self reloadData];
         }

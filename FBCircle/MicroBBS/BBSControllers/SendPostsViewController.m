@@ -14,6 +14,7 @@
 #import "TakePhotoPreViewController.h"
 #import "WritePreviewDeleteViewController.h"///图片预览类
 #import "CreateNewBBSViewController.h"
+#import "ShowImagesViewController.h"
 
 #define INPUT_HEIGHT 40.5
 
@@ -621,10 +622,19 @@
                 break;
             case 1://预览图片
             {
-                WritePreviewDeleteViewController * preViewVC = [[WritePreviewDeleteViewController alloc] init];
-                preViewVC.AllImagesArray = allImageArray;
-                preViewVC.currentPage = index;
-                [self presentViewController:preViewVC animated:YES completion:NULL];
+//                WritePreviewDeleteViewController * preViewVC = [[WritePreviewDeleteViewController alloc] init];
+//                preViewVC.AllImagesArray = allImageArray;
+//                preViewVC.currentPage = index;
+//                [self presentViewController:preViewVC animated:YES completion:NULL];
+                
+                
+                ShowImagesViewController * showImage = [[ShowImagesViewController alloc] init];
+                showImage.allImagesUrlArray = allImageArray;
+                showImage.currentPage = index;
+//                [self presentViewController:showImage animated:YES completion:NULL];
+                [self PushToViewController:showImage WithAnimation:YES];
+                
+                
             }
                 break;
                 

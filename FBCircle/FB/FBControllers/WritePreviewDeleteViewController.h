@@ -5,12 +5,13 @@
 //  Created by soulnear on 14-5-19.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
-
+///图片预览界面
 #import <UIKit/UIKit.h>
 #import "QBShowImagesScrollView.h"
 
 
 typedef void(^PreViewDeleteBlock)(int currentPage);
+
 
 
 @interface WritePreviewDeleteViewController : MyViewController<QBShowImagesScrollViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate>

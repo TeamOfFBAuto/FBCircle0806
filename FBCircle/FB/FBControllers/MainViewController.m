@@ -219,7 +219,7 @@
     
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    spaceButton.width = MY_MACRO_NAME?-5:5;;
+    spaceButton.width = MY_MACRO_NAME?-15:5;;
     
     //  [self.navigationController pushViewController:[[MatchingAddressBookViewController alloc]init] animated:YES];
     //注册成功或者用户第一次登录，会匹配通讯录
@@ -489,16 +489,20 @@
 -(void)setupRightMenuButton
 {
     
-    UIView * viewww = [[UIView alloc] initWithFrame:CGRectMake(0,0,38/2,37.0/2)];
-    viewww.backgroundColor = [UIColor clearColor];
+//    UIView * viewww = [[UIView alloc] initWithFrame:CGRectMake(0,0,44,44)];
+//    viewww.backgroundColor = [UIColor clearColor];
+    UIButton * back_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    back_button.frame = CGRectMake(0,0,44,44);
+    back_button.backgroundColor = [UIColor clearColor];
     
-    right_button=[[UIButton alloc]initWithFrame:CGRectMake(0,0,38/2,37.0/2)];
+    right_button=[[UIButton alloc]initWithFrame:CGRectMake(15,12,38/2,37.0/2)];
     right_button.backgroundColor = [UIColor clearColor];
-    [right_button addTarget:self action:@selector(rightDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+    right_button.userInteractionEnabled = NO;
+    [back_button addTarget:self action:@selector(rightDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
     [right_button setImage:[UIImage imageNamed:@"fabu-40_40.png"] forState:UIControlStateNormal];
-    [viewww addSubview:right_button];
+    [back_button addSubview:right_button];
     
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:viewww];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_button];
     
     self.navigationItem.rightBarButtonItems = @[spaceButton,back_item];
  
@@ -1834,6 +1838,7 @@
 {
     user_header_imageView.image = [GlocalUserImage getUserFaceImage];
     bannerView.image = [GlocalUserImage getUserBannerImage];
+    [self.myTableView reloadData];
 }
 
 -(void)pushToDetailBlogWith:(FBCircleModel *)model
