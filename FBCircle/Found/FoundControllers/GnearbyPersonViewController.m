@@ -74,13 +74,7 @@
 
 
 -(void)fujinderen{
-    
-//    GpersonInfoViewController *ginfo = [[GpersonInfoViewController alloc]init];
-//    ginfo.passUserid = @"1088641";
-//    
-//    [self.navigationController pushViewController:ginfo animated:YES];
-    
-    
+
     
     //每隔一段时间 更新用户位置
     timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
@@ -140,12 +134,11 @@
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
+        NSLog(@"%@",result);
         
-        NSDictionary *datainfo = [result objectForKey:@"datainfo"];
+        NSArray *dataInfoArray = [result objectForKey:@"datainfo"];
         
-        NSArray *dataArray = [datainfo objectForKey:@"data"];
-        
-        if (dataArray.count < _pageCapacity) {
+        if (dataInfoArray.count < _pageCapacity) {
             
             _tableView.isHaveMoreData = NO;
         }else
@@ -154,7 +147,7 @@
         }
         
         
-        [bself reloadData:dataArray isReload:_tableView.isReloadData];
+        [bself reloadData:dataInfoArray isReload:_tableView.isReloadData];
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (_tableView.isReloadData) {
             

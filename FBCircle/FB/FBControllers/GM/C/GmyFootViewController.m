@@ -680,7 +680,52 @@
     
     //判断是否点击加号
     if (_isJiaHaoPick) {//点击加号
-
+        NSLog(@"info ------   %@",info);
+        NSMutableArray * allImageArray = [NSMutableArray array];
+        
+        NSMutableArray * allAssesters = [[NSMutableArray alloc] init];
+        
+        UIImage *image1 = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        UIImage * newImage = [ZSNApi scaleToSizeWithImage:image1 size:CGSizeMake(720,960)];
+        
+        [allImageArray addObject:newImage];
+        
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        
+        [library writeImageToSavedPhotosAlbum:image1.CGImage orientation:(ALAssetOrientation)image1.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error )
+         {
+             //here is your URL : assetURL
+             
+             NSString * url_string = [[assetURL absoluteString] stringByReplacingOccurrencesOfString:@"/" withString:@""];
+             
+             url_string = [url_string stringByAppendingString:@".png"];
+             
+             [allAssesters addObject:url_string];
+             
+             
+             [picker dismissViewControllerAnimated:YES completion:^{
+                 WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
+                 
+                 WriteBlog.TempAllImageArray = allImageArray;
+                 
+                 WriteBlog.TempAllAssesters = allAssesters;
+                 
+                 WriteBlog.delegate = self;
+                 
+                 WriteBlog.theType = WriteBlogWithImagesAndContent;
+                 
+                 UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
+                 
+                 [self presentViewController:nav animated:YES completion:^{
+                     
+                 }];
+             }];
+             
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+                 [ZSNApi saveImageToDocWith:url_string WithImage:image1];
+             });
+         }];
     }else{//更换topviewImage不是点击加号
         
         [UIApplication sharedApplication].statusBarHidden = NO;
@@ -792,6 +837,7 @@
 //按比例缩放
 -(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
+    
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -799,20 +845,21 @@
     return scaledImage;
 }
 
-//按像素缩放
--(UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
-    // 创建一个bitmap的context
-    // 并把它设置成为当前正在使用的context
-    UIGraphicsBeginImageContext(size);
-    // 绘制改变大小的图片
-    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    // 从当前context中创建一个改变大小后的图片
-    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    // 使当前的context出堆栈
-    UIGraphicsEndImageContext();
-    // 返回新的改变大小后的图片
-    return scaledImage;
-}
+////按像素缩放
+//-(UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+//    
+//    // 创建一个bitmap的context
+//    // 并把它设置成为当前正在使用的context
+//    UIGraphicsBeginImageContext(size);
+//    // 绘制改变大小的图片
+//    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+//    // 从当前context中创建一个改变大小后的图片
+//    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+//    // 使当前的context出堆栈
+//    UIGraphicsEndImageContext();
+//    // 返回新的改变大小后的图片
+//    return scaledImage;
+//}
 
 
 
