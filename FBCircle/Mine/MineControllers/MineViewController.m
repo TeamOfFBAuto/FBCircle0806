@@ -397,6 +397,7 @@
             [self setHidesBottomBarWhenPushed:YES] ;
 
             GmyFootViewController *gmyFootVC = [[GmyFootViewController alloc]init];
+            gmyFootVC.isMineVCPush = YES;
 
             [self PushToViewController:gmyFootVC WithAnimation:YES];
 

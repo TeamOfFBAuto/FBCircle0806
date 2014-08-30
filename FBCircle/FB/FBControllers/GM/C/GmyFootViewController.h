@@ -102,6 +102,9 @@
 
 
 
+@property(nonatomic,assign)BOOL isMineVCPush;//是否是从minevc跳转的页面
+
+
 //上传
 @property(nonatomic,strong)UIImage *userUpImage;//用户剪裁后需要上传的top图片
 @property(nonatomic,strong)NSData *userUpImageData;//用户剪裁后需要上传的图片data格式
