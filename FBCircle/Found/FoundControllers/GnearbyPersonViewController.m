@@ -139,8 +139,6 @@
         NSArray *dataInfoArray = [result objectForKey:@"datainfo"];
         _userids = [NSArray arrayWithArray:dataInfoArray];
         
-        
-        NSLog(@"%d",_userids.count);
 //        if (dataInfoArray.count < _pageCapacity) {
 //            
 //            _tableView.isHaveMoreData = NO;
