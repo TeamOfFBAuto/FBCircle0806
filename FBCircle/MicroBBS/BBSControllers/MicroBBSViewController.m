@@ -126,6 +126,7 @@
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:SUCCESSLOGOUT object:nil];
 }
 
 - (void)didReceiveMemoryWarning
