@@ -209,14 +209,21 @@
 
 - (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView {
     
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        [scrollView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
-        
-    } completion:^(BOOL finished) {
-        
-        [self setState:L_EGOOPullRefreshNormal];
-    }];
+//    [UIView animateWithDuration:0.5 animations:^{
+//        
+//        [scrollView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
+//        
+//    } completion:^(BOOL finished) {
+//        
+//        [self setState:L_EGOOPullRefreshNormal];
+//    }];
+    
+    [UIView beginAnimations:@"hh" context:nil];
+    [UIView setAnimationDuration:0.5];
+    [scrollView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
+    [UIView commitAnimations];
+    
+    [self setState:L_EGOOPullRefreshNormal];
 }
 
 

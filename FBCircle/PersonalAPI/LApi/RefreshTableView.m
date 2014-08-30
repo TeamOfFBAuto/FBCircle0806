@@ -174,7 +174,7 @@
     }
     [self.dataArray addObjectsFromArray:data];
     
-    [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0];
 }
 
 //请求数据失败
@@ -324,7 +324,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

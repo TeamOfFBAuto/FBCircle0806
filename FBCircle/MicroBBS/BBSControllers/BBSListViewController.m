@@ -46,14 +46,13 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     if (_aBBSModel) {
         [_table showRefreshNoOffset];
     }else
     {
         [_table showRefreshHeader:YES];
     }
-    
-    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
@@ -63,11 +62,6 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
         
     self.titleLabel.text = self.navigationTitle;
-//    self.rightImageName = @"pen";
-//
-//    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
-    
-//    [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
@@ -253,8 +247,8 @@
             if ([data isKindOfClass:[NSDictionary class]]) {
                
                 NSMutableArray *arr = [NSMutableArray array];
-                if (_table.isLoadMoreData == NO) {
-                    
+                
+                if (weakTable.isLoadMoreData == NO) {
                     
                     NSArray *top = [data objectForKey:@"top"];
                     
@@ -295,8 +289,6 @@
                 }
                 
                 weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-//                weakTable.tableFooterView = [weakSelf createTableFooterView];
-
                 weakSelf.titleLabel.text = _aBBSModel.name;
                 
             }
@@ -306,7 +298,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:weakSelf.view];
         [weakTable loadFail];
         
     }];
@@ -480,8 +472,6 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
-    //获取论坛基本信息
-//    [self getBBSInfoId:self.bbsId];
     
     //帖子列表
     
@@ -557,7 +547,7 @@
         cell.bgView.layer.cornerRadius = 0.f;
     }
     
-    cell.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
     
