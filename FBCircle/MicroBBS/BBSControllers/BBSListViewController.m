@@ -295,7 +295,7 @@
 {
 //    __weak typeof(self)weakSelf = self;
     
-    __weak typeof(RefreshTableView *)weakTable = _table;
+//    __weak typeof(RefreshTableView *)weakTable = _table;
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -309,11 +309,11 @@
             
             [_table.tableHeaderView removeFromSuperview];
             
-            _inforum = 1;
-            weakTable.tableHeaderView = [self createTableHeaderView];
+//            _inforum = 1;
+//            weakTable.tableHeaderView = [self createTableHeaderView];
             
-            //加入论坛通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:@{@"joinState": @"1",@"bbsId":self.bbsId}];
+            //加入论坛状态通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:@{@"joinState":[NSNumber numberWithBool:NO],@"bbsId":self.bbsId}];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
