@@ -36,4 +36,7 @@
 @property(nonatomic,assign)int imaCount;//展示图片数量
 
 
+@property(nonatomic,assign)int cellType;//自己 别人 好友
+
+
 @end

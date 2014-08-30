@@ -244,7 +244,8 @@ alpha:(a)]
 //根据authkey获取二维码
 #define FBFOUND_MYERWEIMA @"http://ucache.fblife.com/ucode/api.php?uid=%@"
 
-
+//根据一组uid获取用户信息
+#define FUFOUND_USERSID @"http://quan.fblife.com/index.php?c=interface&a=getusers&uids=%@"
 
 
 
