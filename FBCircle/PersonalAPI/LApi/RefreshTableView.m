@@ -122,6 +122,7 @@
 {
     _isReloadData = YES;
     
+    self.userInteractionEnabled = NO;
     if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewData)]) {
         
         self.pageNum = 1;
@@ -223,6 +224,8 @@
         
         [self stopLoading:2];
     }
+    
+    self.userInteractionEnabled = YES;
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view

@@ -44,31 +44,39 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (_aBBSModel) {
+        [_table showRefreshNoOffset];
+    }else
+    {
+        [_table showRefreshHeader:YES];
+    }
+    
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
-    
+        
     self.titleLabel.text = self.navigationTitle;
-    self.rightImageName = @"pen";
-
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+//    self.rightImageName = @"pen";
+//
+//    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
-    [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
+//    [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     
     //数据展示table
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) showLoadMore:NO];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
     _table.backgroundColor = [UIColor clearColor];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:_table];
-    
-    //帖子列表
-    
-    [self getBBSTopicList:self.bbsId];
     
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTopic:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
@@ -116,7 +124,7 @@
     }
     
     [_table.tableHeaderView removeFromSuperview];
-    
+    _table.tableHeaderView = nil;
     _table.tableHeaderView = [self createTableHeaderView];
 }
 
@@ -199,8 +207,13 @@
             
             _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
             
+            if (weakTable.tableHeaderView) {
+                [weakTable.tableHeaderView removeFromSuperview];
+                weakTable.tableHeaderView = nil;
+            }
+            
             weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-            weakTable.tableFooterView = [weakSelf createTableFooterView];
+//            weakTable.tableFooterView = [weakSelf createTableFooterView];
             
             weakSelf.titleLabel.text = _aBBSModel.name;
             
@@ -224,7 +237,7 @@
     __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId,[SzkAPI getUid]];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST,bbsId,[SzkAPI getUid],_table.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -233,18 +246,26 @@
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
+            int total = [[dataInfo objectForKey:@"total"]integerValue];
+            
             NSDictionary *data = [dataInfo objectForKey:@"data"];
             
             if ([data isKindOfClass:[NSDictionary class]]) {
-                
-                NSArray *top = [data objectForKey:@"top"];
-                NSMutableArray *arr = [NSMutableArray arrayWithCapacity:top.count];
-                for (NSDictionary *aDic in top) {
-                    TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
-                    [arr addObject:aModel];
+               
+                NSMutableArray *arr = [NSMutableArray array];
+                if (_table.isLoadMoreData == NO) {
+                    
+                    
+                    NSArray *top = [data objectForKey:@"top"];
+                    
+                    for (NSDictionary *aDic in top) {
+                        TopicModel *aModel = [[TopicModel alloc]initWithDictionary:aDic];
+                        [arr addObject:aModel];
+                    }
+                    
+                    top_array = [NSArray arrayWithArray:arr];
                 }
                 
-                top_array = [NSArray arrayWithArray:arr];
                 
                 NSArray *nomal = [data objectForKey:@"nomal"];
                 
@@ -255,7 +276,7 @@
                     [arr addObject:aModel];
                 }
                 
-                 [weakTable reloadData:arr total:0];
+                 [weakTable reloadData:arr total:total];
             }
             
             int inforum = [[dataInfo objectForKey:@"inforum"]intValue];
@@ -268,9 +289,14 @@
                 
                 _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
                 
-                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-                weakTable.tableFooterView = [weakSelf createTableFooterView];
+                if (weakTable.tableHeaderView) {
+                    [weakTable.tableHeaderView removeFromSuperview];
+                    weakTable.tableHeaderView = nil;
+                }
                 
+                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+//                weakTable.tableFooterView = [weakSelf createTableFooterView];
+
                 weakSelf.titleLabel.text = _aBBSModel.name;
                 
             }
@@ -306,11 +332,6 @@
         [LTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
         int errcode = [[result objectForKey:@"errcode"]integerValue];
         if (errcode == 0) {
-            
-            [_table.tableHeaderView removeFromSuperview];
-            
-//            _inforum = 1;
-//            weakTable.tableHeaderView = [self createTableHeaderView];
             
             //加入论坛状态通知
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:@{@"joinState":[NSNumber numberWithBool:NO],@"bbsId":self.bbsId}];
@@ -417,6 +438,13 @@
         btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(8, recommed_view.bottom + 15, 304, 93 / 2.f) normalTitle:nil image:nil backgroudImage:[UIImage imageNamed:@"jiaruluntan"] superView:headerView target:self action:@selector(clickJoinBBS:)];
         
         self.navigationItem.rightBarButtonItems= nil;
+    }else
+    {
+        self.rightImageName = @"pen";
+        
+        [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+        
+        [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     }
     
     CGFloat aheight = 15 + 15;
@@ -463,6 +491,8 @@
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
+    
+    [self getBBSTopicList:self.bbsId];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -471,6 +501,7 @@
     BBSTopicController *topic = [[BBSTopicController alloc]init];
     topic.fid = aModel.fid;
     topic.tid = aModel.tid;
+    topic.modelIndex = indexPath.row;
     [self PushToViewController:topic WithAnimation:YES];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath

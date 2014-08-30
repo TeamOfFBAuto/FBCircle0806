@@ -189,9 +189,9 @@ alpha:(a)]
 //
 #pragma mark - 微论坛主页 -- 帖子
 
-#define FBCIRCLE_TOPIC_LIST @"http://quan.fblife.com/index.php?c=forum&a=getthreads&fid=%@&uid=%@" //帖子列表
+#define FBCIRCLE_TOPIC_LIST @"http://quan.fblife.com/index.php?c=forum&a=getthreads&fid=%@&uid=%@&page=%d&ps=%d" //帖子列表
 #define FBCIRCLE_TOPIC_LIST_HOT @"http://quan.fblife.com/index.php?c=forum&a=topcomthreads" //热门帖子列表
-#define FBCIRCLE_TOPIC_LIST_MYJOIN @"http://quan.fblife.com/index.php?c=forum&a=topcommythreads&authkey=%@" //我关注的热门帖子列表
+#define FBCIRCLE_TOPIC_LIST_MYJOIN @"http://quan.fblife.com/index.php?c=forum&a=topcommythreads&authkey=%@&page=%d&ps=%d" //我关注的热门帖子列表
 
 #define FBCIRCLE_TOPIC_INFO @"http://quan.fblife.com/index.php?c=forum&a=viewthread&tid=%@&page=%d&ps=%d&uid=%@"//帖子详情
 #define FBCIRCLE_TOPIC_ZAN @"http://quan.fblife.com/index.php?c=forum&a=zanthread&authkey=%@&tid=%@"//赞帖子

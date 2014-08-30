@@ -514,6 +514,11 @@ typedef enum{
                 zan_names_label.text = zan;
                 zan_num_label.text = [NSString stringWithFormat:@"%d",[zan componentsSeparatedByString:@"、"].count];
             }
+            
+            if (action == Action_Topic_Del)
+            {
+                [self popViewControllerDelay:1.5];
+            }
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

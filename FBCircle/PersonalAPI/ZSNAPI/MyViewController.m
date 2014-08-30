@@ -286,6 +286,14 @@
     [self.navigationController pushViewController:controller animated:animation];
 }
 
+/**
+ *  延迟返回
+ */
+- (void)popViewControllerDelay:(CGFloat)seconds
+{
+    [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(back) userInfo:nil repeats:NO];
+}
+
 -(void)dealloc
 {
     NSLog(@"-----%@",self);
