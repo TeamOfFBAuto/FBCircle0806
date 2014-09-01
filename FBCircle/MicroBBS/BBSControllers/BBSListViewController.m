@@ -206,8 +206,9 @@
                 weakTable.tableHeaderView = nil;
             }
             
+            _inforum = _aBBSModel.inforum;
+            
             weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-//            weakTable.tableFooterView = [weakSelf createTableFooterView];
             
             weakSelf.titleLabel.text = _aBBSModel.name;
             
@@ -257,9 +258,12 @@
                         [arr addObject:aModel];
                     }
                     
+                    //置顶帖子
+                    
                     top_array = [NSArray arrayWithArray:arr];
                 }
                 
+                //正常帖子
                 
                 NSArray *nomal = [data objectForKey:@"nomal"];
                 
@@ -351,7 +355,7 @@
     
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 53, 53)];
-    imageView.image = [LTools imageForBBSId:_aBBSModel.id];
+    imageView.image = [LTools imageForBBSId:_aBBSModel.forumclass];
     [basic_view addSubview:imageView];
     
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
@@ -472,6 +476,8 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    
+    [self getBBSInfoId:self.bbsId];
     
     //帖子列表
     

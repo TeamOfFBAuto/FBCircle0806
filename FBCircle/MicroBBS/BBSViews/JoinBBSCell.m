@@ -34,7 +34,7 @@
     topicId = aModel.id;
     cellBlock = aBlock;
     
-    self.imageView.image = [LTools imageForBBSId:aModel.id];
+    self.imageView.image = [LTools imageForBBSId:aModel.headpic];
     self.aTitleLabel.text = aModel.name;
     self.memeberLabel.text = aModel.member_num;
     self.topicLabel.text = aModel.thread_num;

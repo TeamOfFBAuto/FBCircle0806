@@ -25,7 +25,7 @@
 
 -(void)setCellWithModel:(BBSInfoModel *)aModel
 {
-    self.aImageView.image = [LTools imageForBBSId:aModel.fid];
+    self.aImageView.image = [LTools imageForBBSId:aModel.forumclass];
     self.nameLabel.text = aModel.name;
     self.numLabel.text = aModel.newthread_num;
     NSString *numText = @"0";

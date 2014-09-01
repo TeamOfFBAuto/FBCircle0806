@@ -27,7 +27,7 @@
 {
 //    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.headpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     
-    self.aImageView.image = [LTools imageForBBSId:aModel.headpic];
+    self.aImageView.image = [LTools imageForBBSId:aModel.forumclass];
     self.aTitleLabel.text = aModel.name;
     self.memberNumLabel.text = aModel.member_num;
     self.topicNumLabel.text = aModel.thread_num;
