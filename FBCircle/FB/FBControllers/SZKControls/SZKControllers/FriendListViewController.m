@@ -664,7 +664,6 @@
             
         }
         
-        
         UIAlertView *alertV=[[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"获取好友列表失败，原因：%@",theerrinfo] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertV show];
     }
