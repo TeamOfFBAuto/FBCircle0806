@@ -77,9 +77,7 @@
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         @try {
             NSDictionary * allDic = [operation.responseString objectFromJSONString];
-            
-            NSLog(@"allDic ------   %@",allDic);
-            
+                        
             if (!bself.data_array) {
                 bself.data_array = [NSMutableArray array];
             }else
@@ -151,7 +149,6 @@
         
         NSLog(@"发送消息----%@",allDic);
         
-        
         if ([[allDic objectForKey:@"errcode"] intValue]==0)
         {
             if (sendMessageCompletionBlock) {
@@ -160,12 +157,12 @@
         }else
         {
             if (sendMessageFaildBlock) {
-                sendMessageFaildBlock(operation);
+                sendMessageFaildBlock(operation,[allDic objectForKey:@"bbsinfo"]);
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (sendMessageFaildBlock) {
-            sendMessageFaildBlock(operation);
+            sendMessageFaildBlock(operation,@"发送失败，请检查当前网络");
         }
     }];
     

@@ -51,7 +51,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
     [self loadMessageData];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -67,7 +69,6 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
     
     //    NSLog(@"system ---   %@",_system_notification_dictionary);
     //    if ([[_system_notification_dictionary allKeys] containsObject:@"message"])
@@ -189,6 +190,7 @@
         isnewfbnotification = NO;
         
         [self PushToViewController:messageVC WithAnimation:YES];
+        
     }else
     {
         _tixing_label.hidden = YES;

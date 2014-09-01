@@ -72,7 +72,7 @@
     NSLog(@"uids ----  %@",uids_string);
     
     NSString * fullUrl = [NSString stringWithFormat:ADD_MEMBER_URL,[SzkAPI getAuthkey],self.fid,uids_string];
-    
+    NSLog(@"添加成员接口 ---  %@",fullUrl);
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]];
     
     operation_request = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];

@@ -193,12 +193,11 @@
                          CGFloat messageViewFrameBottom = self.view.frame.size.height - INPUT_HEIGHT;
                          if(inputViewFrameY > messageViewFrameBottom)
                              inputViewFrameY = messageViewFrameBottom;
-                         
+                        
                          self.inputToolBarView.frame = CGRectMake(inputViewFrame.origin.x,
                                                                   inputViewFrameY,
                                                                   inputViewFrame.size.width,
                                                                   inputViewFrame.size.height);
-                         
                          UIEdgeInsets insets = UIEdgeInsetsMake(0.0f,
                                                                 0.0f,
                                                                 self.view.frame.size.height - self.inputToolBarView.frame.origin.y - INPUT_HEIGHT,
@@ -206,6 +205,7 @@
                          
                          self.mytableView.contentInset = insets;
                          self.mytableView.scrollIndicatorInsets = insets;
+                         
                          
                          _theTouchView.frame = CGRectMake(0,0,320,self.inputToolBarView.frame.origin.y);
                      }
@@ -513,7 +513,7 @@
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    NSLog(@"+++++++=---%f",scrollView.contentOffset.y);
+    
 }
 
 
@@ -586,7 +586,6 @@
     temp_textView.text = textView.text;
     
     CGFloat height = [temp_textView sizeThatFits:CGSizeMake(textView.frame.size.width,CGFLOAT_MAX)].height;
-    
     CGFloat textViewContentHeight = textView.contentSize.height;
     
     self.previousTextViewContentHeight = height - textViewContentHeight;
@@ -601,7 +600,7 @@
     
     float theheight = (count-temp_count)*18;
     
-    
+    NSLog(@"theheight-=-=-==-=--  %f ----   %f",theheight,height);
     [UIView animateWithDuration:0.25f
                      animations:^{
                          
@@ -636,7 +635,7 @@
     temp_count = count;
     
     
-    self.inputToolBarView.sendButton.enabled = ([textView.text trimWhitespace].length > 0);
+//    self.inputToolBarView.sendButton.enabled = ([textView.text trimWhitespace].length > 0);
 }
 
 
@@ -701,18 +700,14 @@
         
         bself.inputToolBarView.sendButton.enabled = YES;
         
-    } WithFaildBlock:^(AFHTTPRequestOperation *operation) {
-        
+    } WithFaildBlock:^(AFHTTPRequestOperation *operation, NSString *error) {
         bself.inputToolBarView.sendButton.enabled = YES;
         
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"发送失败，请检查您当前网络状况" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:@"" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         
         [alertView show];
-        
     }];
 }
-
-
 
 -(void)finnishendsend2{
     [self.inputToolBarView.myTextView setText:@""];

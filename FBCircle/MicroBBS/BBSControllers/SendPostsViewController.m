@@ -193,7 +193,9 @@
 
 -(void)submitData:(UIButton *)sender
 {
-    if (_title_textView.text.length == 0)
+    NSString * titleString = [_title_textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (titleString.length == 0)
     {
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"请输入标题" message:@""delegate:nil cancelButtonTitle:@"确认" otherButtonTitles:nil,nil];
         [alertView show];

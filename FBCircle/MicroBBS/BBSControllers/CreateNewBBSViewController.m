@@ -146,16 +146,19 @@
 
 -(void)createBBS:(UIButton *)button
 {
-    if (name_tf.text.length == 0)
+    NSString * nameString = [name_tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString * introductionString = [introduction_tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (nameString.length == 0)
     {
         [self showAlertViewWithText:@"微论坛名称不能为空" WithType:FBQuanAlertViewTypeNoJuhua];
         return;
-    }else if (name_tf.text.length > 8)
+    }else if (nameString.length > 8)
     {
         [self showAlertViewWithText:@"微论坛名称不能超过8个字" WithType:FBQuanAlertViewTypeNoJuhua];
         
         return;
-    }else if (introduction_tf.text.length > 50)
+    }else if (introductionString.length > 50)
     {
         [self showAlertViewWithText:@"论坛简介不能超过50个字" WithType:FBQuanAlertViewTypeNoJuhua];
         

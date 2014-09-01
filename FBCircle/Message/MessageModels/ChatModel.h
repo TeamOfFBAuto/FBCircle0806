@@ -12,7 +12,7 @@ typedef void(^ChatModelBlock)(NSMutableArray * array,int count);
 
 typedef void(^SendMessageCompletionBlock)(AFHTTPRequestOperation * operation);
 
-typedef void(^SendMessageFailBlock)(AFHTTPRequestOperation * operation);
+typedef void(^SendMessageFailBlock)(AFHTTPRequestOperation * operation,NSString * error);
 
 
 

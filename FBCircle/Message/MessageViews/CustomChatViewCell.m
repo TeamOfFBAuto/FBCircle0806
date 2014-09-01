@@ -155,13 +155,7 @@
                 
                 [_background_imageView addSubview:imageView];
                 
-                
                 imageView.userInteractionEnabled = YES;
-                
-//                UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doTap:)];
-//                
-//                [imageView addGestureRecognizer:tap];
-                
                 
                 theHeight += image_height;
                 
@@ -176,7 +170,6 @@
                     clean_string = [clean_string stringByReplacingOccurrencesOfString:@"[url]" withString:[NSString stringWithFormat:@"<a href=\"%@\">",theurl]];
                     clean_string = [clean_string stringByReplacingOccurrencesOfString:@"[/url]" withString:@"</a>"];
                 }
-                
                 
                 
                 CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?12:7,theHeight?theHeight:6,200,50);
