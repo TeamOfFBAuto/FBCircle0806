@@ -68,7 +68,7 @@ typedef enum{
     
     //导航栏
     UIView *navigationbar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
-    navigationbar.backgroundColor = [UIColor blackColor];
+    navigationbar.backgroundColor = RGBCOLOR(34, 41, 44);
     [self.view addSubview:navigationbar];
     
     

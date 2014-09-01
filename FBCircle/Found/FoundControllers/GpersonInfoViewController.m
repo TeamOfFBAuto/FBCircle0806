@@ -9,8 +9,18 @@
 
 #import "GpersonInfoViewController.h"
 
-#import "GMAPI.h"
+#import "GfeiHaoyouFootViewController.h"
+#import "GHaoYouFootViewController.h"
+#import "ChatViewController.h"
 
+#import "GMAPI.h"
+//typedef enum{
+//    GRXX1 = 0,//自己
+//    GRXX2 ,//好友 接口返回0
+//    GRXX3 ,//非好友 接口返回3
+//    GRXX4 ,//非好友 正在添加中 接口返回1
+//    GRXX5 ,//接到邀请  接口返回2
+//}GRXX;
 @interface GpersonInfoViewController ()
 
 @end
@@ -21,6 +31,9 @@
 {
     NSLog(@"%s",__FUNCTION__);
 }
+
+
+
 
 - (void)viewDidLoad
 {
@@ -36,8 +49,11 @@
     self.titleLabel.text = @"详细信息";
     
     
-    //请求网络数据
-    [self prepareNetData];
+    
+    //判断是否为好友
+    [self panduanIsFriend];
+    
+
     
     
 }
@@ -138,14 +154,14 @@
     
     //展示图片的view
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(62+14, 112, 182, 56)];
+    UITapGestureRecognizer *ttaa = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFoot)];
+    [view addGestureRecognizer:ttaa];
     
     //足迹展示图片的数组
     NSMutableArray *imavMutableArray = [NSMutableArray arrayWithCapacity:1];
     
     //文章对象
     FBCircleModel *wenzhang = [[FBCircleModel alloc]init];
-    
-    NSLog(@"%d",self.wenzhangArray.count);
     
     int count = self.wenzhangArray.count;
     
@@ -160,19 +176,11 @@
         //初始化一个dic 里面存图片地址
         NSDictionary*dic = [[NSDictionary alloc]init];
         
-        NSLog(@"wenzhang.fb_image.count = %d",imageArr.count);
-        
-        
         if (imageArr.count>0) {//图片数组里有东西
             //取出第一张图片
             dic = imageArr[0];
             self.imaCount++;
-            
-            NSLog(@"_imaCount = %d",self.imaCount);
-            
             NSString *str = [dic objectForKey:@"link"];
-            
-            NSLog(@"图片地址%@",str);
             
             //创建展示图片iamge
             UIImageView *imv = [[UIImageView alloc]init];
@@ -187,10 +195,6 @@
                 
             }
             
-            
-            
-            //imv.backgroundColor = [UIColor purpleColor];
-            
             //把需要展示的图片view放到数组中
             [imavMutableArray addObject:imv];
             
@@ -204,11 +208,12 @@
     }
     
     //遍历数组 倒着放图片
-//    for (int i = 0; i<self.imaCount; i++) {
-//        UIImageView *imv = imavMutableArray[self.imaCount-i-1];
-//        imv.frame = CGRectMake(200-(i+1)*63-10, 0, 56, 56);
-//        [view addSubview:imv];
-//    }
+    NSLog(@"%d",self.imaCount);
+    for (int i = 0; i<self.imaCount; i++) {
+        UIImageView *imv = imavMutableArray[self.imaCount-i-1];
+        imv.frame = CGRectMake(200-(i+1)*63-10, 0, 56, 56);
+        [view addSubview:imv];
+    }
     
     [infoView addSubview:view];
     
@@ -229,19 +234,16 @@
     btn.layer.borderWidth = 0.5;
     btn.layer.borderColor = [RGBCOLOR(35, 153, 36)CGColor];
     btn.layer.cornerRadius = 5;
-    self.isFriend = YES;
-    if (self.isFriend) {
-        btn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    btn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    if (self.cellType == GRXX2) {
         [btn setTitle:@"发消息" forState:UIControlStateNormal];
-        [btn setBackgroundColor:RGBCOLOR(36, 192, 38)];
-        btn.tag = 10;
-        
-    }else{
-        btn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    }else if (self.cellType == GRXX3){
         [btn setTitle:@"添加到通讯录" forState:UIControlStateNormal];
-        [btn setBackgroundColor:RGBCOLOR(36, 192, 38)];
-        btn.tag = 11;
+    }else if (self.cellType == GRXX4){
+        [btn setTitle:@"正在添加中" forState:UIControlStateNormal];
     }
+    [btn setBackgroundColor:RGBCOLOR(36, 192, 38)];
+    btn.tag = 11;
     
     [btn addTarget:self action:@selector(bttnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -254,11 +256,50 @@
     if (sender.tag == 10) {
         
     }else if (sender.tag == 11){
+        if (self.cellType == GRXX3) {
+            self.cellType = GRXX4;
+            for (UIView *view in self.view.subviews) {
+                [view removeFromSuperview];
+            }
+            [self loadCustomView];
+        }
         
+        if (self.cellType == GRXX2) {
+            ChatViewController * chatVC = [[ChatViewController alloc] init];
+            
+            MessageModel * messageInfo = [[MessageModel alloc] init];
+            
+            messageInfo.othername = self.personModel.person_username;
+            
+            messageInfo.otheruid = self.personModel.person_uid;
+            
+            messageInfo.to_uid = self.personModel.person_uid;
+            
+            messageInfo.to_username = self.personModel.person_username;
+            
+            chatVC.messageInfo = messageInfo;
+            chatVC.otherHeaderImage = self.personModel.person_face;
+            
+            NSLog(@"%@",chatVC.otherHeaderImage);
+            
+            [self.navigationController pushViewController:chatVC animated:YES];
+        }
     }
 }
 
-
+//跳转到足迹
+-(void)pushToFoot{
+    if (self.cellType == GRXX2) {
+        GHaoYouFootViewController *ghaoyouFoot = [[GHaoYouFootViewController alloc]init];
+        ghaoyouFoot.userId = self.passUserid;
+        [self.navigationController pushViewController:ghaoyouFoot animated:YES];
+        
+    }else if (self.cellType == GRXX3 ||self.cellType == GRXX4){
+        GfeiHaoyouFootViewController *gfeihaoyou = [[GfeiHaoyouFootViewController alloc]init];
+        gfeihaoyou.userId = self.passUserid;
+        [self.navigationController pushViewController:gfeihaoyou animated:YES];
+    }
+}
 
 #pragma mark - 请求网络数据
 -(void)prepareNetData{
@@ -278,6 +319,7 @@
             for (UIView *view in self.view.subviews) {
                 [view removeFromSuperview];
             }
+            self.imaCount = 0;
             [bself loadCustomView];
            
         } WithFailedBlcok:^(NSString *string) {
@@ -287,11 +329,11 @@
         //请求文章数据
         FBCircleModel *fbModel = [[FBCircleModel alloc]init];
         [fbModel initHttpRequestWithUid:self.passUserid Page:1 WithType:2 WithCompletionBlock:^( NSMutableArray *array) {
-            bself.wenzhangArray = array;
+            bself.wenzhangArray = [NSMutableArray arrayWithArray:array];
             for (UIView *view in self.view.subviews) {
                 [view removeFromSuperview];
             }
-            
+            self.imaCount = 0;
             [bself loadCustomView];
             
         } WithFailedBlock:^(NSString *operation) {
@@ -311,5 +353,78 @@
     
     
 }
+
+
+
+#pragma 先判断是否是自己 在判断是否为好友
+-(void)panduanIsFriend{//判断是否为好友
+    
+    //判断是否为好友
+    //http://quan.fblife.com/index.php?c=interface&a=checkbuddy&authkey=UmRSMFQ6XzVUZAFvBjAGfQDUBKEJ7FrNUZZR4g2UB+hQhVrZ&uid=1103383
+    
+    if ([self.passUserid isEqualToString:[SzkAPI getUid]]) {//自己
+        self.cellType = GRXX1;//自己
+        //请求网络数据
+        @try {
+            [self prepareNetData];
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+    }else{//判断是否为好友
+        
+        
+        @try {
+            NSString *str = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=checkbuddy&authkey=%@&uid=%@",[SzkAPI getAuthkey],self.passUserid];
+            NSLog(@"%@",str);
+            
+            
+            
+            NSURL *url = [NSURL URLWithString:str];
+            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                NSString *a = [NSString stringWithFormat:@"%@",[dic objectForKey:@"errcode"]];
+                
+                
+                
+                NSLog(@"%@",a);
+                
+                
+                if ([a isEqualToString:@"0"]) {//好友 接口返回0
+                    self.cellType = GRXX2;
+                }else if ([a isEqualToString:@"1"]){//非好友 正在添加中 接口返回1
+                    self.cellType = GRXX4;
+                }else if ([a isEqualToString:@"2"]){//接到邀请  接口返回2
+                    self.cellType = GRXX5;
+                }else if([a isEqualToString:@"3"]){//非好友 接口返回3
+                    self.cellType = GRXX3;
+                }
+                [self prepareNetData];
+                
+            }];
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+}
+
+
 
 @end

@@ -15,6 +15,8 @@
 @interface HotTopicViewController ()<UITableViewDataSource,RefreshDelegate>
 {
     RefreshTableView *_table;
+    
+    BOOL _needUpdate;//需要更新
 }
 
 @end
@@ -28,6 +30,14 @@
         // Custom initialization
     }
     return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (_needUpdate) {
+        [_table showRefreshNoOffset];
+    }
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
@@ -153,6 +163,11 @@
     
     topic.fid = aModel.fid;
     topic.tid = aModel.tid;
+    
+    [topic updateBlock:^(BOOL update, NSDictionary *userInfo) {
+        
+        _needUpdate = update;
+    }];
     
     [self PushToViewController:topic WithAnimation:YES];
 

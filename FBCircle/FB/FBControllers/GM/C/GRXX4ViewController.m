@@ -35,6 +35,7 @@
     [super viewWillDisappear:YES];
     if (self.isTuichuDenglu) {
         self.tabBarController.selectedIndex = 0;
+        
     }
 }
 
@@ -928,15 +929,18 @@
         
         
         
-        if (self.isMinVc) {
-            self.isTuichuDenglu = YES;
-            MineViewController *mineVc = [self.navigationController.viewControllers objectAtIndex:0];
-            mineVc.personModel = nil;
-            [self.navigationController popToViewController:mineVc animated:YES];
-        }else{
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
-        }
+//        if (self.isMinVc) {
+//            self.isTuichuDenglu = YES;
+//            MineViewController *mineVc = [self.navigationController.viewControllers objectAtIndex:0];
+//            mineVc.personModel = nil;
+//            [self.navigationController popToViewController:mineVc animated:YES];
+//        }else{
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//            
+//        }
+        
+        self.isTuichuDenglu = YES;
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
         
         

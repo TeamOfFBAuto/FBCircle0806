@@ -122,6 +122,7 @@
 {
     _isReloadData = YES;
     
+    self.userInteractionEnabled = NO;
     if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewData)]) {
         
         self.pageNum = 1;
@@ -173,7 +174,7 @@
     }
     [self.dataArray addObjectsFromArray:data];
     
-    [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0];
 }
 
 //请求数据失败
@@ -223,6 +224,8 @@
         
         [self stopLoading:2];
     }
+    
+    self.userInteractionEnabled = YES;
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view
@@ -321,7 +324,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

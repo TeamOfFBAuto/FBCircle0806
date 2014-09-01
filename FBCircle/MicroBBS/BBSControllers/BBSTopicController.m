@@ -137,6 +137,11 @@ typedef enum{
 
 #pragma mark - 事件处理
 
+- (void)updateBlock:(UpdateBlock)aBlock
+{
+    updateBlock = aBlock;
+}
+
 //进入称赞者页
 - (void)clickTOPraiseMember:(UIGestureRecognizer *)tap
 {
@@ -513,6 +518,15 @@ typedef enum{
                 
                 zan_names_label.text = zan;
                 zan_num_label.text = [NSString stringWithFormat:@"%d",[zan componentsSeparatedByString:@"、"].count];
+            }
+            
+            if (action == Action_Topic_Del)
+            {
+                if (updateBlock) {
+                    updateBlock(YES,@{@"action": @"delete"});
+                }
+                
+                [self popViewControllerDelay:1.5];
             }
         }
         

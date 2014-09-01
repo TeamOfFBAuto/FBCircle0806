@@ -61,5 +61,7 @@ typedef enum
 ///push到下一界面,包含隐藏tabbar
 -(void)PushToViewController:(UIViewController *)controller WithAnimation:(BOOL)animation;
 
+//pop回上一页,可设置延迟时间
+- (void)popViewControllerDelay:(CGFloat)seconds;
 
 @end

@@ -193,7 +193,7 @@
             
         }];
     }else if (indexPath.row == 0 && indexPath.section == 1){//用车服务
-        [self presentViewController:[[GuseCarViewController alloc]init] animated:YES completion:^{
+        [self presentViewController: [[GuseCarViewController alloc]init] animated:YES completion:^{
         }];
     }else if (indexPath.row ==0 && indexPath.section == 0){//附近的人
         GnearbyPersonViewController *gnearByVC = [[GnearbyPersonViewController alloc] init];

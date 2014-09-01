@@ -112,6 +112,9 @@
         [bself.navigationController pushViewController:gp  animated:YES];
     }];
     
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
 }
@@ -139,24 +142,42 @@
         NSArray *dataInfoArray = [result objectForKey:@"datainfo"];
         _userids = [NSArray arrayWithArray:dataInfoArray];
         
+        NSString *userIdStr = [[NSString alloc]init];
+        userIdStr = [_userids componentsJoinedByString:@","];
+        NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
         
-//        if (dataInfoArray.count < _pageCapacity) {
-//            
-//            _tableView.isHaveMoreData = NO;
-//        }else
-//        {
-//            _tableView.isHaveMoreData = YES;
-//        }
+        NSLog(@"%@",userIdApi);
+        
+        GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:userIdApi isPost:NO postData:nil];
+        [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
+            NSLog(@"%@",result);
+            NSArray *dataArray = [result objectForKey:@"datainfo"];
+            _dataArray = dataArray;
+//            [bself reloadData:dataArray isReload:_tableView.isReloadData];
+            
+//            if (dataArray.count < _pageCapacity) {
+//                
+//                _tableView.isHaveMoreData = NO;
+//            }else
+//            {
+//                _tableView.isHaveMoreData = YES;
+//            }
+            [bself reloadData:dataArray isReload:_tableView.isReloadData];
+
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            if (_tableView.isReloadData) {
+
+                _page --;
+
+                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            }
+        }];
         
         
-        [bself reloadData:dataInfoArray isReload:_tableView.isReloadData];
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        if (_tableView.isReloadData) {
-//            
-//            _page --;
-//            
-//            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
-//        }
+        NSLog(@"获取用户一组id失败");
     }];
 }
 
@@ -262,14 +283,14 @@
 {
 //    [_mapView updateLocationData:userLocation];
     _guserLocation = userLocation;
-    NSLog(@"heading is %@",userLocation.heading);
+    
 }
 
 
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-//    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+
     _guserLocation = userLocation;
     
 //    [_mapView updateLocationData:userLocation];

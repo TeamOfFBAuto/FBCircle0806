@@ -126,6 +126,7 @@
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:SUCCESSLOGOUT object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -347,7 +348,9 @@
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT];//热门帖子(最多两个)
     }else
     {
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey]];//关注热门帖子(最多15个)
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey],1,15];//关注热门帖子(最多15个)
+        
+        NSLog(@"---->concern %@",url);
     }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -408,9 +411,22 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
-//        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+        
+        if (dataStyle == 1)
+        {
+//            [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+            int errcode = [[failDic objectForKey:@"errcode"]integerValue];
+            if (errcode == 2) {
+                
+                [LTools cache:nil ForKey:CACHE_CONCERN_HOT];
+                _concern_hot_array = nil;
+                
+            }
+        }
         
         [weakTable loadFail];
+        
+        
     }];
 }
 

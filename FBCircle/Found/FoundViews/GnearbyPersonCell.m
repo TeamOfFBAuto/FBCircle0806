@@ -8,6 +8,8 @@
 
 #import "GnearbyPersonCell.h"
 
+#import "GTimeSwitch.h"
+
 @implementation GnearbyPersonCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -37,15 +39,17 @@
 -(void)loadCustomViewWithIndexPath:(NSIndexPath*)theIndexPath{
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 46, 46)];
-    self.userFaceImv.backgroundColor = [UIColor redColor];
+//    self.userFaceImv.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.userFaceImv];
     //姓名
     self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+11, 12, 191, 17)];
-    self.userNameLabel.backgroundColor = [UIColor orangeColor];
+//    self.userNameLabel.backgroundColor = [UIColor orangeColor];
     [self.contentView addSubview:self.userNameLabel];
     //距离和时间
     self.userDistanceAndTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+11, 191, 12)];
-    self.userDistanceAndTimeLabel.backgroundColor = [UIColor purpleColor];
+    self.userDistanceAndTimeLabel.font = [UIFont systemFontOfSize:12];
+    self.userDistanceAndTimeLabel.textColor = [UIColor grayColor];
+//    self.userDistanceAndTimeLabel.backgroundColor = [UIColor purpleColor];
     [self.contentView addSubview:self.userDistanceAndTimeLabel];
     //按钮
     self.btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,8 +67,19 @@
 //填充数据
 -(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array{
     NSLog(@"%s",__FUNCTION__);
-    NSString *userid = [NSString stringWithFormat:@"%@",array[theIndexPath.row]];
-    self.userId = userid;
+    
+    NSDictionary *dic = array[theIndexPath.row];
+    
+    //点击发消息跳转到下一个界面
+    self.userId = [dic objectForKeyedSubscript:@"uid"];
+    //头像
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"face"]]];
+    //姓名
+    self.userNameLabel.text = [dic objectForKey:@"username"];
+    //距离和时间
+    
+    self.userDistanceAndTimeLabel.text = [GTimeSwitch timestamp:[dic objectForKey:@"uptime"]];;
+    
     NSLog(@"dddd");
 }
 

@@ -528,6 +528,9 @@
 #pragma mark - 设置头像点击block
 -(void)faceViewClickdBlock{
     GRXX4ViewController *Grxx4Vc = [[GRXX4ViewController alloc]init];
+    if (self.isMineVCPush) {
+        Grxx4Vc.isMinVc = YES;
+    }
     Grxx4Vc.passUserid = [SzkAPI getUid];
     Grxx4Vc.personModel = self.userModel;
     Grxx4Vc.isGmyFootPass = YES;
