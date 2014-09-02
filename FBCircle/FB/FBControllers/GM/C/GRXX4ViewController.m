@@ -329,7 +329,7 @@
             [cell setfaxiaoxiClickedBlock:^{
                 NSLog(@"在此处设置发消息的block");
                 
-                [bself faxiaoxiBlockMethod];//张少南 发消息的先注释掉
+                [bself faxiaoxiBlockMethod];
             }];
         }
         
@@ -755,7 +755,6 @@
 }
 
 
-//张少南 跳到消息的，先注释掉
 -(void)faxiaoxiBlockMethod{
 #pragma 在此设置发消息的跳转
     

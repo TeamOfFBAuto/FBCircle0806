@@ -42,7 +42,6 @@
         
         self.news_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"new_id"]];
         
-        //张少南
 //        NSString *string_myuid=[NSString stringWithFormat:@"%@",@"967897"];
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:USERID] isEqualToString:self.from_uid]) {
             self.othername=self.to_username;
@@ -68,7 +67,6 @@
 
 -(void)loadInfomationWithBlock:(MessageModelBlock)theBlock
 {
-    //张少南
     NSString * url = [NSString stringWithFormat:MESSAGE_LIST_URL,[SzkAPI getAuthkey]];
     
     NSLog(@"私信首页接口-----%@",url);

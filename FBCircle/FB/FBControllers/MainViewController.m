@@ -353,7 +353,9 @@
     }
 }
 
-
+/*
+ *
+ */
 -(void)HaveNewMessage:(NSNotification *)notification
 {
     NSLog(@"notification ---  %@",notification.userInfo);
@@ -1061,9 +1063,6 @@
         UITapGestureRecognizer * doTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uploadPersonalBanner:)];
         
         [bannerView addGestureRecognizer:doTap];
-        
-        
-        //张少南 这边需要一张背景默认图
         
         [headerView addSubview:bannerView];
         
@@ -2072,7 +2071,7 @@
             {
                 AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 
-                [appdelegate.uploadData upload];//张少南 这里需要修改
+                [appdelegate.uploadData upload];
             }
                 break;
             case AFNetworkReachabilityStatusUnknown:

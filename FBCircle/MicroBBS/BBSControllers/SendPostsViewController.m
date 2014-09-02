@@ -209,7 +209,7 @@
         return;
     }
     
-    hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.view];
+    hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.navigationController.view];
     
     if (allImageArray.count > 0)
     {
@@ -321,7 +321,6 @@
         [hud hide:YES afterDelay:1.5];
     }];
 }
-
 
 ///发表帖子
 

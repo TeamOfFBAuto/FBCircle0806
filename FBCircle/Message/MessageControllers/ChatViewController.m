@@ -193,7 +193,7 @@
                          CGFloat messageViewFrameBottom = self.view.frame.size.height - INPUT_HEIGHT;
                          if(inputViewFrameY > messageViewFrameBottom)
                              inputViewFrameY = messageViewFrameBottom;
-                        
+                         NSLog(@"made yaosi a  ----  %f",inputViewFrameY);
                          self.inputToolBarView.frame = CGRectMake(inputViewFrame.origin.x,
                                                                   inputViewFrameY,
                                                                   inputViewFrame.size.width,
@@ -339,8 +339,7 @@
     ChatModel * info = [self.data_array objectAtIndex:index];
     
     MyChatViewCellType theType;
-    //张少南
-    if ([info.from_username isEqualToString:@"soulnear"])
+    if ([info.from_username isEqualToString:info.to_username])
     {
         theType = MyChatViewCellTypeOutgoing;
     }else
@@ -600,7 +599,12 @@
     
     float theheight = (count-temp_count)*18;
     
-    NSLog(@"theheight-=-=-==-=--  %f ----   %f",theheight,height);
+    if (textView.text.length == 0)
+    {
+        theheight = 0;
+        count = 1;
+    }
+    
     [UIView animateWithDuration:0.25f
                      animations:^{
                          
@@ -622,7 +626,6 @@
                                                                       inputViewFrame.origin.y - theheight,
                                                                       inputViewFrame.size.width,
                                                                       inputViewFrame.size.height + theheight);
-                             
                              [self.inputToolBarView adjustTextViewHeightBy:count WihtHeight:theheight];
                          }
                      }
@@ -710,6 +713,8 @@
 }
 
 -(void)finnishendsend2{
+    self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44-44,320,44);
+    self.inputToolBarView.myTextView.frame = CGRectMake(17,6,248,32);
     [self.inputToolBarView.myTextView setText:@""];
     [self textViewDidChange:self.inputToolBarView.myTextView];
     [self.mytableView reloadData];

@@ -463,7 +463,6 @@
                 NSDictionary *dicimgurl=[theInfo.rfb_image objectAtIndex:0];
                 
                 NSString * urlImage = [dicimgurl objectForKey:@"link"];
-                //张少南 缺少默认图
                 [_rContentImageView loadImageFromURL:urlImage withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
                 
             }else

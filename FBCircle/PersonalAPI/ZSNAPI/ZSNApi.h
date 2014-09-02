@@ -69,6 +69,14 @@
 +(NSString *)docImagePath;
 ///弹出提示框
 + (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
+
+
+///字符串编码
++(NSString *)encodeToPercentEscapeString: (NSString *) input;
+///字符串解码
++(NSString *)decodeFromPercentEscapeString: (NSString *) input;
+
+
 @end
 
 
