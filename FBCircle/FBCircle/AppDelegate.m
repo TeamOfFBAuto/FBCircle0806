@@ -36,6 +36,44 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    
+    //push start
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+
+    if (launchOptions) {
+        NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (pushNotificationKey) {
+            
+            // [alert show];
+            dic_push =   [[NSDictionary alloc]initWithDictionary:pushNotificationKey];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:YINGYONGWAINOTIFICATION object:self userInfo:dic_push];
+            
+            /*
+             
+             小红点的位置及大小找王晴要要图
+             应用外的操作
+             *  转发，评论，赞直接进高猛写的消息列表页面
+             接受和申请好友的进推荐好友ps:推荐好友页面要换，后台需要按时间排出来
+             私信的跳到私信列表页面
+             */
+            
+            
+            
+            //
+            //            UIAlertView *_alert=[[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@",dic_push] delegate:nil cancelButtonTitle:@"launchOptions" otherButtonTitles:nil, nil];
+            //            [_alert show];
+            
+        }
+    }
+
+    
+    //push end
+    
+    
+    
     _uploadData = [[FBCircleUploadData alloc] init];
     
     MainViewController * mainVC = [[MainViewController alloc] init];
@@ -159,6 +197,63 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+
+
+#pragma mark-Push
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    //
+    //    UIAlertView *_alert=[[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@",userInfo] delegate:nil cancelButtonTitle:@"靠谱" otherButtonTitles:nil, nil];
+    //    [_alert show];
+    /**
+     *  应用内的操作
+     转发、评论、赞的还是像先前一样显示，这个右上角也有红点
+     好友相关的，来了消息之后人头的右上角加红点
+     私信的也是右上角有红点
+     红点的消失与下个界面有关系
+     
+     */
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:COMEMESSAGES object:self userInfo:userInfo];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    /**
+     这里收到了信息
+     */
+}
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    
+    NSLog(@"My token is: %@", deviceToken);
+    
+    
+    NSString *string_pushtoken=[NSString stringWithFormat:@"%@",deviceToken];
+    
+    while ([string_pushtoken rangeOfString:@"<"].length||[string_pushtoken rangeOfString:@">"].length||[string_pushtoken rangeOfString:@" "].length) {
+        string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@"<" withString:@""];
+        string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@">" withString:@""];
+        string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+    
+    
+    
+    [[NSUserDefaults standardUserDefaults]setObject:string_pushtoken forKey:DEVICETOKEN];
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    
+    
+    NSLog(@"Failed to get token, error: %@", error);
+}
+
+
+
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

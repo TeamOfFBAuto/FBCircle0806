@@ -18,6 +18,12 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     BMKMapManager* _mapManager;
+    
+    NSDictionary *dic_push;
+
+    
+    
+    
 }
 @property (strong, nonatomic) UIWindow *window;
 @property(nonatomic,strong)FBCircleUploadData * uploadData;
