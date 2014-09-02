@@ -123,6 +123,9 @@
     _isReloadData = YES;
     
     self.userInteractionEnabled = NO;
+    
+    _reloading = YES;
+        
     if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewData)]) {
         
         self.pageNum = 1;

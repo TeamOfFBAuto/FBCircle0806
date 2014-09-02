@@ -48,7 +48,11 @@
 {
     [super viewWillAppear:animated];
     if (_aBBSModel) {
-        [_table showRefreshNoOffset];
+        
+//        [_table showRefreshNoOffset];
+        
+        [self loadNewData];
+        
     }else
     {
         [_table showRefreshHeader:YES];
@@ -355,7 +359,7 @@
     
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 53, 53)];
-    imageView.image = [LTools imageForBBSId:_aBBSModel.forumclass];
+    imageView.image = [LTools imageForBBSId:_aBBSModel.headpic];
     [basic_view addSubview:imageView];
     
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
@@ -476,6 +480,9 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
+    
+    _table.pageNum = 1;
+    _table.isReloadData = YES;
     
     [self getBBSInfoId:self.bbsId];
     

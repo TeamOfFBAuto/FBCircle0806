@@ -32,6 +32,14 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //更新成员个数、加入还是退出
+    
+    [self getBBSInfoId:self.bbsId];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -10,8 +10,15 @@
 /**
  *  微论坛信息页
  */
+typedef void(^UpdateMemberNumberBlock)(int memberNum);
+
 @interface MicroBBSInfoController : MyViewController
+{
+    UpdateMemberNumberBlock _memberBlock;
+}
 
 @property(nonatomic,retain)NSString *bbsId;
+
+- (void)updateMemberNumberBlock:(UpdateMemberNumberBlock)block;
 
 @end

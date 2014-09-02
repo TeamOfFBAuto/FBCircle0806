@@ -67,7 +67,7 @@
         
         [self parseBBSClass:dataInfo];
         
-        BOOL need = [LTools needUpdateForHours:7 * 24 recordDate:[LTools cacheForKey:CACHE_BBS_TIME]];
+        BOOL need = [LTools needUpdateForHours:1.0 recordDate:[LTools cacheForKey:CACHE_BBS_TIME]];
     
         if (need) {
             [self getBBSClass];
@@ -246,8 +246,7 @@
 //        NSMutableString *tt = [NSMutableString stringWithString:title];
 //        [tt replaceOccurrencesOfString:@"）" withString:@")" options:0 range:NSMakeRange(0, tt.length)];
 //        [tt replaceOccurrencesOfString:@"（" withString:@"(" options:0 range:NSMakeRange(0, tt.length)];
-        NSString *imageUrl = ((BBSModel *)[titles objectAtIndex:i]).classpic;
-        
+        NSString *imageUrl = ((BBSModel *)[titles objectAtIndex:i]).id;
         
         k = i % 4;
         line = i / 4;
