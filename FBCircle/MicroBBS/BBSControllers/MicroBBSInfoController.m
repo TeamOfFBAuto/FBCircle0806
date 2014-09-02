@@ -15,8 +15,13 @@
 {
     BBSInfoModel *infoModel;
     UIButton *btn;//加入或者退出按钮
+    LButtonView *memberNumber_btn;//成员个数
     
     UIImageView *iconImageV;
+    
+    int _memberNumber;//成员个数
+    
+    BOOL _needRefresh;
 }
 
 @end
@@ -35,9 +40,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //更新成员个数、加入还是退出
     
-    [self getBBSInfoId:self.bbsId];
+    //更新成员个数
+    if (_needRefresh) {
+        
+        [self getBBSInfoId:self.bbsId];
+    }
 }
 
 - (void)viewDidLoad
@@ -48,6 +56,8 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     [self getBBSInfoId:self.bbsId];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_MEMBER object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,11 +68,27 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     btn = nil;
     infoModel = nil;
 }
 
 #pragma mark - 事件处理
+
+- (void)updateBBS:(NSNotification *)sender
+{
+    _needRefresh = YES;
+}
+
+/**
+ *  更新成员个数
+ */
+- (void)updateMemberNumber:(int)memberNum
+{
+    memberNumber_btn.titleLabel.text = [NSString stringWithFormat:@"%d名成员",memberNum];
+    infoModel.member_num = [NSString stringWithFormat:@"%d",memberNum];
+}
+
 //添加成员
 - (void)clickToAddMember:(LButtonView *)sender
 {
@@ -121,7 +147,17 @@
             
             infoModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
             
-            [weakSelf prepareViews];
+            if (_needRefresh) {
+                
+                [weakSelf updateMemberNumber:[infoModel.member_num intValue]];//更新成员个数
+                
+                _needRefresh = NO;
+                
+            }else
+            {
+                [weakSelf prepareViews];
+            }
+            
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -164,6 +200,14 @@
             [LTools showMBProgressWithText:info addToView:weakSelf.view];
             
             btn.selected = leave;
+            
+            if (leave) {
+                
+                [self updateMemberNumber:([infoModel.member_num intValue] - 1)];
+            }else
+            {
+                [self updateMemberNumber:([infoModel.member_num intValue] + 1)];
+            }
             
             NSLog(@"erroinfo %@",[result objectForKey:@"errinfo"]);
         }
@@ -250,10 +294,10 @@
     
     NSString *title = [NSString stringWithFormat:@"%@名成员",infoModel.member_num];
     
-    LButtonView *btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(0, btn1.bottom, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:title target:self action:@selector(clickToMember:) lineDirection:Line_Down];
-    [firstView addSubview:btn2];
+    memberNumber_btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, btn1.bottom, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:title target:self action:@selector(clickToMember:) lineDirection:Line_Down];
+    [firstView addSubview:memberNumber_btn];
     
-    aFrame.size.height = btn2.bottom;
+    aFrame.size.height = memberNumber_btn.bottom;
     firstView.frame = aFrame;
     
     return firstView;

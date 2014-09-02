@@ -47,16 +47,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (_aBBSModel) {
-        
-//        [_table showRefreshNoOffset];
-        
-        [self loadNewData];
-        
-    }else
-    {
-        [_table showRefreshHeader:YES];
-    }
+//    if (_aBBSModel) {
+//        
+////        [_table showRefreshNoOffset];
+//        
+//        [self loadNewData];
+//        
+//    }else
+//    {
+//        [_table showRefreshHeader:YES];
+//    }
+    
+    [_table showRefreshNoOffset];
 }
 
 - (void)viewDidLoad
@@ -105,7 +107,8 @@
  */
 -(void)updateTopic:(NSNotification *)sender
 {
-    [_table showRefreshHeader:NO];
+//    [_table showRefreshHeader:NO];
+    NSLog(@"创建新帖子成功");
 }
 /**
  *  通知更新加入论坛状态
@@ -307,7 +310,13 @@
         NSLog(@"result %@",failDic);
         
         [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:weakSelf.view];
-        [weakTable loadFail];
+//        [weakTable loadFail];
+        
+        int errcode = [[failDic objectForKey:@"errcode"]integerValue];
+        
+        if (errcode == 1) {
+            [weakTable reloadData:nil total:0];
+        }
         
     }];
 }

@@ -40,7 +40,7 @@
         
         _needRefresh = NO;
     }
-    
+  
     [super viewWillAppear:animated];
 }
 
@@ -143,10 +143,10 @@
  *
  *  @param bbsId 论坛id
  */
-- (void)JoinBBSId:(NSString *)bbsId
+- (void)JoinBBSId:(NSString *)bbsId cell:(JoinBBSCell *)sender
 {
     __weak typeof(self)weakSelf = self;
-    
+//    __weak typeof(UIButton *)weakBtn = sender;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
         
@@ -159,6 +159,9 @@
             if (erroCode == 0) {
                 //加入论坛通知
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:nil];
+//                weakBtn.selected = YES;
+                sender.joinButton.selected = YES;
+                sender.memeberLabel.text = [NSString stringWithFormat:@"%d",[sender.memeberLabel.text integerValue] + 1];
             }
         }
         
@@ -257,9 +260,9 @@
     BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel cellBlock:^(NSString *topicId) {
         NSLog(@"join topic id %@",topicId);
-        [weakSelf JoinBBSId:topicId];
+        [weakSelf JoinBBSId:topicId cell:weakCell];
         
-        weakCell.joinButton.selected = YES;
+//        weakCell.joinButton.selected = YES;
     }];
     return cell;
     
