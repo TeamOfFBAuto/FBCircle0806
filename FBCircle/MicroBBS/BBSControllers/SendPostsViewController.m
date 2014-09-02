@@ -43,6 +43,9 @@
     AFHTTPRequestOperation * posts_request;
     ///地理位置
     CLLocationManager * locationManager;
+    
+    ///提示
+    MBProgressHUD * hud;
 }
 
 @end
@@ -193,6 +196,9 @@
 
 -(void)submitData:(UIButton *)sender
 {
+    [_title_textView resignFirstResponder];
+    [_content_textView resignFirstResponder];
+    
     NSString * titleString = [_title_textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     if (titleString.length == 0)
@@ -202,6 +208,8 @@
         
         return;
     }
+    
+    hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.view];
     
     if (allImageArray.count > 0)
     {
@@ -296,6 +304,8 @@
                 }else
                 {
                     //                [bself sendErrorWith:[allDic objectForKey:@"errinfo"]];
+                    hud.labelText = [allDic objectForKey:@"errinfo"];
+                    [hud hide:YES afterDelay:1.5];
                 }
         }
         @catch (NSException *exception) {
@@ -307,7 +317,8 @@
     }];
     
     [finishedRequest setFailedBlock:^{
-        
+        hud.labelText = @"发送失败,请重试";
+        [hud hide:YES afterDelay:1.5];
     }];
 }
 
@@ -324,8 +335,10 @@
     posts_request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:url]];
     
     __weak typeof(self)bself = self;
+    __weak typeof(hud)bhud = hud;
     
     [posts_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         
         NSDictionary * allDic = [operation.responseString objectFromJSONString];
         NSLog(@"发表帖子 ---- %@",allDic);
@@ -334,12 +347,17 @@
             
             if ([[allDic objectForKey:@"errcode"] intValue] == 0)
             {
+                bhud.labelText = @"发送成功";
+                [bhud hide:YES];
+                
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_TOPICLIST object:nil];
                 
                 [bself.navigationController popViewControllerAnimated:YES];
             }else
             {
                 NSLog(@"error ---  %@",[allDic objectForKey:@"errinfo"]);
+                bhud.labelText = [allDic objectForKey:@"errinfo"];
+                [bhud hide:YES afterDelay:1.5];
             }
             
         }
@@ -351,7 +369,8 @@
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        bhud.labelText = @"发送失败,请重试";
+        [bhud hide:YES afterDelay:1.5];
     }];
     
     [posts_request start];

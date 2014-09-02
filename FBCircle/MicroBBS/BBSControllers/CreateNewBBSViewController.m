@@ -149,24 +149,28 @@
     NSString * nameString = [name_tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString * introductionString = [introduction_tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
+    
+    MBProgressHUD * hud = [ZSNApi showMBProgressWithText:@"正在创建" addToView:self.view];
+    
     if (nameString.length == 0)
     {
-        [self showAlertViewWithText:@"微论坛名称不能为空" WithType:FBQuanAlertViewTypeNoJuhua];
+        hud.labelText = @"微论坛名称不能为空";
         return;
     }else if (nameString.length > 8)
     {
-        [self showAlertViewWithText:@"微论坛名称不能超过8个字" WithType:FBQuanAlertViewTypeNoJuhua];
-        
+        hud.labelText = @"微论坛名称不能超过8个字";
         return;
     }else if (introductionString.length > 50)
     {
-        [self showAlertViewWithText:@"论坛简介不能超过50个字" WithType:FBQuanAlertViewTypeNoJuhua];
-        
+        hud.labelText = @"论坛简介不能超过50个字";
         return;
     }else
     {
-        [self showAlertViewWithText:@"正在创建" WithType:FBQuanAlertViewTypeHaveJuhua];
+        hud.mode = MBProgressHUDModeAnnularDeterminate;
+        
+        hud.labelText = @"正在创建";
     }
+    
     
     
     
@@ -181,7 +185,7 @@
     
     [create_request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        [bself hiddenAlertView];
+        hud.mode = MBProgressHUDModeText;
         
         NSDictionary * allDic = [operation.responseString objectFromJSONString];
         
@@ -189,18 +193,21 @@
         
         if ([[allDic objectForKey:@"errcode"] intValue] == 0)//创建成功返回
         {
+            hud.labelText = @"创建成功";
+            [hud hide:YES];
             [bself.navigationController popViewControllerAnimated:YES];
         }else
         {
-            [bself showAlertViewWith:[allDic objectForKey:@"errinfo"]];
+            hud.labelText = [allDic objectForKey:@"errinfo"];
+            [hud hide:YES afterDelay:1.5];
         }
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [bself hiddenAlertView];
-        
-        [bself showAlertViewWith:@"创建失败，请重试"];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"创建失败,请重试";
+        [hud hide:YES afterDelay:1.5];
     }];
     
     [create_request start];

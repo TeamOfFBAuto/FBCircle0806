@@ -88,6 +88,8 @@
         {
             [bself hiddenAlert];
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPDATE_BBS_MEMBER object:nil userInfo:nil];
+            
             [bself.navigationController popViewControllerAnimated:YES];
         }else
         {

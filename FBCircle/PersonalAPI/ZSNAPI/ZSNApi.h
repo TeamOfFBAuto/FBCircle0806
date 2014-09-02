@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
 #import "NSString+Emoji.h"
+#import "MBProgressHUD.h"
 
 #define PERSONAL_DEFAULTS_IMAGE [UIImage imageNamed:@"gtouxiangHolderImage.png"]
 
@@ -66,8 +67,8 @@
 //保存图片沙盒地址
 
 +(NSString *)docImagePath;
-
-
+///弹出提示框
++ (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 @end
 
 

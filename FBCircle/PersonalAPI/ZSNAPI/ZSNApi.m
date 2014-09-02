@@ -594,6 +594,17 @@
     return path1;
 }
 
+#pragma mark - 弹出提示框
++ (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:aView animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = text;
+    hud.margin = 15.f;
+    hud.yOffset = 0.0f;
+    hud.removeFromSuperViewOnHide = YES;
+    return hud;
+}
 
 @end
 
