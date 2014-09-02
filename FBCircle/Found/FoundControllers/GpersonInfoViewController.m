@@ -386,24 +386,32 @@
             
             NSURL *url = [NSURL URLWithString:str];
             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                NSString *a = [NSString stringWithFormat:@"%@",[dic objectForKey:@"errcode"]];
-                
-                
-                
-                NSLog(@"%@",a);
-                
-                
-                if ([a isEqualToString:@"0"]) {//好友 接口返回0
-                    self.cellType = GRXX2;
-                }else if ([a isEqualToString:@"1"]){//非好友 正在添加中 接口返回1
-                    self.cellType = GRXX4;
-                }else if ([a isEqualToString:@"2"]){//接到邀请  接口返回2
-                    self.cellType = GRXX5;
-                }else if([a isEqualToString:@"3"]){//非好友 接口返回3
-                    self.cellType = GRXX3;
+                if (data.length>0) {
+                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    if ([dic isKindOfClass:[NSDictionary class]]) {
+                    
+                        NSLog(@"%@",dic);
+                        
+                        NSString *a = [NSString stringWithFormat:@"%@",[dic objectForKey:@"errcode"]];
+                        
+                        NSLog(@"%@",a);
+                        
+                        
+                        if ([a isEqualToString:@"0"]) {//好友 接口返回0
+                            self.cellType = GRXX2;
+                        }else if ([a isEqualToString:@"1"]){//非好友 正在添加中 接口返回1
+                            self.cellType = GRXX4;
+                        }else if ([a isEqualToString:@"2"]){//接到邀请  接口返回2
+                            self.cellType = GRXX5;
+                        }else if([a isEqualToString:@"3"]){//非好友 接口返回3
+                            self.cellType = GRXX3;
+                        }
+                        [self prepareNetData];
+                    }
+                    
+                }else{
+                    return;
                 }
-                [self prepareNetData];
                 
             }];
         }

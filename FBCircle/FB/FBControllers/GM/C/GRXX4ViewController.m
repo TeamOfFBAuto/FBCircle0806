@@ -688,7 +688,7 @@
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
                 GmyFootViewController *gmyfoot = [[GmyFootViewController alloc]init];
-                [self.navigationController pushViewController:gmyfoot animated:YES];
+                [self PushToViewController:gmyfoot WithAnimation:YES];
             }
             
         }

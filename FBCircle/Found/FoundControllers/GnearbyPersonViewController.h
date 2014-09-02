@@ -24,5 +24,8 @@
     
     
     NSArray *_userids;//获取到的用户的ids
+    
+    NSDictionary *_distanceDic;//以uid为key的距离数组
+    
 }
 @end

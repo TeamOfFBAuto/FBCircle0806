@@ -9,6 +9,7 @@
 #import "GmFoundScanViewController.h"
 
 #import "FoundViewController.h"
+#import "GpersonInfoViewController.h"
 
 
 #define ScanKuangFrame CGRectMake(50, 70+89, 220, 220)
@@ -23,6 +24,7 @@
 
 - (void)dealloc
 {
+    
     NSLog(@"%s",__FUNCTION__);
 }
 
@@ -224,11 +226,22 @@
      {
          [timer invalidate];
          NSLog(@"123");
+         
          NSLog(@"%@",stringValue);
          
          
-
-         [self.delegate pushWebViewWithStr:stringValue];
+         
+         if([stringValue hasPrefix:@"UID"]){
+             NSString *str = [stringValue substringFromIndex:4];
+             NSArray *arr = [str componentsSeparatedByString:@"\n"];
+             NSString *userId = arr[0];
+             
+             NSLog(@"%@",userId);
+             
+             [self.delegate pushToPersonInfoVcWithStr:userId];
+         }else{
+             [self.delegate pushWebViewWithStr:stringValue];
+         }
 
      }];
     
@@ -236,6 +249,36 @@
 }
 
 
+//少男二维码
+//-(void)findString:(NSString *)stringreplace
+//{
+//    string_uid=[personal getuidwithstring:stringreplace];
+//    
+//    
+//    if ([string_uid isEqualToString:@"0"] || string_uid.length == 0 || [string_uid isEqual:[NSNull null]])
+//    {
+//        if ([stringreplace rangeOfString:@"http://"].length && [stringreplace rangeOfString:@"."].length)
+//        {
+//            
+//            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"是否打开此链接" message:stringreplace delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+//            alert.delegate = self;
+//            
+//            alert.tag = 100000;
+//            
+//            [alert show];
+//            
+//        }else
+//        {
+//            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"未识别的二维码" message:stringreplace delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil,nil];
+//            [alert show];
+//        }
+//    }else
+//    {
+//        NSLog(@"_____stringuid===%@_____",string_uid);
+//        [self pushtonewmine];
+//        
+//    }
+//}
 
 
 
@@ -245,6 +288,7 @@
 -(void)myErweima{
     NSLog(@"%s",__FUNCTION__);
     [self dismissViewControllerAnimated:YES completion:^{
+        
         [self.delegate pushMyerweimaVc];
     }];
     

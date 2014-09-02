@@ -28,7 +28,7 @@ typedef void (^sendMessageBlock)();
 -(void)loadCustomViewWithIndexPath:(NSIndexPath*)theIndexPath;
 
 //填充数据
--(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array;
+-(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array distanceDic:(NSDictionary *)distanceDic;
 
 
 //block set方法

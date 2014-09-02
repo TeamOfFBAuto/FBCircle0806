@@ -74,7 +74,8 @@
 
 
 -(void)fujinderen{
-
+    
+    
     
     //每隔一段时间 更新用户位置
     timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
@@ -102,7 +103,7 @@
     
     cell.separatorInset = UIEdgeInsetsZero;
     [cell loadCustomViewWithIndexPath:indexPath];//加载控件
-    [cell configNetDataWithIndexPath:indexPath dataArray:_dataArray];//填充数据
+    [cell configNetDataWithIndexPath:indexPath dataArray:_dataArray distanceDic:_distanceDic];//填充数据
     
     __weak typeof (self)bself = self;
     __block NSString *celluserid = cell.userId;
@@ -111,9 +112,6 @@
         gp.passUserid = celluserid;
         [bself.navigationController pushViewController:gp  animated:YES];
     }];
-    
-    
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
@@ -134,51 +132,90 @@
     
     __weak typeof (self)bself = self;
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"%@",result);
-        
-        NSArray *dataInfoArray = [result objectForKey:@"datainfo"];
-        _userids = [NSArray arrayWithArray:dataInfoArray];
-        
-        NSString *userIdStr = [[NSString alloc]init];
-        userIdStr = [_userids componentsJoinedByString:@","];
-        NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
-        
-        NSLog(@"%@",userIdApi);
-        
-        GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:userIdApi isPost:NO postData:nil];
-        [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-            NSLog(@"%@",result);
-            NSArray *dataArray = [result objectForKey:@"datainfo"];
-            _dataArray = dataArray;
-//            [bself reloadData:dataArray isReload:_tableView.isReloadData];
+    
+    
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data.length>0) {
+            NSLog(@"data有数据");
+            NSDictionary *allDataInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             
-//            if (dataArray.count < _pageCapacity) {
-//                
-//                _tableView.isHaveMoreData = NO;
-//            }else
-//            {
-//                _tableView.isHaveMoreData = YES;
-//            }
-            [bself reloadData:dataArray isReload:_tableView.isReloadData];
-
+            NSLog(@"请求附近的人获取一组用户id 和距离：%@",allDataInfo);
             
-        } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            if (_tableView.isReloadData) {
-
-                _page --;
-
-                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            if ([allDataInfo isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *datainfo = [allDataInfo objectForKey:@"datainfo"];
+                _userids = [datainfo objectForKey:@"uid"];
+                _distanceDic = [datainfo objectForKey:@"udistance"];
+                
+                
+                //拿到一组id后请求一组用户信息
+                NSString *userIdStr = [[NSString alloc]init];
+                userIdStr = [_userids componentsJoinedByString:@","];
+                NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
+                
+                NSLog(@"请求一组用户接口：%@",userIdApi);
+                
+                NSURL *url = [NSURL URLWithString:userIdApi];
+                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                    NSDictionary *datadic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    
+                    NSLog(@"一组用户dic%@",datadic);
+                    
+                    _dataArray = [datadic objectForKey:@"datainfo"];
+                    
+                    NSLog(@"%@",_dataArray);
+                    [bself reloadData:_dataArray isReload:_tableView.isReloadData];
+                    
+                }];
+                
             }
-        }];
-        
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"获取用户一组id失败");
+        }
     }];
+    
+//    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+//    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        
+//        NSLog(@"-----%@",result);
+//        
+//        NSDictionary *datainfoDic = [result objectForKey:@"datainfo"];
+//        _userids = [datainfoDic objectForKey:@"uid"];
+//        _distanceArray = [datainfoDic objectForKey:@"udistance"];
+//        
+//        
+//        NSString *userIdStr = [[NSString alloc]init];
+//        userIdStr = [_userids componentsJoinedByString:@","];
+//        NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
+//        
+//        NSLog(@"%@",userIdApi);
+//        
+//        GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:userIdApi isPost:NO postData:nil];
+//        [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
+//            NSLog(@"%@",result);
+//            NSArray *dataArray = [result objectForKey:@"datainfo"];
+//            _dataArray = dataArray;
+//            
+////            if (dataArray.count < 20) {
+////                _tableView.isHaveMoreData = NO;
+////            }else{
+////                _tableView.isHaveMoreData = YES;
+////            }
+////            [bself reloadData:dataArray isReload:_tableView.isReloadData];
+//
+//            
+//        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//            if (_tableView.isReloadData) {
+//                _page --;
+//                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+//            }
+//        }];
+    
+        
+        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        NSLog(@"获取用户一组id失败");
+//    }];
 }
 
 
@@ -253,13 +290,12 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        NSLog(@"%@",dic);
-        
         _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
         _tableView.refreshDelegate = self;
         _tableView.dataSource = self;
         [self.view addSubview:_tableView];
+        
+        NSLog(@"%@",dic);
         
         [_tableView showRefreshHeader:YES];
     }];

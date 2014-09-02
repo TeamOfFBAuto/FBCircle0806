@@ -24,6 +24,8 @@
 
 #import "GshoppingWebViewController.h"
 
+#import "GpersonInfoViewController.h"
+
 
 @interface FoundViewController ()
 
@@ -233,7 +235,15 @@
     [self.navigationController pushViewController:erweima animated:YES];
 }
 
-
+-(void)pushToPersonInfoVcWithStr:(NSString *)stringValue{
+    
+    GpersonInfoViewController *ginfovc = [[GpersonInfoViewController alloc]init];
+    ginfovc.passUserid = stringValue;
+    
+    NSLog(@"----%@",ginfovc.passUserid);
+    
+    [self.navigationController pushViewController:ginfovc animated:YES];
+}
 
 
 @end

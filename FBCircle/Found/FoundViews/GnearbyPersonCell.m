@@ -65,7 +65,7 @@
 }
 
 //填充数据
--(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array{
+-(void)configNetDataWithIndexPath:(NSIndexPath*)theIndexPath dataArray:(NSArray*)array distanceDic:(NSDictionary *)distanceDic{
     NSLog(@"%s",__FUNCTION__);
     
     NSDictionary *dic = array[theIndexPath.row];
@@ -78,7 +78,11 @@
     self.userNameLabel.text = [dic objectForKey:@"username"];
     //距离和时间
     
-    self.userDistanceAndTimeLabel.text = [GTimeSwitch timestamp:[dic objectForKey:@"uptime"]];;
+    NSString *distanceFloat = [distanceDic objectForKey:self.userId];
+    float distancc = [distanceFloat floatValue];
+    NSInteger distanccc = (NSInteger)distancc;
+    NSString *time = [GTimeSwitch timestamp:[dic objectForKey:@"uptime"]];
+    self.userDistanceAndTimeLabel.text = [NSString stringWithFormat:@"%d米 | %@",distanccc,time];
     
     NSLog(@"dddd");
 }

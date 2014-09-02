@@ -966,25 +966,43 @@
         
         UIImagePickerController *picker = [[UIImagePickerController alloc]init];
         picker.delegate = self;
+        
         [picker.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
+        picker.navigationBar.barTintColor = [UIColor blackColor];
+        UIColor * cc = [UIColor whiteColor];//RGBCOLOR(91,138,59);
+        
+        NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:18],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+        picker.navigationBar.titleTextAttributes = dict;
+        picker.title=@"hhh";
         switch (buttonIndex) {
             case 0://拍照
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
                     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    
+                    
+                    
                 }else{
                     NSLog(@"无法打开相机");
                 }
                 [self presentViewController:picker animated:YES completion:^{
                     
+//                    #define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
+                    if (IOS7_OR_LATER) {
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+                        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+                    }
                 }];
                 
                 break;
             case 1://相册
             {
-                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
                 
                 [self presentViewController:picker animated:YES completion:^{
-                    
+                    if (IOS7_OR_LATER) {
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+                        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+                    }
                 }];
             }
                 

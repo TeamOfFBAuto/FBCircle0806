@@ -301,15 +301,26 @@
         UIView *picsView = [[UIView alloc]initWithFrame:CGRectZero];
         [view addSubview:picsView];
         //分享文章是用户说的话
-        UILabel *fb_content = [[UILabel alloc]init];
-        fb_content.text = [wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode];
+        
+        //xxxxxxxxxxxxx
+        RTLabel *fb_content = [[RTLabel alloc]init];
+        
+        fb_content.text = [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
+        CGRect contentFrame = fb_content.frame;
+        CGSize optimumsSize = [fb_content optimumSize];
+        contentFrame.size.height = optimumsSize.height+3;
+        fb_content.frame = contentFrame;
+        //xxxxxxxxxxx
+        
         fb_content.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         if (fb_content.text.length>0) {
             fb_content.frame = CGRectMake(5, 5, 192, 15);
         }else{
             fb_content.frame = CGRectZero;
         }
-        fb_content.numberOfLines = 1;
+        //xxxxxxxx
+//        fb_content.numberOfLines = 1;
+        //xxxxxxx
         fb_content.backgroundColor = [UIColor clearColor];
         fb_content.userInteractionEnabled = NO;
         [view addSubview:fb_content];
@@ -375,12 +386,22 @@
             [view addSubview:picsView];
             
             //自己写的内容
-            UILabel *fb_content = [[UILabel alloc]init];
-            fb_content.text = [wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode];
-            fb_content.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
-            fb_content.frame = CGRectMake(5, 5, 192, 15);
-            fb_content.numberOfLines = 1;
+            //xxxxxxxx
+            RTLabel *fb_content = [[RTLabel alloc]init];
+            
+            fb_content.text =  [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
+            CGRect contentFrame = fb_content.frame;
+            CGSize optimumsSize = [fb_content optimumSize];
+            contentFrame.size.height = optimumsSize.height+3;
+            fb_content.frame = contentFrame;
+            
+
+            fb_content.font = [UIFont fontWithName:@"Helvetica-Bold" size:13];
+            fb_content.frame = CGRectMake(5, 5, 192, 16);
+//            fb_content.numberOfLines = 1;
             fb_content.backgroundColor = [UIColor clearColor];
+            //xxxxxxxxx
+            
             
             fb_content.userInteractionEnabled = NO;
             [view addSubview:fb_content];
@@ -399,6 +420,7 @@
             }
             
             //转发的文章的内容
+            //xxxxxxx
             UILabel *rfb_content = [[UILabel alloc]init];
             rfb_content.font = [UIFont systemFontOfSize:13];
             rfb_content.textColor = RGBCOLOR(66, 66, 66);
@@ -466,30 +488,40 @@
             }
             
             //文章内容
-            UILabel *fb_content = [[UILabel alloc]init];
+            //xxxxxxxxxx
+            RTLabel *fb_content = [[RTLabel alloc]init];
             fb_content.font = [UIFont systemFontOfSize:14];
-            fb_content.text = [wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode];
-            //        fb_content.backgroundColor = [UIColor orangeColor];//lcw
+            fb_content.text =  [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
+            //xxxxxxxxx
             
             NSLog(@"__%@",fb_content.text);
             
             
             //根据有没有图片判断文字宽度
             if (wenzhang.fb_image.count > 0) {//有图片
-                [fb_content setMatchedFrame4LabelWithOrigin:CGPointMake(CGRectGetMaxX(picsView.frame)+5, 0) width:145];
+                fb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+5, 0, 145, 0);
+                CGRect contentFrame = fb_content.frame;
+                CGSize optimumsSize = [fb_content optimumSize];
+                contentFrame.size.height = optimumsSize.height+3;
+                fb_content.frame = contentFrame;
                 if (fb_content.frame.size.height >48) {
                     CGRect r = fb_content.frame;
                     r.size.height = 48 + 10;
                     fb_content.frame = r;
                     
                 }
-                fb_content.numberOfLines = 3;
+//                fb_content.numberOfLines = 3;
                 
             }else{//没图片
                 view.backgroundColor = [UIColor whiteColor];
-                [fb_content setMatchedFrame4LabelWithOrigin:CGPointMake(8.5, 0) width:220];
                 
-                fb_content.numberOfLines = 4;
+//                fb_content.numberOfLines = 4;
+                fb_content.frame = CGRectMake(8.5, 0, 220, 0);
+                CGRect contentFrame = fb_content.frame;
+                CGSize optimumsSize = [fb_content optimumSize];
+                contentFrame.size.height = optimumsSize.height+3;
+                fb_content.frame = contentFrame;
+                
                 float height = fb_content.frame.size.height;
                 float height1 = 0.0f;
                 
@@ -506,8 +538,6 @@
                     r.size.height = 60;
                     fb_content.frame = r;
                 }
-                
-                //            fb_content.backgroundColor = [UIColor orangeColor];
                 
                 
                 
