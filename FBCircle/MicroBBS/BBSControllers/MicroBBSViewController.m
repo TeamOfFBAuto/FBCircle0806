@@ -267,7 +267,14 @@
  */
 - (NSArray *)parseTopic:(NSDictionary *)result dataStyle:(int)dataStyle
 {
-    NSArray *dataInfo = [result objectForKey:@"datainfo"];
+    NSArray *dataInfo;
+    
+    if (dataStyle == 0) {
+        dataInfo = [result objectForKey:@"datainfo"];
+    }else if (dataStyle == 1){
+        dataInfo = [result objectForKey:@"data"];
+    }
+    
     
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
     for (NSDictionary *aDic in dataInfo) {
@@ -396,12 +403,14 @@
 //            if ([result JSONString].length != [oldDataInfo JSONString].length)
 //            {
                 NSLog(@"CACHE_CONCERN_HOT 有更新");
-                
+            
+            NSDictionary *datainfo = [result objectForKey:@"datainfo"];
+            
                 @try{
                     
-                    [LTools cache:result ForKey:CACHE_CONCERN_HOT];
+                    [LTools cache:datainfo ForKey:CACHE_CONCERN_HOT];
                     
-                    _concern_hot_array = [self parseTopic:result dataStyle:dataStyle];
+                    _concern_hot_array = [self parseTopic:datainfo dataStyle:dataStyle];
 
                 }
                 @catch(NSException *exception) {

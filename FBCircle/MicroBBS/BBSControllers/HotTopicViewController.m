@@ -112,7 +112,21 @@
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        
+        NSArray *dataInfo;
+        int total = 0;
+        
+        if (self.data_Style == 0) {
+           
+            dataInfo = [result objectForKey:@"datainfo"];
+            
+        }else if (self.data_Style == 1){
+            
+            NSDictionary *dataDic = [result objectForKey:@"datainfo"];
+            dataInfo = [dataDic objectForKey:@"data"];
+            total = [[dataDic objectForKey:@"total"]integerValue];
+            
+        }
         
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
         for (NSDictionary *aDic in dataInfo) {
@@ -122,7 +136,7 @@
                 [arr addObject:aModel];
             }
         }
-        [weakTable reloadData:arr total:0];
+        [weakTable reloadData:arr total:total];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
@@ -151,6 +165,8 @@
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
+    [self getTopic];
+
 }
 /**
  *  帖子详情(从热门推荐进入)
