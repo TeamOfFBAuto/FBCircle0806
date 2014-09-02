@@ -24,9 +24,7 @@
 
 - (void)dealloc
 {
-    
-    
-    
+  
     NSLog(@"%s",__FUNCTION__);
 }
 
@@ -442,6 +440,7 @@
         
         __weak typeof (self)bself = self;
         [cell setTuichudengluClickedBlock:^{
+            
             [bself tuichudengluBlock];
         }];
 
@@ -689,6 +688,7 @@
             }else{
                 GmyFootViewController *gmyfoot = [[GmyFootViewController alloc]init];
                 [self PushToViewController:gmyfoot WithAnimation:YES];
+//                [self.navigationController pushViewController:gmyfoot animated:YES];
             }
             
         }
@@ -1005,7 +1005,16 @@
     NSLog(@"在此上传用户设置的地区信息");
     
     
-    [self testdiqu];
+    NSLog(@"%@ %@",self.province,self.city);
+    if (self.province.length==0||self.city.length == 0) {
+        
+        NSLog(@"未选择省或市");
+        
+    }else{
+        
+        [self testdiqu];
+        
+    }
     
 }
 

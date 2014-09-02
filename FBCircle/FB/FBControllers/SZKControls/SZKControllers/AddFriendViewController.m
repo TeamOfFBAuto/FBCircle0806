@@ -18,6 +18,11 @@
 
 #import "GmFoundScanViewController.h"
 
+#import "GmyErweimaViewController.h"
+
+#import "GpersonInfoViewController.h"
+#import "GRXX4ViewController.h"
+
 @interface AddFriendViewController (){
  NSMutableArray *array_title;
     NSMutableArray *array_logoimg;
@@ -400,7 +405,7 @@
             NSLog(@"xxx跳转到你猜");
             
             GmFoundScanViewController *gmscanVC=[[GmFoundScanViewController alloc]init];
-            
+            gmscanVC.delegate2 = self;
             [self presentViewController:gmscanVC animated:YES completion:^{
                 
             }];
@@ -503,5 +508,44 @@
 {
     [super didReceiveMemoryWarning];
 }
+
+
+
+//扫一扫代理方法
+//代理方法
+-(void)pushWebViewWithStr:(NSString *)stringValue{
+    NSLog(@"%s",__FUNCTION__);
+    
+    FBCircleWebViewController *fbwebvc = [[FBCircleWebViewController alloc]init];
+    fbwebvc.web_url = stringValue;
+    [self PushToViewController:fbwebvc WithAnimation:YES];
+    
+}
+
+-(void)pushMyerweimaVc{
+    
+    
+    GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
+    erweima.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self PushToViewController:erweima WithAnimation:YES];
+}
+
+-(void)pushToPersonInfoVcWithStr:(NSString *)stringValue{
+    
+    GpersonInfoViewController *ginfovc = [[GpersonInfoViewController alloc]init];
+    ginfovc.passUserid = stringValue;
+    
+    NSLog(@"----%@",ginfovc.passUserid);
+    [self PushToViewController:ginfovc WithAnimation:YES];
+}
+
+-(void)pushToGrxx4{
+    GRXX4ViewController *grxx = [[GRXX4ViewController alloc]init];
+    grxx.passUserid = [SzkAPI getUid];
+    grxx.isMinVc = YES;
+    [self PushToViewController:grxx WithAnimation:YES];
+}
+
+
 
 @end

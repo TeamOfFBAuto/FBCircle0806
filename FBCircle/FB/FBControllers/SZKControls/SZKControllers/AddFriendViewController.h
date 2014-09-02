@@ -30,4 +30,14 @@
 
 @property(nonatomic,assign)BOOL isnavgationBarhiden;//
 
+
+//扫一扫完成后的回调
+-(void)pushWebViewWithStr:(NSString *)stringValue;
+
+-(void)pushMyerweimaVc;
+
+-(void)pushToPersonInfoVcWithStr:(NSString *)stringValue;
+
+-(void)pushToGrxx4;
+
 @end

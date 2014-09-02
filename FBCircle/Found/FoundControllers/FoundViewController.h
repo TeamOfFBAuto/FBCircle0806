@@ -20,4 +20,6 @@
 
 -(void)pushToPersonInfoVcWithStr:(NSString *)stringValue;
 
+-(void)pushToGrxx4;
+
 @end

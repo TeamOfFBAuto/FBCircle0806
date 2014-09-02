@@ -25,6 +25,7 @@
 #import "GshoppingWebViewController.h"
 
 #import "GpersonInfoViewController.h"
+#import "GRXX4ViewController.h"
 
 
 @interface FoundViewController ()
@@ -216,23 +217,22 @@
 
 
 
-//代理方法
+//扫一扫的回调方法 代理方法
 -(void)pushWebViewWithStr:(NSString *)stringValue{
     NSLog(@"%s",__FUNCTION__);
-    
     FBCircleWebViewController *fbwebvc = [[FBCircleWebViewController alloc]init];
     fbwebvc.web_url = stringValue;
-    
-    [self.navigationController pushViewController:fbwebvc animated:YES];
+    [self PushToViewController:fbwebvc WithAnimation:YES];
+
     
 }
 
 -(void)pushMyerweimaVc{
     
-    
     GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
     erweima.tabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:erweima animated:YES];
+    [self PushToViewController:erweima WithAnimation:YES];
+
 }
 
 -(void)pushToPersonInfoVcWithStr:(NSString *)stringValue{
@@ -241,8 +241,14 @@
     ginfovc.passUserid = stringValue;
     
     NSLog(@"----%@",ginfovc.passUserid);
-    
-    [self.navigationController pushViewController:ginfovc animated:YES];
+    [self PushToViewController:ginfovc WithAnimation:YES];
+}
+
+-(void)pushToGrxx4{
+    GRXX4ViewController *grxx = [[GRXX4ViewController alloc]init];
+    grxx.passUserid = [SzkAPI getUid];
+    grxx.isMinVc = YES;
+    [self PushToViewController:grxx WithAnimation:YES];
 }
 
 

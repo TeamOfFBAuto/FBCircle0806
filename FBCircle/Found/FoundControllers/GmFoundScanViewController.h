@@ -10,7 +10,7 @@
 //扫一扫界面
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-
+@class AddFriendViewController;
 @class FoundViewController;
 
 @interface GmFoundScanViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate>
@@ -29,5 +29,6 @@
 @property (nonatomic, strong) UIImageView * line;
 
 @property(nonatomic,assign)FoundViewController *delegate;
+@property(nonatomic,assign)AddFriendViewController *delegate2;
 
 @end

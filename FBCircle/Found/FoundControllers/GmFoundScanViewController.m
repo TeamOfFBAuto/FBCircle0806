@@ -12,6 +12,9 @@
 #import "GpersonInfoViewController.h"
 
 
+#import "AddFriendViewController.h"
+
+
 #define ScanKuangFrame CGRectMake(50, 70+89, 220, 220)
 
 
@@ -231,16 +234,32 @@
          
          
          
-         if([stringValue hasPrefix:@"UID"]){
+         if([stringValue hasPrefix:@"UID"]){//加好友
              NSString *str = [stringValue substringFromIndex:4];
              NSArray *arr = [str componentsSeparatedByString:@"\n"];
              NSString *userId = arr[0];
              
              NSLog(@"%@",userId);
+             if ([userId isEqualToString:[SzkAPI getUid]]) {//扫出的二维码是自己
+                 if (self.delegate) {//发现vc
+                     [self.delegate pushToGrxx4];
+                 }else if (self.delegate2){//我vc扫一扫加好友
+                     [self.delegate2 pushToGrxx4];
+                 }
+             }else{//不是自己的二维码
+                 if (self.delegate) {//发现vc
+                     [self.delegate pushToPersonInfoVcWithStr:userId];
+                 }else if (self.delegate2){//我vc扫一扫加好友
+                     [self.delegate2 pushToPersonInfoVcWithStr:userId];
+                 }
+             }
              
-             [self.delegate pushToPersonInfoVcWithStr:userId];
-         }else{
-             [self.delegate pushWebViewWithStr:stringValue];
+         }else{//webView
+             if (self.delegate) {//发现vc
+                 [self.delegate pushWebViewWithStr:stringValue];
+             }else if (self.delegate2){//我vc扫一扫加好友
+                 [self.delegate2 pushWebViewWithStr:stringValue];
+             }
          }
 
      }];

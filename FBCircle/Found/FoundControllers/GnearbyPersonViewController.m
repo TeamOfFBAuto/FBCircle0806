@@ -14,8 +14,7 @@
 
 @interface GnearbyPersonViewController ()
 {
-    int _page;//第几页
-    int _pageCapacity;//一页请求几条数据
+    
     NSArray *_dataArray;//数据源
 }
 @end
@@ -65,7 +64,9 @@
     _locService.delegate = self;
     [_locService startUserLocationService];//启动LocationService
     
-    _pageCapacity = 20;
+    
+    
+    
     
     
     
@@ -76,11 +77,15 @@
 -(void)fujinderen{
     
     
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
+    _tableView.refreshDelegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
     
     //每隔一段时间 更新用户位置
-    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
-    [timer fire];
-
+//    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
+//    [timer fire];
+    [self updateMyLocalNear];
 }
 
 
@@ -132,8 +137,6 @@
     
     __weak typeof (self)bself = self;
     
-    
-    
     NSURL *url = [NSURL URLWithString:api];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -166,6 +169,8 @@
                     _dataArray = [datadic objectForKey:@"datainfo"];
                     
                     NSLog(@"%@",_dataArray);
+                    
+                    _tableView.isHaveMoreData = NO;
                     [bself reloadData:_dataArray isReload:_tableView.isReloadData];
                     
                 }];
@@ -174,48 +179,7 @@
         }
     }];
     
-//    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-//    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        
-//        NSLog(@"-----%@",result);
-//        
-//        NSDictionary *datainfoDic = [result objectForKey:@"datainfo"];
-//        _userids = [datainfoDic objectForKey:@"uid"];
-//        _distanceArray = [datainfoDic objectForKey:@"udistance"];
-//        
-//        
-//        NSString *userIdStr = [[NSString alloc]init];
-//        userIdStr = [_userids componentsJoinedByString:@","];
-//        NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
-//        
-//        NSLog(@"%@",userIdApi);
-//        
-//        GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:userIdApi isPost:NO postData:nil];
-//        [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-//            NSLog(@"%@",result);
-//            NSArray *dataArray = [result objectForKey:@"datainfo"];
-//            _dataArray = dataArray;
-//            
-////            if (dataArray.count < 20) {
-////                _tableView.isHaveMoreData = NO;
-////            }else{
-////                _tableView.isHaveMoreData = YES;
-////            }
-////            [bself reloadData:dataArray isReload:_tableView.isReloadData];
-//
-//            
-//        } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//            if (_tableView.isReloadData) {
-//                _page --;
-//                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
-//            }
-//        }];
-    
-        
-        
-//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        NSLog(@"获取用户一组id失败");
-//    }];
+
 }
 
 
@@ -254,7 +218,6 @@
 
 - (void)loadNewData
 {
-    _page = 1;
     
     [self prepareNetData];
 }
@@ -262,10 +225,6 @@
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
-    
-    _page ++;
-    
-    [self prepareNetData];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -290,10 +249,6 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
-        _tableView.refreshDelegate = self;
-        _tableView.dataSource = self;
-        [self.view addSubview:_tableView];
         
         NSLog(@"%@",dic);
         

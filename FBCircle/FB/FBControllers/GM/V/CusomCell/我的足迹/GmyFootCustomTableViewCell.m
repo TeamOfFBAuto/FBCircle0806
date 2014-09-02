@@ -421,18 +421,23 @@
             
             //转发的文章的内容
             //xxxxxxx
-            UILabel *rfb_content = [[UILabel alloc]init];
+            RTLabel *rfb_content = [[RTLabel alloc]init];
             rfb_content.font = [UIFont systemFontOfSize:13];
             rfb_content.textColor = RGBCOLOR(66, 66, 66);
-            rfb_content.text = wenzhang.rfb_content;
+            rfb_content.text = [ZSNApi FBImageChange:[wenzhang.rfb_content stringByReplacingEmojiCheatCodesWithUnicode]];
+            CGRect contentFrame1 = fb_content.frame;
+            CGSize optimumsSize1 = [fb_content optimumSize];
+            contentFrame1.size.height = optimumsSize1.height+6;
+            fb_content.frame = contentFrame1;
+            
             //根据有没图片判断文字的宽度
             if (wenzhang.rfb_image.count>0) {
                 rfb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+6, CGRectGetMaxY(fb_content.frame)+5, 165, 40);
-                rfb_content.numberOfLines = 2;
+//                rfb_content.numberOfLines = 2;
                 
             }else{
                 rfb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+5, CGRectGetMaxY(fb_content.frame)+5, 196, 40);
-                rfb_content.numberOfLines = 2;
+//                rfb_content.numberOfLines = 2;
             }
             
             [view addSubview:rfb_content];
