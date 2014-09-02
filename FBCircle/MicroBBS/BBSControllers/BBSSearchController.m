@@ -16,7 +16,7 @@
 
 #define SEARCH_HISTORY @"search_history"//搜索历史词
 
-@interface BBSSearchController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate,UIGestureRecognizerDelegate>
+@interface BBSSearchController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate>
 {
     RefreshTableView *_table;
     UITableView *_historyTable;//显示历史搜索词
@@ -163,6 +163,8 @@
     }
     //只要切换 pageNum置为 1
     _table.pageNum = 1;
+    
+    [self searchKeyword:keyword isClear:YES];
 }
 
 - (void)clickToClearHistory:(UIButton *)sender
@@ -372,6 +374,14 @@
 
 #pragma mark - delegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (scrollView == _historyTable) {
+        
+        [searchView.searchField resignFirstResponder];
+    }
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
@@ -474,12 +484,15 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    return [UIView new];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 0.5)];
+    line.backgroundColor = [UIColor lightGrayColor];
+    
+    return line;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0.01f;
+    return 0.5;
 }
 
 #pragma mark - UITableViewDataSource
@@ -521,6 +534,9 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.separatorInset = UIEdgeInsetsZero;
+        
         TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
         cell.textLabel.text = aModel.title;
         cell.detailTextLabel.lineBreakMode = NSLineBreakByCharWrapping;

@@ -107,7 +107,6 @@
  */
 -(void)updateTopic:(NSNotification *)sender
 {
-//    [_table showRefreshHeader:NO];
     NSLog(@"创建新帖子成功");
 }
 /**
@@ -460,8 +459,11 @@
     if (btn == nil) {
         aheight -= 15;
     }
+    
     if (top_array.count == 0) {
         aheight -= 15;
+        
+        btn.top -= 15;
     }
     
     headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + btn.height + 15 + aheight);

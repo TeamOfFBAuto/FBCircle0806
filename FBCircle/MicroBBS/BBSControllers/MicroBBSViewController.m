@@ -65,7 +65,9 @@
     
     if (_needRefresh) {
         
+        
         [_table showRefreshNoOffset];
+        
         
         _needRefresh = NO;
     }
@@ -130,7 +132,7 @@
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:SUCCESSLOGOUT object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:SUCCESSLOGIN object:nil];
 }
 
 - (void)didReceiveMemoryWarning

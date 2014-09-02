@@ -600,7 +600,13 @@ typedef enum{
     OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor orangeColor];
     label.lineBreakMode = NSLineBreakByCharWrapping;
-    [FBHelper creatAttributedText:text Label:label OHDelegate:self];
+    
+    //声明一个gbk编码类型
+    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    //使用如下方法 将获取到的数据按照gbkEncoding的方式进行编码，结果将是正常的汉字
+    NSString *zhuanHuanHouDeShuJu = [text stringByReplacingPercentEscapesUsingEncoding:gbkEncoding];
+    
+    [FBHelper creatAttributedText:zhuanHuanHouDeShuJu Label:label OHDelegate:self];
     
     NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
     

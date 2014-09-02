@@ -21,6 +21,7 @@
     NSArray *createArray;//创建的论坛
     int createNum;
     int joinNum;
+    BOOL _needRefresh;
 }
 
 @end
@@ -36,6 +37,16 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_needRefresh) {
+        
+        [_table showRefreshNoOffset];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,6 +56,8 @@
     self.rightImageName = @"+";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil];
     
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
@@ -66,12 +79,18 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _table.refreshDelegate = nil;
     _table.dataSource = nil;
     _table = nil;
 }
 
 #pragma mark - 事件处理
+
+- (void)updateBBS:(NSNotification *)sender
+{
+    _needRefresh = YES;
+}
 
 //进入我的论坛
 
@@ -108,8 +127,8 @@
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
             int total = [[dataInfo objectForKey:@"total"]integerValue];
-            createNum = [[dataInfo objectForKey:@"createnum" ]integerValue];
-            joinNum = [[dataInfo objectForKey:@"joinnum" ]integerValue];
+//            createNum = [[dataInfo objectForKey:@"createnum" ]integerValue];
+//            joinNum = [[dataInfo objectForKey:@"joinnum" ]integerValue];
             
             NSArray *join = [dataInfo objectForKey:@"join"];
             NSArray *create = [dataInfo objectForKey:@"create"];
@@ -178,6 +197,9 @@
         [newArr_join addObjectsFromArray:arr_join];
         joinArray = newArr_join;
     }
+    
+    createNum = createArray.count;
+    joinNum = joinArray.count;
     
     [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
