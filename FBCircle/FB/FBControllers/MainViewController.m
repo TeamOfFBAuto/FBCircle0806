@@ -328,17 +328,25 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:SUCCESSLOGIN object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(turnToThreeVC:) name:YINGYONGWAINOTIFICATION object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnToThreeVC:) name:YINGYONGWAINOTIFICATION object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(haveReadMessage:) name:@"readMessageNotification" object:nil];    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(haveReadMessage:) name:@"readMessageNotification" object:nil];
+    
+    NSDictionary * yingyongwaiDic = [[NSUserDefaults standardUserDefaults] objectForKey:YINGYONGWAINOTIFICATION];
+    if (yingyongwaiDic)
+    {
+        [self turnToThreeVC:yingyongwaiDic];
+    }
 }
 
 
--(void)turnToThreeVC:(NSNotification *)notification
+-(void)turnToThreeVC:(NSDictionary *)notification
 {
-    NSString * MessageType = [[notificationDic objectForKey:@"aps"] objectForKey:@"type"];
+    NSString * MessageType = [[notification objectForKey:@"aps"] objectForKey:@"type"];
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     
-    if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5) {
+    if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5)
+    {
         GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
         [self PushToViewController:gMessage WithAnimation:YES];
     }else if ([MessageType intValue] == 1 || [MessageType intValue] == 2)
@@ -410,7 +418,6 @@
     [self loadTableHeaderView];
     
     self.myTableView.tableHeaderView = headerView;
-    
     [self.myTableView reloadData];
 }
 
@@ -1177,6 +1184,8 @@
                 
                 isHaveNewMessage = NO;
                 
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"systemMessageRemind"];
+                
                 GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
                 [self PushToViewController:gMessage WithAnimation:YES];
                 
@@ -1659,7 +1668,7 @@
     
     FBCirclePraiseModel * praiseModel = [[FBCirclePraiseModel alloc] init];
     
-    praiseModel.praise_image_url = [ZSNApi returnUrl:[SzkAPI getUid]];
+    praiseModel.praise_image_url = [SzkAPI getUserFace];
     
     praiseModel.praise_uid = [SzkAPI getUid];
     

@@ -37,41 +37,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     
-    //push start
-    
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
-    if (launchOptions) {
-        NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        if (pushNotificationKey) {
-            
-            // [alert show];
-            dic_push =   [[NSDictionary alloc]initWithDictionary:pushNotificationKey];
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:YINGYONGWAINOTIFICATION object:self userInfo:dic_push];
-            
-            /*
-             
-             小红点的位置及大小找王晴要要图
-             应用外的操作
-             *  转发，评论，赞直接进高猛写的消息列表页面
-             接受和申请好友的进推荐好友ps:推荐好友页面要换，后台需要按时间排出来
-             私信的跳到私信列表页面
-             */
-            
-            
-            
-            //
-            //            UIAlertView *_alert=[[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@",dic_push] delegate:nil cancelButtonTitle:@"launchOptions" otherButtonTitles:nil, nil];
-            //            [_alert show];
-            
-        }
-    }
-
-    
-    //push end
-    
     
     
     _uploadData = [[FBCircleUploadData alloc] init];
@@ -161,6 +126,45 @@
     
     
     
+    
+    //push start
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    if (launchOptions) {
+        NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (pushNotificationKey) {
+            
+            // [alert show];
+            dic_push =   [[NSDictionary alloc]initWithDictionary:pushNotificationKey];
+            
+//            [[NSNotificationCenter defaultCenter]postNotificationName:YINGYONGWAINOTIFICATION object:self userInfo:dic_push];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:dic_push forKey:YINGYONGWAINOTIFICATION];
+            
+            /*
+             
+             小红点的位置及大小找王晴要要图
+             应用外的操作
+             *  转发，评论，赞直接进高猛写的消息列表页面
+             接受和申请好友的进推荐好友ps:推荐好友页面要换，后台需要按时间排出来
+             私信的跳到私信列表页面
+             */
+            
+            
+            
+            //
+           
+            
+        }
+    }
+    
+    
+    //push end
+    
+    
+    
     //判断网络是否可用
     //开启监控
     //[[AFNetworkActivityIndicatorManager sharedManager]setEnabled:YES];
@@ -191,8 +195,6 @@
                 break;
         }
     }];
-    
-    
     
     [self.window makeKeyAndVisible];
     return YES;
