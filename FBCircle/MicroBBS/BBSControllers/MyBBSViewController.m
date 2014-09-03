@@ -229,10 +229,16 @@
     BBSInfoModel *aModel;
     if (indexPath.section == 0) {
         
+        if (indexPath.row > createArray.count - 1) {
+            return;
+        }
         aModel = [createArray objectAtIndex:indexPath.row];
         
     }else
     {
+        if (indexPath.row > joinArray.count - 1) {
+            return;
+        }
         aModel = [joinArray objectAtIndex:indexPath.row];
     }
     

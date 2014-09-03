@@ -101,7 +101,7 @@
     NSString *url;
     if (self.data_Style == 0) {
         
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT];//热门帖子
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT,_table.pageNum,L_PAGE_SIZE];//热门帖子
     }else
     {
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];//关注热门帖子

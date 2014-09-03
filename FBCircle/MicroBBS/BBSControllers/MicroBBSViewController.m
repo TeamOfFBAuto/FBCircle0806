@@ -362,7 +362,7 @@
     NSString *url;
     if (dataStyle == 0) {
         
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT];//热门帖子(最多两个)
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT,1,2];//热门帖子(最多两个)
     }else
     {
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey],1,15];//关注热门帖子(最多15个)

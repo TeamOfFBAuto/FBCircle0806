@@ -317,6 +317,10 @@
 {
     CGFloat newHeight = [[self textView] sizeThatFits:CGSizeMake(textView.frame.size.width,CGFLOAT_MAX)].height;
     
+    if (newHeight >= 120) {
+        return;
+    }
+    
     CGRect text_Frame = self.textView.frame;
     text_Frame.size.height = newHeight;
     self.textView.frame = text_Frame;

@@ -38,6 +38,8 @@
             self.alpha = 0.0;
             
             bgView.backgroundColor = [UIColor clearColor];
+            bgView.autoresizesSubviews = YES;
+            bgView.clipsToBounds = YES;
             
             UIImageView *arrow = [[UIImageView alloc]initWithFrame:CGRectMake(572/2.f + 4, 0, 11, 5)];
             arrow.image = [UIImage imageNamed:@"zhankaijiantou22_10"];
@@ -46,6 +48,9 @@
             UIView *section_bgview = [[UIView alloc]init];
             section_bgview.backgroundColor = [UIColor whiteColor];
             section_bgview.layer.cornerRadius = 3.f;
+            
+            section_bgview.autoresizesSubviews = YES;
+            section_bgview.clipsToBounds = YES;
             [bgView addSubview:section_bgview];
             
             for (int i = 0; i < titles.count; i ++) {
@@ -69,7 +74,9 @@
             }
             
             section_bgview.frame = CGRectMake(0, 5, 320, 50 * titles.count);
-            bgView.frame = CGRectMake(0, 0, 320, 50 * titles.count + 5);
+            
+            _sumHeight = 50 * titles.count + 5;
+            bgView.frame = CGRectMake(0, 0, 320, 0);
             
             
         }else if (style == Style_SideBySide)
@@ -77,6 +84,8 @@
             
             bgView.backgroundColor = [UIColor colorWithHexString:@"575757"];
             bgView.layer.cornerRadius = 3.f;
+//            bgView.autoresizesSubviews = YES;
+            bgView.clipsToBounds = YES;
             
             for (int i = 0; i < titles.count; i ++) {
                 
@@ -96,7 +105,9 @@
                 }
             }
             
-            bgView.frame = CGRectMake(0, 0, 10 + 60 * titles.count + 10, 75/2.f);
+            bgView.frame = CGRectMake(0, 0, 0, 75/2.f);
+            
+            _sumHeight = 10 + 60 * titles.count + 10;
             
         }else if (style == Style_Bottom)
         {
@@ -139,34 +150,74 @@
     return self;
 }
 
+
 - (void)showFromView:(UIView *)aView
 {
     //相对于屏幕坐标
     CGRect newFrame = [aView.superview convertRect:aView.frame toView:[UIApplication sharedApplication].keyWindow];
-    
+
     CGRect aFrame = bgView.frame;
+    
     
     if (aStyle == Style_Normal) {
         
-        aFrame.origin.y = newFrame.origin.y + newFrame.size.height - 5;
+        bgView.top = newFrame.origin.y + newFrame.size.height - 5;
+    
+        aFrame = bgView.frame;
+        aFrame.size.height = _sumHeight;
         
     }else if (aStyle == Style_SideBySide){
         
-        aFrame.origin.x = newFrame.origin.x - bgView.width - 5;
-        aFrame.origin.y = newFrame.origin.y - 5;
+        bgView.top = newFrame.origin.y - 5;
+        bgView.left = newFrame.origin.x - bgView.width - 5;
+//        aFrame.origin.x = newFrame.origin.x - bgView.width - 5;
+//        aFrame.origin.y = newFrame.origin.y - 5;
+        aFrame = bgView.frame;
+        
+        aFrame.size.width = _sumHeight - 5;
+        aFrame.origin.x = _sumHeight - 5;
         
     }else if (aStyle == Style_Bottom)
     {
         aFrame.origin.y = [UIApplication sharedApplication].keyWindow.bottom - aFrame.size.height;
     }
-    
+    self.alpha = 1.0;
     [UIView animateWithDuration:0.3 animations:^{
         
         bgView.frame = aFrame;
         
-        self.alpha = 1.0;
+//        self.alpha = 1.0;
     }];
 }
+
+//- (void)showFromView:(UIView *)aView
+//{
+//    //相对于屏幕坐标
+//    CGRect newFrame = [aView.superview convertRect:aView.frame toView:[UIApplication sharedApplication].keyWindow];
+//    
+//    CGRect aFrame = bgView.frame;
+//    
+//    if (aStyle == Style_Normal) {
+//        
+//        aFrame.origin.y = newFrame.origin.y + newFrame.size.height - 5;
+//        
+//    }else if (aStyle == Style_SideBySide){
+//        
+//        aFrame.origin.x = newFrame.origin.x - bgView.width - 5;
+//        aFrame.origin.y = newFrame.origin.y - 5;
+//        
+//    }else if (aStyle == Style_Bottom)
+//    {
+//        aFrame.origin.y = [UIApplication sharedApplication].keyWindow.bottom - aFrame.size.height;
+//    }
+//    
+//    [UIView animateWithDuration:0.3 animations:^{
+//        
+//        bgView.frame = aFrame;
+//        
+//        self.alpha = 1.0;
+//    }];
+//}
 
 - (void)actionToDo:(LButtonView *)button
 {
