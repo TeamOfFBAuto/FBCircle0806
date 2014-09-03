@@ -42,33 +42,7 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
-    if (launchOptions) {
-        NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        if (pushNotificationKey) {
-            
-            // [alert show];
-            dic_push =   [[NSDictionary alloc]initWithDictionary:pushNotificationKey];
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:YINGYONGWAINOTIFICATION object:self userInfo:dic_push];
-            
-            /*
-             
-             小红点的位置及大小找王晴要要图
-             应用外的操作
-             *  转发，评论，赞直接进高猛写的消息列表页面
-             接受和申请好友的进推荐好友ps:推荐好友页面要换，后台需要按时间排出来
-             私信的跳到私信列表页面
-             */
-            
-            
-            
-            //
-            //            UIAlertView *_alert=[[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@",dic_push] delegate:nil cancelButtonTitle:@"launchOptions" otherButtonTitles:nil, nil];
-            //            [_alert show];
-            
-        }
-    }
-
+  
     
     //push end
     
@@ -194,6 +168,42 @@
     
     
     
+    
+    if (launchOptions) {
+        NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (pushNotificationKey) {
+            
+            // [alert show];
+            dic_push =   [[NSDictionary alloc]initWithDictionary:pushNotificationKey];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:YINGYONGWAINOTIFICATION object:self userInfo:dic_push];
+            
+            
+            
+            NSLog(@"PushDic==%@",dic_push);
+            
+            [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+            
+            /*
+             
+             小红点的位置及大小找王晴要要图
+             应用外的操作
+             *  转发，评论，赞直接进高猛写的消息列表页面
+             接受和申请好友的进推荐好友ps:推荐好友页面要换，后台需要按时间排出来
+             私信的跳到私信列表页面
+             */
+            
+            
+            
+            //
+            //            UIAlertView *_alert=[[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@",dic_push] delegate:nil cancelButtonTitle:@"launchOptions" otherButtonTitles:nil, nil];
+            //            [_alert show];
+            
+        }
+    }
+
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -215,12 +225,16 @@
      红点的消失与下个界面有关系
      
      */
+    NSLog(@"PushDic==%@",userInfo);
     
     [[NSNotificationCenter defaultCenter]postNotificationName:COMEMESSAGES object:self userInfo:userInfo];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     /**
      这里收到了信息
      */
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+
 }
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
@@ -331,6 +345,7 @@
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
+    
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
@@ -349,7 +364,6 @@
          * The persistent store is not accessible;
          * The schema for the persistent store is incompatible with current managed object model.
          Check the error message to determine what the actual problem was.
-         
          
          If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
          

@@ -336,6 +336,11 @@
 
 -(void)turnToThreeVC:(NSNotification *)notification
 {
+    
+    
+    
+    
+    
     NSString * MessageType = [[notificationDic objectForKey:@"aps"] objectForKey:@"type"];
     
     if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5) {
