@@ -983,6 +983,7 @@
 		E3E2FBB21990D48C0062A4F2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBB11990D48C0062A4F2 /* MessageUI.framework */; };
 		E3E2FBB41990D4980062A4F2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBB31990D4980062A4F2 /* OpenGLES.framework */; };
 		E3E2FBB61990D4DB0062A4F2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBB51990D4DB0062A4F2 /* SystemConfiguration.framework */; };
+		E3F0892619B6B111009E5461 /* GcustomActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F0892519B6B111009E5461 /* GcustomActionSheet.m */; };
 		E3F66CF919A1F22D00FBDCB8 /* GmPrepareNetData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F66CF819A1F22D00FBDCB8 /* GmPrepareNetData.m */; };
 /* End PBXBuildFile section */
 
@@ -1847,6 +1848,8 @@
 		E3E2FBB11990D48C0062A4F2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E3E2FBB31990D4980062A4F2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		E3E2FBB51990D4DB0062A4F2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E3F0892419B6B111009E5461 /* GcustomActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomActionSheet.h; sourceTree = "<group>"; };
+		E3F0892519B6B111009E5461 /* GcustomActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomActionSheet.m; sourceTree = "<group>"; };
 		E3F66CF719A1F22D00FBDCB8 /* GmPrepareNetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmPrepareNetData.h; sourceTree = "<group>"; };
 		E3F66CF819A1F22D00FBDCB8 /* GmPrepareNetData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmPrepareNetData.m; sourceTree = "<group>"; };
 		EFC5F1F3A29F440FB92E1246 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -3006,6 +3009,8 @@
 		56A64A8D198F6AD800451413 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E3F0892419B6B111009E5461 /* GcustomActionSheet.h */,
+				E3F0892519B6B111009E5461 /* GcustomActionSheet.m */,
 				E313148919AA5A7C0041F998 /* GMAPI.h */,
 				E313148A19AA5A7C0041F998 /* GMAPI.m */,
 				56A64A8E198F6AD800451413 /* GloadingView.h */,
@@ -4607,6 +4612,7 @@
 				56AE78DA1998905300FE869E /* BBSAddMemberCell.m in Sources */,
 				56A64882198F502700451413 /* SzkLoadData.m in Sources */,
 				56D6E32F199B12BF00607DC5 /* CreateBBSChooseIconViewController.m in Sources */,
+				E3F0892619B6B111009E5461 /* GcustomActionSheet.m in Sources */,
 				561731E119925E98001B8574 /* SendPostsBottomView.m in Sources */,
 				56A648D2198F512A00451413 /* AsyncImageView.m in Sources */,
 				E315DF4F199C5E3B00EA9109 /* GpersonInfoViewController.m in Sources */,

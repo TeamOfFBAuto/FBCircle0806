@@ -15,9 +15,14 @@
 #import "MineViewController.h"
 
 
+#import "GcustomActionSheet.h"
+
+#define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 
 @interface GRXX4ViewController ()
-
+{
+    GcustomActionSheet *_gactionsheet;
+}
 @end
 
 @implementation GRXX4ViewController
@@ -37,7 +42,12 @@
     }
 }
 
-
+-(void)viewWillAppear:(BOOL)animated{
+    if (IOS7_OR_LATER) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
+}
 
 
 - (void)viewDidLoad
@@ -438,10 +448,16 @@
             }];
         }
         
+         _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"退出登录"] buttonColor:RGBCOLOR(234, 81, 85) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+        _gactionsheet.tag = 50001;
+        _gactionsheet.delegate = self;
+        __weak typeof (_gactionsheet)bgactionsheet = _gactionsheet;
         __weak typeof (self)bself = self;
+
         [cell setTuichudengluClickedBlock:^{
             
-            [bself tuichudengluBlock];
+            [bgactionsheet showInView:bself.view WithAnimation:YES];
+            
         }];
 
         
@@ -617,9 +633,11 @@
     
     if (self.cellType == GRXX1) {//自己
         if (indexPath.row == 0 ) {//更改头像
-            
-            UIActionSheet *acts =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择", nil];
-            [acts showInView:self.view];
+            //自定义actionSheet
+            GcustomActionSheet *acts = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"拍照",@"从手机相册选择"] buttonColor:RGBCOLOR(31, 188, 34) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+            acts.tag = 50000;
+            acts.delegate = self;
+            [acts showInView:self.view WithAnimation:YES];
             
             
         }else if (indexPath.row == 4){//个性签名
@@ -629,7 +647,7 @@
             gxqmvc.yuanlaiQianming = self.yuanlaiQianming;//原来签名传值
             gxqmvc.delegate = self;
             
-            [self.navigationController pushViewController:gxqmvc animated:YES];
+            [self PushToViewController:gxqmvc WithAnimation:YES];
             
             
         }else if(indexPath.row == 2){//选择性别
@@ -1019,42 +1037,11 @@
 
 
 
-#pragma mark - UIActionSheetDelegate
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-//    UINavigationBar *navcBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
-//    navcBar.backgroundColor = [UIColor redColor];
-//    picker.navigationBar = navcBar;
-    picker.delegate = self;
-    //picker.allowsEditing = YES;
-    switch (buttonIndex) {
-        case 0://拍照
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            }else{
-                NSLog(@"无法打开相机");
-            }
-            [self presentViewController:picker animated:YES completion:^{
-                
-            }];
-            
-            break;
-        case 1://相册
-            picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-            
-            [self presentViewController:picker animated:YES completion:^{
-                
-            }];
-            break;
-            
-        case 2://取消
-            break;
-            
-        default:
-            break;
-    }
-    
-}
+//#pragma mark - UIActionSheetDelegate
+//-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    
+//    
+//}
 
 
 #pragma mark - UIImagePickerControllerDelegate 拍照选择照片协议方法
@@ -1381,6 +1368,59 @@
 
 
 
+
+#pragma mark - GcustomActionSheetDelegate
+-(void)zactionSheet:(GcustomActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%d",buttonIndex);
+    
+    if (actionSheet.tag == 50001) {//退出登录
+        if (buttonIndex == 1) {//退出登录
+            [self tuichudengluBlock];
+        }
+    }else if (actionSheet.tag == 50000){//修改头像
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        
+        [picker.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
+        picker.navigationBar.barTintColor = [UIColor blackColor];
+        UIColor * cc = [UIColor whiteColor];//RGBCOLOR(91,138,59);
+        NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:18],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+        picker.navigationBar.titleTextAttributes = dict;
+        
+        
+        
+        switch (buttonIndex) {
+            case 1://拍照
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                }else{
+                    NSLog(@"无法打开相机");
+                }
+                [self presentViewController:picker animated:YES completion:^{
+                    
+                }];
+                
+                break;
+            case 2://相册
+                picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+                
+                [self presentViewController:picker animated:YES completion:^{
+                    if (IOS7_OR_LATER) {
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+                        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+                    }
+                }];
+                break;
+                
+            case 0://取消
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+}
 
 
 

@@ -8,6 +8,7 @@
 
 #import "GmyMessageViewController.h"
 
+
 @interface GmyMessageViewController ()
 
 @end
@@ -45,10 +46,7 @@
     //设置navigation的titile
     self.titleLabel.text = @"系统通知";
     
-//    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 6)];
-//    _tableView.tableHeaderView = v;
-//    v.backgroundColor = RGBCOLOR(229, 229, 229);
-//    [self.view addSubview:v];
+
     
     
     //主tableview
@@ -183,18 +181,6 @@
     
     
     FBCircleDetailViewController *fbdvc = [[FBCircleDetailViewController alloc]init];
-    
-//
-//    __weak typeof (self)bself = self;
-//    __weak typeof (fbdvc)bfbdvc = fbdvc;
-//    [fbdvc setGmyMessagePassBlock:^{
-//        
-//        
-//        bfbdvc.theModel = [[FBCircleModel alloc]init];
-//        
-//        bfbdvc.theModel= [bself pushToWzdVcBlockMethodWithIndexPath:indexPath];
-//        
-//    }];
     fbdvc.wenzhangid=[NSString stringWithFormat:@"%@",self.wenzhangId];
     fbdvc.xiaoxiid=[NSString stringWithFormat:@"%@",self.messageId];
     fbdvc.flag=[NSString stringWithFormat:@"test"];
@@ -202,58 +188,6 @@
     [self.navigationController pushViewController:fbdvc animated:YES];
     
     
-
-    
-    
-    
-    
-    
-    
-}
-
-
-
-
-#pragma mark - pushto文章详细页block
--(FBCircleModel*)pushToWzdVcBlockMethodWithIndexPath:(NSIndexPath*)indexPath{
-    
-    
-    
-//        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=getsingletopic&tid=%@&frm=%@&type=json",self.wenzhangId,self.messageId]];
-//    
-    
-    NSString *testurlstr=[NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=getsingletopic&tid=%@&frm=%@&type=json",self.wenzhangId,self.messageId];
-    NSLog(@"%@",testurlstr);
-    NSURL *url=[NSURL URLWithString:@"http://quan.fblife.com/index.php?c=interface&a=getsingletopic&tid=1&frm=232"];
-    
-        
-        
-        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            
-            //解析数据
-            NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            
-            NSArray *dataInfoArray = [dataDic objectForKey:@"datainfo"];
-            
-            
-            NSLog(@"");
-            NSDictionary *wenzhangDic = dataInfoArray[0];
-            
-            
-            
-            NSLog(@"dataInfoArray==%@",dataInfoArray);
-            
-            
-            NSLog(@"wenzhangDic%@",wenzhangDic);
-            
-            
-            
-            _wenzhangModel = [[FBCircleModel alloc]initWithDictionary:wenzhangDic];
-            //推到文章详情页面
-            
-        }];
-
-    return _wenzhangModel;
 }
 
 
@@ -280,12 +214,9 @@
     @try {
         NSString *str = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=getalert&authkey=%@&page=%d&ps=10&type=json",[SzkAPI getAuthkey],currentPage];
         
-        
-        
         NSLog(@"请求消息接口：%@",str);
         
-        
-        
+    
         NSURL *url = [NSURL URLWithString:str];
         [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             

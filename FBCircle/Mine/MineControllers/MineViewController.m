@@ -134,8 +134,7 @@
     
     [self setHidesBottomBarWhenPushed:YES] ;
     
-
-    [self.navigationController pushViewController:grxx4 animated:YES];
+    [self PushToViewController:grxx4 WithAnimation:YES];
     
     
     
