@@ -32,9 +32,10 @@ typedef enum{
 
 typedef enum{
     
-    Inforum_Creater = 0,//帖子创建者
-    Inforum_BBSOwner, //坛主
-    Inforum_Others //其他普通用户
+    Inforum_Creater = 3,//帖子创建者
+    Inforum_BBSOwner = 1, //坛主
+    Inforum_Others = 2, //普通用户
+    Inforum_Outer = 0 //不在论坛
     
 }USER_INFORUM;
 
@@ -231,7 +232,7 @@ typedef enum{
         
        titles = @[@"删除"];
         
-    }else if (user_Inform == Inforum_Others){
+    }else if (user_Inform == Inforum_Others || user_Inform == Inforum_Outer){
         
         return;
     }
@@ -440,6 +441,9 @@ typedef enum{
                 if (inforum == 0) {
                     
                     [LTools showMBProgressWithText:@"当前用户不在该论坛" addToView:self.view];
+                    
+                    user_Inform = Inforum_Outer;
+                    
                 }else if (inforum == 1)
                 {
                     NSLog(@"创建者--坛主");
@@ -677,7 +681,7 @@ typedef enum{
     //精 帖
 
     UIImage *rightImage = [UIImage imageNamed:@"jiantou_down"];
-    if (user_Inform == Inforum_Others) {
+    if (user_Inform == Inforum_Others || user_Inform == Inforum_Outer) {
         rightImage = nil;
     }
     
