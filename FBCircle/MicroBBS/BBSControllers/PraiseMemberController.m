@@ -83,7 +83,15 @@
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             NSArray *data = [dataInfo objectForKey:@"data"];
-            int total = [[dataInfo objectForKey:@"total"]integerValue];
+//            int total = [[dataInfo objectForKey:@"total"]integerValue];
+            
+            int total;
+            if (data.count < L_PAGE_SIZE) {
+                total = 0;
+            }else
+            {
+                total = _table.pageNum;
+            }
             
             [weakTable reloadData:data total:total];
             
