@@ -28,7 +28,7 @@
     UIView *_downInfoView;
     UITableView *_tableView;
     BOOL _isShowDownInfoView;
-    
+    UIView *_downBackView;
     
     //信息字典
     NSMutableDictionary *_poiAnnotationDic;
@@ -43,7 +43,7 @@
 
 @property(nonatomic,strong)BMKPoiInfo *tableViewCellDataModel;
 
-
+@property(nonatomic,assign)BOOL isFirstOpenOfjiayouzhan;//第一次进入时自动定位加油站
 
 //协议属性
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;

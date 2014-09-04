@@ -24,7 +24,9 @@ typedef enum{
 }downTableViewType;
 
 @interface GJiuYuanDuiViewController ()
-
+{
+    GJiuYuanCell *_tmpCell;//用户获取高度的临时cell
+}
 @end
 
 @implementation GJiuYuanDuiViewController
@@ -142,11 +144,11 @@ typedef enum{
     
     
     //每隔一段时间 更新用户位置
-    timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateMyLocal) userInfo:nil repeats:YES];
+//    timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateMyLocal) userInfo:nil repeats:YES];
+//    
+//    _isFire = NO;
     
-    _isFire = NO;
-    
-    
+    [self updateMyLocal];
     
     _poiAnnotationDic  = [[NSMutableDictionary alloc]init];
     
@@ -193,7 +195,14 @@ typedef enum{
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    CGFloat cellHeight = 0.0f;
+    if (_tmpCell) {
+        cellHeight = [_tmpCell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
+    }else{
+        _tmpCell = [[GJiuYuanCell alloc]init];
+        cellHeight = [_tmpCell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
+    }
+    return cellHeight;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

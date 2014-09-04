@@ -14,7 +14,9 @@
 
 
 @interface GuseCarViewController ()
-
+{
+    GcustomUseCarDownInfoCell *_tmpCell;//临时cell 用于返回高度
+}
 @end
 
 @implementation GuseCarViewController
@@ -127,6 +129,9 @@
         [btn addTarget:self action:@selector(FoundBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btn];
         [self.btnArray addObject:btn];
+        if (i == 1) {
+            [btn setTitleColor:RGBCOLOR(44, 114, 213) forState:UIControlStateNormal];
+        }
     }
     
     //竖线
@@ -143,7 +148,7 @@
     
     //地图
     _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 88+20, 320, iPhone5?568-88-20:480-88-20)];
-    [_mapView setZoomLevel:13];// 设置地图级别
+    [_mapView setZoomLevel:17];// 设置地图级别
     _mapView.isSelectedAnnotationViewFront = YES;
     _mapView.delegate = self;//设置代理
     _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
@@ -156,23 +161,40 @@
     _poisearch.delegate = self;
     
     
-    //定位
-    _locService = [[BMKLocationService alloc]init];
-    _locService.delegate = self;
-    [_locService startUserLocationService];//启动LocationService
-    
     
     
     //判断是否开启定位
     if ([CLLocationManager locationServicesEnabled]==NO) {
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"定位服务已被关闭，开启定位请前往 设置->隐私->定位服务" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+    }else{
+        //定位
+        _locService = [[BMKLocationService alloc]init];
+        _locService.delegate = self;
+        [_locService startUserLocationService];//启动LocationService
+        self.isFirstOpenOfjiayouzhan = YES;
     }
    
     
     //下面信息view
     _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
     _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
+    //底层view
+    _downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
+    _downBackView.backgroundColor = [UIColor whiteColor];
+    _downBackView.layer.borderWidth = 0.5;
+    _downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _downBackView.layer.cornerRadius = 5;
+    [_downInfoView addSubview:_downBackView];
     
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.layer.borderWidth = 0.5;
+    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
+    _tableView.layer.cornerRadius = 5;
+    [_downBackView addSubview:_tableView];
     
     _poiAnnotationDic = [[NSMutableDictionary alloc]initWithCapacity:1];
     
@@ -193,8 +215,11 @@
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"dd";
+    
     GcustomUseCarDownInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
     if (!cell) {
+        
         cell = [[GcustomUseCarDownInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
@@ -207,15 +232,33 @@
     
     
     [cell loadViewWithIndexPath:indexPath];
+    
+    
     [cell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
     
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    CGFloat cellHeight = 0.0f;
+    
+    if (_tmpCell) {
+        [_tmpCell loadViewWithIndexPath:indexPath];
+        cellHeight = [_tmpCell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
+    }else{
+        
+        _tmpCell = [[GcustomUseCarDownInfoCell alloc]init];
+        cellHeight = [_tmpCell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
+    }
+    
+    NSLog(@"vc heightForRow代理方法 : cellHeight: %f",cellHeight);
+    
+    return cellHeight;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    NSLog(@"%s",__FUNCTION__);
+    
     return 3;
 }
 
@@ -283,8 +326,30 @@
 {
 //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     _guserLocation = userLocation;
-    
     [_mapView updateLocationData:userLocation];
+    _mapView.centerCoordinate = userLocation.location.coordinate;
+    if (self.isFirstOpenOfjiayouzhan) {
+        //发起检索
+        BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
+        option.pageIndex = curPage;
+        option.radius = 2000;
+        option.pageCapacity = 100;
+        option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
+        option.keyword = @"加油站";
+        BOOL flag = [_poisearch poiSearchNearBy:option];
+        if(flag)
+        {
+            NSLog(@"周边检索发送成功");
+            [_locService stopUserLocationService];
+        }
+        else
+        {
+            NSLog(@"周边检索发送失败");
+        }
+    }else{
+        [_locService stopUserLocationService];
+    }
+    
 }
 
 
@@ -324,10 +389,10 @@
             }];
         }
         
-        
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
+        option.radius = 2000;
         option.pageCapacity = 20;
         option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
             option.keyword = @"停车场";
@@ -357,6 +422,7 @@
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
+        option.radius = 2000;
         option.pageCapacity = 100;
         option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
         option.keyword = @"加油站";
@@ -386,6 +452,7 @@
         //发起检索
         BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
         option.pageIndex = curPage;
+        option.radius = 2000;
         option.pageCapacity = 100;
         option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
         option.keyword = @"汽车维修";
@@ -429,11 +496,11 @@
             item.subtitle = poi.address;
             [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
             
-            if(i == 0)
-            {
-                //将第一个点的坐标移到屏幕中央
-                _mapView.centerCoordinate = poi.pt;
-            }
+//            if(i == 0)
+//            {
+//                //将第一个点的坐标移到屏幕中央
+//                _mapView.centerCoordinate = poi.pt;
+//            }
             
             
         }
@@ -491,6 +558,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             _downInfoView.frame = CGRectMake(0, 568, 320, 206);
         }];
+        _isShowDownInfoView = NO;
     }
     
     [mapView bringSubviewToFront:view];
@@ -512,23 +580,6 @@
     NSLog(@"paopaoclick");
     
     
-    //底层view
-    UIView *downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 150)];
-    downBackView.backgroundColor = [UIColor whiteColor];
-    downBackView.layer.borderWidth = 0.5;
-    downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    downBackView.layer.cornerRadius = 5;
-    [_downInfoView addSubview:downBackView];
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 150) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.layer.borderWidth = 0.5;
-    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    _tableView.layer.cornerRadius = 5;
-    [downBackView addSubview:_tableView];
-    
     
     
     NSLog(@"---------%@",[view.annotation title]);
@@ -539,6 +590,11 @@
     NSLog(@"%@",poi.phone);
     
     self.tableViewCellDataModel = poi;
+    
+    NSLog(@"333%@",self.tableViewCellDataModel.name);
+    NSLog(@"444%@",self.tableViewCellDataModel.address);
+    
+    [_tableView reloadData];
     
     
     if (!_isShowDownInfoView) {
