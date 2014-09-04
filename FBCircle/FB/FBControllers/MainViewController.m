@@ -345,7 +345,7 @@
     NSString * MessageType = [[notification objectForKey:@"aps"] objectForKey:@"type"];
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     
-    
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:YINGYONGWAINOTIFICATION];
     if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5)
     {
         GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
