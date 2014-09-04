@@ -120,6 +120,13 @@
            
             dataInfo = [result objectForKey:@"datainfo"];
             
+            if (dataInfo.count < L_PAGE_SIZE) {
+                total = 0;
+            }else
+            {
+                total = _table.pageNum + 1;
+            }
+            
         }else if (self.data_Style == 1){
             
             NSDictionary *dataDic = [result objectForKey:@"datainfo"];

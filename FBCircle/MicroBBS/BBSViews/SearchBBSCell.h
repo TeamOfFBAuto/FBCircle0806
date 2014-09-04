@@ -13,9 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *aImageView;
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *memberNumLabel;
-@property (strong, nonatomic) IBOutlet UILabel *topicNumLabel;
-@property (strong, nonatomic) IBOutlet UIView *line;
-@property (strong, nonatomic) IBOutlet UILabel *tieziLable;
+
 
 - (void)setCellDataWithModel:(BBSInfoModel *)aModel;
 - (void)resetFrame:(NSString *)text;

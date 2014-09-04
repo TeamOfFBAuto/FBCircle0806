@@ -391,9 +391,18 @@
     
     NSString *str__ = [NSString stringWithFormat:@"成员 %@ | 帖子 %@",_aBBSModel.member_num,_aBBSModel.thread_num];
     
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]]];
-
-    memberLabel.attributedText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:[UIColor colorWithHexString:@"91a2ce"]];;
+    NSAttributedString *contentText;
+    if ([_aBBSModel.member_num isEqualToString:_aBBSModel.thread_num]) {
+        
+        contentText = [LTools attributedString:str__ keyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]];
+    }else
+    {
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]]];
+        
+        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:[UIColor colorWithHexString:@"91a2ce"]];
+    }
+    
+    memberLabel.attributedText = contentText;
     
 //    UILabel *memberLabel_num = [LTools createLabelFrame:CGRectMake(memberLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.member_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
 //    [basic_view addSubview:memberLabel_num];
