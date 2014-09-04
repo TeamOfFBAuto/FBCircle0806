@@ -209,13 +209,22 @@
         return;
     }
     
-    hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.navigationController.view];
+    
     
     if (allImageArray.count > 0)
     {
+        hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.navigationController.view];
         [self upDataImages];
     }else
     {
+        NSString * contentString = [_content_textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if (contentString.length == 0)
+        {
+            [ZSNApi showAutoHiddenMBProgressWithText:@"图片跟内容不能同时为空" addToView:self.view];
+            return;
+        }
+        hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.navigationController.view];
+        
         [self uploadNewBBSPostsHaveImages:NO WithImageID:nil];
     }
 }
@@ -347,11 +356,13 @@
             if ([[allDic objectForKey:@"errcode"] intValue] == 0)
             {
                 bhud.labelText = @"发送成功";
-                [bhud hide:YES];
+                [bhud hide:YES afterDelay:1.5];
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_TOPICLIST object:nil];
                 
-                [bself.navigationController popViewControllerAnimated:YES];
+                [bself performSelector:@selector(comeBack) withObject:nil afterDelay:1.5];
+                
+                
             }else
             {
                 NSLog(@"error ---  %@",[allDic objectForKey:@"errinfo"]);
@@ -375,7 +386,10 @@
     [posts_request start];
 }
 
-
+-(void)comeBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 //添加观察者
 -(void)addNotificationObserVer

@@ -36,19 +36,11 @@
 {
     [super viewDidLoad];
     
-    self.titleLabel.text = @"创建新论坛";
+    self.titleLabel.text = @"微论坛分类";
     self.rightString = @"完成";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"BBSClassify" ofType:@"plist"];
-    
-    NSDictionary * dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
-    NSArray * special = [dictionary objectForKey:@"special"];
-    NSArray * normal = [dictionary objectForKey:@"normal"];
-    
     _data_array = [NSMutableArray array];
-    [_data_array addObjectsFromArray:special];
-    [_data_array addObjectsFromArray:normal];
     
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64) style:UITableViewStylePlain];
     _myTableView.delegate = self;
@@ -56,10 +48,46 @@
     [self.view addSubview:_myTableView];
     
     
-    
+    [self getBBSClass];
 }
 
+#pragma mark - 网络请求
+/**
+ *  官方论坛分类
+ */
+- (void)getBBSClass
+{
+    __weak typeof(self)weakSelf = self;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:FBCIRCLE_MICROBBS_BBSCLASS isPost:NO postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        if ([dataInfo isKindOfClass:[NSDictionary class]])
+        {
+                NSArray *tuijian = [dataInfo objectForKey:@"tuijian"];
+                NSArray *normal = [dataInfo objectForKey:@"nomal"];
+                
+                for (NSDictionary *aDic in tuijian) {
+                    
+                    [weakSelf.data_array addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                }
+                
+                for (NSDictionary *aDic in normal) {
+                    
+                    [weakSelf.data_array addObject:[[BBSModel alloc]initWithDictionary:aDic]];
+                }
+                [weakSelf.myTableView reloadData];
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        [ZSNApi showAutoHiddenMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+    }];
+}
 
+#pragma mark - 完成时的回调
 -(void)chooseTypeBlock:(CreateBBSChooseTypeBlock)theType
 {
     chooseType_block = theType;
@@ -71,7 +99,7 @@
 {
     if (chooseType_block)
     {
-        chooseType_block([_data_array objectAtIndex:currentPage],currentPage);
+        chooseType_block([_data_array objectAtIndex:currentPage]);
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -96,16 +124,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    BBSModel * model = [_data_array objectAtIndex:indexPath.row];
+    
     if (currentPage == indexPath.row)
     {
-        _name_Label.text = [_data_array objectAtIndex:indexPath.row];
+        _name_Label.text = model.classname;
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    cell.textLabel.text = [_data_array objectAtIndex:indexPath.row];
+    cell.textLabel.text = model.classname;
     
     return cell;
 }

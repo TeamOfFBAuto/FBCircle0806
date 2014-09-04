@@ -9,6 +9,7 @@
 #import "CreateNewBBSViewController.h"
 #import "CreateBBSChooseTypeViewController.h"
 #import "FBQuanAlertView.h"
+#import "UIImageView+WebCache.h"
 
 #define MAX_NAME_NUMBER 8
 #define MAX_INTRODUCTION_NUMBWE 50
@@ -146,33 +147,38 @@
 
 -(void)createBBS:(UIButton *)button
 {
+    [self.view endEditing:YES];
+    
     NSString * nameString = [name_tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString * introductionString = [introduction_tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
-    
-    MBProgressHUD * hud = [ZSNApi showMBProgressWithText:@"正在创建" addToView:self.view];
+    NSString * error_string = @"";
     
     if (nameString.length == 0)
     {
-        hud.labelText = @"微论坛名称不能为空";
-        return;
+        error_string = @"微论坛名称不能为空";
     }else if (nameString.length > 8)
     {
-        hud.labelText = @"微论坛名称不能超过8个字";
-        return;
+        error_string = @"微论坛名称不能超过8个字";
     }else if (introductionString.length > 50)
     {
-        hud.labelText = @"论坛简介不能超过50个字";
-        return;
-    }else
+        error_string = @"论坛简介不能超过50个字";
+    }
+    
+    if (error_string.length > 0)
     {
-        hud.mode = MBProgressHUDModeAnnularDeterminate;
-        
-        hud.labelText = @"正在创建";
+        [ZSNApi showAutoHiddenMBProgressWithText:error_string addToView:self.navigationController.view];
+        return;
     }
     
     
+    if ([sub_label.text isEqualToString:@"必选"])
+    {
+        [ZSNApi showAutoHiddenMBProgressWithText:@"请选择微论坛分类" addToView:self.navigationController.view];
+        return;
+    }
     
+    MBProgressHUD * hud = [ZSNApi showMBProgressWithText:@"正在创建" addToView:self.navigationController.view];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
     
     NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],name_tf.text,introduction_tf.text,icon_num,type_num];
     NSLog(@"创建微论坛接口 ---  %@",fullUrl);
@@ -194,8 +200,9 @@
         if ([[allDic objectForKey:@"errcode"] intValue] == 0)//创建成功返回
         {
             hud.labelText = @"创建成功";
-            [hud hide:YES];
-            [bself.navigationController popViewControllerAnimated:YES];
+            [hud hide:YES afterDelay:1.5];
+            
+            [bself performSelector:@selector(comeBack) withObject:nil afterDelay:1.5];
         }else
         {
             hud.labelText = [allDic objectForKey:@"errinfo"];
@@ -211,6 +218,10 @@
     }];
     
     [create_request start];
+}
+-(void)comeBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 展示弹出框
@@ -319,13 +330,13 @@
     if (theType == 0)///加载图片icon
     {
         iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(280,9.5,25,25)];
-        iconImage.image = [UIImage imageNamed:@"mirco_icon_1.png"];//张少南  这里需要修改下默认图片
+//        iconImage.image = [UIImage imageNamed:@"defaultPlaceHolder.png"];//张少南  这里需要修改下默认图片
         [inputView addSubview:iconImage];
         
     }else
     {
         sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
-        sub_label.text = @"汽车";
+        sub_label.text = @"必选";
         sub_label.textAlignment = NSTextAlignmentLeft;
         sub_label.backgroundColor = [UIColor clearColor];
         sub_label.font = [UIFont systemFontOfSize:17];
@@ -367,12 +378,12 @@
         {
             CreateBBSChooseTypeViewController * chooseType = [[CreateBBSChooseTypeViewController alloc] init];
             
-            [chooseType chooseTypeBlock:^(NSString *string, int index)
+            [chooseType chooseTypeBlock:^(BBSModel * model)
             {
-                sub_label.text = string;
-                iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"mirco_icon_%d.png",index+1]];
-                icon_num = index+1;
-                type_num = index+1;
+                sub_label.text = model.classname;
+                [iconImage sd_setImageWithURL:[NSURL URLWithString:model.classpic] placeholderImage:[UIImage imageNamed:@"defaultPlaceHolder"]];
+                icon_num = [model.id intValue];
+                type_num = [model.id intValue];
             }];
             
             [self PushToViewController:chooseType WithAnimation:YES];

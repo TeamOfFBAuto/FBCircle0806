@@ -130,7 +130,7 @@
 -(void)ReceiveMytabHeaderV{
     
     UIView *aviews=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320,54)];
-    aviews.backgroundColor=  RGBCOLOR(230  , 230, 230);
+    aviews.backgroundColor=  RGBCOLOR(190  , 189, 195);
 
         
         __weak typeof(self) __weakself=self;

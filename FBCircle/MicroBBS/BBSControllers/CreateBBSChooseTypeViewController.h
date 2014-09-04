@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BBSModel.h"
 
-typedef void(^CreateBBSChooseTypeBlock)(NSString * string,int index);
+typedef void(^CreateBBSChooseTypeBlock)(BBSModel * model);
 
 
 @interface CreateBBSChooseTypeViewController : MyViewController<UITableViewDelegate,UITableViewDataSource>
