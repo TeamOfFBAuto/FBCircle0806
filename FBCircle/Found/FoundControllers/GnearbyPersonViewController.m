@@ -22,6 +22,18 @@
 @implementation GnearbyPersonViewController
 
 
+- (void)dealloc
+{
+    
+    NSLog(@"%s",__FUNCTION__);
+    
+    _tableView.refreshDelegate = nil;
+    _tableView.dataSource = nil;
+    _tableView = nil;
+    
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,6 +48,35 @@
     
     self.titleLabel.text = @"附近的人";
     
+    //定位
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    
+    //判断是否开启定位
+    if ([CLLocationManager locationServicesEnabled]==NO) {
+        [self loadDingweiPanduanView];
+    }else{
+        [self fujinderen];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+//加载提示开启定位的视图
+-(void)loadDingweiPanduanView{
     UILabel *titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(62, 158, 210, 14)];
     titleLabel1.font = [UIFont systemFontOfSize:14];
     titleLabel1.textColor = RGBCOLOR(106, 113, 128);
@@ -57,35 +98,23 @@
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
     [self.view addSubview:btn];
-    
-    
-    //定位
-    _locService = [[BMKLocationService alloc]init];
-    _locService.delegate = self;
-    [_locService startUserLocationService];//启动LocationService
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 
 -(void)fujinderen{
     
+    if ([CLLocationManager locationServicesEnabled]==NO) {
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"定位服务已被关闭，开启定位请前往 设置->隐私->定位服务" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
+    }else{
+        _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
+        _tableView.refreshDelegate = self;
+        _tableView.dataSource = self;
+        [self.view addSubview:_tableView];
+        [_tableView showRefreshHeader:YES];
+    }
     
-    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
-    _tableView.refreshDelegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:_tableView];
     
-    //每隔一段时间 更新用户位置
-//    timer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
-//    [timer fire];
-    [self updateMyLocalNear];
+    
 }
 
 
@@ -144,38 +173,52 @@
             NSLog(@"data有数据");
             NSDictionary *allDataInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             
-            NSLog(@"请求附近的人获取一组用户id 和距离：%@",allDataInfo);
+            NSLog(@"请求附近的人获取一组用户id 和距离请求到的数据字典：%@",allDataInfo);
             
-            if ([allDataInfo isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *datainfo = [allDataInfo objectForKey:@"datainfo"];
-                _userids = [datainfo objectForKey:@"uid"];
-                _distanceDic = [datainfo objectForKey:@"udistance"];
+            NSString *erroCode = [allDataInfo objectForKey:@"errcode"];
+            NSString *erroInfo = [allDataInfo objectForKey:@"errinfo"];
+            
+            NSLog(@"errocode %@ erroInfo %@ ",erroCode,erroInfo);
+            if ([erroCode intValue] == 0) {
+                if ([allDataInfo isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *datainfo = [allDataInfo objectForKey:@"datainfo"];
+                    
+                    _userids = [datainfo objectForKey:@"uid"];
+                    _distanceDic = [datainfo objectForKey:@"udistance"];
+                    
+                    
+                    //拿到一组id后请求一组用户信息
+                    NSString *userIdStr = [[NSString alloc]init];
+                    userIdStr = [_userids componentsJoinedByString:@","];
+                    NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
+                    
+                    NSLog(@"请求一组用户接口：%@",userIdApi);
+                    
+                    NSURL *url = [NSURL URLWithString:userIdApi];
+                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                        NSDictionary *datadic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                        
+                        NSLog(@"一组用户dic%@",datadic);
+                        
+                        _dataArray = [datadic objectForKey:@"datainfo"];
+                        
+                        NSLog(@"数据源数组个数%d",_dataArray.count);
+                        
+                        _tableView.isReloadData = YES;
+                        [bself reloadData:_dataArray isReload:_tableView.isReloadData];
+                        
+                    }];
+                    
+                }
+            }else{
                 
+                _tableView.isReloadData = NO;
+                [bself reloadData:_dataArray isReload:_tableView.isReloadData];
                 
-                //拿到一组id后请求一组用户信息
-                NSString *userIdStr = [[NSString alloc]init];
-                userIdStr = [_userids componentsJoinedByString:@","];
-                NSString *userIdApi = [NSString stringWithFormat:FUFOUND_USERSID,userIdStr];
-                
-                NSLog(@"请求一组用户接口：%@",userIdApi);
-                
-                NSURL *url = [NSURL URLWithString:userIdApi];
-                NSURLRequest *request = [NSURLRequest requestWithURL:url];
-                [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                    NSDictionary *datadic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                    
-                    NSLog(@"一组用户dic%@",datadic);
-                    
-                    _dataArray = [datadic objectForKey:@"datainfo"];
-                    
-                    NSLog(@"%@",_dataArray);
-                    
-                    _tableView.isHaveMoreData = NO;
-                    [bself reloadData:_dataArray isReload:_tableView.isReloadData];
-                    
-                }];
                 
             }
+            
         }
     }];
     
@@ -219,7 +262,7 @@
 - (void)loadNewData
 {
     
-    [self prepareNetData];
+    [self updateMyLocalNear];
 }
 
 - (void)loadMoreData
@@ -241,20 +284,8 @@
 
 #pragma mark - 上传自己的经纬度
 -(void)updateMyLocalNear{
-    NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
     
-    NSLog(@"%@",api);
-    
-    NSURL *url = [NSURL URLWithString:api];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        NSLog(@"%@",dic);
-        
-        [_tableView showRefreshHeader:YES];
-    }];
-    
+    [_locService startUserLocationService];//启动LocationService
     
     
 }
@@ -272,8 +303,29 @@
 //用户方向更新后，会调用此函数
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-//    [_mapView updateLocationData:userLocation];
     _guserLocation = userLocation;
+    
+    int lat = (int)_guserLocation.location.coordinate.latitude;
+    int lonn = (int)_guserLocation.location.coordinate.longitude;
+    if (lat != 0 && lonn != 0) {
+        [_locService stopUserLocationService];
+        NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+        
+        NSLog(@"上传自己的位置%@",api);
+        
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            
+            NSLog(@"上传自己的位置返回的字典%@",dic);
+            
+            [self prepareNetData];
+            
+            
+        }];
+    }
+    
     
 }
 
@@ -281,15 +333,7 @@
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-
     _guserLocation = userLocation;
-    
-//    [_mapView updateLocationData:userLocation];
-    
-    if (!_isFire) {
-        _isFire = YES;
-        [timer fire];
-    }
 }
 
 

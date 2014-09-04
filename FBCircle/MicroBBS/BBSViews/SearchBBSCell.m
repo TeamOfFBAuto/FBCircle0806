@@ -30,21 +30,22 @@
     self.aImageView.image = [LTools imageForBBSId:aModel.forumclass];
     self.aTitleLabel.text = aModel.name;
     self.memberNumLabel.text = aModel.member_num;
-    self.topicNumLabel.text = aModel.thread_num;
-}
-
--(void)layoutSubviews
-{
-    [self resetFrame:self.memberNumLabel.text];
-}
-
-- (void)resetFrame:(NSString *)text
-{
-    self.memberNumLabel.frame = CGRectMake(_memberNumLabel.left, _memberNumLabel.top, [LTools widthForText:text font:14], _memberNumLabel.height);
     
-    self.line.frame = CGRectMake(_memberNumLabel.right + 5, _line.top, _line.width, _line.height);
-    self.tieziLable.frame = CGRectMake(_line.right + 5, _tieziLable.top, _tieziLable.width, _tieziLable.height);
-    self.topicNumLabel.frame = CGRectMake(_tieziLable.right, _topicNumLabel.top, _topicNumLabel.width, _topicNumLabel.height);
+    NSString *str__ = [NSString stringWithFormat:@"成员 %@ | 帖子 %@",aModel.member_num,aModel.thread_num];
+    
+    NSAttributedString *contentText;
+    if ([aModel.member_num isEqualToString:aModel.thread_num]) {
+        
+        contentText = [LTools attributedString:str__ keyword:aModel.member_num color:[UIColor colorWithHexString:@"617dbc"]];
+    }else
+    {
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:aModel.member_num color:[UIColor colorWithHexString:@"617dbc"]]];
+        
+        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:aModel.thread_num color:[UIColor colorWithHexString:@"617dbc"]];
+    }
+    
+    self.memberNumLabel.attributedText = contentText;
 }
+
 
 @end

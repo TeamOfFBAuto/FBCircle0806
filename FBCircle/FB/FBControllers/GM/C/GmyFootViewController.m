@@ -36,7 +36,6 @@
     _isJiaHaoPick = NO;
     //[self prepareNetDataWithPage:1];
     if (IOS7_OR_LATER) {
-        
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
@@ -491,11 +490,13 @@
         _isChooseTopView = NO;
         
         //设置topView点击block
-        _acts =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择", nil];
+        _acts = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"拍照",@"从手机相册选择"] buttonColor:RGBCOLOR(31,188,34) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+        _acts.delegate = self;
         __weak typeof (_acts)bacts = _acts;
         __weak typeof (self)bself = self;
         [cell.topImageView setAvatarClickedBlock:^{
-            [bacts showInView:bself.view];
+//            [bacts showInView:bself.view];
+            [bacts showInView:bself.view WithAnimation:YES];
         }];
 
         
@@ -582,41 +583,41 @@
 
 //今天、加号部分
 
-- (UIView *)photoAdd
-{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectZero];
-    
-        view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 103)];
-        view.backgroundColor = [UIColor whiteColor];
-        
-        //今天label
-        UILabel *todayLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 57, 35)];
-        [todayLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28]];
-        todayLabel.text = @"今天";
-        [view addSubview:todayLabel];
-        
-        //加号
-        GavatarView *addView = [[GavatarView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(todayLabel.frame)+15, 0, 75, 75)];
-        addView.userInteractionEnabled = YES;
-        
-        
-        _actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说", nil];
-        _actionSheet.tag = 100;
-        __weak typeof (_actionSheet)bactionSheet = _actionSheet;
-        
-        __weak typeof (self)bself = self;
-        [addView setAvatarClickedBlock:^{
-            
-            [bactionSheet showInView:bself.view];
-            
-        }];
-        addView.image = [UIImage imageNamed:@"tianjia-150_150.png"];
-        [view addSubview:addView];
-        
-    
-    //view.backgroundColor = [UIColor redColor];
-    return view;
-}
+//- (UIView *)photoAdd
+//{
+//    UIView *view = [[UIView alloc]initWithFrame:CGRectZero];
+//    
+//        view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 103)];
+//        view.backgroundColor = [UIColor whiteColor];
+//        
+//        //今天label
+//        UILabel *todayLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 57, 35)];
+//        [todayLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28]];
+//        todayLabel.text = @"今天";
+//        [view addSubview:todayLabel];
+//        
+//        //加号
+//        GavatarView *addView = [[GavatarView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(todayLabel.frame)+15, 0, 75, 75)];
+//        addView.userInteractionEnabled = YES;
+//        
+//        
+//        _actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说", nil];
+//        _actionSheet.tag = 100;
+//        __weak typeof (_actionSheet)bactionSheet = _actionSheet;
+//        
+//        __weak typeof (self)bself = self;
+//        [addView setAvatarClickedBlock:^{
+//            
+//            [bactionSheet showInView:bself.view];
+//            
+//        }];
+//        addView.image = [UIImage imageNamed:@"tianjia-150_150.png"];
+//        [view addSubview:addView];
+//        
+//    
+//    //view.backgroundColor = [UIColor redColor];
+//    return view;
+//}
 
 
 
@@ -637,14 +638,18 @@
         addView.userInteractionEnabled = YES;
         
         
-        _actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说", nil];
+//        _actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择",@"说说", nil];
+        
+        _actionSheet = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"拍照",@"从手机相册选择",@"说说"] buttonColor:RGBCOLOR(31,188,34) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+        _actionSheet.delegate = self;
+        
         _actionSheet.tag = 100;
         __weak typeof (_actionSheet)bactionSheet = _actionSheet;
 
         __weak typeof (self)bself = self;
         [addView setAvatarClickedBlock:^{
             
-            [bactionSheet showInView:bself.view];
+            [bactionSheet showInView:bself.view WithAnimation:YES];
             
         }];
         addView.image = [UIImage imageNamed:@"tianjia-150_150.png"];
@@ -895,13 +900,13 @@
 
 
 
-#pragma mark - UIActionSheetDelegate
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+#pragma mark - GcustomActionSheetDelegate
+-(void)zactionSheet:(GcustomActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;{
     
     if (actionSheet.tag == 100) {//加号
         _isJiaHaoPick = YES;
         switch (buttonIndex) {
-            case 0://拍照
+            case 1://拍照
             {
                 UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -919,7 +924,7 @@
                 
             }
                 break;
-            case 1://从相册选择
+            case 2://从相册选择
             {
                 NSLog(@"从手机相册选择");
                 
@@ -938,7 +943,7 @@
             }
                 
                 break;
-            case 2://说说
+            case 3://说说
             {
                 NSLog(@"说说");
                 
@@ -973,9 +978,9 @@
         
         NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:18],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
         picker.navigationBar.titleTextAttributes = dict;
-        picker.title=@"hhh";
+        
         switch (buttonIndex) {
-            case 0://拍照
+            case 1://拍照
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
                     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
                     
@@ -985,8 +990,6 @@
                     NSLog(@"无法打开相机");
                 }
                 [self presentViewController:picker animated:YES completion:^{
-                    
-//                    #define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
                     if (IOS7_OR_LATER) {
                         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
                         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
@@ -994,7 +997,7 @@
                 }];
                 
                 break;
-            case 1://相册
+            case 2://相册
             {
                 picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
                 
@@ -1008,7 +1011,7 @@
                 
                 break;
                 
-            case 2://取消
+            case 0://取消
                 break;
                 
             default:

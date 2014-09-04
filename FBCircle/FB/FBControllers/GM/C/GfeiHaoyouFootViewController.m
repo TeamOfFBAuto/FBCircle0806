@@ -36,7 +36,7 @@
     
     
     //设置navigation的titile
-    self.navigationItem.title = @"足迹";
+    self.titleLabel.text = @"足迹";
     
     
     

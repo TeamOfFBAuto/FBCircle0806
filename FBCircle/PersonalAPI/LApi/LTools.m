@@ -681,6 +681,27 @@
     
     return string;
 }
+/**
+ *  每次只给一个关键词加高亮颜色
+ *
+ *  @param attibutedString 可以为空
+ *  @param string          attibutedString 为空时,用此进行初始化;并且用于找到关键词的range
+ *  @param keyword         需要高亮的部分
+ *  @param color           高亮的颜色
+ *
+ *  @return NSAttributedString
+ */
++ (NSAttributedString *)attributedString:(NSMutableAttributedString *)attibutedString originalString:(NSString *)string AddKeyword:(NSString *)keyword color:(UIColor *)color
+{
+    if (attibutedString == nil) {
+        attibutedString = [[NSMutableAttributedString alloc]initWithString:string];
+    }
+    NSRange range = [string rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(0, string.length)];
+    
+    [attibutedString addAttribute:NSForegroundColorAttributeName value:color range:range];
+    
+    return attibutedString;
+}
 
 + (BOOL)NSStringIsNull:(NSString *)string
 {

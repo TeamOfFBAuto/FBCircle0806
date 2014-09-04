@@ -32,14 +32,14 @@
 
 #import "MLImageCrop.h"
 
-
+#import "GcustomActionSheet.h"
 
 
 #import "AppDelegate.h"
 
 
 
-@interface GmyFootViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,EGORefreshTableHeaderDelegate,UIScrollViewDelegate,QBImagePickerControllerDelegate,MLImageCropDelegate,WriteBlogViewControllerDelegate>
+@interface GmyFootViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,GcustomActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,EGORefreshTableHeaderDelegate,UIScrollViewDelegate,QBImagePickerControllerDelegate,MLImageCropDelegate,WriteBlogViewControllerDelegate>
 
 {
     UITableView *_tableView;//主tableview
@@ -78,11 +78,12 @@
     
     
     //点击头像的pickview
-    UIActionSheet *_acts;
+    
+    GcustomActionSheet *_acts;
     
     
     //加号的pickerview
-    UIActionSheet *_actionSheet;
+    GcustomActionSheet *_actionSheet;
 }
 
 //上个页面传过来的参数

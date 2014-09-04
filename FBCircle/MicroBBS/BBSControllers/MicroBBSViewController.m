@@ -26,6 +26,10 @@
 #define CACHE_HOT_TOPIC @"hotTopic" //热门推荐
 #define CACHE_CONCERN_HOT @"concern_hot" //关注热门
 
+#define TITLE_MY_CONCERN_HOT @"我的论坛热帖"
+#define TITLE_MY_HOT_RECOMMEND @"热门推荐"
+#define TITLE_MY_MY_BBS @"我的论坛"
+
 @interface MicroBBSViewController ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
@@ -304,7 +308,7 @@
     __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],1,L_PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],1,3];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -362,10 +366,10 @@
     NSString *url;
     if (dataStyle == 0) {
         
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT];//热门帖子(最多两个)
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_HOT,1,2];//热门帖子(最多两个)
     }else
     {
-        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey],1,15];//关注热门帖子(最多15个)
+        url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey],1,5];//关注热门帖子(最多15个)
         
         NSLog(@"---->concern %@",url);
     }
@@ -515,7 +519,7 @@
     _mybbsView.clipsToBounds = YES;
     [headerView addSubview:_mybbsView];
     
-    LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:@"我的论坛" target:self action:@selector(clickToMyBBS:)];
+    LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_MY_BBS target:self action:@selector(clickToMyBBS:)];
     [_mybbsView addSubview:section];
     
     UIView *secondBgView = [[UIView alloc]initWithFrame:CGRectMake(section.left, section.bottom ,section.width, 40)];
@@ -568,7 +572,7 @@
     _recommendView.clipsToBounds = YES;
     [headerView addSubview:_recommendView];
     
-    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:@"热门推荐" target:self action:@selector(clickToMore:)];
+    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_HOT_RECOMMEND target:self action:@selector(clickToMore:)];
     section2.rightBtn.tag = 100;
     [_recommendView addSubview:section2];
     
@@ -701,8 +705,7 @@
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         
-        NSString *title = @"我关注的论坛的热门话题";
-        LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 0, 304, 40) title:title target:self action:@selector(clickToMore:)];
+        LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 0, 304, 40) title:TITLE_MY_CONCERN_HOT target:self action:@selector(clickToMore:)];
         section.rightBtn.tag = 101;
         [cell addSubview:section];
         

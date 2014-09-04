@@ -26,6 +26,7 @@ typedef void(^ ActionBlock) (NSInteger buttonIndex);
     ActionBlock actionBlock;
     UIView *bgView;
     SHEET_STYLE aStyle;
+    CGFloat _sumHeight;
 }
 
 - (id)initWithTitles:(NSArray *)titles images:(NSArray *)images sheetStyle:(SHEET_STYLE)style action:(ActionBlock)aBlock;

@@ -36,6 +36,8 @@
     }
     
     
+    self.titleLabel.text = @"好友足迹";
+    
     
     //设置navigation左右按钮格式类型
     

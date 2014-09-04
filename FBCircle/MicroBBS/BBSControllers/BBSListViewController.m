@@ -353,6 +353,18 @@
     
 }
 
+//- (NSAttributedString *)attributedString:(NSMutableAttributedString *)attibutedString originalString:(NSString *)string AddKeyword:(NSString *)keyword color:(UIColor *)color
+//{
+//    if (attibutedString == nil) {
+//        attibutedString = [[NSMutableAttributedString alloc]initWithString:string];
+//    }
+//    NSRange range = [string rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(0, string.length)];
+//    
+//    [attibutedString addAttribute:NSForegroundColorAttributeName value:color range:range];
+//    
+//    return attibutedString;
+//}
+
 
 #pragma mark - 视图创建
 
@@ -373,23 +385,39 @@
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [basic_view addSubview:titleLabel];
     
-    UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,25, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+    UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,125, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:memberLabel];
     
-    UILabel *memberLabel_num = [LTools createLabelFrame:CGRectMake(memberLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.member_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
-    [basic_view addSubview:memberLabel_num];
     
+    NSString *str__ = [NSString stringWithFormat:@"成员 %@ | 帖子 %@",_aBBSModel.member_num,_aBBSModel.thread_num];
     
-    UIImageView *line_h = [[UIImageView alloc]initWithFrame:CGRectMake(memberLabel_num.right + 5, memberLabel_num.top + memberLabel_num.height / 4.f, 1, memberLabel_num.height / 2.f)];
-    line_h.backgroundColor = [UIColor lightGrayColor];
-    [basic_view addSubview:line_h];
+    NSAttributedString *contentText;
+    if ([_aBBSModel.member_num isEqualToString:_aBBSModel.thread_num]) {
+        
+        contentText = [LTools attributedString:str__ keyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]];
+    }else
+    {
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]]];
+        
+        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:[UIColor colorWithHexString:@"91a2ce"]];
+    }
     
+    memberLabel.attributedText = contentText;
     
-    UILabel *topicLabel = [LTools createLabelFrame:CGRectMake(line_h.right + 5, titleLabel.bottom,25, 25) title:@"帖子" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
-    [basic_view addSubview:topicLabel];
-    
-    UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.thread_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
-    [basic_view addSubview:topicLabel_num];
+//    UILabel *memberLabel_num = [LTools createLabelFrame:CGRectMake(memberLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.member_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
+//    [basic_view addSubview:memberLabel_num];
+//    
+//    
+//    UIImageView *line_h = [[UIImageView alloc]initWithFrame:CGRectMake(memberLabel_num.right + 5, memberLabel_num.top + memberLabel_num.height / 4.f, 1, memberLabel_num.height / 2.f)];
+//    line_h.backgroundColor = [UIColor lightGrayColor];
+//    [basic_view addSubview:line_h];
+//    
+//    
+//    UILabel *topicLabel = [LTools createLabelFrame:CGRectMake(line_h.right + 5, titleLabel.bottom,25, 25) title:@"帖子" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+//    [basic_view addSubview:topicLabel];
+//    
+//    UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.thread_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
+//    [basic_view addSubview:topicLabel_num];
     
     UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(320 - 12 - 8, basic_view.height/2.f - 13/2.f, 8, 13)];
     arrow_image.image = [UIImage imageNamed:@"jiantou"];

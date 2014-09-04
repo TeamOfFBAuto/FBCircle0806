@@ -29,9 +29,11 @@
 
 #import "MLImageCrop.h"
 
+#import "GcustomActionSheet.h"
+
 @class MainViewController;
 
-@interface GRXX4ViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,UIAlertViewDelegate,MLImageCropDelegate>
+@interface GRXX4ViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,UIAlertViewDelegate,MLImageCropDelegate,GcustomActionSheetDelegate>
 
 {
     UITableView *_tableView;//主tableView
@@ -63,6 +65,9 @@
     
     
     ASIFormDataRequest *request__;//tap==123 上传头像
+    
+    
+    
     
 }
 

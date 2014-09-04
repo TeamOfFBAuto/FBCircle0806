@@ -73,19 +73,24 @@ typedef enum{
     
     
     //导航栏上的返回按钮和titile
-    UIImageView *fanhuiImv = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fanhui-daohanglan-20_38.png"] highlightedImage:nil];
-    fanhuiImv.frame = CGRectMake(15, 33, 10, 19);
-    [navigationbar addSubview:fanhuiImv];
     
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(25, 23, 70, 44);
-//    backBtn.backgroundColor = [UIColor redColor];
-    [backBtn addTarget:self action:@selector(gBackBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [backBtn setTitle:@"发现" forState:UIControlStateNormal];
-    [backBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 4, 32)];
-    [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    backBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [navigationbar addSubview:backBtn];
+    //返回view
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 74, 64)];
+    backView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *ttt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gBackBtnClicked)];
+    [backView addGestureRecognizer:ttt];
+    [navigationbar addSubview:backView];
+    //返回箭头
+    UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12+20, 10, 19)];
+    [backImv setImage:[UIImage imageNamed:@"fanhui-daohanglan-20_38.png"]];
+    backImv.userInteractionEnabled = YES;
+    [backView addSubview:backImv];
+    //返回文字
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(backImv.frame)+8, backImv.frame.origin.y, 34, 20)];
+    backLabel.textColor = [UIColor whiteColor];
+    backLabel.userInteractionEnabled = YES;
+    backLabel.text = @"发现";
+    [backView addSubview:backLabel];
     
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(125, 20, 70, 44)];
