@@ -96,7 +96,7 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:13];
     
     [btn setTitle:@"我的二维码" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [btn setTitleColor:RGBCOLOR(87, 151, 226) forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [btn addTarget:self action:@selector(myErweima) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];

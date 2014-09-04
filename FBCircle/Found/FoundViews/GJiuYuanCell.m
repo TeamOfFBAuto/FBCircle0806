@@ -7,6 +7,8 @@
 //
 
 #import "GJiuYuanCell.h"
+#import "UILabel+GautoMatchedText.h"
+
 
 @implementation GJiuYuanCell
 
@@ -62,11 +64,15 @@
 
 
 //填充数据
--(void)configWithDataModel:(BMKPoiInfo*)poiModel indexPath:(NSIndexPath*)TheIndexPath{
+-(CGFloat)configWithDataModel:(BMKPoiInfo*)poiModel indexPath:(NSIndexPath*)TheIndexPath{
+    
+    float cellHeight = 0.0f;
     
     NSLog(@"%@",poiModel.postcode);
     if (TheIndexPath.row == 0) {
         self.contentLabel.text = poiModel.name;
+        [self.contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(52, 15) width:187];
+        
     }else if (TheIndexPath.row == 1){
         self.contentLabel.text = poiModel.address;
     }else if (TheIndexPath.row == 2){
@@ -75,6 +81,7 @@
         self.contentLabel.text = poiModel.phone;
     }
     
+    return cellHeight;
     
 }
 
