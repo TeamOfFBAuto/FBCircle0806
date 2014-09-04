@@ -554,6 +554,7 @@
     
     
     ZActionSheet * actionSheet = [[ZActionSheet alloc] initWithTitle:nil buttonTitles:[NSArray arrayWithObjects:@"拍照",@"从手机相册选择",@"说说",nil] buttonColor:RGBCOLOR(0,203,4) CancelTitle:@"取消" CancelColor:RGBCOLOR(245,245,245) actionBackColor:RGBCOLOR(236,237,241)];
+    actionSheet.tag = 602;
     actionSheet.delegate = self;
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow WithAnimation:YES];
     
@@ -604,128 +605,8 @@
 
 -(void)zactionSheet:(ZActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [UIView animateWithDuration:0.4 delay:0 options:0 animations: ^{
-        
-        right_button.transform = CGAffineTransformIdentity;
-    } completion: ^(BOOL completed) {
-        
-    }];
     
-    
-    switch (buttonIndex)
-    {
-        case 1:
-        {
-            NSLog(@"拍照");
-            
-            isUpdataBanner = NO;
-            
-            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-            {
-                UIImagePickerController * pickerC = [[UIImagePickerController alloc] init];
-                pickerC.delegate = self;
-                pickerC.allowsEditing = NO;
-                pickerC.sourceType = sourceType;
-                [self presentViewController:pickerC animated:YES completion:nil];
-            }
-            else
-            {
-                NSLog(@"模拟其中无法打开照相机,请在真机中使用");
-            }
-            
-        }
-            break;
-        case 2:
-        {
-            isUpdataBanner = NO;
-            
-            NSLog(@"从手机相册选择");
-            
-            if (!imagePickerController)
-            {
-                imagePickerController = nil;
-            }
-            
-            imagePickerController = [[QBImagePickerController alloc] init];
-            imagePickerController.delegate = self;
-            imagePickerController.allowsMultipleSelection = YES;
-            
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
-            
-            [self presentViewController:navigationController animated:YES completion:NULL];
-            
-        }
-            break;
-        case 3:
-        {
-            NSLog(@"说说");
-            
-            WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
-            
-            WriteBlog.theType = WriteBlogWithContent;
-            
-            WriteBlog.delegate = self;
-            
-            UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
-            
-            [self presentViewController:nav animated:YES completion:^{
-                
-            }];
-            
-            
-        }
-            break;
-        case 0:
-        {
-            NSLog(@"取消");
-        }
-            break;
-            
-        default:
-            break;
-    }
-}
-
-
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (actionSheet.tag == 601)
-    {
-        isUpdataBanner = YES;
-        
-        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-        picker.delegate = self;
-        
-        switch (buttonIndex) {
-            case 0://拍照
-                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                }else{
-                    NSLog(@"无法打开相机");
-                }
-                [self presentViewController:picker animated:YES completion:^{
-                    
-                }];
-                
-                break;
-            case 1://相册
-                picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-                
-                [self presentViewController:picker animated:YES completion:^{
-                    
-                }];
-                break;
-                
-            case 2://取消
-                break;
-                
-            default:
-                break;
-        }
-        
-    }else
-    {
+    if (actionSheet.tag == 602) {//右边的加号
         [UIView animateWithDuration:0.4 delay:0 options:0 animations: ^{
             
             right_button.transform = CGAffineTransformIdentity;
@@ -736,7 +617,7 @@
         
         switch (buttonIndex)
         {
-            case 0:
+            case 1:
             {
                 NSLog(@"拍照");
                 
@@ -758,7 +639,7 @@
                 
             }
                 break;
-            case 1:
+            case 2:
             {
                 isUpdataBanner = NO;
                 
@@ -779,7 +660,7 @@
                 
             }
                 break;
-            case 2:
+            case 3:
             {
                 NSLog(@"说说");
                 
@@ -798,7 +679,7 @@
                 
             }
                 break;
-            case 3:
+            case 0:
             {
                 NSLog(@"取消");
             }
@@ -807,8 +688,181 @@
             default:
                 break;
         }
+        
+        
+    }else if (actionSheet.tag == 601){//更改用户banner
+        isUpdataBanner = YES;
+        
+        
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        
+        [picker.navigationBar setBackgroundImage:FBCIRCLE_NAVIGATION_IMAGE forBarMetrics: UIBarMetricsDefault];
+        picker.navigationBar.barTintColor = [UIColor blackColor];
+        UIColor * cc = [UIColor whiteColor];//RGBCOLOR(91,138,59);
+        
+        NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:18],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+        picker.navigationBar.titleTextAttributes = dict;
+        
+        
+        switch (buttonIndex) {
+            case 1://拍照
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                }else{
+                    NSLog(@"无法打开相机");
+                }
+                [self presentViewController:picker animated:YES completion:^{
+                    
+                }];
+                
+                break;
+            case 2://相册
+                picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+                #define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
+                [self presentViewController:picker animated:YES completion:^{
+                    if (IOS7_OR_LATER) {
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+                        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+                    }
+                }];
+                break;
+                
+            case 3://取消
+                break;
+                
+            default:
+                break;
+        }
     }
+    
+    
+    
+    
 }
+
+
+//-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (actionSheet.tag == 601)
+//    {
+//        isUpdataBanner = YES;
+//        
+//        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+//        picker.delegate = self;
+//        
+//        switch (buttonIndex) {
+//            case 0://拍照
+//                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+//                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+//                }else{
+//                    NSLog(@"无法打开相机");
+//                }
+//                [self presentViewController:picker animated:YES completion:^{
+//                    
+//                }];
+//                
+//                break;
+//            case 1://相册
+//                picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+//                
+//                [self presentViewController:picker animated:YES completion:^{
+//                    
+//                }];
+//                break;
+//                
+//            case 2://取消
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//        
+//    }else
+//    {
+//        [UIView animateWithDuration:0.4 delay:0 options:0 animations: ^{
+//            
+//            right_button.transform = CGAffineTransformIdentity;
+//        } completion: ^(BOOL completed) {
+//            
+//        }];
+//        
+//        
+//        switch (buttonIndex)
+//        {
+//            case 0:
+//            {
+//                NSLog(@"拍照");
+//                
+//                isUpdataBanner = NO;
+//                
+//                UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+//                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+//                {
+//                    UIImagePickerController * pickerC = [[UIImagePickerController alloc] init];
+//                    pickerC.delegate = self;
+//                    pickerC.allowsEditing = NO;
+//                    pickerC.sourceType = sourceType;
+//                    [self presentViewController:pickerC animated:YES completion:nil];
+//                }
+//                else
+//                {
+//                    NSLog(@"模拟其中无法打开照相机,请在真机中使用");
+//                }
+//                
+//            }
+//                break;
+//            case 1:
+//            {
+//                isUpdataBanner = NO;
+//                
+//                NSLog(@"从手机相册选择");
+//                
+//                if (!imagePickerController)
+//                {
+//                    imagePickerController = nil;
+//                }
+//                
+//                imagePickerController = [[QBImagePickerController alloc] init];
+//                imagePickerController.delegate = self;
+//                imagePickerController.allowsMultipleSelection = YES;
+//                
+//                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+//                
+//                [self presentViewController:navigationController animated:YES completion:NULL];
+//                
+//            }
+//                break;
+//            case 2:
+//            {
+//                NSLog(@"说说");
+//                
+//                WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
+//                
+//                WriteBlog.theType = WriteBlogWithContent;
+//                
+//                WriteBlog.delegate = self;
+//                
+//                UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
+//                
+//                [self presentViewController:nav animated:YES completion:^{
+//                    
+//                }];
+//                
+//                
+//            }
+//                break;
+//            case 3:
+//            {
+//                NSLog(@"取消");
+//            }
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//    }
+//}
 
 
 #pragma mark-QBImagePickerControllerDelegate
@@ -2191,11 +2245,11 @@
 -(void)uploadPersonalBanner:(UITapGestureRecognizer *)sender
 {
     
-    UIActionSheet * _acts =[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择", nil];
-    
-    _acts.tag = 601;
-    
-    [_acts showInView:self.tabBarController.tabBar];
+    ZActionSheet *gactionSheet = [[ZActionSheet alloc]initWithTitle:nil buttonTitles:@[@"拍照",@"从手机相册选择"] buttonColor:RGBCOLOR(31,188,34) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+    gactionSheet.delegate = self;
+    [gactionSheet showInView:[UIApplication sharedApplication].keyWindow WithAnimation:YES];
+    gactionSheet.tag = 601;
+
 }
 
 
