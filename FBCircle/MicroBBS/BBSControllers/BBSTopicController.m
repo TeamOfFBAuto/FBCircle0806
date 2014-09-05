@@ -366,6 +366,8 @@ typedef enum{
 {
     __weak typeof(self)weakSelf = self;
     
+    text = [ZSNApi encodeToPercentEscapeString:text];//字符串编码
+    
     NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,self.fid,self.tid];
     
     url = [url stringByReplacingEmojiUnicodeWithCheatCodes];
@@ -625,6 +627,8 @@ typedef enum{
     NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     //使用如下方法 将获取到的数据按照gbkEncoding的方式进行编码，结果将是正常的汉字
     NSString *zhuanHuanHouDeShuJu = [text stringByReplacingPercentEscapesUsingEncoding:gbkEncoding];
+    
+    zhuanHuanHouDeShuJu = [ZSNApi decodeFromPercentEscapeString:text];
     
     [FBHelper creatAttributedText:zhuanHuanHouDeShuJu Label:label OHDelegate:self];
     

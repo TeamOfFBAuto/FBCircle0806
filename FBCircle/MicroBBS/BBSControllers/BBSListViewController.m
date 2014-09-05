@@ -29,6 +29,8 @@
     NSArray *top_array;//置顶帖子
     
     int _inforum;//是否在论坛中
+    
+    MBProgressHUD *_loading;
 }
 
 @end
@@ -77,6 +79,8 @@
     
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:_table];
+    
+    _loading = [LTools MBProgressWithText:@"loading" addToView:self.view];
     
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTopic:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
@@ -193,6 +197,9 @@
 
 - (void)getBBSInfoId:(NSString *)bbsId
 {
+    
+    [_loading show:YES];
+    
     __weak typeof(self)weakSelf = self;
     __weak typeof(UITableView *)weakTable = _table;
     
@@ -223,6 +230,8 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
+        [_loading hide:YES];
+        
         [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         
     }];
@@ -243,6 +252,9 @@
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
+        
+        [_loading hide:YES];
+        
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
@@ -307,6 +319,8 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
+        
+        [_loading hide:YES];
         
         [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:weakSelf.view];
 //        [weakTable loadFail];
