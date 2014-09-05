@@ -94,31 +94,28 @@
     
     //主tableview
     self.navigationItem.title = @"个人信息";
-//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
-//    _tableView.delegate = self;
-//    _tableView.dataSource = self;
-//    _tableView.scrollEnabled = NO;
-//    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    [self.view addSubview:_tableView];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.scrollEnabled = NO;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [self.view addSubview:_tableView];
     
+    
+    
+    //pickerview后面的view
+    _backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
+    _backPickView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_backPickView];
     
     //地区pickview
     _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, 320, 216)];
     _pickeView.delegate = self;
     _pickeView.dataSource = self;
-    [self.view addSubview:_pickeView];
+    [_backPickView addSubview:_pickeView];
     _isChooseArea = NO;
     
     
-    
-
-    
-    UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
-    backPickView.backgroundColor = [UIColor whiteColor];
-    
-    [backPickView addSubview:_pickeView];
-    _backPickView = backPickView;
-    [self.view addSubview:_backPickView];
     
     
     NSString *path = [[NSBundle mainBundle]pathForResource:@"area" ofType:@"plist"];
@@ -191,13 +188,13 @@
     [hud removeFromSuperview];
     hud.delegate = nil;
     hud = nil;
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.scrollEnabled = NO;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [self.view addSubview:_tableView];
-//    [_tableView reloadData];
+//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
+//    _tableView.delegate = self;
+//    _tableView.dataSource = self;
+//    _tableView.scrollEnabled = NO;
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    [self.view addSubview:_tableView];
+    [_tableView reloadData];
 }
 
 

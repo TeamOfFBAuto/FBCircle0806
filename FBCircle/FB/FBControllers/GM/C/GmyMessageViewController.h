@@ -60,6 +60,10 @@
     
     
     MBProgressHUD *_hud;
+    
+    
+    //没有数据时候的文字提示
+    UILabel *_noDataTishiLabel;
 }
 
 

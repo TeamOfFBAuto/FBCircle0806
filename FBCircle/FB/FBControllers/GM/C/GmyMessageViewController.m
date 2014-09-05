@@ -111,6 +111,8 @@
 
 -(void)hudWasHidden:(MBProgressHUD *)hud
 {
+    [_tableView reloadData];
+    
     [hud removeFromSuperview];
     hud.delegate = nil;
     hud = nil;
@@ -330,13 +332,32 @@
             
             //设置上提加载更多view是否隐藏
             if (self.MessageArray.count > 0) {
+                
                 _upMoreView.hidden = NO;
             }else{
                 _upMoreView.hidden = YES;
                 
             }
             
-            [_tableView reloadData];
+            
+            
+            if (self.MessageArray.count>0) {
+                if (_noDataTishiLabel) {
+                    [_noDataTishiLabel removeFromSuperview];
+                    _noDataTishiLabel = nil;
+                }
+            }else{
+                if (_noDataTishiLabel) {
+                    [_noDataTishiLabel removeFromSuperview];
+                    _noDataTishiLabel = nil;
+                }
+                _noDataTishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 200, 60, 15)];
+                _noDataTishiLabel.font = [UIFont systemFontOfSize:14];
+                _noDataTishiLabel.text = @"暂无消息";
+                _noDataTishiLabel.textColor = [UIColor grayColor];
+                [self.view addSubview:_noDataTishiLabel];
+            }
+            
             
             [bself hudWasHidden:bhud];
             
