@@ -227,9 +227,6 @@
     //发表成功，会刷新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshBecauserUpdatasuccess:) name:SUCCESSUPDATA object:nil];
     
-    //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadPersonalData) name:SUCCESSUPDATA object:nil];
-    
-    
     
     self.view.backgroundColor=RGBCOLOR(214,214,214);
     
