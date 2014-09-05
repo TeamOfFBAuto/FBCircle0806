@@ -51,9 +51,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
-    [self loadMessageData];
     
+    BOOL remind = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
+    
+    if (remind != isnewfbnotification)
+    {
+        isnewfbnotification = remind;
+        _tixing_label.hidden = !isnewfbnotification;
+    }
+    
+//    [self loadMessageData];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -93,13 +100,34 @@
 	[_refreshHeaderView refreshLastUpdatedDate];
     [_myTableView addSubview:_refreshHeaderView];
     
-    
+    isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
     _theModel = [[MessageModel alloc] init];
     
+    [self loadMessageData];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HaveNewNotification:) name:COMEMESSAGES object:nil];
 }
 
-
+#pragma mark - 新通知
+-(void)HaveNewNotification:(NSNotification *)notification
+{
+    NSLog(@"notification ---  %@",notification.userInfo);
+    
+    NSString * MessageType = [[notification.userInfo objectForKey:@"aps"] objectForKey:@"type"];
+    
+    if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"systemMessageRemind"];
+        isnewfbnotification = YES;
+        [self.myTableView reloadData];
+    }else if ([MessageType intValue] == 1 || [MessageType intValue] == 2)
+    {
+       
+    }else if ([MessageType intValue] == 6)
+    {
+        
+    }
+}
 
 
 #pragma mark-UITableViewDelegate
@@ -137,7 +165,7 @@
         
         cell.headImageView.image = [UIImage imageNamed:@"xiaoxi_80_80.png"];
         
-        cell.tixing_label.hidden=NO;
+        cell.tixing_label.hidden=YES;
         
         
         if (!_tixing_label)
@@ -190,6 +218,8 @@
         isnewfbnotification = NO;
         
         [self PushToViewController:messageVC WithAnimation:YES];
+        
+        _tixing_label.hidden = YES;
         
     }else
     {
