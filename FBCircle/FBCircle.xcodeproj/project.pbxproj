@@ -953,6 +953,7 @@
 		E3208ABB19A43D210099C829 /* GcustomUseCarDownInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208AB719A43D210099C829 /* GcustomUseCarDownInfoCell.m */; };
 		E3208ABD19A43D8D0099C829 /* GJiuYuanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3208ABC19A43D8D0099C829 /* GJiuYuanCell.m */; };
 		E32F369C19A6D58700FB0F84 /* fgeren@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E32F369B19A6D58700FB0F84 /* fgeren@2x.png */; };
+		E337AC6C19B96CD200869214 /* ext@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E337AC6B19B96CD200869214 /* ext@2x.png */; };
 		E33BAC9119A490BC00401587 /* GBMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */; };
 		E384CB6C19925DCF002E7D71 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */; };
 		E384CBAA19925E08002E7D71 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E384CBA919925E08002E7D71 /* mapapi.bundle */; };
@@ -1751,6 +1752,7 @@
 		E3208AB819A43D210099C829 /* GJiuYuanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJiuYuanCell.h; sourceTree = "<group>"; };
 		E3208ABC19A43D8D0099C829 /* GJiuYuanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJiuYuanCell.m; sourceTree = "<group>"; };
 		E32F369B19A6D58700FB0F84 /* fgeren@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fgeren@2x.png"; sourceTree = "<group>"; };
+		E337AC6B19B96CD200869214 /* ext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ext@2x.png"; sourceTree = "<group>"; };
 		E33BAC8F19A490BC00401587 /* GBMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMKPointAnnotation.h; sourceTree = "<group>"; };
 		E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMKPointAnnotation.m; sourceTree = "<group>"; };
 		E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
@@ -2985,6 +2987,7 @@
 		56A64A6A198F6AD800451413 /* gerenSetting */ = {
 			isa = PBXGroup;
 			children = (
+				E337AC6B19B96CD200869214 /* ext@2x.png */,
 				56A64A6B198F6AD800451413 /* geren-jiantou.png */,
 				56A64A6C198F6AD800451413 /* geren320_103@2x.png */,
 				56A64A6D198F6AD800451413 /* geren_guanyu_down460_148@2x.jpg */,
@@ -4157,6 +4160,7 @@
 				56A64B0E198F6AD800451413 /* zuj_down42_42-xy84_404@2x.png in Resources */,
 				56245CF719A5FA7F00D0F32F /* mirco_icon_1@2x.png in Resources */,
 				1937020E199DE7E6007A339A /* fbMeclock@2x.png in Resources */,
+				E337AC6C19B96CD200869214 /* ext@2x.png in Resources */,
 				561731D119925E47001B8574 /* take_photo_navigation_image@2x.png in Resources */,
 				56AE78DC1998912C00FE869E /* bbs_add_member_xuanzhong@2x.png in Resources */,
 				56A64DCC198F72E900451413 /* duihao-42_42@2x.png in Resources */,

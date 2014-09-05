@@ -45,7 +45,7 @@ typedef enum{
  
 ///aTitle标题  buttonTitles内容标题  buttonColor内容背景色  canceTitle取消按钮标题  cancelColor取消按钮背景色 actionColor actionSheet背景色
 -(GcustomActionSheet *)initWithTitle:(NSString *)aTitle buttonTitles:(NSArray *)buttonTitles buttonColor:(UIColor *)buttonColor CancelTitle:(NSString *)canceTitle CancelColor:(UIColor *)cancelColor actionBackColor:(UIColor *)actionColor;
-
+-(GcustomActionSheet *)initWithTitle:(NSString *)aTitle logOutBtnImageName:(NSString *)imageName logOutBtnTitle:(NSString *)logOutTitle buttonColor:(UIColor *)buttonColor CancelTitle:(NSString *)canceTitle CancelColor:(UIColor *)cancelColor actionBackColor:(UIColor *)actionColor;
 
 -(void)showInView:(UIView *)view WithAnimation:(BOOL)animatio;
 

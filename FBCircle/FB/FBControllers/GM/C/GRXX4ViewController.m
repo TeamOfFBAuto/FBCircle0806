@@ -19,9 +19,13 @@
 
 #define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 
+#import "MBProgressHUD.h"
+
 @interface GRXX4ViewController ()
 {
     GcustomActionSheet *_gactionsheet;
+    MBProgressHUD *_hud;
+    
 }
 @end
 
@@ -40,6 +44,8 @@
         self.tabBarController.selectedIndex = 0;
         
     }
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -158,10 +164,43 @@
 //        }
 //    }];
     
+    
+    _hud = [ZSNApi showMBProgressWithText:@"正在加载" addToView:self.view];
+    _hud.delegate = self;
+    
+//    //常用的设置
+//    //小矩形的背景色
+//    _hud.color = [UIColor clearColor];//这儿表示无背景
+//    //显示的文字
+//    _hud.labelText = @"Test";
+//    //细节文字
+//    _hud.detailsLabelText = @"Test detail";
+//    //是否有庶罩
+//    _hud.dimBackground = YES;
+
+    
     [self panduanIsFriend];
 
     
 }
+
+
+
+-(void)hudWasHidden:(MBProgressHUD *)hud
+{
+    [hud removeFromSuperview];
+    hud.delegate = nil;
+    hud = nil;
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.scrollEnabled = NO;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [self.view addSubview:_tableView];
+//    [_tableView reloadData];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -448,7 +487,9 @@
             }];
         }
         
-         _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"退出登录"] buttonColor:RGBCOLOR(234, 81, 85) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+        //自定义actionsheet
+//         _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"退出登录"] buttonColor:RGBCOLOR(234, 81, 85) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+        _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil logOutBtnImageName:@"ext.png" logOutBtnTitle:@"取消" buttonColor:nil CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
         _gactionsheet.tag = 50001;
         _gactionsheet.delegate = self;
         __weak typeof (_gactionsheet)bgactionsheet = _gactionsheet;
@@ -611,7 +652,7 @@
     }else if(indexPath.row == 5){//足迹
         num = 83;
     }else if (indexPath.row ==6){//最下面按钮
-        num = 145;
+        num = 155;
     }
     else{
         num = 47;
@@ -806,10 +847,15 @@
 #pragma mark - 请求网络数据
 -(void)prepareNetData{
     
+    
+    __block BOOL isLoadUserInfoSuccess = NO;
+    __block BOOL isLoadWenzhangInfoSuccess = NO;
+    
     @try {
         __weak typeof(self) bself = self;
-        __weak typeof(_tableView)btableView = _tableView;
-        
+        __weak typeof (_hud)bhud = _hud;
+//        __weak typeof (_isLoadUserInfoSuccess)bisLoadUserInfoSuccess = _isLoadUserInfoSuccess;
+//        __weak typeof (_isLoadWenzhangInfoSuccess)bisLoadWenzhangInfoSuccess = _isLoadWenzhangInfoSuccess;
         //请求用户信息
         self.personModel = [[FBCirclePersonalModel alloc]init];
         
@@ -821,7 +867,11 @@
             
             bself.yuanlaiQianming = model.person_words;//签名
             
-            [btableView reloadData];
+            isLoadUserInfoSuccess = YES;
+            if (isLoadUserInfoSuccess && isLoadWenzhangInfoSuccess) {
+                [bself hudWasHidden:bhud];
+            }
+            
         } WithFailedBlcok:^(NSString *string) {
             
         }];
@@ -835,7 +885,12 @@
         [fbModel initHttpRequestWithUid:self.passUserid Page:1 WithType:2 WithCompletionBlock:^( NSMutableArray *array) {
             
             bself.wenzhangArray = array;
-            [btableView reloadData];
+            
+            isLoadWenzhangInfoSuccess = YES;
+            if (isLoadWenzhangInfoSuccess && isLoadUserInfoSuccess) {
+                [bself hudWasHidden:bhud];
+            }
+            
         } WithFailedBlock:^(NSString *operation) {
             
         }];
@@ -944,17 +999,7 @@
         
         
         
-        
-        
-//        if (self.isMinVc) {
-//            self.isTuichuDenglu = YES;
-//            MineViewController *mineVc = [self.navigationController.viewControllers objectAtIndex:0];
-//            mineVc.personModel = nil;
-//            [self.navigationController popToViewController:mineVc animated:YES];
-//        }else{
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//            
-//        }
+    
         
         self.isTuichuDenglu = YES;
         [self.navigationController popToRootViewControllerAnimated:YES];

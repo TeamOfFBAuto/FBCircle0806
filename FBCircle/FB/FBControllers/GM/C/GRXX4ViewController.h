@@ -33,7 +33,7 @@
 
 @class MainViewController;
 
-@interface GRXX4ViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,UIAlertViewDelegate,MLImageCropDelegate,GcustomActionSheetDelegate>
+@interface GRXX4ViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ASIHTTPRequestDelegate,UIAlertViewDelegate,MLImageCropDelegate,GcustomActionSheetDelegate,MBProgressHUDDelegate>
 
 {
     UITableView *_tableView;//主tableView

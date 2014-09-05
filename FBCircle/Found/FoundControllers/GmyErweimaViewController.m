@@ -30,6 +30,8 @@
     
     self.view.backgroundColor = RGBCOLOR(246, 247, 249);
     
+    self.titleLabel.text = @"我的二维码";
+    
     //底层view
     UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(20, 57, 320-40, 384)];
     backView.backgroundColor = [UIColor whiteColor];

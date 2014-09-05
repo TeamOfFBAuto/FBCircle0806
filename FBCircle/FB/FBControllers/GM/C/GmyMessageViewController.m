@@ -87,11 +87,33 @@
     _upMoreView.hidden = YES;
     
     
+    _hud = [ZSNApi showMBProgressWithText:@"正在加载" addToView:self.view];
+    _hud.delegate = self;
+    
+//    //常用的设置
+//    //小矩形的背景色
+//    _hud.color = [UIColor clearColor];//这儿表示无背景
+//    //显示的文字
+//    _hud.labelText = @"Test";
+//    //细节文字
+//    _hud.detailsLabelText = @"Test detail";
+//    //是否有庶罩
+//    _hud.dimBackground = YES;
+    
+    
     
     
     //请求网络数据
     [self prepareNetDataWithPage:1];
     
+}
+
+
+-(void)hudWasHidden:(MBProgressHUD *)hud
+{
+    [hud removeFromSuperview];
+    hud.delegate = nil;
+    hud = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -216,7 +238,9 @@
         
         NSLog(@"请求消息接口：%@",str);
         
-    
+        __weak typeof (self)bself = self;
+        __weak typeof (_hud)bhud = _hud;
+        
         NSURL *url = [NSURL URLWithString:str];
         [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             
@@ -313,6 +337,8 @@
             }
             
             [_tableView reloadData];
+            
+            [bself hudWasHidden:bhud];
             
 //            //请求文章原文数据
 //            [self prepareContentWenzhangArrayWithArray:self.MessageArray];

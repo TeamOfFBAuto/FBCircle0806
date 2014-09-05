@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FBCirclePersonalModel.h"
 
-@interface GmyErweimaViewController : UIViewController
+@interface GmyErweimaViewController : MyViewController
 
 @property(nonatomic,strong)UIImageView *erweimaImageV;//二维码
 

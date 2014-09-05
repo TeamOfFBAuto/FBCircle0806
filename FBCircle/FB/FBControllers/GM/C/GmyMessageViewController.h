@@ -19,7 +19,10 @@
 
 #import "GloadingView.h"
 
-@interface GmyMessageViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,UIScrollViewDelegate,UIAlertViewDelegate>
+
+#import "MBProgressHUD.h"
+
+@interface GmyMessageViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,UIScrollViewDelegate,UIAlertViewDelegate,MBProgressHUDDelegate>
 
 {
     UITableView *_tableView;//主tableview
@@ -56,6 +59,7 @@
     UIAlertView *_alertView;
     
     
+    MBProgressHUD *_hud;
 }
 
 
