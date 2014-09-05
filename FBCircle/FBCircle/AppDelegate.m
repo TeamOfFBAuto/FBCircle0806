@@ -254,12 +254,10 @@
     NSLog(@"PushDic==%@",userInfo);
     
     [[NSNotificationCenter defaultCenter]postNotificationName:COMEMESSAGES object:self userInfo:userInfo];
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     /**
      这里收到了信息
      */
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
 }
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken

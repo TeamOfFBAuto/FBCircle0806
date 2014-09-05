@@ -109,7 +109,6 @@
     
     [fbPersonModel loadPersonWithUid:[[NSUserDefaults standardUserDefaults] objectForKey:USERID] WithBlock:^(FBCirclePersonalModel *model) {
         
-        
         self.personModel = model;
         NSLog(@"danteng===%@",self.personModel.person_face);
         [self.userFaceImageView setImageWithURL:[NSURL URLWithString:self.personModel.person_face] placeholderImage:[UIImage imageNamed:@"headimg150_150.png"]];
@@ -226,14 +225,14 @@
         
         
         //箭头
-        UIImageView *jiantouV = [[UIImageView alloc]initWithFrame:CGRectMake(288, 35, 7, 14)];
+        UIImageView *jiantouV = [[UIImageView alloc]initWithFrame:CGRectMake(288, 30, 7, 14)];
         [jiantouV setImage:[UIImage imageNamed:@"geren-jiantou.png"]];
         [btn addSubview:jiantouV];
         
         
         //头像图片
         
-        UIView *backFaceView = [[UIView alloc]initWithFrame:CGRectMake(23.5, 9.5, 46, 46)];
+        UIView *backFaceView = [[UIView alloc]initWithFrame:CGRectMake(12, 9.5, 46, 46)];
         backFaceView.backgroundColor = [UIColor whiteColor];
         backFaceView.layer.cornerRadius = 5;
         backFaceView.layer.borderColor = [RGBCOLOR(211, 211, 211)CGColor];
@@ -241,7 +240,7 @@
         backFaceView.layer.masksToBounds = YES;
         
         
-        self.userFaceImageView = [[GavatarView alloc]initWithFrame:CGRectMake(24, 10, 45, 45)];
+        self.userFaceImageView = [[GavatarView alloc]initWithFrame:CGRectMake(12.5, 10, 45, 45)];
         self.userFaceImageView.layer.cornerRadius = 5;
         self.userFaceImageView.layer.borderWidth = 0;//设置边框的宽度，当然可以不要
         self.userFaceImageView.layer.borderColor = [[UIColor whiteColor] CGColor];//设置边框的颜色
@@ -252,14 +251,13 @@
             [bself doTap];
         }];
         
-        
         [btn addSubview:backFaceView];
         [btn addSubview:self.userFaceImageView];
         
         if ([GlocalUserImage getUserFaceImage]) {
             [self.userFaceImageView setImage:[GlocalUserImage getUserFaceImage]];
         }else{
-            [self.userFaceImageView setImageWithURL:self.string_photo placeholderImage:[UIImage imageNamed:@"geren_morentouxiang126_126.png"]];
+            [self.userFaceImageView setImageWithURL:[NSURL URLWithString: self.string_photo ] placeholderImage:[UIImage imageNamed:@"geren_morentouxiang126_126.png"]];
         }
         
         
