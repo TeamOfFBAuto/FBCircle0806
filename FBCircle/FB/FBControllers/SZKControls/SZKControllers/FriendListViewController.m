@@ -160,7 +160,7 @@
 -(void)ReceiveMytabHeaderV{
 
                if (!_SearchheaderV) {
-            _SearchheaderV=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 115)];
+            _SearchheaderV=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
             _SearchheaderV.backgroundColor=[UIColor whiteColor];
 
             __weak typeof(self) __weakself=self;
@@ -173,16 +173,22 @@
 
             }];
                    
+//                   //黑色背景
+//                   UIView *bgofSearchView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 54)];
+//                   bgofSearchView.backgroundColor=RGBCOLOR(190, 189, 195);
+//                   [bgofSearchView addSubview:_zkingSearchV];
+                   
+                   
             [_SearchheaderV addSubview:_zkingSearchV];
-            UIButton *suggestFriendButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 54, 320, 94/2)];
+            UIButton *suggestFriendButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 54, 320, 72/2)];
             [_SearchheaderV addSubview:suggestFriendButton];
             [suggestFriendButton addTarget:self action:@selector(turnToSuggestFriendVC) forControlEvents:UIControlEventTouchUpInside];
             [suggestFriendButton setTitle:@"新的朋友" forState:UIControlStateNormal];
                    suggestFriendButton.titleLabel.font=[UIFont systemFontOfSize:15];
             [suggestFriendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [suggestFriendButton setImage:[UIImage imageNamed:@"tuijianhaoyou-94_94.png"] forState:UIControlStateNormal];
-            [suggestFriendButton setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,160)];//上左下右
-            [suggestFriendButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,185)];
+            [suggestFriendButton setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,166)];//上左下右
+            [suggestFriendButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,197)];
             
        }
         _mainTabV.tableHeaderView= _SearchheaderV;
@@ -201,6 +207,9 @@
         {
             NSLog(@"取消");
 //            _mainTabV.scrollEnabled=YES;
+            
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
             self.navigationController.navigationBarHidden=NO;
             _mainTabV.frame=CGRectMake(0, 0, 320, iPhone5?568-64:480-64);
             _searchTabV.hidden=YES;
@@ -213,6 +222,10 @@
         case 2:
         {
             self.navigationController.navigationBarHidden=YES;
+            
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+
+            
             _mainTabV.frame=CGRectMake(0, 30-7, 320, iPhone5?568-30-64+7:480-30-64+7);
             _halfBlackV.hidden=NO;
 //            _mainTabV.contentOffset=CGPointMake(0, 0);
@@ -420,7 +433,7 @@
         
         _label.font=[UIFont systemFontOfSize:12];
         
-        _label.backgroundColor=RGBCOLOR(236, 236, 244);
+        _label.backgroundColor=RGBCOLOR(244, 245, 248);
         
         [aview addSubview:_label];
     }else{
@@ -469,7 +482,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return 70;
+    return 60;
 
 }
 

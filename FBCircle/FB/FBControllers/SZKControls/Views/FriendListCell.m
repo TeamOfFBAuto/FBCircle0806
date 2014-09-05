@@ -18,9 +18,9 @@
         
         _headImageV=[[UIImageView alloc]init];
         
-        CALayer *l = [_headImageV layer];   //获取ImageView的层
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:3.0f];
+//        CALayer *l = [_headImageV layer];   //获取ImageView的层
+//        [l setMasksToBounds:YES];
+//        [l setCornerRadius:3.0f];
         
        // _headImageV.backgroundColor=[UIColor redColor];
         [self addSubview:_headImageV];
@@ -54,7 +54,6 @@
      uname = ivyandrich;
      */
     
-    
     [_headImageV setImageWithURL:[NSURL URLWithString:FriendAttributemodel.face] placeholderImage:[UIImage imageNamed:@"xiaotouxiang_92_92.png"]];
     _nameLabel.text=FriendAttributemodel.uname;
 
@@ -62,9 +61,9 @@
 
 -(void)layoutSubviews{
     
-    _headImageV.frame=CGRectMake(12, 12, 46, 46);
+    _headImageV.frame=CGRectMake(12, 12, 36, 36);
 
-    _nameLabel.frame=CGRectMake(75, 0, 150, self.frame.size.height);
+    _nameLabel.frame=CGRectMake(65, 0, 150, self.frame.size.height);
 
 }
 

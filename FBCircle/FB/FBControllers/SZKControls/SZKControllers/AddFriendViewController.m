@@ -49,7 +49,25 @@
     [super viewWillAppear:YES];
 
     self.navigationController.navigationBarHidden=!_searchTabV.hidden;
+    
+    if (_searchTabV.hidden) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    }else{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+
+    }
+
+    
     [_mainTabV reloadData];
+
+}
+-(void)viewWillDisappear:(BOOL)animated{
+
+    [super viewWillDisappear:YES];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
 
 }
 
@@ -130,7 +148,7 @@
 -(void)ReceiveMytabHeaderV{
     
     UIView *aviews=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320,54)];
-    aviews.backgroundColor=  RGBCOLOR(190  , 189, 195);
+    aviews.backgroundColor=  RGBCOLOR(245  , 245, 248);
 
         
         __weak typeof(self) __weakself=self;
@@ -157,6 +175,8 @@
         {
             NSLog(@"取消");
             self.navigationController.navigationBarHidden=NO;
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
             _mainTabV.frame=CGRectMake(0, 0, 320, iPhone5?568:480);
             _searchTabV.hidden=YES;
 //            [arrayOfSearchResault removeAllObjects];
@@ -168,6 +188,8 @@
         case 2:
         {
             self.navigationController.navigationBarHidden=YES;
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+
             _mainTabV.frame=CGRectMake(0, 30-7, 320, iPhone5?568-30+7:480-30+7);
             _halfBlackV.hidden=NO;
             NSLog(@"开始编辑");
