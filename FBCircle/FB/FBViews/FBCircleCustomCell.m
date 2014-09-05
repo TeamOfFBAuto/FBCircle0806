@@ -330,7 +330,7 @@
     
     _userName_label.text = theInfo.fb_username;
     
-    _content_label.text = [ZSNApi FBImageChange:[theInfo.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
+    _content_label.text = [ZSNApi FBImageChange:[[ZSNApi decodeFromPercentEscapeString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode]];
     
     CGRect contentFrame = _content_label.frame;
     
@@ -473,7 +473,7 @@
             }
         }
         
-        _rContent_label.text = [theInfo.rfb_content stringByReplacingEmojiCheatCodesWithUnicode];
+        _rContent_label.text = [[ZSNApi decodeFromPercentEscapeString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode];
         
         forwardHeight += 5;
     }else
@@ -679,7 +679,7 @@
 {
     float cellHeight = 30;
     
-    _content_label.text = [theInfo.fb_content stringByReplacingEmojiCheatCodesWithUnicode];
+    _content_label.text = [[ZSNApi decodeFromPercentEscapeString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
     
     CGSize optimumsSize = [_content_label optimumSize];
     

@@ -168,7 +168,7 @@
     
     _userName_label.frame = CGRectMake(_userName_label.frame.origin.x,_userName_label.frame.origin.y + height,_userName_label.frame.size.width,_userName_label.frame.size.height);
     
-    _content_label.text = [[ZSNApi FBImageChange:model.comment_content] stringByReplacingEmojiCheatCodesWithUnicode];
+    _content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:model.comment_content]] stringByReplacingEmojiCheatCodesWithUnicode];
     CGSize optimumSize = [_content_label optimumSize];
     
     _content_label.frame = CGRectMake(_content_label.frame.origin.x,31+height,212,optimumSize.height+3);

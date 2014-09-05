@@ -176,7 +176,7 @@
         
         _timeLabel.text = [ZSNApi timechange:info.date_now];
         
-        _contentLabel1.text = [[self eidtMessageContent:info.from_message] stringByReplacingEmojiCheatCodesWithUnicode];
+        _contentLabel1.text = [[self eidtMessageContent:[ZSNApi decodeFromPercentEscapeString:info.from_message]] stringByReplacingEmojiCheatCodesWithUnicode];
         
         
         NSString * user = USERID;

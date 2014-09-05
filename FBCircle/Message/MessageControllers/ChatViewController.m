@@ -686,7 +686,7 @@
     /**
      *  在这里改
      */
-    info.msg_message = [content trimWhitespace];
+    info.msg_message = [ZSNApi encodeToPercentEscapeString:[content trimWhitespace]];
     
     /**
      *  end

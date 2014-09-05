@@ -335,7 +335,7 @@
 
 -(void)uploadNewBBSPostsHaveImages:(BOOL)haveImage WithImageID:(NSString *)images
 {
-    NSString * fullUrl = [NSString stringWithFormat:BBS_UPLOAD_POSTS_URL,[SzkAPI getAuthkey],self.fid,_title_textView.text,_content_textView.text,images,_location_string];
+    NSString * fullUrl = [NSString stringWithFormat:BBS_UPLOAD_POSTS_URL,[SzkAPI getAuthkey],self.fid,[ZSNApi encodeToPercentEscapeString:_title_textView.text],[ZSNApi encodeToPercentEscapeString:_content_textView.text],images,_location_string];
     NSLog(@"发表帖子接口 -- %@",fullUrl);
     
     NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];

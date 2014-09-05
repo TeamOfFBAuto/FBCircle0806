@@ -1378,16 +1378,17 @@
             break;
         case FBCircleMenuZhuanFa:
         {
+            if ([model.fb_uid isEqualToString:[SzkAPI getUid]])
+            {
+                [ZSNApi showAutoHiddenMBProgressWithText:@"不能转发自己的文章" addToView:self.view];
+                return;
+            }
+            
+            
             if ((model.rfb_tid.length == 0 || [model.rfb_tid isEqualToString:@"(null)"] || [model.rfb_tid isKindOfClass:[NSNull class]]) && [model.rfb_content isEqualToString:@"此内容已删除"])
             {
-                myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
-                myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-50);
-                [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"此内容已删除"];
-                [self.view addSubview:myAlertView];
-                [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1];
-                
+                [ZSNApi showAutoHiddenMBProgressWithText:@"此内容已删除" addToView:self.view];
                 return;
-                
             }
             
             
@@ -1525,11 +1526,10 @@
 }
 
 
-
+#pragma mark - 转发文章
 
 -(void)ForwardBlogRequestWith:(BOOL)isForward WithMode:(FBCircleModel *)model WithContent:(NSString *)string
 {
-    
     if (string.length == 0)
     {
         string = @"文章转发";

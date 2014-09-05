@@ -194,7 +194,7 @@
 {
     FBCircleCommentModel * model = (FBCircleCommentModel *)data;
     
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[SzkAPI getAuthkey],model.comment_tid,model.comment_uid,[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[SzkAPI getAuthkey],model.comment_tid,model.comment_uid,[[[ZSNApi encodeToPercentEscapeString:model.comment_content] stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSLog(@"转发文章-------%@",fullUrl);
     
@@ -235,7 +235,7 @@
 {
     FBCircleCommentModel * model = (FBCircleCommentModel *)data;
     
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[SzkAPI getAuthkey],model.comment_tid,model.comment_uid,[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[SzkAPI getAuthkey],model.comment_tid,model.comment_uid,[[[ZSNApi encodeToPercentEscapeString:model.comment_content] stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSLog(@"发表评论接口 ----   %@",fullUrl);
     
@@ -409,10 +409,10 @@
         
         if (model.fb_area.length > 0)
         {
-            fullUrl = [NSString stringWithFormat:PUBLISH_TEXT_LOCATION,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[model.fb_lng floatValue],[model.fb_lat floatValue],[model.fb_area stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            fullUrl = [NSString stringWithFormat:PUBLISH_TEXT_LOCATION,model.fb_authkey,[[[ZSNApi encodeToPercentEscapeString:model.fb_content] stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[model.fb_lng floatValue],[model.fb_lat floatValue],[model.fb_area stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }else
         {
-            fullUrl = [NSString stringWithFormat:PUBLISH_TEXT,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            fullUrl = [NSString stringWithFormat:PUBLISH_TEXT,model.fb_authkey,[[[ZSNApi encodeToPercentEscapeString:model.fb_content] stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }
         
         [self sendBlogWithUrl:fullUrl With:model];
@@ -615,12 +615,12 @@
     NSString * fullUrl = @"";
     if (model.fb_area.length > 0)
     {
-        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT_LOCATION,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT_LOCATION,model.fb_authkey,[[[ZSNApi encodeToPercentEscapeString:model.fb_content] stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                    ,authod,[model.fb_lng floatValue],[model.fb_lat floatValue],[model.fb_area stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
     }else
     {
-        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSString stringWithFormat:@"%@",authod] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
+        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT,model.fb_authkey,[[[ZSNApi encodeToPercentEscapeString:model.fb_content] stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSString stringWithFormat:@"%@",authod] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
         
     }
     
