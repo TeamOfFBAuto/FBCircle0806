@@ -51,13 +51,9 @@
         imageUrl = [aModel.img objectAtIndex:0];
     }
     [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
-    self.aTitleLabel.text = [ZSNApi decodeFromPercentEscapeString:aModel.title];
+    self.aTitleLabel.text = aModel.title;
     
-    NSString *content = aModel.sub_content ? aModel.sub_content : aModel.content;
-    
-    content = [ZSNApi decodeFromPercentEscapeString:content];
-    
-    self.subTitleLabel.text = content;
+    self.subTitleLabel.text = aModel.sub_content ? aModel.sub_content : aModel.content;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
