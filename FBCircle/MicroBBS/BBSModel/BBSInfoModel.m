@@ -10,4 +10,24 @@
 
 @implementation BBSInfoModel
 
+-(id)initWithDictionary:(NSDictionary *)dic
+{
+    self = [super init];
+    if (self) {
+        
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            [self setValuesForKeysWithDictionary:dic];
+            
+            if (self.name) {
+                self.name = [ZSNApi decodeFromPercentEscapeString:self.name];
+            }
+            if (self.intro) {
+                self.intro = [ZSNApi decodeFromPercentEscapeString:self.intro];
+            }
+            
+        }
+    }
+    return self;
+}
+
 @end

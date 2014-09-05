@@ -502,6 +502,7 @@ typedef enum{
                 NSDictionary *foruminfo = [datainfo objectForKey:@"foruminfo"];
                 
                 infoModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
+                infoModel.name = [ZSNApi decodeFromPercentEscapeString:infoModel.name];
                 
                 
                 weakTable.tableHeaderView = [weakSelf createTableHeaderView];

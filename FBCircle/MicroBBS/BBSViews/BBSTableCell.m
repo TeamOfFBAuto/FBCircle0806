@@ -35,8 +35,8 @@
 -(void)setCellWithModel:(TopicModel *)aModel
 {
     [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
-    self.aTitleLabel.text = aModel.title;
-    self.subTitleLabel.text = aModel.sub_content;
+    self.aTitleLabel.text =[ZSNApi decodeFromPercentEscapeString:aModel.title];
+    self.subTitleLabel.text = [ZSNApi decodeFromPercentEscapeString:aModel.sub_content];;
 }
 
 @end
