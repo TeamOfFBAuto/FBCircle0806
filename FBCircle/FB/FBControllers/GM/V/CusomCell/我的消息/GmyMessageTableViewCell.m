@@ -64,7 +64,7 @@
     //内容
 //    self.contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.nameLabel.frame.origin.x, CGRectGetMaxY(self.nameLabel.frame)+8, 240, 15)];
     
-    self.contentLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+    self.contentLabel = [[RTLabel alloc]initWithFrame:CGRectZero];
     
     self.contentLabel.font = [UIFont systemFontOfSize:13];
     
@@ -114,12 +114,20 @@
         
     }else{
         //转码解码
-        self.contentLabel.text = [[ZSNApi decodeFromPercentEscapeString:messageModel.recontent] stringByReplacingEmojiCheatCodesWithUnicode];
+        
+        self.contentLabel.text = [[ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:messageModel.recontent]] stringByReplacingEmojiCheatCodesWithUnicode];
+        NSLog(@"%@",self.contentLabel.text);
     }
     NSString *timeFromNow = [GTimeSwitch timeWithDayHourMin:messageModel.dateline];
     
     //调整内容label大小位置
-    [self.contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(self.nameLabel.frame.origin.x, CGRectGetMaxY(self.nameLabel.frame)+8) width:160];
+
+    [self.contentLabel setFrame:CGRectMake(self.nameLabel.frame.origin.x, CGRectGetMaxY(self.nameLabel.frame)+8, 160, 0)];
+    CGRect contentFrame = self.contentLabel.frame;
+    CGSize optimumsSize = [self.contentLabel optimumSize];
+    contentFrame.size.height = optimumsSize.height+5;
+    self.contentLabel.frame = contentFrame;
+    
     
     if (self.contentLabel.frame.size.height >48) {
         CGRect r = CGRectZero;
@@ -136,6 +144,9 @@
     }else{//有赞
         self.timeLabel.frame = CGRectMake(self.nameLabel.frame.origin.x, CGRectGetMaxY(self.nameLabel.frame)+30, 180, 15);
     }
+    
+    
+    
     
     
     //判断原文是否有图片

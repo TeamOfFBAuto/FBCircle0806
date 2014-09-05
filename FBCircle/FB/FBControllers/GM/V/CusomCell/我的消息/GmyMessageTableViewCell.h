@@ -10,6 +10,7 @@
 #import "FBQuanMessageModel.h"
 #import "GTimeSwitch.h"
 #import "UILabel+GautoMatchedText.h"
+#import "RTLabel.h"
 
 @interface GmyMessageTableViewCell : UITableViewCell
 
@@ -17,7 +18,7 @@
 
 @property(nonatomic,strong)UILabel *nameLabel;//用户名
 
-@property(nonatomic,strong)UILabel *contentLabel;//内容
+@property(nonatomic,strong)RTLabel *contentLabel;//内容
 
 @property(nonatomic,strong)UILabel *timeLabel;//时间
 
