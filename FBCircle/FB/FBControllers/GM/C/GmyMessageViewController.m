@@ -29,6 +29,10 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"systemMessageRemind"];
+    
+    
+    
     //分配内存
     self.MessageArray = [NSMutableArray arrayWithCapacity:1];
     
@@ -336,6 +340,27 @@
                 
             }
             
+            
+            
+            if (self.MessageArray.count>0) {
+                if (_noDataTishiLabel) {
+                    [_noDataTishiLabel removeFromSuperview];
+                    _noDataTishiLabel = nil;
+                }
+            }else{
+                if (!_noDataTishiLabel) {
+                    _noDataTishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 200, 60, 15)];
+                    _noDataTishiLabel.font = [UIFont systemFontOfSize:14];
+                    _noDataTishiLabel.textColor = [UIColor grayColor];
+                    _noDataTishiLabel.text = @"暂无消息";
+                    [self.view addSubview:_noDataTishiLabel];
+                }
+            }
+            
+            
+            
+            
+            
             [_tableView reloadData];
             
             [bself hudWasHidden:bhud];
@@ -385,6 +410,21 @@
                 _upMoreView.hidden = YES;
                 [_tableView reloadData];
                 
+                if (!_noDataTishiLabel) {
+                    _noDataTishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 200, 60, 15)];
+                    _noDataTishiLabel.font = [UIFont systemFontOfSize:14];
+                    _noDataTishiLabel.textColor = [UIColor grayColor];
+                    _noDataTishiLabel.text = @"暂无消息";
+                    [self.view addSubview:_noDataTishiLabel];
+                }else{
+                    [_noDataTishiLabel removeFromSuperview];
+                    _noDataTishiLabel = nil;
+                    _noDataTishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(130, 200, 60, 15)];
+                    _noDataTishiLabel.font = [UIFont systemFontOfSize:14];
+                    _noDataTishiLabel.textColor = [UIColor grayColor];
+                    _noDataTishiLabel.text = @"暂无消息";
+                    [self.view addSubview:_noDataTishiLabel];
+                }
                 
                 @try {
                     NSString *str = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=delalert&authkey=%@",[SzkAPI getAuthkey]];
@@ -397,7 +437,7 @@
                         NSString *str = [dic objectForKey:@"errinfo"];
                         
                         
-                        [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+                        [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
                         
                         
                         

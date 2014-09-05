@@ -361,7 +361,7 @@
         contentView1.delegate = self;
         
         contentView1.frame = CGRectMake(0,0,320,[contentView1 setInfoWith:_theModel]);
-        
+        NSLog(@"theContent ---  %@",_theModel.fb_content);
         [cell.contentView addSubview:contentView1];
         
         

@@ -228,7 +228,15 @@
         }
     }
 
+    //定位 上传自己坐标
+    //定位
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
     
+    
+    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
+    [time fire];
+
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -466,5 +474,58 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+//定位
+#pragma mark - 上传自己的经纬度
+-(void)updateMyLocalNear{
+    
+    [_locService startUserLocationService];//启动LocationService
+    
+    
+}
+
+
+#pragma mark - 定位代理方法
+
+//在地图View将要启动定位时，会调用此函数
+- (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView
+{
+	NSLog(@"start locate");
+}
+
+
+//用户方向更新后，会调用此函数
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+{
+    _guserLocation = userLocation;
+    
+}
+
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    _guserLocation = userLocation;
+    
+    int lat = (int)_guserLocation.location.coordinate.latitude;
+    int lonn = (int)_guserLocation.location.coordinate.longitude;
+    if (lat != 0 && lonn != 0) {
+        [_locService stopUserLocationService];
+        NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+        
+        NSLog(@"上传自己的位置%@",api);
+        
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            
+            NSLog(@"上传自己的位置返回的字典%@",dic);
+            
+        }];
+    }
+}
+
+
 
 @end

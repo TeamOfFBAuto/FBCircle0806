@@ -47,7 +47,7 @@
     [backView addGestureRecognizer:ttt];
     [topView addSubview:backView];
     //返回箭头
-    UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12+20, 10, 19)];
+    UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(8, 12+20, 12, 20)];
     [backImv setImage:[UIImage imageNamed:@"fanhui-daohanglan-20_38.png"]];
     backImv.userInteractionEnabled = YES;
     [backView addSubview:backImv];

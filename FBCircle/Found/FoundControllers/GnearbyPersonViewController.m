@@ -61,16 +61,6 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -305,6 +295,14 @@
 {
     _guserLocation = userLocation;
     
+}
+
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    _guserLocation = userLocation;
+    
     int lat = (int)_guserLocation.location.coordinate.latitude;
     int lonn = (int)_guserLocation.location.coordinate.longitude;
     if (lat != 0 && lonn != 0) {
@@ -325,15 +323,6 @@
             
         }];
     }
-    
-    
-}
-
-
-//用户位置更新后，会调用此函数
-- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
-{
-    _guserLocation = userLocation;
 }
 
 

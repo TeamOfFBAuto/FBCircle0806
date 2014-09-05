@@ -639,6 +639,8 @@
 {
     if (input.length == 0 || input == nil)
     {
+        
+        
         return @"";
     }
     NSMutableString *outputStr = [NSMutableString stringWithString:input];

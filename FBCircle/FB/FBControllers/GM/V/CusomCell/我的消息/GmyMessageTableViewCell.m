@@ -113,7 +113,8 @@
         [self.contentView addSubview:self.zhanView];
         
     }else{
-        self.contentLabel.text = [messageModel.recontent stringByReplacingEmojiCheatCodesWithUnicode];
+        //转码解码
+        self.contentLabel.text = [[ZSNApi decodeFromPercentEscapeString:messageModel.recontent] stringByReplacingEmojiCheatCodesWithUnicode];
     }
     NSString *timeFromNow = [GTimeSwitch timeWithDayHourMin:messageModel.dateline];
     
@@ -150,8 +151,12 @@
         UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectZero];
         contentLabel.numberOfLines = 3;
         contentLabel.font = [UIFont systemFontOfSize:13];
-        contentLabel.text = [messageModel.maincontent stringByReplacingEmojiCheatCodesWithUnicode];
+        contentLabel.text = [[ZSNApi decodeFromPercentEscapeString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode];
+//        contentLabel.text = [messageModel.maincontent stringByReplacingEmojiCheatCodesWithUnicode];
         [contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(0, 0) width:60];
+        
+        NSLog(@"原文内容%@",messageModel.maincontent);
+        
         if (contentLabel.frame.size.height>48) {
             CGRect r = contentLabel.frame;
             r.size.height = 48;
@@ -159,7 +164,7 @@
         }
         
         [self.yuanwenContentView addSubview:contentLabel];
-        
+//        原文内容%E4%B8%AD%
     }
     
     
