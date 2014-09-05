@@ -21,8 +21,14 @@
                 self.title = [ZSNApi decodeFromPercentEscapeString:self.title];
             }
             
-            self.sub_content = [ZSNApi decodeFromPercentEscapeString:self.sub_content];
-            self.content = [ZSNApi decodeFromPercentEscapeString:self.content];
+            if (self.sub_content) {
+                self.sub_content = [ZSNApi decodeFromPercentEscapeString:self.sub_content];
+            }
+            
+            if (self.content) {
+                self.content = [ZSNApi decodeFromPercentEscapeString:self.content];
+            }
+            
         }
     }
     return self;

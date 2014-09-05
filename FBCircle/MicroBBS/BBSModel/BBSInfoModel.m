@@ -18,12 +18,12 @@
         if ([dic isKindOfClass:[NSDictionary class]]) {
             [self setValuesForKeysWithDictionary:dic];
             
-            if (self.name) {
-                self.name = [ZSNApi decodeFromPercentEscapeString:self.name];
-            }
-            if (self.intro) {
-                self.intro = [ZSNApi decodeFromPercentEscapeString:self.intro];
-            }
+//            if (self.name) {
+//                self.name = [ZSNApi decodeFromPercentEscapeString:self.name];
+//            }
+//            if (self.intro) {
+//                self.intro = [ZSNApi decodeFromPercentEscapeString:self.intro];
+//            }
             
         }
     }
