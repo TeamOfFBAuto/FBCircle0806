@@ -61,6 +61,8 @@ typedef enum{
     UILabel *zan_num_label;//赞个数
     
     USER_INFORUM user_Inform;//用户身份
+    
+    MBProgressHUD *_loading;
 }
 
 @end
@@ -104,12 +106,18 @@ typedef enum{
     rowHeights = [NSMutableArray array];
     _dataArray = [NSMutableArray array];
     
+    
+    // 加载提示
+    
+    _loading = [LTools MBProgressWithText:@"Loading" addToView:self.view];
+    
     _pageNum = 1;//从第二页开始
     
     //帖子信息
     
     [self networdAction:Action_Topic_Info];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -405,6 +413,8 @@ typedef enum{
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_TRIPTOP,[SzkAPI getAuthkey],self.fid,self.tid];
     }else if (action == Action_Topic_Info)
     {
+        [_loading show:YES];
+        
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_INFO,self.tid,1,L_PAGE_SIZE,[SzkAPI getUid]];
     }else if (action == Action_Topic_Del)
     {
@@ -421,6 +431,9 @@ typedef enum{
         
         //帖子详情
         if (action == Action_Topic_Info) {
+            
+            [_loading hide:YES];
+            
             NSDictionary *datainfo = [result objectForKey:@"datainfo"];
             if ([datainfo isKindOfClass:[NSDictionary class]]) {
                 
@@ -536,6 +549,9 @@ typedef enum{
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"fail result %@",failDic);
+        
+        [_loading hide:YES];
+        
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
     }];
 }

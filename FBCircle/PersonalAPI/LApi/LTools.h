@@ -24,6 +24,8 @@
 #define L_PAGE_SIZE 10 //每页条数
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
+#define LOADING_TITLE @"努力加载中..." //加载提示文字
+
 //通知
 
 #define NOTIFICATION_UPDATE_TOPICLIST @"TOPIC_LIST" //帖子列表更新通知
@@ -115,7 +117,13 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (BOOL)needUpdateForHours:(CGFloat)hours recordDate:(NSDate *)recordDate;//计算既定时间段是否需要更新
 
+#pragma mark - 加载提示
+
 + (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
+
++ (MBProgressHUD *)MBProgressWithText:(NSString *)text addToView:(UIView *)aView;
+
+#pragma mark - 字符串的处理
 
 + (NSString *)NSStringNotNull:(NSString *)text;
 
