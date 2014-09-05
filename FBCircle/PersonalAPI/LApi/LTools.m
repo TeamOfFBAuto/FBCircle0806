@@ -229,16 +229,19 @@
 }
 
 
-- (void)requestCompletion111:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock{
+- (void)requestSpecialCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock{
     successBlock = completionBlock;
     failBlock = failedBlock;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *newStr = requestUrl;
     
     NSLog(@"requestUrl %@",newStr);
     NSURL *urlS = [NSURL URLWithString:newStr];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
     
     
@@ -653,6 +656,7 @@
     hud.labelText = text;
 //    hud.margin = 15.f;
 //    hud.yOffset = 0.0f;
+    [aView addSubview:hud];
     hud.removeFromSuperViewOnHide = YES;
     return hud;
 }

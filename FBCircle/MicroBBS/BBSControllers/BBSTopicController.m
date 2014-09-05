@@ -374,12 +374,13 @@ typedef enum{
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    [tool requestSpecialCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         if ([result isKindOfClass:[NSDictionary class]]) {
             
             int errcode = [[result objectForKey:@"errcode"]integerValue];
+            
             if (errcode == 0) {
                 
                 [weakSelf sendComment:text];

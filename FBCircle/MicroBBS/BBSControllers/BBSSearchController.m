@@ -83,15 +83,16 @@
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 20)];
     _table.refreshDelegate = self;
     _table.dataSource = self;
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _table.separatorInset = UIEdgeInsetsZero;
     [self.view addSubview:_table];
     
     //数据展示table
     _historyTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, 320, self.view.height - 44 - 20) style:UITableViewStylePlain];
     _historyTable.delegate = self;
     _historyTable.dataSource = self;
-    _historyTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _historyTable.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    _historyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _historyTable.separatorInset = UIEdgeInsetsZero;
     [self.view addSubview:_historyTable];
     
     
@@ -259,6 +260,8 @@
         }
         
         [weakTable reloadData:arr total:total];
+        
+        [weakTable reloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
@@ -484,10 +487,12 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 0.5)];
-    line.backgroundColor = [UIColor lightGrayColor];
+//    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 0.5)];
+//    line.backgroundColor = [UIColor lightGrayColor];
+//    
+//    return line;
     
-    return line;
+    return [UIView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -518,6 +523,9 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell.height - 1, 320, 0.5)];
+            line.backgroundColor = [UIColor colorWithHexString:@"d7d7d7"];
+            [cell.contentView addSubview:line];
         }
         
         cell.textLabel.text = [_historyArray objectAtIndex:indexPath.row];
@@ -531,10 +539,14 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell.detailTextLabel.height - 1, 320, 0.5)];
+            line.backgroundColor = [UIColor colorWithHexString:@"d7d7d7"];
+            line.tag = 100;
+            [cell.contentView addSubview:line];
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.separatorInset = UIEdgeInsetsZero;
         
         TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
@@ -546,6 +558,9 @@
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
         cell.detailTextLabel.attributedText = [LTools attributedString:content keyword:keyword color:[UIColor colorWithHexString:@"637cbc"]];
         
+        UIView *line = [cell viewWithTag:100];
+        line.top = cell.height - 1;
+        
         return cell;
     }
     
@@ -556,9 +571,12 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SearchBBSCell" owner:self options:nil]objectAtIndex:0];
         
         NSLog(@"cell %@",cell);
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell.height - 1, 320, 0.5)];
+        line.backgroundColor = [UIColor colorWithHexString:@"d7d7d7"];
+        [cell.contentView addSubview:line];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.separatorInset = UIEdgeInsetsZero;
+//    cell.separatorInset = UIEdgeInsetsZero;
     BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
     
