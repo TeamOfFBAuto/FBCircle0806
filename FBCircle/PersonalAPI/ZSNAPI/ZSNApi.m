@@ -621,6 +621,10 @@
 ///字符串编码
 +(NSString *)encodeToPercentEscapeString: (NSString *) input
 {
+    if (input.length == 0 || input == nil)
+    {
+        return @"";
+    }
     // Encode all the reserved characters, per RFC 3986
     // (<http://www.ietf.org/rfc/rfc3986.txt>)
     NSString *outputStr = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
@@ -633,6 +637,10 @@
 ///字符串解码
 +(NSString *)decodeFromPercentEscapeString: (NSString *) input
 {
+    if (input.length == 0 || input == nil)
+    {
+        return @"";
+    }
     NSMutableString *outputStr = [NSMutableString stringWithString:input];
     [outputStr replaceOccurrencesOfString:@"+"
                                withString:@" "

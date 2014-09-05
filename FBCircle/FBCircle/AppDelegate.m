@@ -234,7 +234,58 @@
     return YES;
 }
 
-
+#pragma mark - 上传的代理回调方法
+-(void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"上传完成");
+    
+    if (request.tag == 123)//上传用户头像
+    {
+        NSLog(@"走了555");
+        NSDictionary * dic = [[NSDictionary alloc] initWithDictionary:[request.responseData objectFromJSONData]];
+        NSLog(@"tupiandic==%@",dic);
+        
+        
+        
+        
+        if ([[dic objectForKey:@"errcode"]intValue] == 0) {
+            NSString *str = @"no";
+            [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
+            [ZSNApi deleteFileWithUrl:[SzkAPI getUserFace]];
+        }else{
+            NSString *str = @"yes";
+            [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
+        }
+        
+        
+        //发通知
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
+        
+    }else if (request.tag == 122)//上传用户banner
+    {
+        NSLog(@"走了555");
+        NSDictionary * dic = [[NSDictionary alloc] initWithDictionary:[request.responseData objectFromJSONData]];
+        
+        NSLog(@"tupiandic==%@",dic);
+        
+        if ([[dic objectForKey:@"errcode"]intValue] == 0) {
+            NSLog(@"上传成功");
+            NSString *str = @"no";
+            [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"gIsUpBanner"];
+            
+        }else{
+            NSString *str = @"yes";
+            [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"gIsUpBanner"];
+            
+        }
+        
+        
+        //发通知
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
+        
+    }
+    
+}
 
 #pragma mark-Push
 
