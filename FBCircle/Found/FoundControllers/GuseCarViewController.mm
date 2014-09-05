@@ -142,7 +142,7 @@
     }
     
     //横线
-    UIView *hengxian = [[UIView alloc]initWithFrame:CGRectMake(0, 64+43, 320, 1)];
+    UIView *hengxian = [[UIView alloc]initWithFrame:CGRectMake(0, 64+43, 320, 0.5)];
     hengxian.backgroundColor = RGBCOLOR(148, 149, 153);
     [self.view addSubview:hengxian];
     

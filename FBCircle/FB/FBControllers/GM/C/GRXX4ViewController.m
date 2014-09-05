@@ -94,12 +94,12 @@
     
     //主tableview
     self.navigationItem.title = @"个人信息";
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.scrollEnabled = NO;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [self.view addSubview:_tableView];
+//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
+//    _tableView.delegate = self;
+//    _tableView.dataSource = self;
+//    _tableView.scrollEnabled = NO;
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    [self.view addSubview:_tableView];
     
     
     //地区pickview
@@ -489,7 +489,7 @@
         
         //自定义actionsheet
 //         _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil buttonTitles:@[@"退出登录"] buttonColor:RGBCOLOR(234, 81, 85) CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
-        _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil logOutBtnImageName:@"ext.png" logOutBtnTitle:@"取消" buttonColor:nil CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
+        _gactionsheet = [[GcustomActionSheet alloc]initWithTitle:nil logOutBtnImageName:@"ext.png" logOutBtnTitle:@"退出登录" buttonColor:nil CancelTitle:@"取消" CancelColor:[UIColor whiteColor] actionBackColor:RGBCOLOR(236, 237, 241)];
         _gactionsheet.tag = 50001;
         _gactionsheet.delegate = self;
         __weak typeof (_gactionsheet)bgactionsheet = _gactionsheet;
