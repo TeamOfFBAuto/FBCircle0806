@@ -8,6 +8,7 @@
 
 #import "ZSNApi.h"
 #import "FriendAttribute.h"
+#import "FullyLoaded.h"
 
 @implementation ZSNApi
 
@@ -639,6 +640,12 @@
                                     range:NSMakeRange(0, [outputStr length])];
     
     return [outputStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+#pragma mark - 删除asyncimage某个缓存图片
++(void)deleteFileWithUrl:(NSString *)path
+{
+    [[NSFileManager defaultManager] removeItemAtPath:[FullyLoaded tmpFilePathForResourceAtURL:path] error:nil];
 }
 
 @end

@@ -56,10 +56,12 @@
 + (NSString*)FBEximgreplace:(NSString*)imgSrc;
 
 
+///删除asyncimage某个缓存图片
++(void)deleteFileWithUrl:(NSString *)path;
+
 //保存图片到沙盒
 
 +(void)saveImageToDocWith:(NSString *)path WithImage:(UIImage *)image;
-
 //删除沙盒文件
 
 +(void)deleteDocFileWith:(NSMutableArray *)fileNames;

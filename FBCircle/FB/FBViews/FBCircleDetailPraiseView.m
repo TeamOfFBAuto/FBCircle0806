@@ -110,7 +110,7 @@
                     
                     AsyncImageView * imageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(44 + 40*i,8 + j*40,35,35)];
                     [imageView loadImageFromURL:model.praise_image_url withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
-                    
+                    NSLog(@"model.praise.url ----  %@",model.praise_image_url);
                     imageView.userInteractionEnabled = YES;
                     
                     imageView.layer.masksToBounds = YES;
