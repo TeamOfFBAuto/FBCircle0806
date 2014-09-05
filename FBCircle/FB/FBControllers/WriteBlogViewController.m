@@ -197,6 +197,7 @@
 
 -(void)expressionClickWith:(NewFaceView *)faceView faceName:(NSString *)name
 {
+    placeHolderLable.text = @"";
     NSMutableString * temp_string = [NSMutableString stringWithFormat:@"%@",_myTextView.text];
     
     [temp_string insertString:name atIndex:_myTextView.selectedRange.location];
