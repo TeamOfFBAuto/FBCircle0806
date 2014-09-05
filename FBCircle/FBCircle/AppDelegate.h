@@ -15,15 +15,13 @@
 //@end
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,BMKLocationServiceDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,BMKLocationServiceDelegate,CLLocationManagerDelegate>
 {
     BMKMapManager* _mapManager;
     
     NSDictionary *dic_push;
 
-    BMKLocationService *_locService;//定位服务
-    BMKUserLocation *_guserLocation;//用户当前位置
-    
+    CLLocationManager *_locManager;
     
 }
 @property (strong, nonatomic) UIWindow *window;
