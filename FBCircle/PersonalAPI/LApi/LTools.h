@@ -101,6 +101,7 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 #pragma mark - 计算宽度、高度
 
 + (CGFloat)widthForText:(NSString *)text font:(CGFloat)size;
++ (CGFloat)widthForText:(NSString *)text boldFont:(CGFloat)size;
 + (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size;
 
 #pragma mark - 小工具

@@ -320,7 +320,11 @@ typedef enum{
         for (NSDictionary *aDic in data) {
             
             TopicCommentModel *aModel = [[TopicCommentModel alloc]initWithDictionary:aDic];
-            aModel.content = [aModel.content stringByReplacingEmojiCheatCodesWithUnicode];
+            NSString *content = [NSString stringWithFormat:@"%@",aModel.content];
+            content = [ZSNApi decodeFromPercentEscapeString:content];
+            
+            aModel.content = [content stringByReplacingEmojiCheatCodesWithUnicode];
+            
             [_dataArray addObject:aModel];
             aModel = nil;
         }
@@ -366,11 +370,16 @@ typedef enum{
 {
     __weak typeof(self)weakSelf = self;
     
+    NSString *temp = [NSString stringWithFormat:@"%@",text];
+    
+    text = [text stringByReplacingEmojiUnicodeWithCheatCodes];
+    
     text = [ZSNApi encodeToPercentEscapeString:text];//字符串编码
+    text = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"comment2 %@",text);
     
     NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,self.fid,self.tid];
-    
-    url = [url stringByReplacingEmojiUnicodeWithCheatCodes];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -383,7 +392,7 @@ typedef enum{
             
             if (errcode == 0) {
                 
-                [weakSelf sendComment:text];
+                [weakSelf sendComment:temp];
             }else
             {
                 [LTools showMBProgressWithText:[dataInfo objectForKey:@"errinfo"] addToView:self.view];
@@ -625,14 +634,12 @@ typedef enum{
     label.backgroundColor = [UIColor orangeColor];
     label.lineBreakMode = NSLineBreakByCharWrapping;
     
-    //声明一个gbk编码类型
-    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //使用如下方法 将获取到的数据按照gbkEncoding的方式进行编码，结果将是正常的汉字
-    NSString *zhuanHuanHouDeShuJu = [text stringByReplacingPercentEscapesUsingEncoding:gbkEncoding];
+//    //声明一个gbk编码类型
+//    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+//    //使用如下方法 将获取到的数据按照gbkEncoding的方式进行编码，结果将是正常的汉字
+//    NSString *zhuanHuanHouDeShuJu = [text stringByReplacingPercentEscapesUsingEncoding:gbkEncoding];
     
-    zhuanHuanHouDeShuJu = [ZSNApi decodeFromPercentEscapeString:text];
-    
-    [FBHelper creatAttributedText:zhuanHuanHouDeShuJu Label:label OHDelegate:self];
+    [FBHelper creatAttributedText:text Label:label OHDelegate:self];
     
     NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
     
@@ -752,7 +759,8 @@ typedef enum{
     //楼主
     NSString *name = aTopicModel.username;
     
-    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(headImage.right + 10, headImage.top, [LTools widthForText:name font:14], 15) title:name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(headImage.right + 10, headImage.top, [LTools widthForText:name boldFont:14], 15) title:name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    nameLabel.font = [UIFont boldSystemFontOfSize:14];
     [recommed_view addSubview:nameLabel];
     
     UIButton *hintBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(nameLabel.right + 5, headImage.top, 35, 15) normalTitle:@"楼主" image:nil backgroudImage:nil superView:recommed_view target:nil action:nil];
@@ -907,6 +915,7 @@ typedef enum{
 {
     TopicCommentModel *aModel = [_dataArray objectAtIndex:indexPath.row];
     NSString *text = aModel.content;
+    
     CGFloat labelHeight = 0.0;
     if (rowHeights.count > indexPath.row && [rowHeights objectAtIndex:indexPath.row]) {
         
