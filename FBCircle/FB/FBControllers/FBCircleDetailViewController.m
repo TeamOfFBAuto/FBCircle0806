@@ -811,7 +811,7 @@
     
     [alert show];
     
-    
+    string = [ZSNApi encodeToPercentEscapeString:string];
     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],isForward?model.rfb_tid:model.fb_tid,isForward?model.rfb_uid:model.fb_uid,[[string stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
     
     NSLog(@"转发文章-------%@",fullUrl);
@@ -869,9 +869,10 @@
         return;
     }
     
+    NSString * content = [ZSNApi encodeToPercentEscapeString:self.inputToolBarView.myTextView.text];
     
     FBCircleCommentModel * commentModel = [[FBCircleCommentModel alloc] init];
-    commentModel.comment_content = self.inputToolBarView.myTextView.text;
+    commentModel.comment_content = content;
     commentModel.comment_uid = [SzkAPI getUid];
     commentModel.comment_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
     commentModel.comment_face = [ZSNApi returnUrl:[SzkAPI getUid]];
@@ -886,7 +887,7 @@
     
     
     
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],_theModel.fb_tid,_theModel.fb_uid,[[self.inputToolBarView.myTextView.text stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
+    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],_theModel.fb_tid,_theModel.fb_uid,[[content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
     
     [UIView animateWithDuration:0.4 animations:^{
         self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44,320,44);

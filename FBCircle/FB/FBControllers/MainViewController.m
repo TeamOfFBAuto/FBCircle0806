@@ -1535,6 +1535,8 @@
         string = @"文章转发";
     }
     
+    string = [ZSNApi encodeToPercentEscapeString:string];
+    
     FBCircleModel * forward_model = [[FBCircleModel alloc] init];
     
     forward_model.fb_rootid = isForward?model.rfb_tid:model.fb_tid;
@@ -1557,7 +1559,7 @@
     
     forward_model.rfb_username = isForward?model.rfb_username:model.fb_username;
     
-    forward_model.rfb_content = isForward?model.rfb_content:model.fb_content;
+    forward_model.rfb_content = [ZSNApi encodeToPercentEscapeString:(isForward?model.rfb_content:model.fb_content)];
     
     forward_model.rfb_imageid = isForward?model.rfb_imageid:model.fb_imageid;
     
@@ -2171,12 +2173,13 @@
         return;
     }
     
+    NSString * theContent = [ZSNApi encodeToPercentEscapeString:self.inputToolBarView.myTextView.text];
     
     FBCircleModel * model = [self.data_array objectAtIndex:history_selected_menu_page];
     
     FBCircleCommentModel * commentModel = [[FBCircleCommentModel alloc] init];
     
-    commentModel.comment_content = self.inputToolBarView.myTextView.text;
+    commentModel.comment_content = theContent;
     
     commentModel.comment_uid = [SzkAPI getUid];
     
@@ -2198,7 +2201,7 @@
     
     
     
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],model.fb_tid,model.fb_uid,[[self.inputToolBarView.myTextView.text stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
+    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],model.fb_tid,model.fb_uid,[[theContent stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
     
     NSLog(@"发表评论接口 ----   %@",fullUrl);
     
