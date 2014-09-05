@@ -40,11 +40,11 @@
     
     //设置navigation左右按钮格式类型
     
-    
-    
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
     //设置navigation的titile
     self.titleLabel.text = @"系统通知";
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    
     
 
     
@@ -312,7 +312,7 @@
                 NSLog(@"%d",self.MessageArray.count);
                 if (self.MessageArray.count>0) {
                     self.rightImageName = @"qingkong_40_40.png";
-                    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
+                    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
                 }
                 
                 
