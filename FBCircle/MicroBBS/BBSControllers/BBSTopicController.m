@@ -379,9 +379,16 @@ typedef enum{
     
     NSLog(@"comment2 %@",text);
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,self.fid,self.tid];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],self.fid,self.tid];
     
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    NSString *post = [NSString stringWithFormat:@"content=%@",text];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    
+    
+    
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     
     [tool requestSpecialCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);

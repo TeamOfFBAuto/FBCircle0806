@@ -524,11 +524,20 @@
     [self  dismissViewControllerAnimated:YES completion:NULL];
     
     if (result == MessageComposeResultCancelled)
-        NSLog(@"Message cancelled");
+    {
+//       NSLog(@"Message cancelled");
+    }
+    
     else if (result == MessageComposeResultSent)
-        NSLog(@"Message sent") ;
+    {
+        
+//        NSLog(@"Message sent") ;
+    }
     else
-        NSLog(@"Message failed") ;
+    {
+        
+//        NSLog(@"Message failed") ;
+    }
 }
 
 
