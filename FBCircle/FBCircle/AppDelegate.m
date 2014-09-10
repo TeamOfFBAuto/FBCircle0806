@@ -493,17 +493,29 @@
     int lonn = (int)coor.longitude;
     
     if (lat != 0 && lonn != 0) {
-        [_locManager stopUpdatingLocation];
-        NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],coor.latitude,coor.longitude];
-        NSLog(@"appdelegate上传自己的位置api接口%@",api);
-        NSURL *url = [NSURL URLWithString:api];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-
-            NSLog(@"appdelegate上传自己的位置返回的字典%@",dic);
+        
+        
+        @try {
+            [_locManager stopUpdatingLocation];
+            NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],coor.latitude,coor.longitude];
+            NSLog(@"appdelegate上传自己的位置api接口%@",api);
+            NSURL *url = [NSURL URLWithString:api];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                if (data.length > 0) {
+                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    NSLog(@"appdelegate上传自己的位置返回的字典%@",dic);
+                }
+            }];
+        }
+        @catch (NSException *exception) {
             
-        }];
+        }
+        @finally {
+            
+        }
+        
+        
     }
     
     
