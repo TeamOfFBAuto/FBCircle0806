@@ -71,7 +71,20 @@
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    CGFloat height = 0.0f;
+    if (indexPath.section == 0) {//附近的人
+        height = 45;
+    }else if(indexPath.section == 1 && indexPath.row == 0) {//用车服务
+        height = 45;
+    }else if (indexPath.section == 1 && indexPath.row == 1){//救援队
+        height = 44;
+    }else if (indexPath.section == 2 && indexPath.row == 0){//扫一扫
+        height = 45;
+    }else if (indexPath.section == 3 && indexPath.row == 0){//购物
+        height = 45;
+    }
+    
+    return height;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -149,7 +162,7 @@
     }else if (indexPath.section == 2 && indexPath.row == 0){
         titleLabel.text = @"扫一扫";
         //分割线
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 44, 320, 1)];
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 320, 1)];
         line.backgroundColor = RGBCOLOR(229, 231, 230);
         [cell.contentView addSubview:line];
         [imv setImage:[UIImage imageNamed:@"fsao.png"]];
@@ -157,7 +170,7 @@
     }else if (indexPath.section == 3 && indexPath.row == 0){
         titleLabel.text = @"购物";
         //分割线
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 44, 320, 1)];
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 320, 1)];
         line.backgroundColor = RGBCOLOR(229, 231, 230);
         [cell.contentView addSubview:line];
         [imv setImage:[UIImage imageNamed:@"fshop.png"]];
@@ -176,13 +189,22 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    CGFloat height = 0;
+    CGFloat height = 0.0f;
     
     if (section == 0) {
         height = 0.01;
+    }else {
+        height = 30.5;
     }
     return height;
 }
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    CGFloat height = 0.01f;
+    return height;
+}
+
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

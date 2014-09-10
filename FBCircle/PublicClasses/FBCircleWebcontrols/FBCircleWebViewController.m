@@ -39,6 +39,7 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     
     self.my_right_button.userInteractionEnabled = NO;
+    self.my_right_button.hidden = YES;
     
     
     _myWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64)];
@@ -90,6 +91,11 @@
     self.web_title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     
     self.titleLabel.text = self.web_title;
+    if (self.titleLabel.text.length>0) {
+        self.my_right_button.hidden = NO;
+    }else{
+        self.my_right_button.hidden = YES;
+    }
     
     NSString * content = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     

@@ -11,7 +11,6 @@
 #import "FoundViewController.h"
 #import "GpersonInfoViewController.h"
 
-
 #import "AddFriendViewController.h"
 
 
@@ -220,11 +219,7 @@
     }
     
     [_session stopRunning];
-    
-    
-    
-    
-    
+
     [self dismissViewControllerAnimated:YES completion:^
      {
          [timer invalidate];

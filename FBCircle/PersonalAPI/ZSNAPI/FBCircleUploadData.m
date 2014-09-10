@@ -683,6 +683,9 @@
     
     //上传face
     NSString *touxiang = [[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpFace"];
+    
+    NSLog(@"%@",touxiang);
+    
     if ([touxiang isEqualToString:@"yes"] && [GlocalUserImage getUserFaceImage]) {
         
         GupData *up =[[GupData alloc]init];

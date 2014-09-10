@@ -300,11 +300,9 @@
         //分享的图片view
         UIView *picsView = [[UIView alloc]initWithFrame:CGRectZero];
         [view addSubview:picsView];
+        
         //分享文章是用户说的话
-        
-        //xxxxxxxxxxxxx
         RTLabel *fb_content = [[RTLabel alloc]init];
-        
         fb_content.text = [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
         CGRect contentFrame = fb_content.frame;
         CGSize optimumsSize = [fb_content optimumSize];
@@ -312,15 +310,13 @@
         fb_content.frame = contentFrame;
         //xxxxxxxxxxx
         
-        fb_content.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+        fb_content.font = [UIFont boldSystemFontOfSize:14];
         if (fb_content.text.length>0) {
-            fb_content.frame = CGRectMake(5, 5, 192, 15);
+            fb_content.frame = CGRectMake(5, 5, 192, 17);
         }else{
             fb_content.frame = CGRectZero;
         }
-        //xxxxxxxx
 //        fb_content.numberOfLines = 1;
-        //xxxxxxx
         fb_content.backgroundColor = [UIColor clearColor];
         fb_content.userInteractionEnabled = NO;
         [view addSubview:fb_content];
@@ -348,20 +344,10 @@
         
         //根据有没图片判断文字的宽度
         if (![wenzhang.rfb_face isEqualToString:@"(null)"]) {
-            
-            
-            
-            
-            
-            
-            
             rfb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+6, CGRectGetMaxY(fb_content.frame)+5, 165, 40);
             rfb_content.numberOfLines = 2;
             
         }else{
-            
-            
-            
             rfb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+5, CGRectGetMaxY(fb_content.frame)+5, 196, 40);
             rfb_content.numberOfLines = 2;
         }

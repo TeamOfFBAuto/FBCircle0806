@@ -1230,7 +1230,11 @@
         
         NSString* fullURL = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=updatehead&authkey=%@",[SzkAPI getAuthkey]];
         
-        NSLog(@"上传图片请求的地址===%@",fullURL);
+        NSLog(@"上传头像请求的地址===%@ %s",fullURL,__FUNCTION__);
+        
+        //设置标志位
+        NSString *str = @"yes";
+        [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
         
         request__ = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
         AppDelegate *_appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;

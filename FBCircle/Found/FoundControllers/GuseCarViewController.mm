@@ -146,6 +146,10 @@
     hengxian.backgroundColor = RGBCOLOR(148, 149, 153);
     [self.view addSubview:hengxian];
     
+    
+    curPage = 0;
+    
+    
     //地图
     _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 88+20, 320, iPhone5?568-88-20:480-88-20)];
     [_mapView setZoomLevel:17];// 设置地图级别
@@ -170,10 +174,14 @@
         //定位
         _locService = [[BMKLocationService alloc]init];
         _locService.delegate = self;
-        [_locService startUserLocationService];//启动LocationService
         self.isFirstOpenOfjiayouzhan = YES;
+        [_locService startUserLocationService];//启动LocationService
+        
     }
    
+    
+    
+    
     
     //下面信息view
     _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
@@ -324,31 +332,36 @@
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-//    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+
     _guserLocation = userLocation;
     [_mapView updateLocationData:userLocation];
-    _mapView.centerCoordinate = userLocation.location.coordinate;
-    if (self.isFirstOpenOfjiayouzhan) {
-        //发起检索
-        BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
-        option.pageIndex = curPage;
-        option.radius = 2000;
-        option.pageCapacity = 100;
-        option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
-        option.keyword = @"加油站";
-        BOOL flag = [_poisearch poiSearchNearBy:option];
-        if(flag)
-        {
-            NSLog(@"周边检索发送成功");
+    
+    if (userLocation.location) {//定位成功
+         _mapView.centerCoordinate = userLocation.location.coordinate;
+        [_locService stopUserLocationService];
+        if (self.isFirstOpenOfjiayouzhan) {
+            //发起检索
+            BMKNearbySearchOption *option = [[BMKNearbySearchOption alloc]init];
+            option.pageIndex = curPage;
+            option.radius = 2000;
+            option.pageCapacity = 100;
+            option.location =CLLocationCoordinate2DMake(_guserLocation.location.coordinate.latitude, _guserLocation.location.coordinate.longitude);
+            option.keyword = @"加油站";
+            BOOL flag = [_poisearch poiSearchNearBy:option];
+            if(flag)
+            {
+                NSLog(@"周边检索发送成功");
+            }
+            else
+            {
+                NSLog(@"周边检索发送失败");
+            }
+        }else{
             [_locService stopUserLocationService];
         }
-        else
-        {
-            NSLog(@"周边检索发送失败");
-        }
-    }else{
-        [_locService stopUserLocationService];
+   
     }
+    
     
 }
 

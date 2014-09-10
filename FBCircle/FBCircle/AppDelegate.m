@@ -246,9 +246,11 @@
 {
     NSLog(@"上传完成");
     
-    if (request.tag == 123)//上传用户头像
+    if (request.tag == 100 || request.tag == 123)//上传用户头像
     {
-        NSLog(@"走了555");
+        
+        NSLog(@"走了request.tag = %d    123:grxx4    100:gupdata",request.tag);
+        
         NSDictionary * dic = [[NSDictionary alloc] initWithDictionary:[request.responseData objectFromJSONData]];
         NSLog(@"tupiandic==%@",dic);
         
@@ -265,12 +267,16 @@
         }
         
         
+        NSLog(@"上传头像标志位%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpFace"]);
+        
         //发通知
         [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
         
-    }else if (request.tag == 122)//上传用户banner
+    }else if (request.tag == 101 || request.tag == 122)//上传用户banner
     {
-        NSLog(@"走了555");
+        
+        NSLog(@"走了request.tag = %d    122:gmyfootvc     101:gupdata",request.tag);
+        
         NSDictionary * dic = [[NSDictionary alloc] initWithDictionary:[request.responseData objectFromJSONData]];
         
         NSLog(@"tupiandic==%@",dic);
@@ -285,6 +291,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"gIsUpBanner"];
             
         }
+        
+        NSLog(@"上传banner标志位%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"gIsUpBanner"]);
         
         
         //发通知
