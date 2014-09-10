@@ -33,7 +33,7 @@
         
         NSString * commentString = [NSString stringWithFormat:@"<a href=\"fb://atSomeone@/%@\">%@</a> : %@",model.comment_uid,model.comment_username,model.comment_content];
         
-        commentString = [ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:commentString]];
+        commentString = [ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:commentString]];
         
         CGRect labelFrame = CGRectMake(0,height,self.frame.size.width,0);
         

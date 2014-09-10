@@ -107,7 +107,7 @@
         
         self.fb_username = [NSString stringWithFormat:@"%@",[dic objectForKey:@"username"]];
         
-        self.fb_content = [ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:[NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]]]];
+        self.fb_content = [ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]]]];
         
         self.fb_imageid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"imageid"]];
         
@@ -157,7 +157,7 @@
             
             self.rfb_username = extension.extentsion_title;
             
-            self.rfb_content = [ZSNApi decodeFromPercentEscapeString:extension.extentsion_content];
+            self.rfb_content = [ZSNApi decodeSpecialCharactersString:extension.extentsion_content];
             
             self.rfb_face = extension.extentsion_image;
             
@@ -205,7 +205,7 @@
             
             self.rfb_username = [NSString stringWithFormat:@"%@",[rDic objectForKey:@"username"]];
             
-            self.rfb_content = [ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:[NSString stringWithFormat:@"%@",[rDic objectForKey:@"content"]]]];
+            self.rfb_content = [ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[rDic objectForKey:@"content"]]]];
                         
             self.rfb_imageid = [NSString stringWithFormat:@"%@",[rDic objectForKey:@"imageid"]];
             
@@ -287,7 +287,7 @@
                 
                 self.rfb_username = extension.extentsion_title;
                 
-                self.rfb_content = [ZSNApi decodeFromPercentEscapeString:extension.extentsion_content];
+                self.rfb_content = [ZSNApi decodeSpecialCharactersString:extension.extentsion_content];
                 
                 self.rfb_face = extension.extentsion_image;
                 

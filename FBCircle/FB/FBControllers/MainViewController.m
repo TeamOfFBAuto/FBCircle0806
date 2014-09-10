@@ -60,7 +60,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:animated];
     [self.inputToolBarView.myTextView resignFirstResponder];
     NSString *string_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:AUTHERKEY]];
     //判断登录条件
@@ -73,6 +73,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self.inputToolBarView.myTextView resignFirstResponder];
 }
 
@@ -202,15 +203,7 @@
 {
     [super viewDidLoad];
     
-    
-    //   [self matchingAddressBook];
     loadsucess=YES;
-    
-//    UIImageView * titleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,26,23)];
-//    
-//    titleImageView.image = [UIImage imageNamed:@"fb-52_46.png"];
-//    
-//    self.navigationItem.titleView = titleImageView;
 
     self.titleLabel.text = @"fb圈";
     self.title = @"fb圈";
@@ -1332,18 +1325,31 @@
 {
     FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
     
-    model.isShowMenuView = NO;
+    if (model.isShowMenuView) {
+        model.isShowMenuView = NO;
+        __weak typeof(self)bself = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+            [bself reloadTableViewWithIndexPath:[NSArray arrayWithObjects:indexPath,nil]];
+        });
+    }
+    
     
     FBCircleDetailViewController * detailView = [[FBCircleDetailViewController alloc] init];
     
     detailView.theModel = model;
     
     [detailView reloadDataWhenBackWith:^{
-        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+//            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        });
     }];
     [self PushToViewController:detailView WithAnimation:YES];
 }
 
+-(void)reloadTableViewWithIndexPath:(NSArray *)arrary
+{
+    [self.myTableView reloadRowsAtIndexPaths:arrary withRowAnimation:UITableViewRowAnimationNone];
+}
 
 
 #pragma FBCircleCellDelegate
@@ -1532,8 +1538,6 @@
         string = @"文章转发";
     }
     
-    string = [ZSNApi encodeToPercentEscapeString:string];
-    
     FBCircleModel * forward_model = [[FBCircleModel alloc] init];
     
     forward_model.fb_rootid = isForward?model.rfb_tid:model.fb_tid;
@@ -1556,7 +1560,7 @@
     
     forward_model.rfb_username = isForward?model.rfb_username:model.fb_username;
     
-    forward_model.rfb_content = [ZSNApi encodeToPercentEscapeString:(isForward?model.rfb_content:model.fb_content)];
+    forward_model.rfb_content = isForward?model.rfb_content:model.fb_content;
     
     forward_model.rfb_imageid = isForward?model.rfb_imageid:model.fb_imageid;
     
@@ -1778,19 +1782,32 @@
     
     model.isShowMenuView = !model.isShowMenuView;
     
-    if (history_selected_menu_page != -1 && history_selected_menu_page != indexPath.row)
+    FBCircleModel * history_model = [self.data_array objectAtIndex:history_selected_menu_page];
+    
+    if (history_selected_menu_page != indexPath.row && history_model.isShowMenuView)
     {
-        FBCircleModel * history_model = [self.data_array objectAtIndex:history_selected_menu_page];
-        
-        if (history_model.isShowMenuView)
-        {
-            history_model.isShowMenuView = NO;
-            
-            [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0],nil] withRowAnimation:UITableViewRowAnimationFade];
-        }
+        history_model.isShowMenuView = NO;
+        [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0],nil] withRowAnimation:UITableViewRowAnimationFade];
+    }else
+    {
+        [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
     }
     
-    [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
+    
+//    NSLog(@"history_selected_menu_page ===   %d",history_selected_menu_page);
+//    if (history_selected_menu_page != -1 && history_selected_menu_page != indexPath.row)
+//    {
+//        FBCircleModel * history_model = [self.data_array objectAtIndex:history_selected_menu_page];
+//        
+//        if (history_model.isShowMenuView)
+//        {
+//            history_model.isShowMenuView = NO;
+//            
+//            [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0],nil] withRowAnimation:UITableViewRowAnimationFade];
+//        }
+//    }
+//    
+//    [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
     
     history_selected_menu_page = indexPath.row;
 }
@@ -2170,7 +2187,7 @@
         return;
     }
     
-    NSString * theContent = [ZSNApi encodeToPercentEscapeString:self.inputToolBarView.myTextView.text];
+    NSString * theContent = self.inputToolBarView.myTextView.text;
     
     FBCircleModel * model = [self.data_array objectAtIndex:history_selected_menu_page];
     

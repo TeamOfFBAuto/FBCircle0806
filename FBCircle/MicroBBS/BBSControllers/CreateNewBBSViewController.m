@@ -180,7 +180,7 @@
     MBProgressHUD * hud = [ZSNApi showMBProgressWithText:@"正在创建" addToView:self.navigationController.view];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     
-    NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],[ZSNApi encodeToPercentEscapeString:name_tf.text],[ZSNApi encodeToPercentEscapeString:introduction_tf.text],icon_num,type_num];
+    NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],name_tf.text,introduction_tf.text,icon_num,type_num];
     NSLog(@"创建微论坛接口 ---  %@",fullUrl);
     NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];

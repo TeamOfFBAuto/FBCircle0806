@@ -318,7 +318,6 @@ void RunDelegateDeallocCallback(void* refCon);
             if (component.text.length!=0)
             {
                 [self applyColor:@"clear" toText:attrString atPosition:component.position withLength:[component.text length]];
-                
                 [self buildAttribute:component.position withImageName:[component.attributes objectForKey:@"src"]];
             }
         }
@@ -1282,9 +1281,11 @@ void RunDelegateDeallocCallback(void* refCon);
                     imageDrawRect.origin.x = runRect.origin.x + lineOrigin.x;
                     imageDrawRect.origin.y = lineOrigin.y - _lineSpacing*i - 2;
                     CGContextDrawImage(context,imageDrawRect,image.CGImage);
+                
                 }
             }
         }
+        UIGraphicsEndImageContext();
     }
 }
 //CTRun的回调，销毁内存的回调

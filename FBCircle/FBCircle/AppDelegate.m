@@ -311,7 +311,7 @@
      
      */
     NSLog(@"PushDic==%@",userInfo);
-    
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [[NSNotificationCenter defaultCenter]postNotificationName:COMEMESSAGES object:self userInfo:userInfo];
     /**
      这里收到了信息

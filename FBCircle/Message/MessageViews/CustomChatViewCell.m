@@ -176,7 +176,7 @@
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
-                content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
+                content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
                 
                 content_label.textColor = theType==MyChatViewCellTypeIncoming?[UIColor whiteColor]:RGBCOLOR(3,3,3);
                 
@@ -239,7 +239,7 @@
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
-                content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeFromPercentEscapeString:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
+                content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
                                 
                 content_label.font = [UIFont systemFontOfSize:14];
                 

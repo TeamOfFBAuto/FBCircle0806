@@ -414,7 +414,7 @@
     img= [img stringByReplacingOccurrencesOfString:@"\n" withString:@" "] ;
     img= [img stringByReplacingOccurrencesOfString:@"\r" withString:@" "] ;
     //替换  &  这个符号
-    img= [img stringByReplacingOccurrencesOfString:@"&" withString:@" "] ;
+//    img= [img stringByReplacingOccurrencesOfString:@"&" withString:@" "] ;
     return img;
 }
 
@@ -520,7 +520,7 @@
     img= [img stringByReplacingOccurrencesOfString:@"\r" withString:@" "] ;
     
     //替换  &  这个符号
-    img= [img stringByReplacingOccurrencesOfString:@"&" withString:@" "] ;
+//    img= [img stringByReplacingOccurrencesOfString:@"&" withString:@" "] ;
     return img;
 }
 
@@ -657,6 +657,20 @@
 {
     [[NSFileManager defaultManager] removeItemAtPath:[FullyLoaded tmpFilePathForResourceAtURL:path] error:nil];
 }
+
+
+#pragma mark - 解码特殊字符
++(NSString *)decodeSpecialCharactersString:(NSString *)input
+{
+    input = [input stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+    input = [input stringByReplacingOccurrencesOfString:@"quot;" withString:@"\""];
+    input = [input stringByReplacingOccurrencesOfString:@"#039;" withString:@"'"];
+    input = [input stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+    input = [input stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+    
+    return input;
+}
+
 
 @end
 

@@ -79,7 +79,8 @@
 ///字符串解码
 +(NSString *)decodeFromPercentEscapeString: (NSString *) input;
 
-
+///解码特殊字符
++(NSString *)decodeSpecialCharactersString:(NSString *)input;
 @end
 
 
