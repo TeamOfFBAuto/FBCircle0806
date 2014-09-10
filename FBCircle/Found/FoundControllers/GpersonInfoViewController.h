@@ -14,7 +14,7 @@
 #import "FBCircleModel.h"
 
 
-@interface GpersonInfoViewController : MyViewController
+@interface GpersonInfoViewController : MyViewController<MBProgressHUDDelegate>
 
 @property(nonatomic,strong)NSString *passUserid;//上个界面传过来的userid 用于判断是否为好友
 @property(nonatomic,strong)NSString *userName;//用户名 用于添加好友

@@ -55,9 +55,6 @@ typedef enum{
     
     _locService.delegate = nil;
     
-//    for (UIView * view in _mapView.subviews) {
-//        [view removeFromSuperview];
-//    }
     
     
 }
@@ -117,7 +114,7 @@ typedef enum{
     //定位
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
-    [_locService startUserLocationService];//启动LocationService
+//    [_locService startUserLocationService];//启动LocationService
     
     //判断是否开启定位
     if ([CLLocationManager locationServicesEnabled]==NO) {
@@ -141,6 +138,8 @@ typedef enum{
     [self.view addSubview:_downInfoView];
     
     
+    //初始化分配内存
+    _poiAnnotationDic  = [[NSMutableDictionary alloc]init];
     
     
     //每隔一段时间 更新用户位置
@@ -148,13 +147,9 @@ typedef enum{
 //    
 //    _isFire = NO;
     
+    
+    //上传自己的坐标
     [self updateMyLocal];
-    
-    _poiAnnotationDic  = [[NSMutableDictionary alloc]init];
-    
-    
-    
-    
     
     
 }
@@ -273,21 +268,37 @@ typedef enum{
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-    _guserLocation = userLocation;
     
     [_mapView updateLocationData:userLocation];
     
-    if (!_isFire) {
-        _isFire = YES;
-        [timer fire];
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    _guserLocation = userLocation;
+    
+    //判断是否有经纬度
+    if (_guserLocation.location) {//有经纬度的话 停止定位 上传自己坐标
+        [_locService stopUserLocationService];
+        //上传自己的坐标
+        NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+        NSLog(@"上传自己的坐标接口：%@",api);
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (data.length > 0) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                NSLog(@"%@",dic);
+                [self getJiuyuandui];
+            }
+        }];
     }
+
+    
 }
 
 
 //定位失败后，会调用此函数
 - (void)mapView:(BMKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
+    
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [al show];
 }
@@ -305,51 +316,48 @@ typedef enum{
     NSURL *url = [NSURL URLWithString:api];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         
-        NSLog(@"%@",dataDic);
-        
-        // 清楚屏幕中所有的annotation
-        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
-        [_mapView removeAnnotations:array];
-        
-        
-        NSArray *modelArray = [dataDic objectForKey:@"datainfo"];
-        
-        for (int i = 0; i < modelArray.count; i++) {
-            NSDictionary *modelInfo = [modelArray objectAtIndex:1];
-            BMKPoiInfo *poi = [[BMKPoiInfo alloc]init];
-            poi.name = [modelInfo objectForKey:@"name"];
-            poi.address = [modelInfo objectForKey:@"address"];
-            poi.phone = [modelInfo objectForKey:@"phone"];
-            poi.uid = [modelInfo objectForKey:@"id"];
-            poi.postcode = [modelInfo objectForKey:@"owner"];//救援队联系人
-            CLLocationCoordinate2D pt = CLLocationCoordinate2DMake([[modelInfo objectForKey:@"wei_lat"]floatValue], [[modelInfo objectForKey:@"jing_lng"]floatValue]);
-            poi.pt = pt;
+        if (data.length > 0) {
+            NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            NSLog(@"%@",dataDic);
             
+            // 清楚屏幕中所有的annotation
+            NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+            [_mapView removeAnnotations:array];
             
-            [_poiAnnotationDic setObject:poi forKey:poi.name];
+            NSArray *modelArray = [dataDic objectForKey:@"datainfo"];
             
-            BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
-            item.coordinate = poi.pt;
-            item.title = poi.name;
-            item.subtitle = poi.address;
-            
-            
-            NSLog(@"%@",item.title);
-            
-            [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
-            
-            
-            if(i == 0){
-                //将第一个点的坐标移到屏幕中央
-                _mapView.centerCoordinate = poi.pt;
+            for (int i = 0; i < modelArray.count; i++) {
+                NSDictionary *modelInfo = [modelArray objectAtIndex:1];
+                BMKPoiInfo *poi = [[BMKPoiInfo alloc]init];
+                poi.name = [modelInfo objectForKey:@"name"];
+                poi.address = [modelInfo objectForKey:@"address"];
+                poi.phone = [modelInfo objectForKey:@"phone"];
+                poi.uid = [modelInfo objectForKey:@"id"];
+                poi.postcode = [modelInfo objectForKey:@"owner"];//救援队联系人
+                CLLocationCoordinate2D pt = CLLocationCoordinate2DMake([[modelInfo objectForKey:@"wei_lat"]floatValue], [[modelInfo objectForKey:@"jing_lng"]floatValue]);
+                poi.pt = pt;
+                
+                
+                [_poiAnnotationDic setObject:poi forKey:poi.name];
+                
+                BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+                item.coordinate = poi.pt;
+                item.title = poi.name;
+                item.subtitle = poi.address;
+                
+                
+                NSLog(@"%@",item.title);
+                
+                [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
+                
+//                if(i == 0){
+//                    //将第一个点的坐标移到屏幕中央
+//                    _mapView.centerCoordinate = poi.pt;
+//                }
             }
+            
         }
-        
-        [timer invalidate];
-        _isFire = NO;
-        
         
     }];
     
@@ -487,21 +495,8 @@ typedef enum{
 
 #pragma mark - 上传自己的经纬度
 -(void)updateMyLocal{
-    NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
-    
-    NSLog(@"%@",api);
-    
-    NSURL *url = [NSURL URLWithString:api];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        
-        NSLog(@"%@",dic);
-        
-        [self getJiuyuandui];
-    }];
-    
-    
+    //打开定位
+    [_locService startUserLocationService];
     
 }
 

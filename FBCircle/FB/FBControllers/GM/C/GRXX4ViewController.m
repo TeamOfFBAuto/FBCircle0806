@@ -94,12 +94,12 @@
     
     //主tableview
     self.navigationItem.title = @"个人信息";
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.scrollEnabled = NO;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [self.view addSubview:_tableView];
+//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
+//    _tableView.delegate = self;
+//    _tableView.dataSource = self;
+//    _tableView.scrollEnabled = NO;
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    [self.view addSubview:_tableView];
     
     
     
@@ -188,12 +188,12 @@
     [hud removeFromSuperview];
     hud.delegate = nil;
     hud = nil;
-//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
-//    _tableView.delegate = self;
-//    _tableView.dataSource = self;
-//    _tableView.scrollEnabled = NO;
-//    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    [self.view addSubview:_tableView];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , 320, iPhone5?568:480) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.scrollEnabled = NO;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [self.view addSubview:_tableView];
     [_tableView reloadData];
 }
 

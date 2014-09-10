@@ -205,7 +205,7 @@ alpha:(a)]
 //
 #pragma  mark -  评论
 
-#define FBCIRCLE_COMMENT_ADD @"http://quan.fblife.com/index.php?c=forum&a=addcomment&authkey=%@&content=%@&fid=%@&tid=%@" //发表评论
+#define FBCIRCLE_COMMENT_ADD @"http://quan.fblife.com/index.php?c=forum&a=addcomment&authkey=%@&fid=%@&tid=%@" //发表评论
 #define FBCIRCLE_COMMENT_LIST @"http://quan.fblife.com/index.php?c=forum&a=getcomment&tid=%@&page=%d&ps=%d" //评论列表
 
 

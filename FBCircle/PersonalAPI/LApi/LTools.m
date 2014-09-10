@@ -386,6 +386,13 @@
     return aSize.width;
 }
 
++ (CGFloat)widthForText:(NSString *)text boldFont:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:size]};
+    CGSize aSize = [text sizeWithAttributes:attributes];
+    return aSize.width;
+}
+
 + (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size
 {
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};

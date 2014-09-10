@@ -14,6 +14,9 @@
 #import "ChatViewController.h"
 
 #import "GMAPI.h"
+
+
+#import "MBProgressHUD.h"
 //typedef enum{
 //    GRXX1 = 0,//自己
 //    GRXX2 ,//好友 接口返回0
@@ -22,7 +25,9 @@
 //    GRXX5 ,//接到邀请  接口返回2
 //}GRXX;
 @interface GpersonInfoViewController ()
-
+{
+    MBProgressHUD *_hud;
+}
 @end
 
 @implementation GpersonInfoViewController
@@ -48,7 +53,8 @@
     
     self.titleLabel.text = @"详细信息";
     
-    
+    _hud = [ZSNApi showMBProgressWithText:@"正在加载" addToView:self.view];
+    _hud.delegate = self;
     
     //判断是否为好友
     [self panduanIsFriend];
@@ -306,7 +312,9 @@
     
     @try {
         __weak typeof(self) bself = self;
-        
+        __block BOOL isLoadUserInfoSuccess = NO;
+        __block BOOL isLoadWenzhangInfoSuccess = NO;
+        __weak typeof (_hud)bhud = _hud;
         
         //请求用户信息
         self.personModel = [[FBCirclePersonalModel alloc]init];
@@ -320,7 +328,11 @@
                 [view removeFromSuperview];
             }
             self.imaCount = 0;
-            [bself loadCustomView];
+            isLoadUserInfoSuccess = YES;
+            if (isLoadUserInfoSuccess && isLoadWenzhangInfoSuccess) {
+                [bself hudWasHidden:bhud];
+            }
+            
            
         } WithFailedBlcok:^(NSString *string) {
             
@@ -334,7 +346,12 @@
                 [view removeFromSuperview];
             }
             self.imaCount = 0;
-            [bself loadCustomView];
+            
+            isLoadWenzhangInfoSuccess = YES;
+            if (isLoadUserInfoSuccess && isLoadWenzhangInfoSuccess) {
+                [bself hudWasHidden:bhud];
+            }
+            
             
         } WithFailedBlock:^(NSString *operation) {
             
@@ -433,6 +450,15 @@
     
 }
 
+
+
+#pragma mark - MBProgressHUDDelegate
+-(void)hudWasHidden:(MBProgressHUD *)hud{
+    [hud removeFromSuperview];
+    hud.delegate = nil;
+    hud = nil;
+    [self loadCustomView];
+}
 
 
 @end

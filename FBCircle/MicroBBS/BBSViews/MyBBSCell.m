@@ -27,7 +27,14 @@
 {
     self.aImageView.image = [LTools imageForBBSId:aModel.headpic];
     self.nameLabel.text = aModel.name;
-    self.numLabel.text = aModel.newthread_num;
+    
+    if ([aModel.newthread_num isKindOfClass:[NSString class]]) {
+        self.numLabel.text = aModel.newthread_num;
+    }else
+    {
+        self.numLabel.text = [NSString stringWithFormat:@"%@",aModel.newthread_num];
+    }
+    
     NSString *numText = @"0";
     if ([aModel.newthread_num intValue] < 10) {
         numText = aModel.newthread_num;

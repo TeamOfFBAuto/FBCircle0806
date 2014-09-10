@@ -8,6 +8,8 @@
 
 #import "GmyMessageTableViewCell.h"
 
+#import "GMAPI.h"
+
 @implementation GmyMessageTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -163,6 +165,8 @@
         contentLabel.numberOfLines = 3;
         contentLabel.font = [UIFont systemFontOfSize:13];
         contentLabel.text = [[ZSNApi decodeSpecialCharactersString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode];
+//        contentLabel.text = [[ZSNApi decodeFromPercentEscapeString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode];
+        contentLabel.text = [GMAPI exchangeStringForDeleteNULL:[[ZSNApi decodeFromPercentEscapeString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode]];
 //        contentLabel.text = [messageModel.maincontent stringByReplacingEmojiCheatCodesWithUnicode];
         [contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(0, 0) width:60];
         

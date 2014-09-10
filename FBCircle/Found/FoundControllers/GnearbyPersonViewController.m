@@ -309,10 +309,11 @@
         [_locService stopUserLocationService];
         NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
         
-        NSLog(@"上传自己的位置%@",api);
+        NSLog(@"不是delegate上传自己的位置%@",api);
         
         NSURL *url = [NSURL URLWithString:api];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             

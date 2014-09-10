@@ -15,7 +15,7 @@
 #import "AddFriendViewController.h"
 
 
-#define ScanKuangFrame CGRectMake(50, 70+89, 220, 220)
+#define ScanKuangFrame CGRectMake(50, 70+89-6, 220, 220)
 
 
 @interface GmFoundScanViewController ()
@@ -69,7 +69,7 @@
     
     
     //半透明的浮层
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64+5.4, 320, 568-64-6)];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64+5.4-6, 320, 568-64-6)];
     backImageView.image = [UIImage imageNamed:@"saoyisao_bg_640_996.png"];
     [self.view addSubview:backImageView];
     
@@ -106,7 +106,7 @@
     num =0;
     
     //上下滚动的条
-    _line = [[UIImageView alloc]initWithFrame:CGRectMake(40, 70+89-18, 240, 18)];
+    _line = [[UIImageView alloc]initWithFrame:CGRectMake(40, 70+89-18-6, 240, 18)];
     [_line setImage:[UIImage imageNamed:@"fshan.png"]];
     [self.view addSubview:_line];
     
@@ -125,7 +125,7 @@
     if (upOrdown == NO) {
         num ++;
         
-        _line.frame = CGRectMake(40, 70+89-9+2*num, 240, 18);
+        _line.frame = CGRectMake(40, 70+89-9-6+2*num, 240, 18);
         if (2*num == 220) {
             
             upOrdown = YES;
@@ -134,7 +134,7 @@
     }
     else {
         num --;
-        _line.frame = CGRectMake(40, 70+89-9+2*num, 240, 18);
+        _line.frame = CGRectMake(40, 70+89-9-6+2*num, 240, 18);
         if (num == 0) {
             upOrdown = NO;
         }
