@@ -387,20 +387,21 @@
             
             //自己写的内容
             //xxxxxxxx
-            RTLabel *fb_content = [[RTLabel alloc]init];
+            RTLabel *fb_content = [[RTLabel alloc]initWithFrame:CGRectMake(5, 5, 192, 0)];
+            fb_content.textColor = [UIColor blackColor];
             
             fb_content.text =  [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
-            CGRect contentFrame = fb_content.frame;
-            CGSize optimumsSize = [fb_content optimumSize];
-            contentFrame.size.height = optimumsSize.height+3;
-            fb_content.frame = contentFrame;
+//            CGRect contentFrame = fb_content.frame;
+//            CGSize optimumsSize = [fb_content optimumSize];
+//            contentFrame.size.height = optimumsSize.height+3;
+//            fb_content.frame = contentFrame;
+//            
+//            
+//            NSLog(@"%@ %@",fb_content.text,NSStringFromCGRect(fb_content.frame));
             
-
-            fb_content.font = [UIFont fontWithName:@"Helvetica-Bold" size:13];
+            fb_content.font = [UIFont boldSystemFontOfSize:13];
             fb_content.frame = CGRectMake(5, 5, 192, 16);
-//            fb_content.numberOfLines = 1;
             fb_content.backgroundColor = [UIColor clearColor];
-            //xxxxxxxxx
             
             
             fb_content.userInteractionEnabled = NO;
@@ -425,10 +426,10 @@
             rfb_content.font = [UIFont systemFontOfSize:13];
             rfb_content.textColor = RGBCOLOR(66, 66, 66);
             rfb_content.text = [ZSNApi FBImageChange:[wenzhang.rfb_content stringByReplacingEmojiCheatCodesWithUnicode]];
-            CGRect contentFrame1 = fb_content.frame;
-            CGSize optimumsSize1 = [fb_content optimumSize];
+            CGRect contentFrame1 = rfb_content.frame;
+            CGSize optimumsSize1 = [rfb_content optimumSize];
             contentFrame1.size.height = optimumsSize1.height+6;
-            fb_content.frame = contentFrame1;
+            rfb_content.frame = contentFrame1;
             
             //根据有没图片判断文字的宽度
             if (wenzhang.rfb_image.count>0) {

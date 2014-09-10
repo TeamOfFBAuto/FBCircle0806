@@ -229,18 +229,13 @@
     }
 
     //定位 上传自己坐标
-    //定位
-//    _locService = [[BMKLocationService alloc]init];
-//    _locService.delegate = self;
-//    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(updateMyLocalNear) userInfo:nil repeats:YES];
-//    [time fire];
-//    [self updateMyLocalNear];
     
-    _locManager = [[CLLocationManager alloc]init];
-    _locManager.delegate = self;
+    //百度定位
+    _locServiceDDD = [[BMKLocationService alloc]init];
+    _locServiceDDD.delegate = self;
+    [_locServiceDDD startUserLocationService];
     
-    // 开始定位
-    [_locManager startUpdatingLocation];
+    
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -482,55 +477,54 @@
 
 
 
-#pragma mark - CLLocationManagerDelegate
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+
+#pragma mark - 百度地图定位代理方法
+
+//在地图View将要启动定位时，会调用此函数
+- (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView
 {
-    //此处locations存储了持续更新的位置坐标值，取最后一个值为最新位置，如果不想让其持续更新位置，则在此方法中获取到一个值之后让locationManager stopUpdatingLocation
-    CLLocation *currentLocation = [locations lastObject];
+	NSLog(@"start locate");
+}
+
+
+//用户方向更新后，会调用此函数
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+{
+    _guserLocationDDD = userLocation;
     
-    CLLocationCoordinate2D coor = currentLocation.coordinate;
-    int lat = (int)coor.latitude;
-    int lonn = (int)coor.longitude;
+}
+
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    _guserLocationDDD = userLocation;
+    
+    int lat = (int)_guserLocationDDD.location.coordinate.latitude;
+    int lonn = (int)_guserLocationDDD.location.coordinate.longitude;
     
     if (lat != 0 && lonn != 0) {
+        [_locServiceDDD stopUserLocationService];
+        _locServiceDDD.delegate = nil;
+        _locServiceDDD = nil;
+        NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocationDDD.location.coordinate.latitude,_guserLocationDDD.location.coordinate.longitude];
+        NSLog(@"delegate上传自己的位置%@",api);
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
-        
-        @try {
-            [_locManager stopUpdatingLocation];
-            NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],coor.latitude,coor.longitude];
-            NSLog(@"appdelegate上传自己的位置api接口%@",api);
-            NSURL *url = [NSURL URLWithString:api];
-            NSURLRequest *request = [NSURLRequest requestWithURL:url];
-            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                if (data.length > 0) {
-                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                    NSLog(@"appdelegate上传自己的位置返回的字典%@",dic);
-                }
-            }];
-        }
-        @catch (NSException *exception) {
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (data.length > 0) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                
+                NSLog(@"delegate上传自己的位置返回的字典%@",dic);
+            }
             
-        }
-        @finally {
             
-        }
-        
-        
-    }
-    
-    
-    
-}
-
-
-
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
-    
-    if (error.code == kCLErrorDenied) {
-        // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+        }];
     }
 }
+
+
 
 
 

@@ -52,6 +52,8 @@
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
     
+    NSLog(@"%p",_locService);
+    
     //判断是否开启定位
     if ([CLLocationManager locationServicesEnabled]==NO) {
         [self loadDingweiPanduanView];
@@ -305,6 +307,9 @@
     
     int lat = (int)_guserLocation.location.coordinate.latitude;
     int lonn = (int)_guserLocation.location.coordinate.longitude;
+    
+    NSLog(@"%d %d",lat,lonn);
+    
     if (lat != 0 && lonn != 0) {
         [_locService stopUserLocationService];
         NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
@@ -315,11 +320,14 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if (data.length > 0) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                
+                NSLog(@"上传自己的位置返回的字典%@",dic);
+                
+                [self prepareNetData];
+            }
             
-            NSLog(@"上传自己的位置返回的字典%@",dic);
-            
-            [self prepareNetData];
             
             
         }];
