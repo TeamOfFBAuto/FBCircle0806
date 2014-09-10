@@ -270,7 +270,7 @@ typedef enum{
 {
     
     [_mapView updateLocationData:userLocation];
-    
+    _mapView.centerCoordinate = userLocation.location.coordinate;
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     _guserLocation = userLocation;
     
