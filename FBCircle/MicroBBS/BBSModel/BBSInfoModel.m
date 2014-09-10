@@ -19,10 +19,10 @@
             [self setValuesForKeysWithDictionary:dic];
             
             if (self.name) {
-                self.name = [ZSNApi decodeFromPercentEscapeString:self.name];
+                self.name = [ZSNApi decodeSpecialCharactersString:self.name];
             }
             if (self.intro) {
-                self.intro = [ZSNApi decodeFromPercentEscapeString:self.intro];
+                self.intro = [ZSNApi decodeSpecialCharactersString:self.intro];
             }
             
         }

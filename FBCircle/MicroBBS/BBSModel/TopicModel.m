@@ -18,15 +18,15 @@
             [self setValuesForKeysWithDictionary:dic];
             
             if (self.title) {
-                self.title = [ZSNApi decodeFromPercentEscapeString:self.title];
+                self.title = [ZSNApi decodeSpecialCharactersString:self.title];
             }
             
             if (self.sub_content) {
-                self.sub_content = [ZSNApi decodeFromPercentEscapeString:self.sub_content];
+                self.sub_content = [ZSNApi decodeSpecialCharactersString:self.sub_content];
             }
             
             if (self.content) {
-                self.content = [ZSNApi decodeFromPercentEscapeString:self.content];
+                self.content = [ZSNApi decodeSpecialCharactersString:self.content];
             }
             
         }

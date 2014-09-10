@@ -20,7 +20,15 @@ typedef void(^CellBlock)(NSString *topicId);
 }
 @property (strong, nonatomic) IBOutlet UIImageView *aImageView;
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *memberTitle;
+
 @property (strong, nonatomic) IBOutlet UILabel *memeberLabel;
+
+@property (strong, nonatomic) IBOutlet UIView *line;
+@property (strong, nonatomic) IBOutlet UILabel *topicTitle;
+
+
 @property (strong, nonatomic) IBOutlet UILabel *topicLabel;
 @property (strong, nonatomic) IBOutlet UIButton *joinButton;
 
@@ -28,5 +36,7 @@ typedef void(^CellBlock)(NSString *topicId);
 - (IBAction)clickToJoin:(id)sender;
 
 - (void)setCellDataWithModel:(BBSInfoModel *)aModel cellBlock:(CellBlock)aBlock;
+
+- (void)updateFrameWithModel:(BBSInfoModel *)aModel;
 
 @end

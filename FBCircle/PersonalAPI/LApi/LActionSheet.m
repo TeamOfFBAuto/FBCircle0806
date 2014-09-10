@@ -170,23 +170,37 @@
         
         bgView.top = newFrame.origin.y - 5;
         bgView.left = newFrame.origin.x - bgView.width - 5;
-//        aFrame.origin.x = newFrame.origin.x - bgView.width - 5;
-//        aFrame.origin.y = newFrame.origin.y - 5;
+
         aFrame = bgView.frame;
-        
         aFrame.size.width = _sumHeight - 5;
-        aFrame.origin.x = _sumHeight - 5;
+//        aFrame.origin.x = _sumHeight - 5;
+        
+        aFrame.origin.x = _sumHeight;
         
     }else if (aStyle == Style_Bottom)
     {
         aFrame.origin.y = [UIApplication sharedApplication].keyWindow.bottom - aFrame.size.height;
     }
     self.alpha = 1.0;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        
+//        bgView.frame = aFrame;
+//    }];
+    
     [UIView animateWithDuration:0.3 animations:^{
         
         bgView.frame = aFrame;
         
-//        self.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        
+        if (aStyle == Style_SideBySide){
+            
+            if (finished) {
+                
+                bgView.left -= 5;
+            }
+        }
+        
     }];
 }
 

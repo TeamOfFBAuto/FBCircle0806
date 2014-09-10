@@ -228,7 +228,7 @@
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    return 77;
 }
 
 #pragma mark - UITableViewDelegate
@@ -253,6 +253,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"JoinBBSCell" owner:self options:nil]objectAtIndex:0];
     }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     __weak typeof(self)weakSelf = self;
@@ -264,6 +265,7 @@
         
 //        weakCell.joinButton.selected = YES;
     }];
+    
     return cell;
     
 }

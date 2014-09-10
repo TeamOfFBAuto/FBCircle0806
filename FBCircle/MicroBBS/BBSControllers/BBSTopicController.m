@@ -321,7 +321,7 @@ typedef enum{
             
             TopicCommentModel *aModel = [[TopicCommentModel alloc]initWithDictionary:aDic];
             NSString *content = [NSString stringWithFormat:@"%@",aModel.content];
-            content = [ZSNApi decodeFromPercentEscapeString:content];
+            content = [ZSNApi decodeSpecialCharactersString:content];
             
             aModel.content = [content stringByReplacingEmojiCheatCodesWithUnicode];
             
@@ -371,26 +371,17 @@ typedef enum{
     __weak typeof(self)weakSelf = self;
     
     NSString *temp = [NSString stringWithFormat:@"%@",text];
+
     
     text = [text stringByReplacingEmojiUnicodeWithCheatCodes];
     
-    text = [ZSNApi encodeToPercentEscapeString:text];//字符串编码
-    text = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
     NSLog(@"comment2 %@",text);
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],self.fid,self.tid];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_ADD,[SzkAPI getAuthkey],text,self.fid,self.tid];
     
-    NSString *post = [NSString stringWithFormat:@"content=%@",text];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    
-    
-    
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    
-    [tool requestSpecialCompletion:^(NSDictionary *result, NSError *erro) {
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         if ([result isKindOfClass:[NSDictionary class]]) {
@@ -519,8 +510,6 @@ typedef enum{
                 NSDictionary *foruminfo = [datainfo objectForKey:@"foruminfo"];
                 
                 infoModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
-                infoModel.name = [ZSNApi decodeFromPercentEscapeString:infoModel.name];
-                
                 
                 weakTable.tableHeaderView = [weakSelf createTableHeaderView];
                 weakTable.tableFooterView = [weakSelf createTableFooterView];
