@@ -66,6 +66,8 @@
     
     [_table showRefreshHeader:YES];
     
+    _table.backgroundColor = [UIColor colorWithHexString:@"d3d7db"];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -197,7 +199,7 @@
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    return 75 + 2;
 }
 
 

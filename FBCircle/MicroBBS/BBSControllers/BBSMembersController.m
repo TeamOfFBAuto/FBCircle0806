@@ -16,6 +16,7 @@
 {
     RefreshTableView *_table;
     LButtonView *btn2;
+    BOOL _needRefresh;
 }
 
 @end
@@ -29,6 +30,17 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //更新成员个数
+    if (_needRefresh) {
+        
+        [_table showRefreshNoOffset];
+    }
 }
 
 - (void)viewDidLoad
@@ -53,6 +65,8 @@
     _table.tableHeaderView = [self createTableHeaderView];
     
     [self getBBSMembersForBBSId:self.bbs_id];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_MEMBER object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,6 +81,11 @@
     _table.dataSource = nil;
     _table = nil;
     btn2 = nil;
+}
+
+- (void)updateBBS:(NSNotification *)sender
+{
+    _needRefresh = YES;
 }
 
 #pragma mark - 事件处理

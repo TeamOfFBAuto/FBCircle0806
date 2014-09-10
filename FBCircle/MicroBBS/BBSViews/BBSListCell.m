@@ -26,6 +26,7 @@
 - (void)setCellDataWithModel:(TopicModel *)aModel
 {
     self.aTitleLabel.text = aModel.title;
+    _aTitleLabel.font = [UIFont boldSystemFontOfSize:14];
     
     NSString *address = [LTools NSStringNotNull:aModel.address];
     

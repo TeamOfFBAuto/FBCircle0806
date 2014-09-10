@@ -249,7 +249,7 @@
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return 44;
 }
 
 -(CGFloat)heightForHeaderInSection:(NSInteger)section

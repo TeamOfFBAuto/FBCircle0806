@@ -13,6 +13,8 @@
 #define NORMAL_TEXT @"上拉加载更多"
 #define NOMORE_TEXT @"没有更多数据"
 
+#define TABLEFOOTER_HEIGHT 50.f
+
 @implementation RefreshTableView
 
 - (id)initWithFrame:(CGRect)frame
@@ -83,7 +85,7 @@
 
 - (void)createFooterView
 {
-    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320, 40.0f)];
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320, TABLEFOOTER_HEIGHT)];
     
     [tableFooterView addSubview:self.loadingIndicator];
     [tableFooterView addSubview:self.loadingLabel];
@@ -356,7 +358,7 @@
         _loadingIndicator.hidden = YES;
         _loadingIndicator.backgroundColor = [UIColor clearColor];
         _loadingIndicator.hidesWhenStopped = YES;
-        _loadingIndicator.frame = CGRectMake(self.frame.size.width/2 - 70 ,6+2, 24, 24);
+        _loadingIndicator.frame = CGRectMake(self.frame.size.width/2 - 70 ,6+2 + (TABLEFOOTER_HEIGHT - 40)/2.0, 24, 24);
     }
     return _loadingIndicator;
 }
@@ -364,7 +366,7 @@
 - (UILabel*)normalLabel
 {
     if (!_normalLabel) {
-        _normalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.frame.size.width, 20)];
+        _normalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 8 + (TABLEFOOTER_HEIGHT - 40)/2.0, self.frame.size.width, 20)];
         _normalLabel.text = NSLocalizedString(NORMAL_TEXT, nil);
         _normalLabel.backgroundColor = [UIColor clearColor];
         [_normalLabel setFont:[UIFont systemFontOfSize:14]];
@@ -379,7 +381,7 @@
 - (UILabel*)loadingLabel
 {
     if (!_loadingLabel) {
-        _loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(320.f/2-80, 10, self.frame.size.width/2+30, 20)];
+        _loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(320.f/2-80,8 + (TABLEFOOTER_HEIGHT - 40)/2.0, self.frame.size.width/2+30, 20)];
         _loadingLabel.text = NSLocalizedString(@"加载中...", nil);
         _loadingLabel.backgroundColor = [UIColor clearColor];
         [_loadingLabel setFont:[UIFont systemFontOfSize:14]];

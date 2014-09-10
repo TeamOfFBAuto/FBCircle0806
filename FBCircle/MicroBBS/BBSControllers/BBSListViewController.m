@@ -398,22 +398,24 @@
     
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [basic_view addSubview:titleLabel];
+    titleLabel.font = [UIFont boldSystemFontOfSize:14];
     
     UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,125, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:memberLabel];
-    
+    memberLabel.textColor = [UIColor colorWithHexString:@"6b7180"];
     
     NSString *str__ = [NSString stringWithFormat:@"成员 %@ | 帖子 %@",_aBBSModel.member_num,_aBBSModel.thread_num];
     
+    UIColor *textColor = [UIColor colorWithHexString:@"627bb9"];
     NSAttributedString *contentText;
     if ([_aBBSModel.member_num isEqualToString:_aBBSModel.thread_num]) {
         
-        contentText = [LTools attributedString:str__ keyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]];
+        contentText = [LTools attributedString:str__ keyword:_aBBSModel.member_num color:textColor];
     }else
     {
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:[UIColor colorWithHexString:@"91a2ce"]]];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:textColor]];
         
-        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:[UIColor colorWithHexString:@"91a2ce"]];
+        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:textColor];
     }
     
     memberLabel.attributedText = contentText;
@@ -456,6 +458,7 @@
         LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 * i, 304, 40) leftImage:[UIImage imageNamed:@"qi"] title:aModel.title target:self action:@selector(clickToRecommend:)];
         [recommed_view addSubview:btnV];
         btnV.tag = 10 + i;
+        btnV.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     }
     
     aFrame.size.height = 40 * top_array.count;

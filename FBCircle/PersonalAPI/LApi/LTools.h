@@ -26,6 +26,10 @@
 
 #define LOADING_TITLE @"努力加载中..." //加载提示文字
 
+#define FONT_SIZE_BIG 16
+#define FONT_SIZE_MID 14
+#define FONT_SIZE_SMALL 12
+
 //通知
 
 #define NOTIFICATION_UPDATE_TOPICLIST @"TOPIC_LIST" //帖子列表更新通知

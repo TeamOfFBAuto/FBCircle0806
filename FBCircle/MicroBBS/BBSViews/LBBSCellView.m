@@ -29,13 +29,17 @@
         self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 10, 53, 53)];
         [self addSubview:_aImageView];
         
-        self.aTitleLabel = [LTools createLabelFrame:CGRectMake(_aImageView.right + 7 , 9, 200 - 20, 21) title:@"testlll" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        _aTitleLabel.font = [UIFont systemFontOfSize:16];
+        self.aTitleLabel = [LTools createLabelFrame:CGRectMake(_aImageView.right + 7 , 13, 200 - 20, 18 - 2) title:@"testlll" font:FONT_SIZE_BIG align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        _aTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_BIG];
+        _aTitleLabel.backgroundColor = [UIColor clearColor];
         
         [self addSubview:_aTitleLabel];
         
-        self.subTitleLabel = [LTools createLabelFrame:CGRectMake(_aTitleLabel.left, _aTitleLabel.bottom, 188, 41) title:@"aksdlkajksldjalkdsjklasjdlkajskdlajklsjdakldjakl" font:14 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+        self.subTitleLabel = [LTools createLabelFrame:CGRectMake(_aTitleLabel.left, _aTitleLabel.bottom, 188, 36) title:@"aksdlkajksldjalkdsjklasjdlkajskdlajklsjdakldjakl" font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
         [self addSubview:_subTitleLabel];
+        _subTitleLabel.backgroundColor = [UIColor clearColor];
+        _subTitleLabel.numberOfLines = 2;
+        _subTitleLabel.lineBreakMode = NSLineBreakByCharWrapping;
         
         UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(276 , self.height/2.f - 13/2.f, 8, 13)];
         arrow_image.image = [UIImage imageNamed:@"jiantou"];

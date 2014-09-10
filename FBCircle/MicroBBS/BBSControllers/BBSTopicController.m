@@ -772,7 +772,7 @@ typedef enum{
     //正文
     
     NSString *text = aTopicModel.content;
-    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 2, aFrame.size.width - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 font:12]) title:text font:12 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aFrame.size.width - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 font:12]) title:text font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     textLabel.numberOfLines = 0;
     [recommed_view addSubview:textLabel];
     

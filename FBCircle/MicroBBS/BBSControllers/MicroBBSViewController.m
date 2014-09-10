@@ -466,7 +466,7 @@
     search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
     [self.view addSubview:search_bgview];
 
-    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(5, 0, 310, 45)];
+    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
     bar.placeholder = @"搜索";
     bar.backgroundColor = [UIColor clearColor];
     bar.delegate = self;
@@ -514,7 +514,7 @@
     
     //我的论坛
     
-    _mybbsView = [[UIView alloc]initWithFrame:CGRectMake(8, 20 + 45, 304, 80)];
+    _mybbsView = [[UIView alloc]initWithFrame:CGRectMake(8, 19 + 45, 304, 80)];
     _mybbsView.layer.cornerRadius = 3.f;
     _mybbsView.clipsToBounds = YES;
     [headerView addSubview:_mybbsView];
