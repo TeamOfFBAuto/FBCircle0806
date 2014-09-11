@@ -499,7 +499,6 @@
 //用户方向更新后，会调用此函数
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    _guserLocationDDD = userLocation;
     
 }
 

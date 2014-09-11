@@ -103,17 +103,17 @@
     
     
     
-    //pickerview后面的view
-    _backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
-    _backPickView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_backPickView];
-    
-    //地区pickview
-    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, 320, 216)];
-    _pickeView.delegate = self;
-    _pickeView.dataSource = self;
-    [_backPickView addSubview:_pickeView];
-    _isChooseArea = NO;
+//    //pickerview后面的view
+//    _backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
+//    _backPickView.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:_backPickView];
+//    
+//    //地区pickview
+//    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, 320, 216)];
+//    _pickeView.delegate = self;
+//    _pickeView.dataSource = self;
+//    [_backPickView addSubview:_pickeView];
+//    _isChooseArea = NO;
     
     
     
@@ -194,7 +194,23 @@
     _tableView.scrollEnabled = NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:_tableView];
-    [_tableView reloadData];
+//    [_tableView reloadData];
+    
+    
+    
+    //pickerview后面的view
+    _backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
+    _backPickView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_backPickView];
+    
+    //地区pickview
+    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, 320, 216)];
+    _pickeView.delegate = self;
+    _pickeView.dataSource = self;
+    [_backPickView addSubview:_pickeView];
+    _isChooseArea = NO;
+    
+    
 }
 
 
