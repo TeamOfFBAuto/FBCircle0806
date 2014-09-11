@@ -42,6 +42,11 @@
     {
         numText = [NSString stringWithFormat:@"%d+",[aModel.newthread_num intValue]/10 * 10];
     }
+    
+    _nameLabel.font = [UIFont systemFontOfSize:FONT_SIZE_BIG];
+    _nameLabel.textColor = [UIColor colorWithHexString:@"333333"];
+    _numLabel.font = [UIFont boldSystemFontOfSize:FONT_SIZE_13];
+    _numLabel.textColor = [UIColor colorWithHexString:@"aaabad"];
 }
 
 @end

@@ -64,6 +64,9 @@
     
     _table.tableHeaderView = [self createTableHeaderView];
     
+    
+//    UIView *footer = [UIView alloc]initWithFrame:CGRectMake(0, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    
     [self getBBSMembersForBBSId:self.bbs_id];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_BBS_MEMBER object:nil];
@@ -148,9 +151,15 @@
     btn.layer.cornerRadius = 3.f;
     [header addSubview:btn];
     
-    NSString *title = [NSString stringWithFormat:@"成员(%d)",0];
+    NSString *title = [NSString stringWithFormat:@"成员 (%d)",0];
     btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(12, btn.bottom + 15, 320 - 24, 43) leftImage:Nil rightImage:Nil title:title target:Nil action:Nil lineDirection:Line_No];
     [header addSubview:btn2];
+    btn2.backgroundColor = [UIColor colorWithHexString:@"f5f8f8"];
+    
+    UIView *bottom = [[UIView alloc]initWithFrame:CGRectMake(12, btn2.bottom - 2, 320 - 24, 2)];
+    bottom.backgroundColor = [UIColor colorWithHexString:@"f5f8f8"];
+    [header addSubview:bottom];
+    
     
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(12, btn2.bottom - 1, 320 - 24, 0.5)];
     line.backgroundColor = [UIColor lightGrayColor];

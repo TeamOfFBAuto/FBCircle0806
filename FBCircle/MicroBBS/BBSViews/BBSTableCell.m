@@ -37,6 +37,10 @@
     [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     self.aTitleLabel.text = aModel.title;
     self.subTitleLabel.text = aModel.sub_content;
+    self.aTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_MID];
+    _aTitleLabel.textColor = [UIColor colorWithHexString:@"1d222b"];
+    self.subTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_SMALL];
+    _subTitleLabel.textColor = [UIColor colorWithHexString:@"9197a3"];
 }
 
 @end

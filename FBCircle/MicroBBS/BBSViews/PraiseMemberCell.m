@@ -23,7 +23,8 @@
         self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, (55-37)/2.0, 37, 37)];
         [self addSubview:_aImageView];
         
-        self.aTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_aImageView.right + 5, 0, 150, 55)];
+        self.aTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_aImageView.right + 6, 0, 150, 55)];
+        _aTitleLabel.font = [UIFont systemFontOfSize:15];
         [self addSubview:_aTitleLabel];
     }
     return self;

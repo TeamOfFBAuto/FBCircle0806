@@ -23,6 +23,8 @@ typedef enum {
 @property(nonatomic,assign)BOOL selected;
 @property(nonatomic,retain)UIColor *selcted_TitleColor;
 
+@property(nonatomic,retain)UIImageView *line_horizon;
+
 @property(nonatomic,weak)id target;
 
 

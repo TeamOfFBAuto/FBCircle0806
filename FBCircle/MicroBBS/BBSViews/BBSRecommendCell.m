@@ -23,7 +23,7 @@
         hh_view.backgroundColor = [UIColor whiteColor];
         [self addSubview:hh_view];
         
-        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 40, 40)];
+        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 15, 40, 40)];
         [_aImageView sd_setImageWithURL:Nil placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
         [hh_view addSubview:_aImageView];
         
@@ -44,7 +44,7 @@
     self.content_label = OHLabel;
     
     _content_label.left = _nameLabel.left + 10;
-    _content_label.top = _nameLabel.bottom;
+    _content_label.top = _nameLabel.bottom + 5;
     [self addSubview:_content_label];
     
     CGFloat aHeight = 30 + _content_label.height + 10;

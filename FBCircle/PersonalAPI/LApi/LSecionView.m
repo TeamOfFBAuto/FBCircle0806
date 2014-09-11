@@ -24,16 +24,16 @@
         
         UILabel *leftLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 200, 40 - 1)];
         leftLabel.text = title;
-        leftLabel.font = [UIFont boldSystemFontOfSize:14];
+        leftLabel.font = [UIFont systemFontOfSize:FONT_SIZE_MID];
+        leftLabel.textColor = [UIColor colorWithHexString:@"141a23"];
         [self addSubview:leftLabel];
         
         self.rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [_rightBtn setTitle:@"更多" forState:UIControlStateNormal];
         [_rightBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-        [_rightBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [_rightBtn setTitleColor:[UIColor colorWithHexString:@"7f7f7f"] forState:UIControlStateNormal];
         _rightBtn.frame = CGRectMake(self.width - 100, 0, 90, self.height);
-//        rightBtn.backgroundColor = [UIColor orangeColor];
-        [_rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_rightBtn.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE_MID]];
         [_rightBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_rightBtn];
         

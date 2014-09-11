@@ -268,6 +268,7 @@
     UIImage *defaultImage = [LTools imageForBBSId:infoModel.forumclass];
     LButtonView *btn1 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, firstView.width, 75) leftImage:[LTools scaleToSizeWithImage:defaultImage size:CGSizeMake(35, 35)] rightImage:Nil title:infoModel.name target:Nil action:Nil lineDirection:Line_Down];
     [firstView addSubview:btn1];
+    btn1.line_horizon.height = 1.f;
     
     //简介
     
@@ -291,6 +292,7 @@
     
     LButtonView *btn1 = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 43) leftImage:nil rightImage:[UIImage imageNamed:@"jiantou"] title:@"添加成员" target:self action:@selector(clickToAddMember:) lineDirection:Line_Down];
     [firstView addSubview:btn1];
+    btn1.line_horizon.height = 1.f;
     
     NSString *title = [NSString stringWithFormat:@"%@名成员",infoModel.member_num];
     

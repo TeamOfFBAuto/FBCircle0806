@@ -28,6 +28,7 @@
 
 #define FONT_SIZE_BIG 16
 #define FONT_SIZE_MID 14
+#define FONT_SIZE_13 13
 #define FONT_SIZE_SMALL 12
 
 //通知

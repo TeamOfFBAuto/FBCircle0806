@@ -691,15 +691,13 @@ typedef enum{
     basic_view.layer.cornerRadius = 3.f;
     
     //论坛name
-//    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(10, 0, 150, 40) title:infoModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-//    [basic_view addSubview:nameLabel];
     
     LButtonView *nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_Down];
     [basic_view addSubview:nameLabel];
     
     //帖子数
     NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
-    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10, 40) title:title font:13 align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"90a1cd"]];
+    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10, 40) title:title font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
     numLabel.backgroundColor= [UIColor clearColor];
     [basic_view addSubview:numLabel];
     
@@ -748,32 +746,33 @@ typedef enum{
     recommed_view.clipsToBounds = YES;
     
     //头像
-    UIImageView *headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 40, 40)];
+    UIImageView *headImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, 15, 40, 40)];
     [headImage sd_setImageWithURL:[NSURL URLWithString:aTopicModel.authorhead] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     [recommed_view addSubview:headImage];
     
     //楼主
     NSString *name = aTopicModel.username;
     
-    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(headImage.right + 10, headImage.top, [LTools widthForText:name boldFont:14], 15) title:name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-    nameLabel.font = [UIFont boldSystemFontOfSize:14];
+    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(headImage.right + 11, headImage.top, [LTools widthForText:name boldFont:15], 18) title:name font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"1b1b1d"]];
+    nameLabel.font = [UIFont boldSystemFontOfSize:15];
     [recommed_view addSubview:nameLabel];
     
-    UIButton *hintBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(nameLabel.right + 5, headImage.top, 35, 15) normalTitle:@"楼主" image:nil backgroudImage:nil superView:recommed_view target:nil action:nil];
+    UIButton *hintBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(nameLabel.right + 5, headImage.top, 35, 18) normalTitle:@"楼主" image:nil backgroudImage:nil superView:recommed_view target:nil action:nil];
     hintBtn.backgroundColor = [UIColor colorWithHexString:@"5c7bbe"];
     hintBtn.layer.cornerRadius = 3.f;
     [hintBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     
     //时间
     NSString *time = [LTools timechange:aTopicModel.time];
-    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aFrame.size.width - 10 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:12], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aFrame.size.width - 10 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
     [recommed_view addSubview:timeLabel];
     
     //正文
     
     NSString *text = aTopicModel.content;
-    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aFrame.size.width - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 font:12]) title:text font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aFrame.size.width - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 font:14]) title:text font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
     textLabel.numberOfLines = 0;
+    textLabel.lineBreakMode = NSLineBreakByCharWrapping;
     [recommed_view addSubview:textLabel];
     
     //图片
@@ -782,7 +781,7 @@ typedef enum{
     
     __weak typeof(self)weakSelf = self;
     
-    LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 5, textLabel.width, 0) images:imageUrls imageIndex:^(int index) {
+    LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 10, textLabel.width, 0) images:imageUrls imageIndex:^(int index) {
         NSLog(@"slectIndex %d",index);
         
         ShowImagesViewController *showBigVC=[[ShowImagesViewController alloc]init];
@@ -804,16 +803,16 @@ typedef enum{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickTOPraiseMember:)];
     [zan_view addGestureRecognizer:tap];
     
-    UIImageView *zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, (40 - 16)/2.0, 16, 16)];
+    UIImageView *zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, (40 - 16)/2.0, 16, 16)];
     zanImage.image = [UIImage imageNamed:@"add_zan"];
     [zan_view addSubview:zanImage];
     
     NSString *numberSter = [NSString stringWithFormat:@"%@",aTopicModel.zan_num];
-    zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
+    zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
     [zan_view addSubview:zan_num_label];
     
     NSString *names = zan_String;
-    zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240, zan_view.height) title:names font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"7083ad"]];
+    zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240, zan_view.height) title:names font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
     [zan_view addSubview:zan_names_label];
     
     //时间

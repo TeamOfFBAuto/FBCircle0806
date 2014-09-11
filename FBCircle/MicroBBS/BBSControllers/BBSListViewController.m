@@ -398,7 +398,7 @@
     
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [basic_view addSubview:titleLabel];
-    titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    titleLabel.font = [UIFont systemFontOfSize:14];
     
     UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,125, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:memberLabel];
@@ -458,7 +458,7 @@
         LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40 * i, 304, 40) leftImage:[UIImage imageNamed:@"qi"] title:aModel.title target:self action:@selector(clickToRecommend:)];
         [recommed_view addSubview:btnV];
         btnV.tag = 10 + i;
-        btnV.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        btnV.titleLabel.font = [UIFont systemFontOfSize:14];
     }
     
     aFrame.size.height = 40 * top_array.count;

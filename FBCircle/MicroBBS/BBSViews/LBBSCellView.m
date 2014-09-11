@@ -29,13 +29,13 @@
         self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 10, 53, 53)];
         [self addSubview:_aImageView];
         
-        self.aTitleLabel = [LTools createLabelFrame:CGRectMake(_aImageView.right + 7 , 13, 200 - 20, 18 - 2) title:@"testlll" font:FONT_SIZE_BIG align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        _aTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_BIG];
+        self.aTitleLabel = [LTools createLabelFrame:CGRectMake(_aImageView.right + 7 , 13, 200 - 20, 18 - 2) title:@"testlll" font:FONT_SIZE_BIG align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"1d222d"]];
+        _aTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_MID];
         _aTitleLabel.backgroundColor = [UIColor clearColor];
         
         [self addSubview:_aTitleLabel];
         
-        self.subTitleLabel = [LTools createLabelFrame:CGRectMake(_aTitleLabel.left, _aTitleLabel.bottom, 188, 36) title:@"aksdlkajksldjalkdsjklasjdlkajskdlajklsjdakldjakl" font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+        self.subTitleLabel = [LTools createLabelFrame:CGRectMake(_aTitleLabel.left, _aTitleLabel.bottom, 188, 36) title:@"aksdlkajksldjalkdsjklasjdlkajskdlajklsjdakldjakl" font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"9197a3"]];
         [self addSubview:_subTitleLabel];
         _subTitleLabel.backgroundColor = [UIColor clearColor];
         _subTitleLabel.numberOfLines = 2;

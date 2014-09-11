@@ -253,6 +253,7 @@
         
         LButtonView *lBtn = [[LButtonView alloc]initWithFrame:CGRectMake(10 + (5 + 72) * k,15 + (15 + 72) * line, 72, 67) imageUrl:nil placeHolderImage:nil title:title target:self action:@selector(clickToSubClassifyBBS:)];
         lBtn.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"classification_big%@",imageUrl]];
+        lBtn.titleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_SMALL];
         lBtn.tag = 100 + i;
         
         [bgScroll addSubview:lBtn];
@@ -282,8 +283,9 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [btn setTitle:title forState:UIControlStateNormal];
         btn.frame = CGRectMake(80 * k, aY + 45 * line, 80, 45);
-        [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithHexString:@"6a7180"] forState:UIControlStateNormal];
         btn.backgroundColor = [UIColor colorWithHexString:@"f0f1f3"];
+        btn.titleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_13];
         [btn addTarget:self action:@selector(clickToSubClassifyBBS:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = 1000 + i;
         [bgScroll addSubview:btn];

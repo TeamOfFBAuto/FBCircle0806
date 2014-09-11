@@ -36,24 +36,36 @@
     cellBlock = aBlock;
     
     self.aImageView.image = [LTools imageForBBSId:aModel.headpic];
+    
+    //标题
     self.aTitleLabel.text = aModel.name;
-    UIColor *textColor = [UIColor colorWithHexString:@"6a707e"];
-    _memberTitle.textColor = textColor;
+    _aTitleLabel.font = [UIFont systemFontOfSize:15];
     
+    UIColor *color1 = [UIColor colorWithHexString:@"6a7180"];
+    UIColor *color2 = [UIColor colorWithHexString:@"627cbd"];
+    
+    //成员
+    _memberTitle.textColor = color1;
+    
+    
+    //成员数
     self.memeberLabel.text = aModel.member_num;
-    
-    self.memeberLabel.width = [LTools widthForText:aModel.member_num font:14.0];
+    self.memeberLabel.width = [LTools widthForText:aModel.member_num font:FONT_SIZE_SMALL];
+    _memeberLabel.textColor = color2;
     
     self.line.left = self.memeberLabel.right + 5;
     
-    
+    //帖子
     self.topicTitle.left = self.line.right + 5;
+    _topicTitle.textColor = color1;
     
-    _topicTitle.textColor = textColor;
-    
+    //帖子数
     self.topicLabel.text = aModel.thread_num;
     self.topicLabel.left = self.topicTitle.right;
-    self.topicLabel.width = [LTools widthForText:aModel.thread_num font:14.0];
+    self.topicLabel.width = [LTools widthForText:aModel.thread_num font:FONT_SIZE_SMALL];
+    _topicLabel.textColor = color2;
+    
+    //加入按钮
     
     self.joinButton.selected = (aModel.inForum == 1) ? YES : NO;
     self.joinButton.userInteractionEnabled = (aModel.inForum == 1) ? NO : YES;

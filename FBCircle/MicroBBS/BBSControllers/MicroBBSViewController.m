@@ -535,7 +535,7 @@
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             [btn setTitle:title forState:UIControlStateNormal];
-            [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+            [btn.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE_MID]];
             btn.frame = CGRectMake(aWidth * i, 0, aWidth, 40);
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [secondBgView addSubview:btn];
