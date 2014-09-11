@@ -20,7 +20,7 @@
         
         _selected_button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _selected_button.frame = CGRectMake(5,5,40,60);
+        _selected_button.frame = CGRectMake(5,5,40,45);
         
         [_selected_button setImage:[UIImage imageNamed:@"bbs_add_member_quan"] forState:UIControlStateNormal];
         
@@ -33,9 +33,9 @@
         
         _headImageV=[[UIImageView alloc]init];
         
-        CALayer *l = [_headImageV layer];   //获取ImageView的层
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:3.0f];
+//        CALayer *l = [_headImageV layer];   //获取ImageView的层
+//        [l setMasksToBounds:YES];
+//        [l setCornerRadius:3.0f];
         
         // _headImageV.backgroundColor=[UIColor redColor];
         [self addSubview:_headImageV];
@@ -66,9 +66,9 @@
 
 -(void)layoutSubviews{
     
-    _headImageV.frame=CGRectMake(50, 12, 46, 46);
+    _headImageV.frame=CGRectMake(50,9.5,36,36);
     
-    _nameLabel.frame=CGRectMake(110, 0, 150,self.frame.size.height);
+    _nameLabel.frame=CGRectMake(100, 0, 150,self.frame.size.height);
     
 }
 

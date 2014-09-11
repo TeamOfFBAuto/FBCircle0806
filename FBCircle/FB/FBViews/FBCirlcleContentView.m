@@ -253,7 +253,7 @@
     float cellHeight = 30;
     
     [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
-    
+    NSLog(@"_headerImageView ----  %@",theInfo.fb_face);
     _userName_label.text = theInfo.fb_username;
     
     _content_label.text = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];

@@ -112,17 +112,17 @@
     
     _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,40)];
     _title_textView.textAlignment = NSTextAlignmentLeft;
-    _title_textView.textColor = RGBCOLOR(3,3,3);
+    _title_textView.textColor = [UIColor blackColor];
     _title_textView.scrollEnabled = YES;
     _title_textView.backgroundColor = [UIColor clearColor];
     _title_textView.returnKeyType = UIReturnKeyDone;
     _title_textView.delegate = self;
-    _title_textView.font = [UIFont systemFontOfSize:16];
+    _title_textView.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:_title_textView];
 
     
     title_place_label = [[UILabel alloc] initWithFrame:CGRectMake(10,0,300,33)];
-    title_place_label.font = [UIFont systemFontOfSize:16];
+    title_place_label.font = [UIFont systemFontOfSize:15];
     title_place_label.textColor = RGBCOLOR(173,173,173);
     title_place_label.text = @"输入标题(必填)不超过30个字";
     title_place_label.textAlignment = NSTextAlignmentLeft;
@@ -131,24 +131,24 @@
     [_title_textView addSubview:title_place_label];
     
     
-    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15.5,50,320,0.5)];
+    UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15.5,43,320,0.5)];
     
     lineView.backgroundColor = RGBCOLOR(188,191,195);
     
     [self.view addSubview:lineView];
     
-    _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,50.5,300,80)];
+    _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,50.5,300,65)];
     _content_textView.textAlignment = NSTextAlignmentLeft;
     _content_textView.textColor = RGBCOLOR(3,3,3);
     _content_textView.delegate = self;
     _content_textView.returnKeyType = UIReturnKeyDone;
     _content_textView.backgroundColor = [UIColor clearColor];
     _content_textView.delegate = self;
-    _content_textView.font = [UIFont systemFontOfSize:16];
+    _content_textView.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:_content_textView];
     
     content_place_label = [[UILabel alloc] initWithFrame:CGRectMake(10,0,300,33)];
-    content_place_label.font = [UIFont systemFontOfSize:16];
+    content_place_label.font = [UIFont systemFontOfSize:15];
     content_place_label.textColor = RGBCOLOR(173,173,173);
     content_place_label.text = @"输入正文";
     content_place_label.textAlignment = NSTextAlignmentLeft;
@@ -156,7 +156,7 @@
     content_place_label.userInteractionEnabled = NO;
     [_content_textView addSubview:content_place_label];
     
-    imageScrollView = [[SendPostsImageScrollView alloc] initWithFrame:CGRectMake(0,_content_textView.frame.origin.y+_content_textView.frame.size.height,320,150)];
+    imageScrollView = [[SendPostsImageScrollView alloc] initWithFrame:CGRectMake(0,125,320,150)];
     imageScrollView.showsHorizontalScrollIndicator = NO;
     imageScrollView.showsVerticalScrollIndicator = NO;
     

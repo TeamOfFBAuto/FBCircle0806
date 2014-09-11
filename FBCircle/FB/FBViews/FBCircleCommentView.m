@@ -51,9 +51,10 @@
         
         label.backgroundColor = [UIColor clearColor];
         
-        label.font = [UIFont systemFontOfSize:13];
+        label.font = [UIFont systemFontOfSize:12];
         
         [self addSubview:label];
+        
         
         CGSize optimuSize = [label optimumSize];
                 
@@ -62,6 +63,8 @@
         label.frame = labelFrame;
         
         height += optimuSize.height + 7;
+        
+        label = nil;
     }
 
     return height;

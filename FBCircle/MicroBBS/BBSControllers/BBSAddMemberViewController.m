@@ -422,7 +422,7 @@
         if ([[arrayinfoaddress objectAtIndex:section] count]==0) {
             return 0;
         }else{
-            return 25;
+            return 22;
         }
         
     }else{
@@ -454,7 +454,7 @@
         UILabel *_label=[[UILabel alloc]initWithFrame:CGRectMake(10, 0.5, 320-24, 24)];
         
         _label.text=[NSString stringWithFormat:@"%c",'A'+section];
-        
+        _label.textColor = RGBCOLOR(170,178,188);
         _label.backgroundColor=[UIColor clearColor];
         
 //        _label.backgroundColor=RGBCOLOR(250, 250, 250);
@@ -506,7 +506,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 70;
+    return 55;
     
 }
 

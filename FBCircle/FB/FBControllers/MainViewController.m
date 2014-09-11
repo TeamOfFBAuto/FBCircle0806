@@ -85,16 +85,16 @@
     if ([[[NSUserDefaults standardUserDefaults]objectForKey:USERID]integerValue ]==0) {
         
         return;
-        
     }
     
     [_theModel initHttpRequestWithUid:[[NSUserDefaults standardUserDefaults] objectForKey:USERID] Page:currentPage WithType:1 WithCompletionBlock:^(NSMutableArray *array) {
         loadsucess=YES;
         [bself dotheSuccessloadDtat:array];
-        
+        [loadview stopLoading:1];
+        [bself doneLoadingTableViewData];
     } WithFailedBlock:^(NSString *operation) {
-        [self doneLoadingTableViewData];
-        
+        [bself doneLoadingTableViewData];
+        [loadview stopLoading:1];
         loadsucess=YES;
     }];
 }
@@ -121,17 +121,11 @@
     if (_data_array)
     {
         [_data_array removeAllObjects];
-        //        [_myTableView reloadData];
     }
     
     self.data_array  = [NSMutableArray arrayWithArray:arrayinfo];
     
-    //    self.data_array = arrayinfo;
-    
     [self.myTableView reloadData];
-    
-    sleep(1);
-    [self doneLoadingTableViewData];
     
 }
 
@@ -176,24 +170,50 @@
 {
     if (self.data_array.count == 0)
     {
-        NSMutableArray * delete_array = [FBCircleModel findAllWaitingUploadDelete];
         
-        self.data_array = [FBCircleModel findAll];
-        
-        for (int i = 0;i < self.data_array.count;i++)
-        {
-            FBCircleModel * model = [self.data_array objectAtIndex:i];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
             
-            for (FBCirclePraiseModel * praise_model in delete_array)
+            NSMutableArray * delete_array = [FBCircleModel findAllWaitingUploadDelete];
+
+            self.data_array = [FBCircleModel findAll];
+
+            for (int i = 0;i < self.data_array.count;i++)
             {
-                if ([model.fb_tid isEqualToString:praise_model.praise_tid])
+                FBCircleModel * model = [self.data_array objectAtIndex:i];
+
+                for (FBCirclePraiseModel * praise_model in delete_array)
                 {
-                    [self.data_array removeObjectAtIndex:i];
+                    if ([model.fb_tid isEqualToString:praise_model.praise_tid])
+                    {
+                        [self.data_array removeObjectAtIndex:i];
+                    }
                 }
             }
-        }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        });
         
-        [self.myTableView reloadData];
+        
+//        NSMutableArray * delete_array = [FBCircleModel findAllWaitingUploadDelete];
+//        
+//        self.data_array = [FBCircleModel findAll];
+//        
+//        for (int i = 0;i < self.data_array.count;i++)
+//        {
+//            FBCircleModel * model = [self.data_array objectAtIndex:i];
+//            
+//            for (FBCirclePraiseModel * praise_model in delete_array)
+//            {
+//                if ([model.fb_tid isEqualToString:praise_model.praise_tid])
+//                {
+//                    [self.data_array removeObjectAtIndex:i];
+//                }
+//            }
+//        }
+//        
+//        [self.myTableView reloadData];
     }
 }
 
@@ -240,6 +260,7 @@
     
     isFace = NO;
     
+    
     [self loadInfomationWithPage];
     
     [self loadPersonalData];
@@ -256,13 +277,9 @@
     _myTableView.tableHeaderView = headerView;
     [self.view addSubview:_myTableView];
     
-    
     loadview=[[LoadingIndicatorView alloc]initWithFrame:CGRectMake(0, 900, 320, 40)];
-    
     _myTableView.tableFooterView = loadview;
-    
-    
-    [self loadCacheData];
+    [loadview startLoading];
     
     if (_refreshHeaderView == nil)
     {
@@ -274,7 +291,7 @@
 	[_refreshHeaderView refreshLastUpdatedDate];
     [_myTableView addSubview:_refreshHeaderView];
     
-    
+     [self loadCacheData];
     
     faceScrollView = [[WeiBoFaceScrollView alloc] initWithFrame:CGRectMake(0,0,320,215) target:self];
     faceScrollView.delegate = self;
@@ -1837,20 +1854,20 @@
         
         [_theModel initHttpRequestWithUid:[[NSUserDefaults standardUserDefaults] objectForKey:USERID] Page:currentPage WithType:1 WithCompletionBlock:^(NSMutableArray *array)
          {
-             
+             [bself doneLoadingTableViewData];
              [loadview stopLoading:1];
              
              loadsucess=YES;
              
              [bself dotheSuccessloadDtat:array];
              
-             if (self.data_array.count == array.count)
+             if (bself.data_array.count == array.count)
              {
                  loadview.normalLabel.text = @"没有更多数据了";
              }
              
          } WithFailedBlock:^(NSString *operation) {
-             [self doneLoadingTableViewData];
+             [bself doneLoadingTableViewData];
              
              [loadview stopLoading:1];
              

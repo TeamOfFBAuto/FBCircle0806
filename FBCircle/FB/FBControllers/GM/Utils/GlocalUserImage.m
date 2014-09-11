@@ -78,7 +78,6 @@
     NSString *pathD = paths[0];
     NSString *userBannerName = @"/guserBannerImage.png";
     NSString *path = [pathD stringByAppendingString:userBannerName];
-    NSLog(@"%@",path);
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     return image;
 }
@@ -89,8 +88,6 @@
     NSString *pathD = paths[0];
     NSString *userFaceName = @"/guserFaceImage.png";
     NSString *path = [pathD stringByAppendingString:userFaceName];
-    
-    NSLog(@"%@",path);
     
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     return image;

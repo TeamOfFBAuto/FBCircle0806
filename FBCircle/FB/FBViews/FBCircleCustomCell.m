@@ -89,7 +89,7 @@
         [self.contentView addSubview:_content_label];
     }else
     {
-        _content_label.text = @"";
+//        _content_label.text = @"";
     }
     
     if (!_PictureViews) {
@@ -149,7 +149,7 @@
         [_forwardBackGroundImageView addSubview:_rContent_label];
     }else
     {
-        _rContent_label.text = @"";
+//        _rContent_label.text = @"";
     }
     
     

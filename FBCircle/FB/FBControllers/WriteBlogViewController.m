@@ -96,7 +96,7 @@
     
     _allAssesters = [NSMutableArray arrayWithArray:_TempAllAssesters];
     
-    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-20-44) style:UITableViewStylePlain];
+    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,6.5,320,(iPhone5?568:480)-20-44-6.5) style:UITableViewStylePlain];
     
     self.myTableView.delegate = self;
     
@@ -232,7 +232,7 @@
         
         switch (indexPath.row) {
             case 0:
-                theHeight = 80;
+                theHeight = 157.0/2;
                 break;
             case 1:
                 theHeight = 43;
@@ -249,7 +249,7 @@
         
         switch (indexPath.row) {
             case 0:
-                theHeight = 80;
+                theHeight = 157.0/2;
                 break;
             case 1:
                 [self loadChoosePictures];
@@ -292,9 +292,9 @@
         case 0:
         {
             if (!_myTextView) {
-                _myTextView = [[UITextView alloc] initWithFrame:CGRectMake(12,5,296,70)];
+                _myTextView = [[UITextView alloc] initWithFrame:CGRectMake(12,5,296,157.0/2)];
                 
-                _myTextView.font = [UIFont systemFontOfSize:15];
+                _myTextView.font = [UIFont systemFontOfSize:14];
                 
                 _myTextView.delegate = self;
                 
@@ -309,7 +309,7 @@
                 [cell.contentView addSubview:_myTextView];
                 
                 
-                placeHolderLable = [[UILabel alloc] initWithFrame:CGRectMake(7,7,200,15)];
+                placeHolderLable = [[UILabel alloc] initWithFrame:CGRectMake(5,7,200,15)];
                 
                 placeHolderLable.text = @"心情记录...";
                 
@@ -319,7 +319,7 @@
                 
                 placeHolderLable.textAlignment = NSTextAlignmentLeft;
                 
-                placeHolderLable.font = [UIFont systemFontOfSize:15];
+                placeHolderLable.font = [UIFont systemFontOfSize:14];
                 
                 placeHolderLable.userInteractionEnabled = NO;
                 
@@ -372,7 +372,7 @@
         _locationLabel.text = @"所在位置";
         
         _locationLabel.textAlignment = NSTextAlignmentLeft;
-        
+        _locationLabel.font = [UIFont systemFontOfSize:14];
         _locationLabel.textColor = [UIColor blackColor];
         
         _locationLabel.backgroundColor = [UIColor clearColor];
@@ -629,7 +629,8 @@
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         button.frame = CGRectMake(16,14,65,65);
-        
+        button.layer.masksToBounds = YES;
+        button.layer.cornerRadius = 5;
         [button setImage:[UIImage imageNamed:@"WriteChoosePictures.png"] forState:UIControlStateNormal];
         
         [button addTarget:self action:@selector(ChooseMorePictures:) forControlEvents:UIControlEventTouchUpInside];
@@ -663,7 +664,8 @@
                     button.frame = CGRectMake(16 + 74*j,14 + 74*i,65,65);
                     
                     button.imageView.clipsToBounds = YES;
-                    
+                    button.layer.masksToBounds = YES;
+                    button.layer.cornerRadius = 5;
                     button.tag = 1000+ j + 4*i;
                     
                     button.imageView.contentMode = UIViewContentModeScaleAspectFill;

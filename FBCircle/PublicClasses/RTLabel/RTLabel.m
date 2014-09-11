@@ -179,13 +179,13 @@ void RunDelegateDeallocCallback(void* refCon);
 - (void)setTextAlignment:(RTTextAlignment)textAlignment
 {
 	_textAlignment = textAlignment;
-	[self setNeedsDisplay];
+//	[self setNeedsDisplay];
 }
 
 - (void)setLineBreakMode:(RTTextLineBreakMode)lineBreakMode
 {
 	_lineBreakMode = lineBreakMode;
-	[self setNeedsDisplay];
+//	[self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect

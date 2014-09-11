@@ -319,7 +319,7 @@
         }
     }
     
-    
+    __weak typeof(self)bself = self;
     
     if (thePage == 1 && theType == 1)
     {
@@ -354,7 +354,7 @@
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         model.fb_image = allImageArray;
-                        [self.data_array addObject:model];
+                        [bself.data_array addObject:model];
                     });
                 });
             }else
@@ -375,14 +375,15 @@
     
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
-        
         @try {
             
+            if (data.length == 0)
+            {
+                fbCircleFailedBlock(@"");
+            }
+            
+            
             NSDictionary * allDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            
-            
-//            NSLog(@"allDic-----%@",allDic);
-            
             
             if ([[allDic objectForKey:@"errcode"] intValue]==0)
             {
@@ -395,11 +396,8 @@
                     delete_array = [FBCircleModel findAllWaitingUploadDelete];
                 }
                 
-                
-                NSArray * array = [allDic objectForKey:@"datainfo"];
-                
-                
-                
+                NSArray * array = [allDic objectForKey:@"datainfo"];                
+              
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                     for (NSDictionary * dic in array)
                     {
@@ -419,7 +417,6 @@
                             [FBCircleModel addBlogWith:model];
                         }
                         
-                        
                         [self.data_array addObject:model];
                     }
                     
@@ -431,14 +428,8 @@
                     });
                     
                 });
-                
-                
-            }else
-            {
-                if (fbCircleFailedBlock) {
-                    fbCircleFailedBlock(@"");
-                }
             }
+         
         }
         @catch (NSException *exception) {
             
@@ -446,92 +437,7 @@
         @finally {
             
         }
-        
-        
     }];
-    
-    
-    
-    
-    
-    
-    //    fbCircleRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    //
-    //    __block AFHTTPRequestOperation * request = fbCircleRequest;
-    //
-    //    __weak typeof(self) bself = self;
-    //
-    //    [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-    //
-    //        @try {
-    //
-    //            NSDictionary * allDic = [operation.responseString objectFromJSONString];
-    //            NSLog(@"allDic-----%@",allDic);
-    //
-    //
-    //            if ([[allDic objectForKey:@"errcode"] intValue]==0)
-    //            {
-    //                NSMutableArray * delete_array;
-    //
-    //                if (thePage == 1)
-    //                {
-    //                    [FBCircleModel deleteAllBlog];
-    //
-    //                    delete_array = [FBCircleModel findAllWaitingUploadDelete];
-    //                }
-    //
-    //
-    //                NSArray * array = [allDic objectForKey:@"datainfo"];
-    //
-    //
-    //                for (NSDictionary * dic in array)
-    //                {
-    //                    FBCircleModel * model = [[FBCircleModel alloc] initWithDictionary:dic];
-    //
-    //                    for (FBCirclePraiseModel * praise_model in delete_array)
-    //                    {
-    //                        if (![model.fb_tid isEqualToString:praise_model.praise_tid])
-    //                        {
-    //                            return ;
-    //                        }
-    //                    }
-    //
-    //
-    ////                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-    //                        [FBCircleModel addBlogWith:model];
-    ////                    });
-    //
-    //
-    //                    [bself.data_array addObject:model];
-    //                }
-    //
-    //                if (fbCircleCompletionBlock) {
-    //                    fbCircleCompletionBlock(operation,bself.data_array);
-    //                }
-    //            }else
-    //            {
-    //                if (fbCircleFailedBlock) {
-    //                    fbCircleFailedBlock(operation);
-    //                }
-    //            }
-    //        }
-    //        @catch (NSException *exception) {
-    //
-    //        }
-    //        @finally {
-    //
-    //        }
-    //
-    //
-    //    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    //        if (fbCircleFailedBlock) {
-    //            fbCircleFailedBlock(operation);
-    //        }
-    //    }];
-    //
-    //
-    //
-    //    [fbCircleRequest start];
 }
 
 #pragma mark-加载未发送的数据库数据

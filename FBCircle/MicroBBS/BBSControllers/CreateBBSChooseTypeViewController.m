@@ -45,6 +45,8 @@
     _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-64) style:UITableViewStylePlain];
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
+    _myTableView.separatorColor = RGBCOLOR(185,190,207);
+    _myTableView.separatorInset = UIEdgeInsetsZero;
     [self.view addSubview:_myTableView];
     
     
@@ -113,6 +115,10 @@
     return _data_array.count;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -135,6 +141,8 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
+    cell.textLabel.textColor = RGBCOLOR(139,146,156);
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.text = model.classname;
     
     return cell;

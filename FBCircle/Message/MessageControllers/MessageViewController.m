@@ -60,7 +60,9 @@
         _tixing_label.hidden = !isnewfbnotification;
     }
     
-//    [self loadMessageData];
+    if (self.data_array.count==0) {
+        [self loadMessageData];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -106,6 +108,8 @@
     [self loadMessageData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HaveNewNotification:) name:COMEMESSAGES object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isLogOut) name:SUCCESSLOGOUT object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isLogIn) name:SUCCESSLOGIN object:nil];
 }
 
 #pragma mark - 新通知
@@ -129,6 +133,17 @@
     }
 }
 
+#pragma mark - 退出登录通知
+-(void)isLogOut
+{
+    [self.data_array removeAllObjects];
+    [self.myTableView reloadData];
+}
+#pragma mark - 登陆成功通知
+-(void)isLogIn
+{
+    [self loadMessageData];
+}
 
 #pragma mark-UITableViewDelegate
 
@@ -234,6 +249,9 @@
         chatViewController.otherHeaderImage = model.otherFaceImage;
         
         [self PushToViewController:chatViewController WithAnimation:YES];
+        
+        CustomMessageCell * cell = (CustomMessageCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.tixing_label.hidden = YES;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

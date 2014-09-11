@@ -81,11 +81,9 @@
     
     if (!isHaveShow)
     {
-//        show_remind_alert = [[UIAlertView alloc] initWithTitle:@"长按图片以预览" message:@"" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-//        
-//        [show_remind_alert show];
-        
         [ZSNApi showAutoHiddenMBProgressWithText:@"长按图片以预览" addToView:self.navigationController.view];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isShowed"];
     }
     
     
@@ -849,16 +847,6 @@
         right_button.userInteractionEnabled = YES;
     }
 }
-
-
-#pragma mark - AlertView Delegate
-
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isShowed"];
-}
-
 
 @end
 
