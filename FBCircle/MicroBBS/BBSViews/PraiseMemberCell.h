@@ -14,4 +14,6 @@
 @property(nonatomic,retain)UILabel *aTitleLabel;
 @property(nonatomic,retain)UIView *bgView;
 
+@property(nonatomic,retain)UIView *upMask;
+
 @end

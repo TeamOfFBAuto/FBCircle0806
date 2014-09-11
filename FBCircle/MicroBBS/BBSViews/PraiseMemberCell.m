@@ -16,6 +16,10 @@
     if (self) {
         // Initialization code
         
+        self.upMask = [[UIView alloc]initWithFrame:CGRectMake(12, 0, 320 - 24, 4)];
+        _upMask.backgroundColor = [UIColor whiteColor];
+        [self addSubview:_upMask];
+        
         self.bgView = [[UIView alloc]initWithFrame:CGRectMake(12, 0, 320 - 24, 55)];
         _bgView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_bgView];
@@ -26,6 +30,7 @@
         self.aTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_aImageView.right + 6, 0, 150, 55)];
         _aTitleLabel.font = [UIFont systemFontOfSize:15];
         [self addSubview:_aTitleLabel];
+        
     }
     return self;
 }

@@ -377,7 +377,7 @@
         
         @try {
             
-            if (data.length == 0)
+            if (data == nil || data.length == 0)
             {
                 fbCircleFailedBlock(@"");
             }

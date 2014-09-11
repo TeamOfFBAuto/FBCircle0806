@@ -606,9 +606,11 @@
         
         if (indexPath.row == 0) {
             cell.upMask.hidden = YES;
+            cell.downMask.hidden = NO;
         }else
         {
             cell.downMask.hidden = YES;
+            cell.upMask.hidden = NO;
         }
         
     }else

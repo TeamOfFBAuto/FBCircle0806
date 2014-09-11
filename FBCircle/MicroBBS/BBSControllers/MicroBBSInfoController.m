@@ -22,6 +22,8 @@
     int _memberNumber;//成员个数
     
     BOOL _needRefresh;
+    
+    MBProgressHUD *_loading;
 }
 
 @end
@@ -54,6 +56,8 @@
     // Do any additional setup after loading the view.
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    _loading = [LTools MBProgressWithText:@"loading" addToView:self.view];
     
     [self getBBSInfoId:self.bbsId];
     
@@ -135,6 +139,8 @@
 - (void)getBBSInfoId:(NSString *)bbsId
 {
     __weak typeof(self)weakSelf = self;
+    
+    [_loading show:YES];
 
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_INFO,bbsId,[SzkAPI getUid]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -142,6 +148,8 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        [_loading hide:NO];
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
@@ -162,6 +170,8 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
+        
+        [_loading hide:NO];
         
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
         

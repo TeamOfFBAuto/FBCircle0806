@@ -226,13 +226,16 @@ typedef enum{
     }
     
     NSArray *titles;
+    NSArray *images;
     if (user_Inform == Inforum_BBSOwner) {
         
         if (ding) {
             titles = @[@"置顶",@"删除"];
+            images = @[[UIImage imageNamed:@"zhiding"],[UIImage imageNamed:@"dele"]];
         }else
         {
             titles = @[@"取消置顶",@"删除"];
+            images = @[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]];
         }
         
         
@@ -263,7 +266,7 @@ typedef enum{
         return;
     }
     
-    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:@[[UIImage imageNamed:@"quxiao"],[UIImage imageNamed:@"dele"]] sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
+    LActionSheet *sheet = [[LActionSheet alloc]initWithTitles:titles images:images sheetStyle:Style_Normal action:^(NSInteger buttonIndex) {
         if (buttonIndex == 0) {
             
             if (ding) {
@@ -553,6 +556,15 @@ typedef enum{
                 }
                 
                 [self popViewControllerDelay:1.5];
+            }
+            
+            if (action == Action_Topic_Top) {
+                
+                aTopicModel.status = @"9";
+            }
+            
+            if (action == Action_Topic_Top_Cancel) {
+                aTopicModel.status = @"2";
             }
         }
         

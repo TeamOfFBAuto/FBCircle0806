@@ -59,13 +59,13 @@
     _table.refreshDelegate = self;
     _table.dataSource = (id)self;
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0);
+    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     [self.view addSubview:_table];
     
     _table.tableHeaderView = [self createTableHeaderView];
     
     
-//    UIView *footer = [UIView alloc]initWithFrame:CGRectMake(0, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    
     
     [self getBBSMembersForBBSId:self.bbs_id];
     
@@ -162,7 +162,7 @@
     
     
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(12, btn2.bottom - 1, 320 - 24, 0.5)];
-    line.backgroundColor = [UIColor lightGrayColor];
+    line.backgroundColor = [UIColor colorWithHexString:@"e9e9e9"];
     [header addSubview:line];
     
     header.frame = CGRectMake(0, 0, 320, btn2.bottom);
@@ -237,6 +237,13 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
+    
+    if (indexPath.row == _table.dataArray.count - 1) {
+        cell.bgView.layer.cornerRadius = 3.f;
+    }else
+    {
+        cell.bgView.layer.cornerRadius = 0.0;
+    }
     
     CGRect imageFrame = cell.aImageView.frame;
     imageFrame.origin.x = 10 + 10;
