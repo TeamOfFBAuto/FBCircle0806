@@ -258,6 +258,7 @@
         
         
         if ([[dic objectForKey:@"errcode"]intValue] == 0) {
+            request.delegate = nil;
             NSString *str = @"no";
             [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
             [ZSNApi deleteFileWithUrl:[SzkAPI getUserFace]];

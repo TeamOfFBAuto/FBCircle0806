@@ -34,11 +34,11 @@
     
 }
 
-- (void)dealloc
-{
-    _userBannerrequest.delegate = nil;
-    _userFacerequest.delegate = nil;
-}
+//- (void)dealloc
+//{
+//    _userBannerrequest.delegate = nil;
+//    _userFacerequest.delegate = nil;
+//}
 
 
 
