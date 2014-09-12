@@ -60,9 +60,9 @@
         _tixing_label.hidden = !isnewfbnotification;
     }
     
-    if (self.data_array.count==0) {
+//    if (self.data_array.count==0) {
         [self loadMessageData];
-    }
+//    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -105,7 +105,7 @@
     isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
     _theModel = [[MessageModel alloc] init];
     
-    [self loadMessageData];
+//    [self loadMessageData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HaveNewNotification:) name:COMEMESSAGES object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isLogOut) name:SUCCESSLOGOUT object:nil];

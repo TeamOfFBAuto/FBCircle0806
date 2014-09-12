@@ -832,7 +832,7 @@ void RunDelegateDeallocCallback(void* refCon);
 - (void)setLineSpacing:(CGFloat)lineSpacing
 {
 	_lineSpacing = lineSpacing;
-	[self setNeedsDisplay];
+//	[self setNeedsDisplay];
 }
 
 - (void)setHighlighted:(BOOL)highlighted
@@ -1237,7 +1237,6 @@ void RunDelegateDeallocCallback(void* refCon);
     //获取每行的原点坐标
     CGPoint lineOrigins[CFArrayGetCount(lines)];
     CTFrameGetLineOrigins(_frame, CFRangeMake(0, 0), lineOrigins);
-    
     for (int i = 0; i < CFArrayGetCount(lines); i++)
     {
         CTLineRef line = CFArrayGetValueAtIndex(lines, i);

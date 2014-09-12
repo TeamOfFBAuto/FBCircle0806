@@ -43,9 +43,6 @@
         
         [self.contentView addSubview:_headImageView];
         
-    }else
-    {
-        _headImageView.image = nil;
     }
     
     
