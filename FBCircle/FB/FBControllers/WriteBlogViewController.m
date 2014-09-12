@@ -292,7 +292,7 @@
         case 0:
         {
             if (!_myTextView) {
-                _myTextView = [[UITextView alloc] initWithFrame:CGRectMake(12,5,296,157.0/2)];
+                _myTextView = [[UITextView alloc] initWithFrame:CGRectMake(12,5,296,157.0/2-10)];
                 
                 _myTextView.font = [UIFont systemFontOfSize:14];
                 

@@ -225,7 +225,7 @@
         }
         hud = [ZSNApi showMBProgressWithText:@"正在发送" addToView:self.navigationController.view];
         
-        [self uploadNewBBSPostsHaveImages:NO WithImageID:nil];
+        [self uploadNewBBSPostsHaveImages:NO WithImageID:@""];
     }
 }
 

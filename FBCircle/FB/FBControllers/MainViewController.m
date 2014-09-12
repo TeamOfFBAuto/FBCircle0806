@@ -47,7 +47,7 @@
 @synthesize inputToolBarView = _inputToolBarView;
 @synthesize theTouchView = _theTouchView;
 @synthesize personModel = _personModel;
-
+@synthesize cell_height_array = _cell_height_array;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -118,15 +118,17 @@
 
 -(void)dotheSuccessloadDtat:(NSMutableArray *)arrayinfo{
     
-    if (_data_array)
+    if (currentPage == 1)
     {
         [_data_array removeAllObjects];
     }
     
-    self.data_array  = [NSMutableArray arrayWithArray:arrayinfo];
+    [_data_array addObjectsFromArray:arrayinfo];
     
-    [self.myTableView reloadData];
+    [self returnCellHeightWith:arrayinfo WithNew:YES];    
     
+//    self.data_array  = [NSMutableArray arrayWithArray:arrayinfo];
+//    [self.myTableView reloadData];
 }
 
 -(void)loadPersonalData
@@ -170,30 +172,31 @@
 {
     if (self.data_array.count == 0)
     {
+        __weak typeof(self)bself = self;
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-            
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        
             NSMutableArray * delete_array = [FBCircleModel findAllWaitingUploadDelete];
 
-            self.data_array = [FBCircleModel findAll];
+            bself.data_array = [FBCircleModel findAll];
 
-            for (int i = 0;i < self.data_array.count;i++)
+            for (int i = 0;i < bself.data_array.count;i++)
             {
-                FBCircleModel * model = [self.data_array objectAtIndex:i];
-
+                FBCircleModel * model = [bself.data_array objectAtIndex:i];
+                //找到没删除成功的微博，然后不显示
                 for (FBCirclePraiseModel * praise_model in delete_array)
                 {
                     if ([model.fb_tid isEqualToString:praise_model.praise_tid])
                     {
-                        [self.data_array removeObjectAtIndex:i];
+                        [bself.data_array removeObjectAtIndex:i];
                     }
                 }
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.myTableView reloadData];
-            });
-        });
+//            dispatch_async(dispatch_get_main_queue(), ^{
+                [bself returnCellHeightWith:bself.data_array WithNew:YES];
+//            });
+//        });
         
         
 //        NSMutableArray * delete_array = [FBCircleModel findAllWaitingUploadDelete];
@@ -247,7 +250,7 @@
     [self setupRightMenuButton];    
     
     _data_array = [NSMutableArray array];
-    
+    _cell_height_array = [NSMutableArray array];
     notification_dictionary  = [NSMutableDictionary dictionary];
     
     _theModel = [[FBCircleModel alloc] init];
@@ -291,7 +294,7 @@
 	[_refreshHeaderView refreshLastUpdatedDate];
     [_myTableView addSubview:_refreshHeaderView];
     
-     [self loadCacheData];
+    
     
     faceScrollView = [[WeiBoFaceScrollView alloc] initWithFrame:CGRectMake(0,0,320,215) target:self];
     faceScrollView.delegate = self;
@@ -311,6 +314,8 @@
     
     [self.view addSubview:_inputToolBarView];
     
+    
+    [self loadCacheData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(FBCirclehandleWillShowKeyboard:)
@@ -451,7 +456,7 @@
     
     
     [self.data_array removeAllObjects];
-    
+    [self.cell_height_array removeAllObjects];
     _personModel = [[FBCirclePersonalModel alloc] init];
     
     notificationNum = 0;
@@ -1279,6 +1284,45 @@
     
     
 }
+
+
+#pragma mark - 计算行高并保存
+///array:要计算高度的数组  isNew:是否把之前的干掉重新计算
+-(void)returnCellHeightWith:(NSMutableArray *)array WithNew:(BOOL)isNew
+{
+    if (!test_cell)
+    {
+        test_cell = [[FBCircleCustomCell alloc] init];
+        [test_cell setAllViews];
+    }
+    
+    if (currentPage == 1)
+    {
+        [_cell_height_array removeAllObjects];
+    }
+    
+    __weak typeof(self)bself = self;
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        for (FBCircleModel * model in array)
+        {
+            float height = [test_cell returnCellHeightWith:model];
+            [bself.cell_height_array addObject:[NSNumber numberWithFloat:height]];
+            
+            NSLog(@"高度 -=-=----   %f",height);
+            
+        }
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    
+            
+            [bself.myTableView reloadData];
+//        });
+//    });
+}
+
+
+
 #pragma mark--点击头像进入跳转
 
 -(void)dotap:(UITapGestureRecognizer*)sender{
@@ -1293,21 +1337,19 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
     return _data_array.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!test_cell)
+    if (_data_array.count == 0)
     {
-        test_cell = [[FBCircleCustomCell alloc] init];
-        [test_cell setAllViews];
+        return 44;
+    }else
+    {
+        return [[_cell_height_array objectAtIndex:indexPath.row] floatValue];
     }
-    
-    FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
-    float height = [test_cell returnCellHeightWith:model];
-    
-    return height;
 }
 
 

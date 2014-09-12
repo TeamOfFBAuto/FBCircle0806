@@ -313,10 +313,10 @@
         self.data_array = [NSMutableArray array];
     }else
     {
-        if (thePage == 1)
-        {
+//        if (thePage == 1)
+//        {
             [self.data_array removeAllObjects];
-        }
+//        }
     }
     
     __weak typeof(self)bself = self;
