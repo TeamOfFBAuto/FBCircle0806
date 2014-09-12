@@ -106,7 +106,7 @@ typedef enum{
     [_mapView setZoomLevel:13];// 设置地图级别
     _mapView.isSelectedAnnotationViewFront = YES;
     _mapView.delegate = self;//设置代理
-    _mapView.userTrackingMode = BMKUserTrackingModeFollow;//设置定位的状态
+    _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
     _mapView.showsUserLocation = YES;//显示定位图层
     
     [self.view addSubview:_mapView];
@@ -114,7 +114,6 @@ typedef enum{
     //定位
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
-//    [_locService startUserLocationService];//启动LocationService
     
     //判断是否开启定位
     if ([CLLocationManager locationServicesEnabled]==NO) {

@@ -161,20 +161,30 @@
         
         [self.yuanwenContentView addSubview:imv];
     }else{
-        UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-        contentLabel.numberOfLines = 3;
+        RTLabel *contentLabel = [[RTLabel alloc]initWithFrame:CGRectZero];
         contentLabel.font = [UIFont systemFontOfSize:13];
-        contentLabel.text = [[ZSNApi decodeSpecialCharactersString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode];
-//        contentLabel.text = [[ZSNApi decodeFromPercentEscapeString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode];
-        contentLabel.text = [GMAPI exchangeStringForDeleteNULL:[[ZSNApi decodeFromPercentEscapeString:messageModel.maincontent]stringByReplacingEmojiCheatCodesWithUnicode]];
-//        contentLabel.text = [messageModel.maincontent stringByReplacingEmojiCheatCodesWithUnicode];
-        [contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(0, 0) width:60];
+        
+        NSString *yuanwenNeirong = [ZSNApi FBImageChange:[messageModel.maincontent stringByReplacingEmojiCheatCodesWithUnicode]];
+        
+        contentLabel.text = [GMAPI exchangeStringForYuanwenDelete:contentLabel contentText:yuanwenNeirong];
+        contentLabel.frame = CGRectMake(0, 0, 60, 0);
+        CGRect contentFrame = contentLabel.frame;
+        CGSize optimumsSize = [contentLabel optimumSize];
+        contentFrame.size.height = optimumsSize.height+3;
+        contentLabel.frame = contentFrame;
+        
+        
+        if ([contentLabel.text isEqualToString:@"原文已删除"]) {
+            contentLabel.textColor = [UIColor grayColor];
+        }
+        
+
         
         NSLog(@"原文内容%@",messageModel.maincontent);
         
-        if (contentLabel.frame.size.height>48) {
+        if (contentLabel.frame.size.height>55) {//最多3行
             CGRect r = contentLabel.frame;
-            r.size.height = 48;
+            r.size.height = 55;
             contentLabel.frame = r;
         }
         

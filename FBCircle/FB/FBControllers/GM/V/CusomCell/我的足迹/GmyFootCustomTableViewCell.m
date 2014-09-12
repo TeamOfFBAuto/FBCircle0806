@@ -508,7 +508,7 @@
                 view.backgroundColor = [UIColor whiteColor];
                 
 //                fb_content.numberOfLines = 4;
-                fb_content.frame = CGRectMake(8.5, 0, 220, 0);
+                fb_content.frame = CGRectMake(8.5, 0, 215, 0);
                 CGRect contentFrame = fb_content.frame;
                 CGSize optimumsSize = [fb_content optimumSize];
                 contentFrame.size.height = optimumsSize.height+3;

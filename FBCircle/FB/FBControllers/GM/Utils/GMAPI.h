@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+@class RTLabel;
 
 @interface GMAPI : NSObject
 
-+(NSString *)exchangeStringForDeleteNULL:(id)sender;
++(NSString *)exchangeStringForDeleteNULL:(id)sender;//暂无
 
-+(NSString *)exchangeStringForDeleteNULLWithWeiTianXie:(id)sender;
++(NSString *)exchangeStringForDeleteNULLWithWeiTianXie:(id)sender;//未填写
+
++(NSString *)exchangeStringForYuanwenDelete:(RTLabel*)sender contentText:(NSString *)neirong;//原文已删除
+
 @end

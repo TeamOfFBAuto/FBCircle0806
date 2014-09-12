@@ -8,6 +8,8 @@
 
 #import "GMAPI.h"
 
+#import "RTLabel.h"
+
 @implementation GMAPI
 +(NSString *)exchangeStringForDeleteNULL:(id)sender
 {
@@ -29,6 +31,20 @@
     if (temp.length == 0 || [temp isEqualToString:@"<null>"] || [temp isEqualToString:@"null"] || [temp isEqualToString:@"(null)"])
     {
         temp = @"未填写";
+    }
+    
+    return temp;
+}
+
+
++(NSString *)exchangeStringForYuanwenDelete:(RTLabel*)sender contentText:(NSString *)neirong
+{
+    NSString * temp = [NSString stringWithFormat:@"%@",neirong];
+    
+    if (temp.length == 0 || [temp isEqualToString:@"<null>"] || [temp isEqualToString:@"null"] || [temp isEqualToString:@"(null)"])
+    {
+        temp = @"原文已删除";
+        sender.textColor = [UIColor grayColor];
     }
     
     return temp;
