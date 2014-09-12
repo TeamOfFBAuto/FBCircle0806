@@ -22,6 +22,8 @@
     int createNum;
     int joinNum;
     BOOL _needRefresh;
+    
+    LTools *tool_tmp;
 }
 
 @end
@@ -119,7 +121,9 @@
     NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-        
+    
+    tool_tmp = tool;
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];

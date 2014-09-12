@@ -93,7 +93,7 @@
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
     [attString setFont:[UIFont systemFontOfSize:14]];
     [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:kCTLineBreakByCharWrapping];
-    label.backgroundColor = [UIColor clearColor];
+
     [label setAttString:attString withImages:p.images];
     
     NSString *string = attString.string;
@@ -140,6 +140,5 @@
         [label bringSubviewToFront:imageView];
     }
 }
-
 
 @end

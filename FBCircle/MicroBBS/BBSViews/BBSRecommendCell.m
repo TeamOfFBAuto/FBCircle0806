@@ -43,6 +43,8 @@
 {
     self.content_label = OHLabel;
     
+    _content_label.userInteractionEnabled = YES;
+    
     _content_label.left = _nameLabel.left + 10;
     _content_label.top = _nameLabel.bottom + 5;
     [self addSubview:_content_label];

@@ -109,7 +109,7 @@ typedef enum{
     
     // 加载提示
     
-    _loading = [LTools MBProgressWithText:@"Loading" addToView:self.view];
+    _loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
     _pageNum = 1;//从第二页开始
     
@@ -639,7 +639,7 @@ typedef enum{
 - (CGFloat)createRichLabelWithMessage:(NSString *)text isInsert:(BOOL)isInsert
 {
     OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
-    label.backgroundColor = [UIColor orangeColor];
+//    label.backgroundColor = [UIColor orangeColor];
     label.lineBreakMode = NSLineBreakByCharWrapping;
     
 //    //声明一个gbk编码类型

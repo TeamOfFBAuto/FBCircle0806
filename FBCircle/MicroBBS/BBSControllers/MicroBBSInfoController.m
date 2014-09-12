@@ -57,7 +57,7 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    _loading = [LTools MBProgressWithText:@"loading" addToView:self.view];
+    _loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
     [self getBBSInfoId:self.bbsId];
     

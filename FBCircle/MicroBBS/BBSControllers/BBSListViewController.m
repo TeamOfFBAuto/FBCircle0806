@@ -80,7 +80,7 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:_table];
     
-    _loading = [LTools MBProgressWithText:@"loading" addToView:self.view];
+    _loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTopic:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
