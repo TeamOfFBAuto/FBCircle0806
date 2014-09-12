@@ -560,6 +560,10 @@
     // 设置是否可以拖拽
     annotationView.draggable = NO;
 
+    
+    
+    annotationView.image = [UIImage imageNamed:@"gpin.png"];
+    
     return annotationView;
 }
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view

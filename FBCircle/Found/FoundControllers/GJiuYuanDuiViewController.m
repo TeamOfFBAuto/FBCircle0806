@@ -106,7 +106,7 @@ typedef enum{
     [_mapView setZoomLevel:13];// 设置地图级别
     _mapView.isSelectedAnnotationViewFront = YES;
     _mapView.delegate = self;//设置代理
-    _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
+    _mapView.userTrackingMode = BMKUserTrackingModeFollow;//设置定位的状态
     _mapView.showsUserLocation = YES;//显示定位图层
     
     [self.view addSubview:_mapView];
@@ -406,6 +406,9 @@ typedef enum{
 //    _allJiuyuanduiTableView.tag = allJiuyuanduiInfoTableView;
 //    [self.view addSubview:_allJiuyuanduiTableView];
     
+    
+    
+    annotationView.image = [UIImage imageNamed:@"gpin.png"];
     
     return annotationView;
 }

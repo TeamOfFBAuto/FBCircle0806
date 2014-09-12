@@ -978,6 +978,7 @@
 		E3AAA73F19AD860F00467886 /* ios7_refresh4139@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AAA73E19AD860F00467886 /* ios7_refresh4139@2x.png */; };
 		E3AC5316199D8EBA007C7733 /* GJiuYuanDuiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */; };
 		E3B9CAD41990AC9D00DE07F4 /* GmFoundScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B9CAD31990AC9D00DE07F4 /* GmFoundScanViewController.m */; };
+		E3C842A719C1A6B200050770 /* gpin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C842A619C1A6B200050770 /* gpin@2x.png */; };
 		E3E2FBAB1990B93E0062A4F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBAA1990B93E0062A4F2 /* AVFoundation.framework */; };
 		E3E2FBAE1990D0940062A4F2 /* GuseCarViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E3E2FBAD1990D0940062A4F2 /* GuseCarViewController.mm */; };
 		E3E2FBB01990D4810062A4F2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E2FBAF1990D4810062A4F2 /* Security.framework */; };
@@ -1842,6 +1843,7 @@
 		E3AC5315199D8EBA007C7733 /* GJiuYuanDuiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJiuYuanDuiViewController.m; sourceTree = "<group>"; };
 		E3B9CAD21990AC9D00DE07F4 /* GmFoundScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmFoundScanViewController.h; sourceTree = "<group>"; };
 		E3B9CAD31990AC9D00DE07F4 /* GmFoundScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmFoundScanViewController.m; sourceTree = "<group>"; };
+		E3C842A619C1A6B200050770 /* gpin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gpin@2x.png"; sourceTree = "<group>"; };
 		E3D313901990DCAC00EE1B9C /* libPods-BaiduMapSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-BaiduMapSDK.a"; path = "Pods/build/Debug-iphoneos/libPods-BaiduMapSDK.a"; sourceTree = "<group>"; };
 		E3E2FBAA1990B93E0062A4F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E3E2FBAC1990D0940062A4F2 /* GuseCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuseCarViewController.h; sourceTree = "<group>"; };
@@ -3580,6 +3582,7 @@
 		E3208AB119A43CFF0099C829 /* FoundModels */ = {
 			isa = PBXGroup;
 			children = (
+				E3C842A619C1A6B200050770 /* gpin@2x.png */,
 			);
 			path = FoundModels;
 			sourceTree = "<group>";
@@ -3991,6 +3994,7 @@
 				56A64D58198F72E900451413 /* Expression_2@2x.png in Resources */,
 				56A64CC4198F72E900451413 /* back7.png in Resources */,
 				13B85B0D1999F376000072FB /* seach@2x.png in Resources */,
+				E3C842A719C1A6B200050770 /* gpin@2x.png in Resources */,
 				56A64AD8198F6AD800451413 /* geren_jiantou30_16@2x.png in Resources */,
 				56A64CD8198F72E900451413 /* baocun40_48@2x.png in Resources */,
 				56A64CDA198F72E900451413 /* bg-540_420@2x.png in Resources */,
