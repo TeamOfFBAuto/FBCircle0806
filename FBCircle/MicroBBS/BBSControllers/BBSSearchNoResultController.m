@@ -33,7 +33,7 @@
     // Do any additional setup after loading the view.
     self.titleLabel.text = @"创建新论坛";
     
-    UILabel *hello = [LTools createLabelFrame:CGRectMake(0, 334/2.f - (iPhone5 ? 0 : 88), self.view.width, 20) title:@"越野e族联盟,微论坛尚未创建" font:16 align:NSTextAlignmentCenter textColor:[UIColor blackColor]];
+    UILabel *hello = [LTools createLabelFrame:CGRectMake(0, 334/2.f - (iPhone5 ? 0 : 88), self.view.width, 20) title:@"越野e族联盟,微论坛尚未创建" font:16 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"69737f"]];
     [self.view addSubview:hello];
     
     UIButton *create_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake((self.view.width - 574/2.f)/2.f, hello.bottom + 35, 574/2.f, 83/2.f) normalTitle:nil image:nil backgroudImage:[UIImage imageNamed:@"chuangjian"] superView:nil target:self action:@selector(clickToCreateBBS:)];

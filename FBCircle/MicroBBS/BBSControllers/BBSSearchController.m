@@ -214,6 +214,15 @@
  */
 - (void)searchKeyword:(NSString *)aKeyword isClear:(BOOL)isClear
 {
+    
+    
+    NSLog(@"|%@|",[aKeyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
+    
+    if (aKeyword == nil || [aKeyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length == 0) {
+        
+        return;
+    }
+    
     keyword = aKeyword;
     
     [self recordHistoryKeyword:aKeyword];
@@ -330,7 +339,7 @@
     LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 160, 43) leftImage:nil rightImage:nil title:@"搜微论坛" target:self action:@selector(clickToSwap:) lineDirection:Line_No];
     [self.view addSubview:btn];
     btn.layer.cornerRadius = 0.f;
-    btn.backgroundColor = [UIColor colorWithHexString:@"f0f0f3"];
+    btn.backgroundColor = [UIColor colorWithHexString:@"eff2f2"];
     btn.titleLabel.textAlignment = NSTextAlignmentCenter;
     btn.selcted_TitleColor = [UIColor colorWithHexString:@"627bbd"];
     btn.selected = YES;
@@ -348,7 +357,7 @@
     LButtonView *btn2 = [[LButtonView alloc]initWithFrame:CGRectMake(line.right, 0, 160, 43) leftImage:nil rightImage:nil title:@"搜帖子" target:self action:@selector(clickToSwap:) lineDirection:Line_No];
     [self.view addSubview:btn2];
     btn2.layer.cornerRadius = 0.f;
-    btn2.backgroundColor = [UIColor colorWithHexString:@"f0f0f3"];
+    btn2.backgroundColor = [UIColor colorWithHexString:@"eff2f2"];
     btn2.titleLabel.textAlignment = NSTextAlignmentCenter;
     btn2.tag = 101;
     btn2.selcted_TitleColor = [UIColor colorWithHexString:@"627bbd"];
@@ -365,7 +374,7 @@
     
     LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 1, move.width, move.height - 1) leftImage:Nil rightImage:Nil title:@"清空历史记录" target:self action:@selector(clickToClearHistory:) lineDirection:Line_Up];
     btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    btn.backgroundColor = [UIColor clearColor];
+    btn.backgroundColor = [UIColor colorWithHexString:@"eff2f2"];
     
     [move addSubview:btn];
     btn.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -539,9 +548,11 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell.detailTextLabel.height - 1, 320, 0.5)];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 43, 320, 0.5)];
             line.backgroundColor = [UIColor colorWithHexString:@"d7d7d7"];
             line.tag = 100;
+            
+            line.hidden = YES;
             [cell.contentView addSubview:line];
         }
         
@@ -560,6 +571,7 @@
         
         UIView *line = [cell viewWithTag:100];
         line.top = cell.height - 1;
+        line.hidden = NO;
         
         return cell;
     }
