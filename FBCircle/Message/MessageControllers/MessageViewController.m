@@ -8,6 +8,9 @@
 
 #import "MessageViewController.h"
 
+#define SEPARATOR_COLOR RGBCOLOR(229, 231, 230)
+
+
 @interface MessageViewController ()
 {
     EGORefreshTableHeaderView * _refreshHeaderView;
@@ -59,10 +62,6 @@
         isnewfbnotification = remind;
         _tixing_label.hidden = !isnewfbnotification;
     }
-    
-//    if (self.data_array.count==0) {
-        [self loadMessageData];
-//    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -90,6 +89,7 @@
     self.myTableView.dataSource = self;
     self.myTableView.rowHeight = 60;
     self.myTableView.separatorInset = UIEdgeInsetsZero;
+    self.myTableView.separatorColor = SEPARATOR_COLOR;
     [self.view addSubview:self.myTableView];
     
     if (_refreshHeaderView == nil)
@@ -102,11 +102,16 @@
 	[_refreshHeaderView refreshLastUpdatedDate];
     [_myTableView addSubview:_refreshHeaderView];
     
+    UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,0)];
+    footerView.backgroundColor = SEPARATOR_COLOR;
+    _myTableView.tableFooterView = footerView;
+    
+    
     isnewfbnotification = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemMessageRemind"];
     _theModel = [[MessageModel alloc] init];
     
-//    [self loadMessageData];
-    
+    [self loadMessageData];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HaveNewNotification:) name:COMEMESSAGES object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isLogOut) name:SUCCESSLOGOUT object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isLogIn) name:SUCCESSLOGIN object:nil];
@@ -167,38 +172,28 @@
     cell.timeLabel.text = @"";
     cell.contentLabel1.text = @"";
     cell.contentLabel.text = @"";
-    
+    cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.row ==0)
     {
         cell.tixing_label.image = nil;
-        
         [cell setAllViewWithType:1];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
         cell.contentLabel.text = @"系统通知";
-        
         cell.headImageView.image = [UIImage imageNamed:@"xiaoxi_80_80.png"];
-        
         cell.tixing_label.hidden=YES;
-        
-        
+//        @"geren-jiantou.png"
+        UIImageView * accessView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,7,13)];
+        accessView.image = [UIImage imageNamed:@"geren-jiantou.png"];
+        cell.accessoryView = accessView;
         if (!_tixing_label)
         {
             _tixing_label = [[UIImageView alloc] init];
-            
             _tixing_label.layer.masksToBounds = YES;
-            
             _tixing_label.layer.cornerRadius = 3.5;
-            
             _tixing_label.backgroundColor = RGBACOLOR(245,6,0,1);
-            
         }
         
         _tixing_label.hidden = !isnewfbnotification;
-        
         _tixing_label.frame=CGRectMake(120, 21,7,7);
-        
         _tixing_label.center = CGPointMake(50,10);
         
         [cell.contentView addSubview:_tixing_label];

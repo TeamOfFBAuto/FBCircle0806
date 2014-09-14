@@ -1805,6 +1805,18 @@
     
     [FBCircleModel addPraiseWith:praiseModel withtid:info.fb_tid];
     
+    if (!test_cell)
+    {
+        test_cell = [[FBCircleCustomCell alloc] init];
+        [test_cell setAllViews];
+    }
+    
+    float height = [test_cell returnCellHeightWith:model];
+    [self.cell_height_array replaceObjectAtIndex:history_selected_menu_page withObject:[NSNumber numberWithFloat:height]];
+
+    
+    
+    
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
     
     
