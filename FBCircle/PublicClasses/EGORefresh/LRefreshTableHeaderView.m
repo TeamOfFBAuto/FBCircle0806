@@ -9,8 +9,11 @@
 
 #import "LRefreshTableHeaderView.h"
 
-#define TEXT_COLOR1	 [UIColor colorWithRed:99/255.0 green:99/255.0 blue:99/255.0 alpha:1.0]
-#define TEXT_COLOR2	 [UIColor colorWithRed:178/255.0 green:178/255.0 blue:178/255.0 alpha:1.0]
+//#define TEXT_COLOR1	 [UIColor colorWithRed:99/255.0 green:99/255.0 blue:99/255.0 alpha:1.0]
+//#define TEXT_COLOR2	 [UIColor colorWithRed:178/255.0 green:178/255.0 blue:178/255.0 alpha:1.0]
+
+#define TEXT_COLOR2	 [UIColor colorWithRed:108/255.0 green:108/255.0 blue:108/255.0 alpha:1.0]
+#define TEXT_COLOR1	 [UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1.0]
 
 #define FLIP_ANIMATION_DURATION 0.18f
 
@@ -26,7 +29,7 @@
         
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 22.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont systemFontOfSize:9.0f];
+		label.font = [UIFont systemFontOfSize:12.0f];
 		label.textColor = TEXT_COLOR2;
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = NSTextAlignmentCenter;
@@ -36,7 +39,7 @@
 		
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 42.0f, frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont boldSystemFontOfSize:11.0f];
+		label.font = [UIFont systemFontOfSize:13.0f];
 		label.textColor = TEXT_COLOR1;
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = NSTextAlignmentCenter;
@@ -48,7 +51,7 @@
 		layer.frame = CGRectMake(75.0f, frame.size.height - 40.0f, 16.0f, 31.0f);
 		layer.contentsGravity = kCAGravityResizeAspect;
         //		layer.contents = (id)[UIImage imageNamed:arrow].CGImage;
-        layer.contents = (id)[UIImage imageNamed:@"blueArrow.png"].CGImage;
+//        layer.contents = (id)[UIImage imageNamed:@"blueArrow.png"].CGImage;
 		
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
 		if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
@@ -60,7 +63,10 @@
 		_arrowImage=layer;
 		
 		UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		view.frame = CGRectMake(72.0f, frame.size.height - 35.0f, 20.0f, 20.0f);
+//		view.frame = CGRectMake(72.0f, frame.size.height - 35.0f, 20.0f, 20.0f);
+        
+        view.frame = CGRectMake(25.0f, frame.size.height - 38.0f, 20.0f, 20.0f);
+        
 		[self addSubview:view];
 		_activityView = view;
         //		[view release];
@@ -74,7 +80,7 @@
 }
 
 - (id)initWithFrame:(CGRect)frame  {
-    return [self initWithFrame:frame arrowImageName:@"icon_refresh.png" textColor:nil];
+    return [self initWithFrame:frame arrowImageName:@"icon_refresh111.png" textColor:nil];
 }
 
 #pragma mark -
@@ -91,7 +97,7 @@
 		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 		[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
         
-		_lastUpdatedLabel.text = [NSString stringWithFormat:@"最后更新: %@", [dateFormatter stringFromDate:date]];
+		_lastUpdatedLabel.text = [NSString stringWithFormat:@"上次更新: %@", [dateFormatter stringFromDate:date]];
         //        _lastUpdatedLabel.font = [UIFont systemFontOfSize:20];
 		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
@@ -109,7 +115,7 @@
 	switch (aState) {
 		case L_EGOOPullRefreshPulling:
 			
-			_statusLabel.text = NSLocalizedString(@"松开即可更新", @"松开即可更新");
+			_statusLabel.text = NSLocalizedString(@"释放立即更新", @"释放立即更新");
 			[CATransaction begin];
 			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
 			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
@@ -125,7 +131,7 @@
 				[CATransaction commit];
 			}
 			
-			_statusLabel.text = NSLocalizedString(@"下拉即可更新", @"下拉即可更新");
+			_statusLabel.text = NSLocalizedString(@"下拉刷新", @"下拉刷新");
 			[_activityView stopAnimating];
             [_activityView setHidden:YES];
             [CATransaction begin];
@@ -139,7 +145,7 @@
 			break;
 		case L_EGOOPullRefreshLoading:
 			
-			_statusLabel.text = NSLocalizedString(@"加载中~", @"加载中~");
+			_statusLabel.text = NSLocalizedString(@"加载中...", @"加载中...");
 			[_activityView startAnimating];
             [_activityView setHidden:NO];
 			[CATransaction begin];

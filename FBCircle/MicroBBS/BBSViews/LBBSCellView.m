@@ -41,8 +41,8 @@
         _subTitleLabel.numberOfLines = 2;
         _subTitleLabel.lineBreakMode = NSLineBreakByCharWrapping;
         
-        UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(276 , self.height/2.f - 13/2.f, 8, 13)];
-        arrow_image.image = [UIImage imageNamed:@"jiantou"];
+        UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(276 , self.height/2.f - 13/2.f, 7, 13)];
+        arrow_image.image = [UIImage imageNamed:@"geren-jiantou.png"];
         [self addSubview:arrow_image];
     }
     return self;

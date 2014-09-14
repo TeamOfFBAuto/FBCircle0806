@@ -122,8 +122,9 @@
             
         }else
         {
-            self.line_horizon = [[UIImageView alloc]initWithFrame:CGRectMake(0, (direction == Line_Up ? 0: self.height - 1), self.width, 0.5f)];
-            _line_horizon.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+            self.line_horizon = [[UIImageView alloc]initWithFrame:CGRectMake(0, (direction == Line_Up ? 0: self.height - 0.5), self.width, 0.5f)];
+//            _line_horizon.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+            _line_horizon.backgroundColor = COLOR_TABLE_LINE;
             [self addSubview:_line_horizon];
         }
     }

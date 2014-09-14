@@ -66,7 +66,7 @@
     
     [_table showRefreshHeader:YES];
     
-    _table.backgroundColor = [UIColor colorWithHexString:@"d3d7db"];
+    _table.backgroundColor = self.view.backgroundColor;
     
 }
 

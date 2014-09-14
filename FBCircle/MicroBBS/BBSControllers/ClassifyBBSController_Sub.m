@@ -48,7 +48,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
     
     self.titleLabel.text = self.navigationTitle;
     
@@ -185,9 +184,11 @@
     search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
     [self.view addSubview:search_bgview];
     
-    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(5, 0, 310, 45)];
+    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
     bar.placeholder = @"搜索";
-    bar.backgroundColor = [UIColor clearColor];
+    bar.layer.borderWidth = 2.f;
+    bar.layer.borderColor = COLOR_SEARCHBAR.CGColor;
+    bar.barTintColor = COLOR_SEARCHBAR;
     bar.delegate = self;
     [search_bgview addSubview:bar];
 }

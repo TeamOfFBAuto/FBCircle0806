@@ -169,13 +169,13 @@
     }else if (aStyle == Style_SideBySide){
         
         bgView.top = newFrame.origin.y - 5;
-        bgView.left = newFrame.origin.x - bgView.width - 5;
-
-        aFrame = bgView.frame;
-        aFrame.size.width = _sumHeight - 5;
-//        aFrame.origin.x = _sumHeight - 5;
-        
-        aFrame.origin.x = _sumHeight;
+        bgView.left = newFrame.origin.x - 5;
+//
+//        aFrame = bgView.frame;
+//        aFrame.size.width = _sumHeight - 5;
+////        aFrame.origin.x = _sumHeight - 5;
+//        
+//        aFrame.origin.x = _sumHeight;
         
     }else if (aStyle == Style_Bottom)
     {
@@ -187,9 +187,16 @@
 //        bgView.frame = aFrame;
 //    }];
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         
-        bgView.frame = aFrame;
+        if (aStyle == Style_SideBySide) {
+            
+            bgView.frame = CGRectMake(_sumHeight - 5, newFrame.origin.y - 5, _sumHeight - 5, bgView.height);
+            
+        }else
+        {
+           bgView.frame = aFrame;
+        }
         
     } completion:^(BOOL finished) {
         
@@ -197,7 +204,13 @@
             
             if (finished) {
                 
-                bgView.left -= 5;
+                [UIView animateWithDuration:0.1 animations:^{
+//                    bgView.left -= 5;
+                    
+                    bgView.frame = CGRectMake(_sumHeight, newFrame.origin.y - 5, _sumHeight - 5, bgView.height);
+
+                }];
+                
             }
         }
         

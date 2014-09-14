@@ -72,8 +72,8 @@
 		1366029C1990ABE300F2BEEC /* LTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 136602991990ABE300F2BEEC /* LTools.m */; };
 		1366029D1990ABE300F2BEEC /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366029B1990ABE300F2BEEC /* RefreshTableView.m */; };
 		136602AE1990B6D600F2BEEC /* LBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136602AD1990B6D600F2BEEC /* LBaseViewController.m */; };
-		136602B81990C3B200F2BEEC /* bluedown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602B01990C3B200F2BEEC /* bluedown@2x.png */; };
-		136602B91990C3B200F2BEEC /* blueup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602B11990C3B200F2BEEC /* blueup@2x.png */; };
+		136602B81990C3B200F2BEEC /* bluedown1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602B01990C3B200F2BEEC /* bluedown1@2x.png */; };
+		136602B91990C3B200F2BEEC /* blueup1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136602B11990C3B200F2BEEC /* blueup1@2x.png */; };
 		1368544519920D84004BBB20 /* ClassifyBBSController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1368544419920D84004BBB20 /* ClassifyBBSController.m */; };
 		1368544B19921170004BBB20 /* LButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1368544A19921170004BBB20 /* LButtonView.m */; };
 		1368544D19921AFC004BBB20 /* defaultPlaceHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1368544C19921AFC004BBB20 /* defaultPlaceHolder.png */; };
@@ -1084,8 +1084,8 @@
 		1366029B1990ABE300F2BEEC /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
 		136602AC1990B6D600F2BEEC /* LBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBaseViewController.h; sourceTree = "<group>"; };
 		136602AD1990B6D600F2BEEC /* LBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBaseViewController.m; sourceTree = "<group>"; };
-		136602B01990C3B200F2BEEC /* bluedown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluedown@2x.png"; sourceTree = "<group>"; };
-		136602B11990C3B200F2BEEC /* blueup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueup@2x.png"; sourceTree = "<group>"; };
+		136602B01990C3B200F2BEEC /* bluedown1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluedown1@2x.png"; sourceTree = "<group>"; };
+		136602B11990C3B200F2BEEC /* blueup1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueup1@2x.png"; sourceTree = "<group>"; };
 		1368544319920D84004BBB20 /* ClassifyBBSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassifyBBSController.h; sourceTree = "<group>"; };
 		1368544419920D84004BBB20 /* ClassifyBBSController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassifyBBSController.m; sourceTree = "<group>"; };
 		1368544919921170004BBB20 /* LButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LButtonView.h; sourceTree = "<group>"; };
@@ -2125,8 +2125,8 @@
 		136602AF1990C3B200F2BEEC /* EGORefresh */ = {
 			isa = PBXGroup;
 			children = (
-				136602B01990C3B200F2BEEC /* bluedown@2x.png */,
-				136602B11990C3B200F2BEEC /* blueup@2x.png */,
+				136602B01990C3B200F2BEEC /* bluedown1@2x.png */,
+				136602B11990C3B200F2BEEC /* blueup1@2x.png */,
 				136D3AA61990C6D90052E808 /* LRefreshTableHeaderView.h */,
 				136D3AA71990C6D90052E808 /* LRefreshTableHeaderView.m */,
 			);
@@ -3934,7 +3934,7 @@
 				56A64D66198F72E900451413 /* Expression_9@2x.png in Resources */,
 				56A64DD6198F72E900451413 /* xiangqing-pinglun-icon-24_24@2x.png in Resources */,
 				56A64DC6198F72E900451413 /* duanxin-icon-94_94@2x.png in Resources */,
-				136602B91990C3B200F2BEEC /* blueup@2x.png in Resources */,
+				136602B91990C3B200F2BEEC /* blueup1@2x.png in Resources */,
 				56A64CCE198F72E900451413 /* shurukuang_yonghumingi528_268@2x.png in Resources */,
 				56A64B04198F6AD800451413 /* saoyisao_bg_640_996@2x.png in Resources */,
 				56A64DD8198F72E900451413 /* xiangqing-shurukuang-496_60@2x.png in Resources */,
@@ -4114,7 +4114,7 @@
 				56245D0119A5FA7F00D0F32F /* mirco_icon_6@2x.png in Resources */,
 				56245CFF19A5FA7F00D0F32F /* mirco_icon_5@2x.png in Resources */,
 				56A64D14198F72E900451413 /* pinglun_28_28@2x.png in Resources */,
-				136602B81990C3B200F2BEEC /* bluedown@2x.png in Resources */,
+				136602B81990C3B200F2BEEC /* bluedown1@2x.png in Resources */,
 				56A64D7A198F72E900451413 /* touxiang-126_126@2x.png in Resources */,
 				56A64D20198F72E900451413 /* wo-34_38@2x.png in Resources */,
 				56A64AF8198F6AD800451413 /* headimg_bg150_150@2x.png in Resources */,

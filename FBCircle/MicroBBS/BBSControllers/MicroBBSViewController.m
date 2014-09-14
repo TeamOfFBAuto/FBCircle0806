@@ -81,7 +81,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
+    
+//    self.view.backgroundColor = [UIColor redColor];
     
     self.title = @"微论坛";
     self.titleLabel.text = @"微论坛";
@@ -99,7 +100,9 @@
     
     _table.hiddenLoadMore = YES;
     
-    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _table.separatorColor = COLOR_TABLE_LINE;
+    _table.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
     [self.view addSubview:_table];
     
     UIView *footer_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
@@ -463,13 +466,17 @@
 - (UIView *)createSearchView
 {
     UIView *search_bgview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
-    search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
+//    search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
+    
+//    search_bgview.backgroundColor = [UIColor redColor];
     [self.view addSubview:search_bgview];
 
     UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
     bar.placeholder = @"搜索";
-    bar.backgroundColor = [UIColor clearColor];
     bar.delegate = self;
+    bar.layer.borderWidth = 2.f;
+    bar.layer.borderColor = COLOR_SEARCHBAR.CGColor;
+    bar.barTintColor = COLOR_SEARCHBAR;
     [search_bgview addSubview:bar];
     return search_bgview;
 }
@@ -590,8 +597,8 @@
         [cell_view setCellWithModel:aModel];
         
         if (i < 1) {
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 1)];
-            line.backgroundColor = [UIColor colorWithHexString:@"dfdfdf"];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 0.5)];
+            line.backgroundColor = COLOR_TABLE_LINE;
             [_recommendView addSubview:line];
         }
     }

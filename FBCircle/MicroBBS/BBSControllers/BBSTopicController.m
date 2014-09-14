@@ -82,7 +82,6 @@ typedef enum{
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
     
     self.titleLabel.text = @"主题帖";
     
@@ -97,7 +96,7 @@ typedef enum{
     _table.dataSource = self;
     
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
+    _table.separatorColor = COLOR_TABLE_LINE;
     [self.view addSubview:_table];
     
     [self createInputView];
@@ -372,9 +371,6 @@ typedef enum{
 - (void)addComment:(NSString *)text
 {
     __weak typeof(self)weakSelf = self;
-    
-    NSString *temp = [NSString stringWithFormat:@"%@",text];
-
     
     text = [text stringByReplacingEmojiUnicodeWithCheatCodes];
     
@@ -701,13 +697,13 @@ typedef enum{
     
     //论坛name
     
-    LButtonView *nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_Down];
+    LButtonView *nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_No];
     [basic_view addSubview:nameLabel];
     
     //帖子数
     NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
-    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10, 40) title:title font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
-    numLabel.backgroundColor= [UIColor clearColor];
+    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 - 8, 40-1 - 0.5) title:title font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
+//    numLabel.backgroundColor= [UIColor redColor];
     [basic_view addSubview:numLabel];
     
     //精 帖
@@ -735,6 +731,7 @@ typedef enum{
     
     LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
     [basic_view addSubview:btnV];
+    btnV.line_horizon.height = 0.5f;
     
     
     basic_view.backgroundColor = [UIColor whiteColor];
@@ -773,13 +770,13 @@ typedef enum{
     
     //时间
     NSString *time = [LTools timechange:aTopicModel.time];
-    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aFrame.size.width - 10 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aFrame.size.width - 10 - 8- [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
     [recommed_view addSubview:timeLabel];
     
     //正文
     
     NSString *text = aTopicModel.content;
-    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aFrame.size.width - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 font:14]) title:text font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
+    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aFrame.size.width - 8 - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 - 8 font:14]) title:text font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
     textLabel.numberOfLines = 0;
     textLabel.lineBreakMode = NSLineBreakByCharWrapping;
     [recommed_view addSubview:textLabel];
@@ -802,7 +799,7 @@ typedef enum{
     
     //赞
     
-    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aFrame.size.width + 2, 40)];
+    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aFrame.size.width + 2 - 8, 40)];
     zan_view.backgroundColor = [UIColor whiteColor];
     zan_view.layer.borderWidth = 1.f;
     zan_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
@@ -825,7 +822,7 @@ typedef enum{
     [zan_view addSubview:zan_names_label];
     
     //时间
-    UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aFrame.size.width + 2, 40)];
+    UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aFrame.size.width + 2 - 8, 40)];
     time_view.backgroundColor = [UIColor whiteColor];
     time_view.layer.borderWidth = 0.5f;
     time_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
@@ -835,8 +832,10 @@ typedef enum{
     UILabel *time_Label = [LTools createLabelFrame:CGRectMake(10, 0, 100, time_view.height) title:time_str font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [time_view addSubview:time_Label];
     
-    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30, 5, 30, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:time_view target:self action:@selector(clickToZan:)];
+    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30 - 10 - 5, zan_view.bottom + 5, 30 + 20 + 10, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:recommed_view target:self action:@selector(clickToZan:)];
     [zan_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    zan_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//    zan_btn.backgroundColor = [UIColor redColor];
     
     aFrame.size.height = time_view.bottom;
     recommed_view.frame = aFrame;
@@ -857,7 +856,8 @@ typedef enum{
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(8, 15, 304, 0)];
     [headerView addSubview:basic_view];
     
-    UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304, 0)];
+    UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304 + 8, 0)];
+    recommed_view.backgroundColor = self.view.backgroundColor;
     [headerView addSubview:recommed_view];
     
     headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15 + 15 +1);
@@ -995,6 +995,8 @@ typedef enum{
     
     cell.nameLabel.text = aModel.username;
     cell.timeLabel.text = [LTools timechange:aModel.time];
+    
+    cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
     
     return cell;
     

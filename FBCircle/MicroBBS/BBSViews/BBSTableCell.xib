@@ -40,8 +40,8 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="jiantou.png" translatesAutoresizingMaskIntoConstraints="NO" id="sB7-Xu-X0a">
-                                <rect key="frame" x="276" y="30" width="8" height="13"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="geren-jiantou.png" translatesAutoresizingMaskIntoConstraints="NO" id="sB7-Xu-X0a">
+                                <rect key="frame" x="276" y="30" width="7" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -59,6 +59,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="jiantou.png" width="8" height="13"/>
+        <image name="geren-jiantou.png" width="14" height="26"/>
     </resources>
 </document>

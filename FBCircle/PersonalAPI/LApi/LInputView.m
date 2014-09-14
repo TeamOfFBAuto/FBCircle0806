@@ -39,7 +39,8 @@
         self.frame = CGRectMake(0, CGRectGetMinY(frame), 320, SELF_HEIGHT);
         
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1)];
-        line.backgroundColor = [UIColor colorWithHexString:@"919499"];
+//        line.backgroundColor = [UIColor colorWithHexString:@"919499"];
+        line.backgroundColor = COLOR_TABLE_LINE;
         [self addSubview:line];
         
         _inputBlock = inputBlock;
@@ -110,14 +111,47 @@
     return _textView;
 }
 
+/**
+ *  根据编辑状态调整发送按钮
+ *
+ */
+- (void)sendBtnSelected:(BOOL)selected
+{
+    if (selected) {
+        
+        [_sendBtn setTitleColor:[UIColor colorWithHexString:@"5c7bbe"] forState:UIControlStateNormal];
+//        
+//        _sendBtn.backgroundColor = [UIColor colorWithHexString:@"5c7bbe"];
+//        
+//        _sendBtn.layer.borderWidth = 0.f;
+////        _sendBtn.layer.borderColor = [UIColor clearColor].CGColor;
+
+    }else
+    {
+        [_sendBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
+//        _sendBtn.backgroundColor = [UIColor clearColor];
+//        
+//        _sendBtn.layer.borderWidth = 1.f;
+//        _sendBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    }
+}
+
 - (UIButton *)sendBtn
 {
     if (!_sendBtn) {
         _sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-        [_sendBtn setTitleColor:[UIColor colorWithHexString:@"b7b7b7"] forState:UIControlStateNormal];
-        [_sendBtn setFrame:CGRectMake(_textView.right, 12, 50, 25)];
+        [_sendBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//        [_sendBtn setTitleColor:[UIColor colorWithHexString:@"5c7bbe"] forState:UIControlStateSelected];
+        
+        //colorWithHexString:@"b7b7b7"
+        
+        [_sendBtn setFrame:CGRectMake(_textView.right+2, 11, 50 - 4 -2, 25)];
         [_sendBtn addTarget:self action:@selector(sendBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+//        _sendBtn.layer.borderWidth = 1.f;
+//        _sendBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//        _sendBtn.layer.cornerRadius = 3.f;
         _sendBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [self addSubview:_sendBtn];
         
@@ -183,6 +217,7 @@
     
     if (self.clearInputWhenSend) {
         self.textView.text = @"";
+        _sendBtn.selected = NO;
         [self resetFrame];
     }
     if (self.resignFirstResponderWhenSend) {
@@ -288,6 +323,13 @@
         
     }
     
+    if (textView.text.length > 0) {
+        _sendBtn.selected = YES;
+    }else
+    {
+        _sendBtn.selected = NO;
+    }
+    
     _textView.textColor = [UIColor blackColor];
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -295,6 +337,8 @@
     if ([textView.text isEqualToString:@""]) {
         textView.text = PLACE_HOLDER;
         _textView.textColor = [UIColor colorWithHexString:@"cacacc"];
+        
+            _sendBtn.selected = NO;
     }
 }
 
@@ -306,6 +350,7 @@
         return YES;
     }
     
+    
     [self sendBtnPress:nil];
     
     return NO;
@@ -315,6 +360,20 @@
  */
 - (void)textViewDidChange:(UITextView *)textView
 {
+    if (textView.text.length > 0) {
+//        _sendBtn.selected = YES;
+        
+        [self sendBtnSelected:YES];
+        
+    }else
+    {
+//        _sendBtn.selected = NO;
+        
+        [self sendBtnSelected:NO];
+
+    }
+    
+    
     CGFloat newHeight = [[self textView] sizeThatFits:CGSizeMake(textView.frame.size.width,CGFLOAT_MAX)].height;
     
     if (newHeight >= 120) {

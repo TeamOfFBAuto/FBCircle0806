@@ -67,8 +67,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithHexString:@"d3d6db"];
-        
+    
     self.titleLabel.text = self.navigationTitle;
     
     //数据展示table
