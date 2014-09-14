@@ -393,7 +393,7 @@ typedef enum{
             
             if (errcode == 0) {
                 
-                [weakSelf sendComment:temp];
+                [weakSelf sendComment:text];
             }else
             {
                 [LTools showMBProgressWithText:[dataInfo objectForKey:@"errinfo"] addToView:self.view];
@@ -639,13 +639,10 @@ typedef enum{
 - (CGFloat)createRichLabelWithMessage:(NSString *)text isInsert:(BOOL)isInsert
 {
     OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
-//    label.backgroundColor = [UIColor orangeColor];
+
     label.lineBreakMode = NSLineBreakByCharWrapping;
     
-//    //声明一个gbk编码类型
-//    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//    //使用如下方法 将获取到的数据按照gbkEncoding的方式进行编码，结果将是正常的汉字
-//    NSString *zhuanHuanHouDeShuJu = [text stringByReplacingPercentEscapesUsingEncoding:gbkEncoding];
+    text = [text stringByReplacingEmojiCheatCodesWithUnicode];
     
     [FBHelper creatAttributedText:text Label:label OHDelegate:self];
     
