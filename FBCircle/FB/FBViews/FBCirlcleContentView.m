@@ -8,6 +8,10 @@
 
 #import "FBCirlcleContentView.h"
 
+#define IMAGE_WIDHT 18
+#define IMAGE_HEIGHT 18
+
+
 @implementation FBCirlcleContentView
 @synthesize delegate = _delegate;
 @synthesize theFBModel = _theFBModel;
@@ -62,7 +66,7 @@
         
         
         if (!_content_label) {
-            _content_label = [[RTLabel alloc] initWithFrame:CGRectMake(64,36,247,13)];
+            _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(64,36,247,13)];
             _content_label.textAlignment = NSTextAlignmentLeft;
             _content_label.textColor = RGBCOLOR(4,4,4);
             _content_label.backgroundColor = [UIColor clearColor];
@@ -134,7 +138,7 @@
         
         
         if (!_rContent_label) {
-            _rContent_label = [[RTLabel alloc] initWithFrame:CGRectMake(54,28,235,20)];
+            _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,21)];
             _rContent_label.textAlignment = NSTextAlignmentLeft;
             _rContent_label.textColor = RGBCOLOR(3,3,3);
             _rContent_label.backgroundColor = [UIColor clearColor];
@@ -147,13 +151,9 @@
         
         
         if (!_rContentImageView) {
-            
             _rContentImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(5,5.5,40,40)];
-            
             _rContentImageView.clipsToBounds = YES;
-            
             _rContentImageView.contentMode = UIViewContentModeScaleAspectFill;
-            
             [_forwardBackGroundImageView addSubview:_rContentImageView];
         }else
         {
@@ -164,15 +164,10 @@
         
         if (!_date_label) {
             _date_label = [[UILabel alloc]  initWithFrame:CGRectMake(64,0,200,15)];
-            
             _date_label.textColor = RGBCOLOR(120,120,120);
-            
             _date_label.textAlignment = NSTextAlignmentLeft;
-            
             _date_label.backgroundColor = [UIColor clearColor];
-            
             _date_label.font = [UIFont systemFontOfSize:13];
-            
             [self addSubview:_date_label];
         }else
         {
@@ -182,24 +177,16 @@
         
         if (!_menu_button) {
             _menu_button = [UIButton buttonWithType:UIButtonTypeCustom];
-            
-            _menu_button.frame = CGRectMake(272,0,33,15);
-            
+            _menu_button.frame = CGRectMake(279,0,40,20);
             [_menu_button setImage:[UIImage imageNamed:@"pinglun-icon-66_24.png"] forState:UIControlStateNormal];
-            
             [_menu_button addTarget:self action:@selector(clickMenuTap:) forControlEvents:UIControlEventTouchUpInside];
-            
             [self addSubview:_menu_button];
         }
         
         
-        
         if (!_menu_background_view) {
-            
             _menu_background_view = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,0)];
-            
             _menu_background_view.userInteractionEnabled = YES;
-            
             [self addSubview:_menu_background_view];
         }else
         {
@@ -213,17 +200,11 @@
             }
         }
         
-        
-        
         if (!_menu_view) {
             _menu_view = [[FBCircleMenuView alloc] initWithFrame:CGRectMake(0,10,320,0)];
-            
             _menu_view.backgroundColor = RGBCOLOR(144,144,144);
-            
             _menu_view.delegate = self;
-            
             _menu_button.clipsToBounds = YES;
-            
             [_menu_background_view addSubview:_menu_view];
         }else
         {
@@ -234,13 +215,10 @@
     
     if (!_sep_line_view) {
         _sep_line_view = [[UIImageView alloc] initWithFrame:CGRectMake(11,0,297.5,5)];
-        
         _sep_line_view.backgroundColor = RGBCOLOR(221,221,221);
         
         //  [self addSubview:_sep_line_view];
     }
-    
-    
     
     return self;
 }
@@ -255,18 +233,22 @@
     [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
     NSLog(@"_headerImageView ----  %@",theInfo.fb_face);
     _userName_label.text = theInfo.fb_username;
+ 
     
+    /*
     _content_label.text = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
-    
     CGRect contentFrame = _content_label.frame;
-    
     CGSize optimumsSize = [_content_label optimumSize];
-    
     cellHeight = cellHeight + 10 + optimumsSize.height;
-    
     contentFrame.size.height = optimumsSize.height+3;
-    
     _content_label.frame = contentFrame;
+    */
+    
+    NSString * content = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
+    
+    [OHLableHelper creatAttributedText:content Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+    cellHeight += _content_label.frame.size.height;
+    
     
     if (theInfo.fb_imageid.length > 0)
     {
@@ -293,38 +275,22 @@
         
         _PictureViews.frame = CGRectMake(64,cellHeight+10,231,height);
         
-        
-        //   [_PictureViews setImageUrls:theInfo.fb_imageid withSize:75 isjuzhong:NO];
-        
-//        NSMutableArray *arry_url=[NSMutableArray array];
-//        for (int i=0; i<theInfo.fb_image.count; i++) {
-//            NSDictionary *dicimgurl=[theInfo.fb_image objectAtIndex:i];
-//            [arry_url addObject:[dicimgurl objectForKey:@"link"]];
-//        }
-        
-        
         [_PictureViews setimageArr:arry_url withSize:75 isjuzhong:NO];
         
         
         [_PictureViews setthebloc:^(NSInteger index) {
             
             ShowImagesViewController * showImages = [[ShowImagesViewController alloc]init];
-            
             showImages.allImagesUrlArray = arry_url;
-            
             showImages.currentPage = index - 1;
-            
             [[(UIViewController *)self.delegate navigationController] pushViewController:showImages animated:YES];
         }];
-        
         
         cellHeight = cellHeight + 10 + height;
     }
     
     
     float forwardHeight = 0;
-    
-    
     
     if ([theInfo.fb_sort isEqualToString:@"1"])
     {
@@ -334,6 +300,7 @@
         
         _rUserName_label.hidden = YES;
         
+        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
         
         if (theInfo.rfb_face.length > 0 && ![theInfo.rfb_face isEqualToString:@"(null)"] && ![theInfo.rfb_face isKindOfClass:[NSNull class]])
         {
@@ -342,11 +309,8 @@
             _rContent_label.frame = CGRectMake(54,5.5,180,40);
         }else
         {
-            _rContent_label.frame = CGRectMake(5,5.5,180+49,20);
+            _rContent_label.frame = CGRectMake(5,5.5,180+49,_rContent_label.frame.size.height);
         }
-        
-        _rContent_label.text = theInfo.rfb_username;
-        
         
         _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 8,245,51);
         
@@ -365,7 +329,7 @@
             
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 8,245,30);
             
-            _rContent_label.frame = CGRectMake(5,8,235,30);
+            _rContent_label.frame = CGRectMake(5,8,235,_rContent_label.frame.size.height);
             
         }else
         {
@@ -378,7 +342,7 @@
                         
             _rUserName_label.frame = CGRectMake(54,5,180,20);
             
-            _rContent_label.frame = CGRectMake(54,28,180,20);
+            _rContent_label.frame = CGRectMake(54,28,180,_rContent_label.frame.size.height);
             
             if (theInfo.rfb_imageid.length > 0)
             {
@@ -388,19 +352,20 @@
                 
                 [_rContentImageView loadImageFromURL:urlImage withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
                 
+                _rContent_label.frame = CGRectMake(54,28,180,_rContent_label.frame.size.height);
+                
             }else
             {
                 _rUserName_label.frame = CGRectMake(5,5,180+49,20);
                 
-                _rContent_label.frame = CGRectMake(5,28,180+49,20);
+                _rContent_label.frame = CGRectMake(5,28,180+49,_rContent_label.frame.size.height);
             }
             
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 10,245,51);
             
         }
         
-        _rContent_label.text = [[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode];
-        
+        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
         
         forwardHeight += 10;
     }else
@@ -478,7 +443,7 @@
 
 
 //老版设计
-
+/*
 //- (id)initWithFrame:(CGRect)frame
 //{
 //    self = [super initWithFrame:frame];
@@ -892,7 +857,7 @@
 //
 //}
 
-
+*/
 
 
 -(void)clickMenuTap:(UIButton *)sender

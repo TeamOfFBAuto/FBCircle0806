@@ -152,7 +152,9 @@
         
         [bself loadTableHeaderView];
         
-        [bself.myTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (bself.cell_height_array.count > 0) {
+            [bself.myTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
         
         //        [bself.myTableView reloadData];
         
@@ -178,23 +180,25 @@
         
             NSMutableArray * delete_array = [FBCircleModel findAllWaitingUploadDelete];
 
-            bself.data_array = [FBCircleModel findAll];
-
-            for (int i = 0;i < bself.data_array.count;i++)
-            {
-                FBCircleModel * model = [bself.data_array objectAtIndex:i];
-                //找到没删除成功的微博，然后不显示
-                for (FBCirclePraiseModel * praise_model in delete_array)
+            self.data_array = [FBCircleModel findAll];
+            
+            if (delete_array.count != 0) {
+                for (int i = 0;i < bself.data_array.count;i++)
                 {
-                    if ([model.fb_tid isEqualToString:praise_model.praise_tid])
+                    FBCircleModel * model = [bself.data_array objectAtIndex:i];
+                    //找到没删除成功的微博，然后不显示
+                    for (FBCirclePraiseModel * praise_model in delete_array)
                     {
-                        [bself.data_array removeObjectAtIndex:i];
+                        if ([model.fb_tid isEqualToString:praise_model.praise_tid])
+                        {
+                            [self.data_array removeObjectAtIndex:i];
+                        }
                     }
                 }
             }
             
 //            dispatch_async(dispatch_get_main_queue(), ^{
-                [bself returnCellHeightWith:bself.data_array WithNew:YES];
+                [self returnCellHeightWith:bself.data_array WithNew:YES];
 //            });
 //        });
         
@@ -431,7 +435,7 @@
     [self loadTableHeaderView];
     
     self.myTableView.tableHeaderView = headerView;
-    [self.myTableView reloadData];
+    [self.myTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -1308,14 +1312,9 @@
         {
             float height = [test_cell returnCellHeightWith:model];
             [bself.cell_height_array addObject:[NSNumber numberWithFloat:height]];
-            
-            NSLog(@"高度 -=-=----   %f",height);
-            
         }
         
 //        dispatch_async(dispatch_get_main_queue(), ^{
-    
-            
             [bself.myTableView reloadData];
 //        });
 //    });
@@ -1343,13 +1342,8 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_data_array.count == 0)
-    {
-        return 44;
-    }else
-    {
-        return [[_cell_height_array objectAtIndex:indexPath.row] floatValue];
-    }
+    FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
+    return [[_cell_height_array objectAtIndex:indexPath.row] floatValue] + (model.isShowMenuView?42:0);
 }
 
 
@@ -1366,6 +1360,12 @@
         cell.delegate = self;
     }
     
+    [cell.content_label removeFromSuperview];
+    cell.content_label = nil;
+    [cell.rContent_label removeFromSuperview];
+    cell.rContent_label = nil;
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     FBCircleModel * model = [_data_array objectAtIndex:indexPath.row];
@@ -1377,21 +1377,14 @@
     return cell;
 }
 
-
-
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FBCircleModel * model = [self.data_array objectAtIndex:indexPath.row];
     
     if (model.isShowMenuView) {
         model.isShowMenuView = NO;
-        __weak typeof(self)bself = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-            [bself reloadTableViewWithIndexPath:[NSArray arrayWithObjects:indexPath,nil]];
-        });
+        [self reloadTableViewWithIndexPath:[NSArray arrayWithObjects:indexPath,nil]];
     }
-    
     
     FBCircleDetailViewController * detailView = [[FBCircleDetailViewController alloc] init];
     
@@ -1501,6 +1494,8 @@
     FBCircleModel * model = [self.data_array objectAtIndex:deleteIndexPath.row];
     
     [self.data_array removeObjectAtIndex:deleteIndexPath.row];
+    
+    [self.cell_height_array removeObjectAtIndex:deleteIndexPath.row];
     
     [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:deleteIndexPath,nil] withRowAnimation:UITableViewRowAnimationRight];
     
@@ -1665,6 +1660,15 @@
     [FBCircleModel addBlogWith:forward_model];
     
     [self.data_array insertObject:forward_model atIndex:0];
+    
+    if (!test_cell)
+    {
+        test_cell = [[FBCircleCustomCell alloc] init];
+        [test_cell setAllViews];
+    }
+    
+    float height = [test_cell returnCellHeightWith:forward_model];
+    [self.cell_height_array insertObject:[NSNumber numberWithFloat:height] atIndex:0];
     
     [self.myTableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationLeft];
     
@@ -2034,6 +2038,15 @@
     
     [self.data_array insertObject:model atIndex:0];
     
+    if (!test_cell)
+    {
+        test_cell = [[FBCircleCustomCell alloc] init];
+        [test_cell setAllViews];
+    }
+    
+    float height = [test_cell returnCellHeightWith:model];
+    [self.cell_height_array insertObject:[NSNumber numberWithFloat:height] atIndex:0];
+    
     [self.myTableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0],nil] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
@@ -2269,6 +2282,17 @@
     model.fb_reply_num = [NSString stringWithFormat:@"%d",([model.fb_reply_num intValue]+1)];
     
     [FBCircleModel addCommentWith:commentModel withtid:model.fb_tid];
+    
+    
+    if (!test_cell)
+    {
+        test_cell = [[FBCircleCustomCell alloc] init];
+        [test_cell setAllViews];
+    }
+    
+    float height = [test_cell returnCellHeightWith:model];
+    [self.cell_height_array replaceObjectAtIndex:history_selected_menu_page withObject:[NSNumber numberWithFloat:height]];
+    
     
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationAutomatic];
     

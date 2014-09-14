@@ -10,8 +10,19 @@
 #import "AppDelegate.h"
 #import "NSString+Emoji.h"
 #import "MBProgressHUD.h"
-
+#import "OHLableHelper.h"
 #define PERSONAL_DEFAULTS_IMAGE [UIImage imageNamed:@"gtouxiangHolderImage.png"]
+
+///大表情
+#define IMAGE_BIG_WIDTH 20
+#define IMAGE_BIG_HEIGHT 20
+///中表情
+#define IMAGE_MIDDLE_WIDTH 18
+#define IMAGE_MIDDLE_HEIGHT 18
+///小表情
+#define IMAGE_SMALL_WIDTH 16
+#define IMAGE_SMALL_HEIGHT 16
+
 
 
 

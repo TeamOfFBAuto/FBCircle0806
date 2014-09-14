@@ -32,15 +32,11 @@
 
 @property(nonatomic,strong)UILabel * dateLine_label;
 
-@property(nonatomic,strong)RTLabel * content_label;
+@property(nonatomic,strong)OHAttributedLabel * content_label;
 
 @property(nonatomic,strong)UIImageView * upLine_view;
 
 @property(nonatomic,strong)UIView * bottomLine_view;
-
-@property(nonatomic,strong)UIView * left_view;
-
-@property(nonatomic,strong)UIView * right_view;
 
 @property(nonatomic,strong)UIImageView * pinglun_logo;
 

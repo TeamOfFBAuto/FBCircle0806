@@ -77,7 +77,7 @@
         
         if (!_content_label)
         {
-            _content_label = [[RTLabel alloc] initWithFrame:CGRectMake(75,72.5,180,20)];
+            _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(75,72.5,180,20)];
             _content_label.textAlignment = NSTextAlignmentLeft;
             _content_label.textColor = RGBCOLOR(3,3,3);
             _content_label.font = [UIFont systemFontOfSize:14];
@@ -159,7 +159,10 @@
     
     _userName_label.text = userName;
     
-    _content_label.text = [[ZSNApi FBEximgreplace:[ZSNApi decodeSpecialCharactersString:content]] stringByReplacingEmojiCheatCodesWithUnicode];
+//    _content_label.text = [[ZSNApi FBEximgreplace:[ZSNApi decodeSpecialCharactersString:content]] stringByReplacingEmojiCheatCodesWithUnicode];
+    
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT];
+    
 }
 
 -(void)show

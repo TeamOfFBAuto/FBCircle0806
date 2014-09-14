@@ -1280,7 +1280,7 @@ void RunDelegateDeallocCallback(void* refCon);
                     imageDrawRect.origin.x = runRect.origin.x + lineOrigin.x;
                     imageDrawRect.origin.y = lineOrigin.y - _lineSpacing*i - 2;
                     CGContextDrawImage(context,imageDrawRect,image.CGImage);
-                
+                    image = nil;
                 }
             }
         }

@@ -19,7 +19,7 @@
 
 
 
-@interface FBCircleCommentView : UIView<RTLabelDelegate>
+@interface FBCircleCommentView : UIView<RTLabelDelegate,OHAttributedLabelDelegate>
 {
     
 }

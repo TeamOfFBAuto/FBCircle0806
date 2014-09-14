@@ -27,7 +27,7 @@ typedef void(^ZSNAlertViewBlock)(NSString * theString);
 
 @property(nonatomic,strong)UILabel * userName_label;
 
-@property(nonatomic,strong)RTLabel * content_label;
+@property(nonatomic,strong)OHAttributedLabel * content_label;
 
 @property(nonatomic,strong)UITextField * textField;
 

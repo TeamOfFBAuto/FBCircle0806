@@ -107,7 +107,7 @@
         
         self.fb_username = [NSString stringWithFormat:@"%@",[dic objectForKey:@"username"]];
         
-        self.fb_content = [ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]]]];
+        self.fb_content = [ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]]];
         
         self.fb_imageid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"imageid"]];
         
@@ -205,7 +205,7 @@
             
             self.rfb_username = [NSString stringWithFormat:@"%@",[rDic objectForKey:@"username"]];
             
-            self.rfb_content = [ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[rDic objectForKey:@"content"]]]];
+            self.rfb_content = [ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[rDic objectForKey:@"content"]]];
                         
             self.rfb_imageid = [NSString stringWithFormat:@"%@",[rDic objectForKey:@"imageid"]];
             

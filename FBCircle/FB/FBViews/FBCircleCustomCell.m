@@ -9,6 +9,8 @@
 #import "FBCircleCustomCell.h"
 #import "GRXX4ViewController.h"
 
+#define IMAGE_WIDHT 18
+#define IMAGE_HEIGHT 18
 
 @implementation FBCircleCustomCell
 @synthesize delegate = _delegate;
@@ -82,14 +84,13 @@
     
     
     if (!_content_label) {
-        _content_label = [[RTLabel alloc] initWithFrame:CGRectMake(64,36,247,0)];
+        _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(64,36,247,0)];
         _content_label.font = [UIFont systemFontOfSize:14];
-        _content_label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
-        _content_label.lineSpacing = 3;
+//        _content_label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
         [self.contentView addSubview:_content_label];
     }else
     {
-//        _content_label.text = @"";
+        [_content_label setAttString:[[NSAttributedString alloc] initWithString:@""] withImages:nil];        
     }
     
     if (!_PictureViews) {
@@ -141,7 +142,7 @@
     
     
     if (!_rContent_label) {
-        _rContent_label = [[RTLabel alloc] initWithFrame:CGRectMake(54,28,235,21)];
+        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,21)];
         _rContent_label.textAlignment = NSTextAlignmentLeft;
         _rContent_label.textColor = RGBCOLOR(3,3,3);
         _rContent_label.backgroundColor = [UIColor clearColor];
@@ -149,7 +150,7 @@
         [_forwardBackGroundImageView addSubview:_rContent_label];
     }else
     {
-//        _rContent_label.text = @"";
+        [_rContent_label setAttString:[[NSAttributedString alloc] initWithString:@""] withImages:nil];
     }
     
     
@@ -330,18 +331,17 @@
     
     _userName_label.text = theInfo.fb_username;
     
-    _content_label.text = [ZSNApi FBImageChange:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode]];
+//    _content_label.text = [ZSNApi FBImageChange:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode]];
+//    CGRect contentFrame = _content_label.frame;
+//    CGSize optimumsSize = [_content_label optimumSize];
+//    cellHeight = cellHeight + 5 + optimumsSize.height;
+//    contentFrame.size.height = optimumsSize.height+3;
+//    _content_label.frame = contentFrame;
     
-    CGRect contentFrame = _content_label.frame;
     
-    CGSize optimumsSize = [_content_label optimumSize];
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
     
-    
-    cellHeight = cellHeight + 5 + optimumsSize.height;
-    
-    contentFrame.size.height = optimumsSize.height+3;
-    
-    _content_label.frame = contentFrame;
+    cellHeight += _content_label.frame.size.height;
     
     
     if (theInfo.fb_imageid.length > 0)
@@ -398,8 +398,9 @@
         
         _rUserName_label.hidden = YES;
         
-        _rContent_label.text = [theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode];
+//        _rContent_label.text = [theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode];
         
+        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
         
         if (theInfo.rfb_face.length > 0 && ![theInfo.rfb_face isEqualToString:@"(null)"] && ![theInfo.rfb_face isKindOfClass:[NSNull class]])
         {
@@ -411,13 +412,7 @@
             
         }else
         {
-//            _rContent_label.frame = CGRectMake(5,5.5,180+49,20);
-            
-            CGSize share_optimumsSize = [_rContent_label optimumSize];
-            
-            _rContent_label.frame = CGRectMake(5,5.5,180+49,share_optimumsSize.height+5);
-            
-            forwardHeight = share_optimumsSize.height + 10;
+            forwardHeight = _rContent_label.frame.size.height + 10;
             
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 8,245,forwardHeight);
         }
@@ -427,8 +422,6 @@
     }else if ([theInfo.fb_topic_type isEqualToString:@"2"])
     {
         forwardHeight = 51;
-        
-//        _rContent_label.backgroundColor = [UIColor redColor];
         
         if (theInfo.rfb_username.length == 0 || [theInfo.rfb_username isEqualToString:@"(null)"] || [theInfo.rfb_username isKindOfClass:[NSNull class]])
         {
@@ -473,7 +466,7 @@
             }
         }
         
-        _rContent_label.text = [[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode];
+        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT];
         
         forwardHeight += 5;
     }else
@@ -667,13 +660,9 @@
 -(float)returnCellHeightWith:(FBCircleModel *)theInfo
 {
     float cellHeight = 30;
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
     
-    _content_label.text = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
-    
-    CGSize optimumsSize = [_content_label optimumSize];
-    
-    cellHeight = cellHeight + 5 + optimumsSize.height;
-    
+    cellHeight += _content_label.frame.size.height;
     
     if (theInfo.fb_imageid.length > 0)
     {
@@ -709,20 +698,17 @@
     {
         forwardHeight = 51;
         
-        _rContent_label.text = [theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode];
+        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
         
         if (theInfo.rfb_face.length > 0 && ![theInfo.rfb_face isEqualToString:@"(null)"] && ![theInfo.rfb_face isKindOfClass:[NSNull class]])
         {
             
         }else
         {
-            CGSize share_optimumsSize = [_rContent_label optimumSize];
-            
-            forwardHeight = share_optimumsSize.height + 10;
+            forwardHeight = _rContent_label.frame.size.height + 10;
         }
         
         forwardHeight += 5;
-        
     }
     
     
@@ -753,15 +739,8 @@
     
     cellHeight += 25;
     
-    
     float menu_background_height = 0;
-    
-    
-    if (theInfo.isShowMenuView)
-    {
-        menu_background_height += 38;
-    }
-    
+
     
     if ([theInfo.fb_zan_num intValue] != 0)
     {

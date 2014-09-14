@@ -21,7 +21,6 @@
 
 
 
-
 @class FBCircleCustomCell;
 @protocol FBCircleCustomCellDelegate <NSObject>
 
@@ -38,7 +37,7 @@
 
 
 
-@interface FBCircleCustomCell : UITableViewCell<FBCircleMenuViewDelegate,FBCircleCommentViewDelegate,RTLabelDelegate>
+@interface FBCircleCustomCell : UITableViewCell<FBCircleMenuViewDelegate,FBCircleCommentViewDelegate,RTLabelDelegate,OHAttributedLabelDelegate>
 {
     
 }
@@ -51,7 +50,7 @@
 
 @property(nonatomic,strong)UILabel * userName_label;
 
-@property(nonatomic,strong)RTLabel * content_label;
+@property(nonatomic,strong)OHAttributedLabel * content_label;
 
 @property(nonatomic,strong)UILabel * date_label;
 
@@ -63,7 +62,7 @@
 
 @property(nonatomic,strong)UILabel * rUserName_label;
 
-@property(nonatomic,strong)RTLabel * rContent_label;
+@property(nonatomic,strong)OHAttributedLabel * rContent_label;
 
 @property(nonatomic,strong)FBCirclePicturesViews * rPictuteViews;
 
