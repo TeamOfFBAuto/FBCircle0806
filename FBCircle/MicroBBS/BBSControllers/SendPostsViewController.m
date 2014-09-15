@@ -110,7 +110,7 @@
     [self ShowLocation];
     
     
-    _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,40)];
+    _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,35)];
     _title_textView.textAlignment = NSTextAlignmentLeft;
     _title_textView.textColor = [UIColor blackColor];
     _title_textView.scrollEnabled = YES;

@@ -1788,17 +1788,11 @@
     
     
     FBCirclePraiseModel * praiseModel = [[FBCirclePraiseModel alloc] init];
-    
     praiseModel.praise_image_url = [SzkAPI getUserFace];
-    
     praiseModel.praise_uid = [SzkAPI getUid];
-    
     praiseModel.praise_tid = info.fb_tid;
-    
     praiseModel.praise_dateline = [ZSNApi timechangeToDateline];
-    
     praiseModel.praise_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-    
     [info.fb_praise_array addObject:praiseModel];
     
     info.fb_zan_num = [NSString stringWithFormat:@"%d",([info.fb_zan_num intValue]+1)];
@@ -1814,8 +1808,6 @@
     float height = [test_cell returnCellHeightWith:model];
     [self.cell_height_array replaceObjectAtIndex:history_selected_menu_page withObject:[NSNumber numberWithFloat:height]];
 
-    
-    
     
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
     
