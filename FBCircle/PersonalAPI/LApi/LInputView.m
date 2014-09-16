@@ -107,6 +107,9 @@
         _textView.text = PLACE_HOLDER;
         _textView.textColor = [UIColor colorWithHexString:@"cacacc"];
         [self addSubview:_textView];
+        
+        
+//        _textView.keyboardAppearance = UIKeyboardAppearanceDark;
     }
     return _textView;
 }

@@ -92,7 +92,7 @@
                 UIImage *aImage = [images objectAtIndex:i];
                 NSString *title = [titles objectAtIndex:i];
                 
-                LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(5 + 60 * i, 0, 60, 75/2.f) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
+                LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(5 + 60 * i, 0, 80+5+5, 75/2.f) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
                 btn.backgroundColor = [UIColor colorWithHexString:@"575757"];
                 btn.tag = 100 + i;
                 btn.titleLabel.textColor = [UIColor whiteColor];

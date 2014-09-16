@@ -69,9 +69,10 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-//    self.view.backgroundColor = RGBCOLOR(214,214,214);
+//    self.view.backgroundColor = RGBCOLOR(214,214,214);//深色
     
-    self.view.backgroundColor = COLOR_VIEW_BACKGROUND;
+    self.view.backgroundColor = COLOR_VIEW_BACKGROUND;//浅色
+    
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spaceButton.width = MY_MACRO_NAME?-5:5;

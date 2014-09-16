@@ -729,6 +729,8 @@ typedef enum{
         
     }
     
+    //帖子名称
+    
     LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
     [basic_view addSubview:btnV];
     btnV.line_horizon.height = 0.5f;
@@ -743,13 +745,19 @@ typedef enum{
 /**
  *  置顶帖子部分
  */
-- (UIView *)createRecommendViewFrame:(CGRect)aFrame
+- (UIView *)createRecommendViewFrame:(CGRect)aFrame bgView:(UIView *)bgview
 {
+    CGFloat aWidth = aFrame.size.width - 8;
     
     UIView *recommed_view = [[UIView alloc]init];
-    recommed_view.backgroundColor = [UIColor whiteColor];
+    recommed_view.backgroundColor = [UIColor clearColor];
     recommed_view.layer.cornerRadius = 3.f;
     recommed_view.clipsToBounds = YES;
+    
+    
+    bgview.backgroundColor = [UIColor whiteColor];
+    bgview.layer.cornerRadius = 3.f;
+    bgview.clipsToBounds = YES;
     
     //头像
     UIImageView *headImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, 15, 40, 40)];
@@ -770,13 +778,13 @@ typedef enum{
     
     //时间
     NSString *time = [LTools timechange:aTopicModel.time];
-    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aFrame.size.width - 10 - 8- [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aWidth - 10 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
     [recommed_view addSubview:timeLabel];
     
     //正文
     
     NSString *text = aTopicModel.content;
-    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aFrame.size.width - 8 - headImage.right - 20, [LTools heightForText:text width:aFrame.size.width - headImage.right - 20 - 8 font:14]) title:text font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
+    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aWidth - headImage.right - 20, [LTools heightForText:text width:aWidth - headImage.right - 20 font:14]) title:text font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
     textLabel.numberOfLines = 0;
     textLabel.lineBreakMode = NSLineBreakByCharWrapping;
     [recommed_view addSubview:textLabel];
@@ -799,7 +807,7 @@ typedef enum{
     
     //赞
     
-    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aFrame.size.width + 2 - 8, 40)];
+    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth+1, 40)];
     zan_view.backgroundColor = [UIColor whiteColor];
     zan_view.layer.borderWidth = 1.f;
     zan_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
@@ -822,7 +830,7 @@ typedef enum{
     [zan_view addSubview:zan_names_label];
     
     //时间
-    UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aFrame.size.width + 2 - 8, 40)];
+    UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aWidth + 1, 40)];
     time_view.backgroundColor = [UIColor whiteColor];
     time_view.layer.borderWidth = 0.5f;
     time_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
@@ -840,6 +848,9 @@ typedef enum{
     aFrame.size.height = time_view.bottom;
     recommed_view.frame = aFrame;
     
+    //b背景view
+    aFrame.size.width -= 8;
+    bgview.frame = aFrame;
     
     return recommed_view;
 }
@@ -856,8 +867,10 @@ typedef enum{
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(8, 15, 304, 0)];
     [headerView addSubview:basic_view];
     
-    UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304 + 8, 0)];
-    recommed_view.backgroundColor = self.view.backgroundColor;
+    UIView *bgview = [[UIView alloc]initWithFrame:CGRectZero];
+    [headerView addSubview:bgview];
+    
+    UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304 + 8, 0) bgView:bgview];
     [headerView addSubview:recommed_view];
     
     headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15 + 15 +1);
