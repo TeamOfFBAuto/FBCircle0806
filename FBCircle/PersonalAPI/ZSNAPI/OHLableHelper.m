@@ -77,7 +77,7 @@
 /**
  *  画图
  */
-+ (void)drawImage:(OHAttributedLabel *)label
++ (void)drawImage:(OHAttributedLabel *)label WithLineBreak:(BOOL)isBreak
 {
     for (NSArray *info in label.imageInfoArr) {
         NSString *filePath = [[NSBundle mainBundle] pathForResource:[info objectAtIndex:0] ofType:nil];
@@ -85,6 +85,11 @@
         SCGIFImageView *imageView = [[SCGIFImageView alloc] initWithGIFData:data];
         imageView.frame = CGRectFromString([info objectAtIndex:2]);
         imageView.top += 2;
+        
+        if (isBreak && (imageView.right >= label.width))
+        {
+            return;
+        }
         
         [label addSubview:imageView];//label内添加图片层
         [label bringSubviewToFront:imageView];
@@ -95,32 +100,22 @@
  *  创建lable
  */
 
-+ (void)creatAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label OHDelegate:(id<OHAttributedLabelDelegate>)delegate WithWidht:(float)image_widht WithHeight:(float)image_height
++ (void)creatAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label OHDelegate:(id<OHAttributedLabelDelegate>)delegate WithWidht:(float)image_widht WithHeight:(float)image_height WithLineBreak:(BOOL)isBreak
 {
-//    [label setNeedsDisplay];
-    
     label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
     
     NSMutableArray *httpArr = [OHLableHelper addHttpArr:o_text];
-//    NSMutableArray *phoneNumArr = [OHLableHelper addPhoneNumArr:o_text];
-    
     NSString *text = [OHLableHelper transformString:o_text WithImageWidth:image_widht WithHeight:image_height];
     text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
     
     MarkupParser* p = [[MarkupParser alloc] init];
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
-    [attString setFont:[UIFont systemFontOfSize:14]];
-    [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:kCTLineBreakByCharWrapping];
+    [attString setFont:label.font];
+    [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:isBreak?kCTLineBreakByTruncatingTail:kCTLineBreakByCharWrapping];
     label.backgroundColor = [UIColor clearColor];
     [label setAttString:attString withImages:p.images];
     
     NSString *string = attString.string;
-    
-    //    if ([phoneNumArr count]) {
-    //        for (NSString *phoneNum in phoneNumArr) {
-    //            [label addCustomLink:[NSURL URLWithString:phoneNum] inRange:[string rangeOfString:phoneNum]];
-    //        }
-    //    }
     
     if ([httpArr count]) {
         for (NSString *httpStr in httpArr) {
@@ -129,8 +124,8 @@
     }
     label.delegate = delegate;
     CGRect labelRect = label.frame;
-    labelRect.size.width = [label sizeThatFits:CGSizeMake(225, CGFLOAT_MAX)].width;
-    labelRect.size.height = [label sizeThatFits:CGSizeMake(225, CGFLOAT_MAX)].height;
+//    labelRect.size.width = label.frame.size.width;//[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
+    labelRect.size.height = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
     label.frame = labelRect;
     label.onlyCatchTouchesOnLinks = NO;
     label.underlineLinks = YES;//链接是否带下划线
@@ -139,10 +134,33 @@
     // |setNeedsDisplay|方法有滞后，因为这个需要画面稳定后才调用|drawTextInRect:|方法
     // 这里我们创建的时候就需要调用|drawTextInRect:|方法，所以用|display|方法，这个我找了很久才发现的
     
-    [OHLableHelper drawImage:label];
+    [OHLableHelper drawImage:label WithLineBreak:isBreak];
 }
 
+#pragma mark - 计算label高度
 
++ (float)returnHeightAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label WithWidht:(float)image_widht WithHeight:(float)image_height
+{
+    label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
+    
+    NSString *text = [OHLableHelper transformString:o_text WithImageWidth:image_widht WithHeight:image_height];
+    text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
+    
+    MarkupParser* p = [[MarkupParser alloc] init];
+    NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
+    [attString setFont:[UIFont systemFontOfSize:14]];
+    [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:kCTLineBreakByCharWrapping];
+    [label setAttString:attString withImages:p.images];
+    
+    CGRect labelRect = label.frame;
+    labelRect.size.height = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
+    label.frame = labelRect;
+//    [label.layer display];
+    // 调用这个方法立即触发label的|drawTextInRect:|方法，
+    // |setNeedsDisplay|方法有滞后，因为这个需要画面稳定后才调用|drawTextInRect:|方法
+    // 这里我们创建的时候就需要调用|drawTextInRect:|方法，所以用|display|方法，这个我找了很久才发现的
+    return label.frame.size.height;
+}
 
 
 

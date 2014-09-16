@@ -102,6 +102,7 @@
 @property(nonatomic,strong)UITableView * myTableView;
 
 @property(nonatomic,strong)NSMutableArray * data_array;
+///存放每个cell的高度
 @property(nonatomic,strong)NSMutableArray * cell_height_array;
 
 @property(nonatomic,strong)FBCircleModel * theModel;

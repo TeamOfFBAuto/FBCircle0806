@@ -161,7 +161,7 @@
     
 //    _content_label.text = [[ZSNApi FBEximgreplace:[ZSNApi decodeSpecialCharactersString:content]] stringByReplacingEmojiCheatCodesWithUnicode];
     
-    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT];
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT WithLineBreak:YES];
     
 }
 

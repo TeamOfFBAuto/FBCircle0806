@@ -21,5 +21,7 @@
 + (NSMutableArray *)addEmailArr:(NSString *)text;
 + (NSString *)transformString:(NSString *)originalStr;//表情转换为html
 + (void)drawImage:(OHAttributedLabel *)label;
-+ (void)creatAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label OHDelegate:(id<OHAttributedLabelDelegate>)delegate WithWidht:(float)image_widht WithHeight:(float)image_height;
++ (void)creatAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label OHDelegate:(id<OHAttributedLabelDelegate>)delegate WithWidht:(float)image_widht WithHeight:(float)image_height WithLineBreak:(BOOL)isBreak;
+///计算ohlabel高度
++ (float)returnHeightAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label WithWidht:(float)image_widht WithHeight:(float)image_height;
 @end

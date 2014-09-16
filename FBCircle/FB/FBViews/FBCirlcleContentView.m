@@ -246,7 +246,7 @@
     
     NSString * content = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
     
-    [OHLableHelper creatAttributedText:content Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+    [OHLableHelper creatAttributedText:content Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
     cellHeight += _content_label.frame.size.height;
     
     
@@ -300,7 +300,7 @@
         
         _rUserName_label.hidden = YES;
         
-        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
         
         if (theInfo.rfb_face.length > 0 && ![theInfo.rfb_face isEqualToString:@"(null)"] && ![theInfo.rfb_face isKindOfClass:[NSNull class]])
         {
@@ -342,6 +342,8 @@
                         
             _rUserName_label.frame = CGRectMake(54,5,180,20);
             
+            [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
+            
             _rContent_label.frame = CGRectMake(54,28,180,_rContent_label.frame.size.height);
             
             if (theInfo.rfb_imageid.length > 0)
@@ -352,20 +354,18 @@
                 
                 [_rContentImageView loadImageFromURL:urlImage withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
                 
-                _rContent_label.frame = CGRectMake(54,28,180,_rContent_label.frame.size.height);
+                _rContent_label.frame = CGRectMake(54,28,180,20);
                 
             }else
             {
                 _rUserName_label.frame = CGRectMake(5,5,180+49,20);
                 
-                _rContent_label.frame = CGRectMake(5,28,180+49,_rContent_label.frame.size.height);
+                _rContent_label.frame = CGRectMake(5,28,180+49,20);
             }
             
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 10,245,51);
             
         }
-        
-        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
         
         forwardHeight += 10;
     }else

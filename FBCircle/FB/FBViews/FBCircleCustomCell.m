@@ -75,7 +75,6 @@
         _userName_label.textAlignment = NSTextAlignmentLeft;
         _userName_label.textColor = RGBCOLOR(3,3,3);
         _userName_label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
-        _userName_label.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_userName_label];
     }else
     {
@@ -86,11 +85,10 @@
     if (!_content_label) {
         _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(64,36,247,0)];
         _content_label.font = [UIFont systemFontOfSize:14];
-//        _content_label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
         [self.contentView addSubview:_content_label];
     }else
     {
-        [_content_label setAttString:[[NSAttributedString alloc] initWithString:@""] withImages:nil];        
+        [_content_label setAttString:[[NSAttributedString alloc] initWithString:@""] withImages:nil];
     }
     
     if (!_PictureViews) {
@@ -133,7 +131,7 @@
         _rUserName_label.textAlignment = NSTextAlignmentLeft;
         _rUserName_label.textColor = RGBCOLOR(88,105,152);
         _rUserName_label.font = [UIFont systemFontOfSize:13];
-        _rUserName_label.backgroundColor = [UIColor clearColor];
+//        _rUserName_label.backgroundColor = [UIColor clearColor];
         [_forwardBackGroundImageView addSubview:_rUserName_label];
     }else
     {
@@ -142,15 +140,14 @@
     
     
     if (!_rContent_label) {
-        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,21)];
+        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,10)];
         _rContent_label.textAlignment = NSTextAlignmentLeft;
         _rContent_label.textColor = RGBCOLOR(3,3,3);
-        _rContent_label.backgroundColor = [UIColor clearColor];
         _rContent_label.font = [UIFont systemFontOfSize:13];
         [_forwardBackGroundImageView addSubview:_rContent_label];
     }else
     {
-        [_rContent_label setAttString:[[NSAttributedString alloc] initWithString:@""] withImages:nil];
+        
     }
     
     
@@ -170,7 +167,6 @@
         _date_label = [[UILabel alloc]  initWithFrame:CGRectMake(64,0,200,15)];
         _date_label.textColor = RGBCOLOR(114,114,114);
         _date_label.textAlignment = NSTextAlignmentLeft;
-        _date_label.backgroundColor = [UIColor clearColor];
         _date_label.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:_date_label];
     }else
@@ -185,7 +181,6 @@
         _deleteButton.userInteractionEnabled = YES;
         _deleteButton.textAlignment = NSTextAlignmentCenter;
         _deleteButton.textColor = RGBCOLOR(86,105,163);
-        _deleteButton.backgroundColor = [UIColor clearColor];
         _deleteButton.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:_deleteButton];
         
@@ -201,7 +196,6 @@
         _menu_button = [UIButton buttonWithType:UIButtonTypeCustom];
         _menu_button.frame = CGRectMake(276,0,45,30);
         [_menu_button setImage:[UIImage imageNamed:@"pinglun-icon-66_24.png"] forState:UIControlStateNormal];
-        _menu_button.backgroundColor=[UIColor clearColor];
         [_menu_button addTarget:self action:@selector(clickMenuTap:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_menu_button];
     }
@@ -248,7 +242,7 @@
         _zan_label.imageHeight = 14;
         _zan_label.rt_color = @"#030303";
         _zan_label.textColor = RGBCOLOR(3,3,3);
-        _zan_label.backgroundColor = [UIColor clearColor];
+//        _zan_label.backgroundColor = [UIColor clearColor];
         [_menu_background_view addSubview:_zan_label];
     }else
     {
@@ -265,20 +259,6 @@
     {
         _jiantou_imageView.hidden = YES;
     }
-    
-    
-//    if (!_Menu_Line_view) {
-//        _Menu_Line_view = [[UIView alloc]  initWithFrame:CGRectMake(0,49,320,0.5)];
-//        
-//        _Menu_Line_view.backgroundColor = RGBCOLOR(237,237,237);
-//        
-//        _Menu_Line_view.hidden = YES;
-//        
-//        [_menu_background_view addSubview:_Menu_Line_view];
-//    }else
-//    {
-//        _Menu_Line_view.hidden = YES;
-//    }
     
     if (!_comment_line_view)
     {
@@ -327,22 +307,11 @@
         [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
     }
     
-    
-    
     _userName_label.text = theInfo.fb_username;
-    
-//    _content_label.text = [ZSNApi FBImageChange:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode]];
-//    CGRect contentFrame = _content_label.frame;
-//    CGSize optimumsSize = [_content_label optimumSize];
-//    cellHeight = cellHeight + 5 + optimumsSize.height;
-//    contentFrame.size.height = optimumsSize.height+3;
-//    _content_label.frame = contentFrame;
-    
-    
-    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+   
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
     
     cellHeight += _content_label.frame.size.height;
-    
     
     if (theInfo.fb_imageid.length > 0)
     {
@@ -359,7 +328,6 @@
                 [arry_url addObject:[dicimgurl objectForKey:@"link"]];
             }
         }
-        
         
         int i = arry_url.count/3;
         
@@ -381,16 +349,16 @@
             showBigVC.hidesBottomBarWhenPushed = YES;
             [VCtest.navigationController pushViewController:showBigVC animated:YES];
         }];
-        
+      
         cellHeight = cellHeight + 5 + height;
+      
     }
     
     
     float forwardHeight = 0;
     
     
-    
-    if ([theInfo.fb_sort isEqualToString:@"1"])
+    if ([theInfo.fb_sort isEqualToString:@"1"])//sort==1为分享微博
     {
         forwardHeight = 51;
         
@@ -398,14 +366,9 @@
         
         _rUserName_label.hidden = YES;
         
-//        _rContent_label.text = [theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode];
-        
-        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
-        
         if (theInfo.rfb_face.length > 0 && ![theInfo.rfb_face isEqualToString:@"(null)"] && ![theInfo.rfb_face isKindOfClass:[NSNull class]])
         {
             [_rContentImageView loadImageFromURL:theInfo.rfb_face withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
-            
             _rContent_label.frame = CGRectMake(54,5.5,180,40);
             
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 8,245,51);
@@ -417,9 +380,11 @@
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 8,245,forwardHeight);
         }
         
+        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
+        
         forwardHeight += 5;
         
-    }else if ([theInfo.fb_topic_type isEqualToString:@"2"])
+    }else if ([theInfo.fb_topic_type isEqualToString:@"2"])//转发微博
     {
         forwardHeight = 51;
         
@@ -457,7 +422,6 @@
                 
                 NSString * urlImage = [dicimgurl objectForKey:@"link"];
                 [_rContentImageView loadImageFromURL:urlImage withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
-                
             }else
             {
                 _rUserName_label.frame = CGRectMake(5,5,180+49,20);
@@ -466,7 +430,7 @@
             }
         }
         
-        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT];
+        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.rfb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT WithLineBreak:YES];
         
         forwardHeight += 5;
     }else
@@ -556,7 +520,6 @@
         CGSize zanOptimusize = [_zan_label optimumSize];
         
         _zan_label.frame = CGRectMake(_zan_label.frame.origin.x,menu_background_height + 4,_zan_label.frame.size.width,zanOptimusize.height+10);
-        
         menu_background_height += zanOptimusize.height + 12;
     }
     
@@ -590,6 +553,7 @@
         
         menu_background_height += 10;
     }
+
     
     return menu_background_height + cellHeight + forwardHeight + 6.5;
 }
@@ -660,45 +624,29 @@
 -(float)returnCellHeightWith:(FBCircleModel *)theInfo
 {
     float cellHeight = 30;
-    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+//    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
+
+    [OHLableHelper returnHeightAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+    
     
     cellHeight += _content_label.frame.size.height;
     
     if (theInfo.fb_imageid.length > 0)
     {
-        NSMutableArray *arry_url=[NSMutableArray array];
-        
-        if ([theInfo.fb_imageid rangeOfString:@"assets"].length)
-        {
-            arry_url = theInfo.fb_image;
-        }else
-        {
-            for (int i=0; i<theInfo.fb_image.count; i++)
-            {
-                NSDictionary *dicimgurl=[theInfo.fb_image objectAtIndex:i];
-                [arry_url addObject:[dicimgurl objectForKey:@"link"]];
-            }
-        }
-        
-        
-        int i = arry_url.count/3;
-        
-        int j = arry_url.count%3?1:0;
-        
+        int i = theInfo.fb_image.count/3;
+        int j = theInfo.fb_image.count%3?1:0;
         float height = 75*(i+j)+2.5*(j + i - 1);
-        
         cellHeight = cellHeight + 5 + height;
     }
     
-    
     float forwardHeight = 0;
-    
     
     if ([theInfo.fb_sort isEqualToString:@"1"])
     {
         forwardHeight = 51;
         
-        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+//        [OHLableHelper creatAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
+        [OHLableHelper returnHeightAttributedText:[theInfo.rfb_username stringByReplacingEmojiCheatCodesWithUnicode] Label:_rContent_label WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
         
         if (theInfo.rfb_face.length > 0 && ![theInfo.rfb_face isEqualToString:@"(null)"] && ![theInfo.rfb_face isKindOfClass:[NSNull class]])
         {

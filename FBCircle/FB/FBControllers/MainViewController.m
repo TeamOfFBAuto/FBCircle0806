@@ -35,7 +35,12 @@
     
     
     UIBarButtonItem * spaceButton;
-    
+//    ///存放所有内容label
+//    NSMutableArray * contentLabelArr;
+//    ///存放所有回复内容label
+//    NSMutableArray * rcontentLabelArr;
+//    ///存放所有评论数据views
+//    NSMutableArray * commentsViewArr;
 }
 
 @end
@@ -256,17 +261,11 @@
     _data_array = [NSMutableArray array];
     _cell_height_array = [NSMutableArray array];
     notification_dictionary  = [NSMutableDictionary dictionary];
-    
     _theModel = [[FBCircleModel alloc] init];
-    
     _personModel = [[FBCirclePersonalModel alloc] init];
-    
     currentPage = 1;
-    
     temp_count = 1;
-    
     isFace = NO;
-    
     
     [self loadInfomationWithPage];
     
@@ -1369,7 +1368,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     FBCircleModel * model = [_data_array objectAtIndex:indexPath.row];
-    
+
     [cell setAllViews];
     
     [cell setInfomationWith:model];
@@ -1911,14 +1910,15 @@
              
              [bself dotheSuccessloadDtat:array];
              
-             if (bself.data_array.count == array.count)
+             if (array.count == 0)
              {
+                 currentPage--;
                  loadview.normalLabel.text = @"没有更多数据了";
              }
              
          } WithFailedBlock:^(NSString *operation) {
              [bself doneLoadingTableViewData];
-             
+             currentPage--;
              [loadview stopLoading:1];
              
              loadsucess=YES;

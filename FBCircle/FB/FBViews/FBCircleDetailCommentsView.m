@@ -117,7 +117,7 @@
     
     _userName_label.frame = CGRectMake(_userName_label.frame.origin.x,_userName_label.frame.origin.y + height,_userName_label.frame.size.width,_userName_label.frame.size.height);
     
-    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:model.comment_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT];
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:model.comment_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT WithLineBreak:NO];
     
     _dateLine_label.text = [ZSNApi timechange:model.comment_dateline];
     

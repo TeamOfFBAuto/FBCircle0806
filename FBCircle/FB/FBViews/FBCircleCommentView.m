@@ -67,13 +67,13 @@
         label.textColor = RGBCOLOR(3,3,3);
         label.font = [UIFont systemFontOfSize:12];
         [self addSubview:label];
-        [OHLableHelper creatAttributedText:content Label:label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
+        [OHLableHelper creatAttributedText:content Label:label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
         NSRange range = [content rangeOfString:model.comment_username];
         label.underlineLinks = NO;
         [label addCustomLink:[NSURL URLWithString:model.comment_uid] inRange:range];
         [label setLinkColor:RGBCOLOR(87,106,154)];
-        label.backgroundColor = [UIColor clearColor];
-        height += label.frame.size.height;
+//        label.backgroundColor = [UIColor clearColor];
+        height += label.frame.size.height+3;
         
     }
 

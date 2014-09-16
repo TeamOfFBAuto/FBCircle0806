@@ -161,6 +161,7 @@
     
     //push end
     
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     
     
     //判断网络是否可用
