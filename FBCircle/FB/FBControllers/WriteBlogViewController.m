@@ -542,6 +542,7 @@
         UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
         
         [_allImageArray addObject:newImage];
+        newImage = nil;
         
         NSURL * url = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"];
         
@@ -591,7 +592,7 @@
          [_allAssesters addObject:url_string];
          
          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-             [ZSNApi saveImageToDocWith:url_string WithImage:image];
+             [ZSNApi saveImageToDocWith:url_string WithImage:newImage];
          });
          
      }];
@@ -611,13 +612,11 @@
         picturesView = [[UIView alloc] init];
     }else
     {
-        for (UIView * view in picturesView.subviews)
-        {
-            if ([view isKindOfClass:[UIButton class]]) {
-                [(UIButton *)view setImage:nil forState:UIControlStateNormal];
-            }
-            
-            [view removeFromSuperview];
+        for (int i = 0;i < picturesView.subviews.count;i++) {
+            UIButton * button = [picturesView.subviews objectAtIndex:i];
+            [button setImage:nil forState:UIControlStateNormal];
+            [button removeFromSuperview];
+            button = nil;
         }
     }
     
@@ -670,7 +669,7 @@
                     
                     button.imageView.contentMode = UIViewContentModeScaleAspectFill;
                     
-                    [button setImage:[self.allImageArray objectAtIndex:j+4*i] forState:UIControlStateNormal];
+                    [button setImage:[ZSNApi scaleToSizeWithImage:[self.allImageArray objectAtIndex:j+4*i] size:CGSizeMake(130,130)] forState:UIControlStateNormal];
                     
                     [button addTarget:self action:@selector(RemoveSelfTap:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -1350,7 +1349,13 @@
         [view removeFromSuperview];
     }
     
-    [_allImageArray removeAllObjects];
+    for (int i = 0;i < _allImageArray.count;i++)
+    {
+        UIImage * image = [_allImageArray objectAtIndex:i];
+        image = nil;
+    }
+    
+    _allImageArray = nil;
     
     [_allAssesters removeAllObjects];
     

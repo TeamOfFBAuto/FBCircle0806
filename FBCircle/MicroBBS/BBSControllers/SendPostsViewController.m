@@ -800,11 +800,19 @@
 {
     [self deleteNotificationObserver];
     
-    for (UIView * view in imageScrollView.subviews) {
-        [view removeFromSuperview];
+    for (int i = 0;i < imageScrollView.subviews.count;i++) {
+        UIButton * button = [imageScrollView.subviews objectAtIndex:i];
+        [button setImage:nil forState:UIControlStateNormal];
+        button = nil;
     }
     
     imageScrollView = nil;
+    
+    for (int i = 0;i < allImageArray.count;i++) {
+        UIImage * image = [allImageArray objectAtIndex:i];
+        image = nil;
+    }
+    allImageArray = nil;
 }
 
 
