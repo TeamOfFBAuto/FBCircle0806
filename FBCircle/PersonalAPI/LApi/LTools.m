@@ -399,22 +399,7 @@
     CGSize aSize = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
     return aSize.height;
 }
-/**
- *  更改指定frame值
- *
- */
-+ (void)updateFrame:(UIView *)aView
-            originX:(CGFloat)x
-            originY:(CGFloat)y
-              width:(CGFloat)width
-             height:(CGFloat)height
-{
-    CGRect aFrame = aView.frame;
-    aFrame.origin.x = x;
-    aFrame.origin.y = y;
-    aFrame.size.width = width;
-    aFrame.size.height = height;
-}
+
 
 #pragma - mark 验证邮箱、电话等有效性
 
@@ -679,6 +664,43 @@
     }
     return text;
 }
+/**
+ *  给字符串加逗号
+ *
+ *  @param string 源字符串 如： 123456.78 或者 123456
+ *
+ *  @return 逗号分割字符串  1,234,567.89 或者 123,456
+ */
+
++ (NSString *)NSStringAddComma:(NSString *)string{//添加逗号
+    
+    if (string == nil) {
+        return @"";
+    }
+    
+    NSRange range = [string rangeOfString:@"."];
+    
+    NSMutableString *temp = [NSMutableString stringWithString:string];
+    int i;
+    if (range.length > 0) {
+        //有.
+        
+        i = (int)range.location;
+        
+    }else
+    {
+        i = (int)string.length;
+    }
+    
+    while ((i-=3) > 0) {
+        
+        [temp insertString:@"," atIndex:i];
+    }
+    
+    return temp;
+    
+}
+
 
 /**
  *  关键词特殊显示

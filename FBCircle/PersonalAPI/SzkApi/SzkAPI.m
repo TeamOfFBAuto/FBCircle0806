@@ -15,7 +15,7 @@
 @implementation SzkAPI
 
 #define NORESAULT @"noresault"
-#include "sys/stat.h"
+//#include "sys/stat.h"
 
 #pragma mark--获取通讯录放到一个数组里面，包含名字和号码
 +(NSMutableArray *)AccesstoAddressBookAndGetDetail{
@@ -142,39 +142,39 @@
 }
 
 
-+ (long long) _folderSizeAtPath: (const char*)folderPath{
-    long long folderSize = 0;
-    DIR* dir = opendir(folderPath);
-    if (dir == NULL) return 0;
-    struct dirent* child;
-    while ((child = readdir(dir))!=NULL) {
-        if (child->d_type == DT_DIR && (
-                                        (child->d_name[0] == '.' && child->d_name[1] == 0) || // 忽略目录 .
-                                        (child->d_name[0] == '.' && child->d_name[1] == '.' && child->d_name[2] == 0) // 忽略目录 ..
-                                        )) continue;
-        
-        int folderPathLength = strlen(folderPath);
-        char childPath[1024]; // 子文件的路径地址
-        stpcpy(childPath, folderPath);
-        if (folderPath[folderPathLength-1] != '/'){
-            childPath[folderPathLength] = '/';
-            folderPathLength++;
-        }
-        stpcpy(childPath+folderPathLength, child->d_name);
-        childPath[folderPathLength + child->d_namlen] = 0;
-        if (child->d_type == DT_DIR){ // directory
-            folderSize += [self _folderSizeAtPath:childPath]; // 递归调用子目录
-            // 把目录本身所占的空间也加上
-            struct stat st;
-            if(lstat(childPath, &st) == 0) folderSize += st.st_size;
-        }else if (child->d_type == DT_REG || child->d_type == DT_LNK){ // file or link
-            struct stat st;
-            if(lstat(childPath, &st) == 0) folderSize += st.st_size;
-        }
-    }
-    
-    return folderSize;
-}
+//+ (long long) _folderSizeAtPath: (const char*)folderPath{
+//    long long folderSize = 0;
+//    DIR* dir = opendir(folderPath);
+//    if (dir == NULL) return 0;
+//    struct dirent* child;
+//    while ((child = readdir(dir))!=NULL) {
+//        if (child->d_type == DT_DIR && (
+//                                        (child->d_name[0] == '.' && child->d_name[1] == 0) || // 忽略目录 .
+//                                        (child->d_name[0] == '.' && child->d_name[1] == '.' && child->d_name[2] == 0) // 忽略目录 ..
+//                                        )) continue;
+//        
+//        int folderPathLength = strlen(folderPath);
+//        char childPath[1024]; // 子文件的路径地址
+//        stpcpy(childPath, folderPath);
+//        if (folderPath[folderPathLength-1] != '/'){
+//            childPath[folderPathLength] = '/';
+//            folderPathLength++;
+//        }
+//        stpcpy(childPath+folderPathLength, child->d_name);
+//        childPath[folderPathLength + child->d_namlen] = 0;
+//        if (child->d_type == DT_DIR){ // directory
+//            folderSize += [self _folderSizeAtPath:childPath]; // 递归调用子目录
+//            // 把目录本身所占的空间也加上
+//            struct stat stt;
+//            if(lstat(childPath, &stt) == 0) folderSize += stt.st_size;
+//        }else if (child->d_type == DT_REG || child->d_type == DT_LNK){ // file or link
+//            struct stat st;
+//            if(lstat(childPath, &st) == 0) folderSize += st.st_size;
+//        }
+//    }
+//    
+//    return folderSize;
+//}
 
 
 //获取authkey
