@@ -708,9 +708,12 @@
             
             NSLog(@"%@",self.gender);
             //判断是否修改过性别
+            
             if ([self.gender isEqualToString:@"0"]) {//没修改过
+                
                 UIAlertView *gender = [[UIAlertView alloc]initWithTitle:@"选择性别" message:@"只能选择一次,下次不能修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"男",@"女", nil];
                 [gender show];
+                
             }else{//修改过
                 
             }
@@ -876,8 +879,9 @@
             bself.personModel = model;
             bself.userName = model.person_username;
             
-            NSLog(@"%@",model.person_gender);
+            NSLog(@"用户性别-------%@",model.person_gender);
             
+            bself.gender = model.person_gender;//性别
             bself.yuanlaiQianming = model.person_words;//签名
             
             isLoadUserInfoSuccess = YES;
