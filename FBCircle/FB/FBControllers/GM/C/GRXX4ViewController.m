@@ -1264,7 +1264,7 @@
         
         NSString* fullURL = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=updatehead&authkey=%@",[SzkAPI getAuthkey]];
         
-        NSLog(@"上传头像请求的地址===%@ %s",fullURL,__FUNCTION__);
+        NSLog(@"上传头像请求的地址===%@     ----%s",fullURL,__FUNCTION__);
         
         //设置标志位
         NSString *str = @"yes";
