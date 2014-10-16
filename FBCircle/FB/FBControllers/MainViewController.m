@@ -468,7 +468,7 @@
     
     notificationDic = nil;
     
-    bannerView.image = [UIImage imageNamed:@"fengmian_loading_640_512.png"];
+    [bannerView loadImageFromURL:@"" withPlaceholdImage:[UIImage imageNamed:@"fengmian_loading_640_512.png"]];
     
     user_header_imageView.image = PERSONAL_DEFAULTS_IMAGE;
     
@@ -1201,9 +1201,11 @@
         bannerView.image = [GlocalUserImage getUserBannerImage];
     }else
     {
-        if ([_personModel.person_frontpic isEqualToString:@"http://quan.fblife.com/resource/front//"])
+        NSString * string = [NSString stringWithFormat:@"%@",_personModel.person_frontpic];
+        NSLog(@"dadsaddasdasdad---=d--=-=  %@  ---  %@",_personModel.person_frontpic,string);
+        if ([string isEqualToString:@"http://quan.fblife.com/resource/front//"])
         {
-            bannerView.image = [UIImage imageNamed:@"fengmian_640_512.png"];
+            [bannerView loadImageFromURL:@"" withPlaceholdImage:[UIImage imageNamed:@"fengmian_640_512.png"]];
         }else
         {
             [bannerView setImageWithURL:[NSURL URLWithString:_personModel.person_frontpic] placeholderImage:[UIImage imageNamed:@"fengmian_loading_640_512.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
@@ -1978,9 +1980,18 @@
 
 -(void)FBCircleUserInfomationChanged:(NSNotification *)notification
 {
-    user_header_imageView.image = [GlocalUserImage getUserFaceImage];
-    bannerView.image = [GlocalUserImage getUserBannerImage];
-    [self.myTableView reloadData];
+    UIImage * headerImg = [GlocalUserImage getUserFaceImage];
+    if (headerImg)
+    {
+        user_header_imageView.image = headerImg;
+    }
+    
+    UIImage * bannerImg = [GlocalUserImage getUserBannerImage];
+    if (bannerImg) {
+        bannerView.image = bannerImg;
+    }
+    
+//    [self.myTableView reloadData];
 }
 
 -(void)pushToDetailBlogWith:(FBCircleModel *)model
@@ -2268,25 +2279,15 @@
     FBCircleModel * model = [self.data_array objectAtIndex:history_selected_menu_page];
     
     FBCircleCommentModel * commentModel = [[FBCircleCommentModel alloc] init];
-    
     commentModel.comment_content = theContent;
-    
     commentModel.comment_uid = [SzkAPI getUid];
-    
     commentModel.comment_tid = model.fb_tid;
-    
     commentModel.comment_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-    
     commentModel.comment_face = [ZSNApi returnUrl:[SzkAPI getUid]];
-    
     commentModel.comment_dateline = [ZSNApi timechangeToDateline];
-    
     [model.fb_comment_array addObject:commentModel];
-    
     model.fb_reply_num = [NSString stringWithFormat:@"%d",([model.fb_reply_num intValue]+1)];
-    
     [FBCircleModel addCommentWith:commentModel withtid:model.fb_tid];
-    
     
     if (!test_cell)
     {
@@ -2300,17 +2301,62 @@
     
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    
-    
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],model.fb_tid,model.fb_uid,[[theContent stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
-    
-    NSLog(@"发表评论接口 ----   %@",fullUrl);
-    
     self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44,320,44);
     
     self.inputToolBarView.myTextView.frame = CGRectMake(17,6,248,32);
     
     self.inputToolBarView.myTextView.text = @"";
+    
+//    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],model.fb_tid,model.fb_uid,[[theContent stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
+//    
+//    NSLog(@"发表评论接口 ----   %@",fullUrl);
+    
+    ASIFormDataRequest * comment_request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:FBCIRCLE_COMMENT_URL]];
+    [comment_request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [comment_request setPostValue:model.fb_tid forKey:@"tid"];
+    [comment_request setPostValue:model.fb_uid forKey:@"touid"];
+    [comment_request setPostValue:[[theContent stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding] forKey:@"content"];
+    __weak typeof(comment_request)brequest = comment_request;
+    
+    [brequest setCompletionBlock:^{
+        @try {
+            NSDictionary * allDic = [comment_request.responseString objectFromJSONString];
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+            {
+                NSLog(@"发表评论成功");
+            }else
+            {
+                
+                [FBCircleModel addNOSendCommentWith:commentModel];
+                
+                //             [model.fb_comment_array removeObject:commentModel];
+                //
+                //             [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:history_selected_menu_page inSection:0], nil] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }];
+    
+    [brequest setFailedBlock:^{
+        [FBCircleModel addNOSendCommentWith:commentModel];
+    }];
+    
+    [comment_request startAsynchronous];
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     
     NSURLRequest * urlRequest = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
     
@@ -2340,6 +2386,7 @@
      }];
     
     [requestOpration start];
+     */
 }
 
 

@@ -106,7 +106,6 @@
         self.fb_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
         
         self.fb_username = [NSString stringWithFormat:@"%@",[dic objectForKey:@"username"]];
-        
         self.fb_content = [ZSNApi decodeSpecialCharactersString:[NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]]];
         
         self.fb_imageid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"imageid"]];

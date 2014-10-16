@@ -194,6 +194,39 @@
 {
     FBCircleCommentModel * model = (FBCircleCommentModel *)data;
     
+    
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:FBCIRCLE_FORWARD_URL]];
+    [request setPostValue:[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"content"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:model.comment_tid forKey:@"tid"];
+    [request setPostValue:model.comment_uid forKey:@"touid"];
+    
+    __weak typeof(request)arequest = request;
+    [request setCompletionBlock:^{
+        NSDictionary * allDic = [arequest.responseString objectFromJSONString];
+        if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
+            
+            NSLog(@"转发成功");
+            [FBCircleModel deleteForwardByDateLine:model.comment_dateline];
+        }else
+        {
+            NSLog(@"转发失败 ---  %@",[allDic objectForKey:@"errinfo"]);
+            
+            [FBCircleModel deleteForwardByDateLine:model.comment_dateline];
+        }
+
+    }];
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [request startAsynchronous];
+    
+    
+    
+    /*
+    
     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[SzkAPI getAuthkey],model.comment_tid,model.comment_uid,[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSLog(@"转发文章-------%@",fullUrl);
@@ -226,6 +259,8 @@
      }];
     
     [requestOpration start];
+     
+     */
     
 }
 
@@ -235,6 +270,40 @@
 {
     FBCircleCommentModel * model = (FBCircleCommentModel *)data;
     
+    
+//    authkey=%@&tid=%@&touid=%@&content=%@&
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:FBCIRCLE_COMMENT_URL]];
+    [request setPostValue:[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"content"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:model.comment_tid forKey:@"tid"];
+    [request setPostValue:model.comment_uid forKey:@"touid"];
+    
+    __weak typeof(request)arequest = request;
+    [request setCompletionBlock:^{
+        NSDictionary * allDic = [arequest.responseString objectFromJSONString];
+        
+        if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+        {
+            NSLog(@"发表评论成功");
+            
+            [FBCircleModel deleteCommentsByDateLine:model.comment_dateline];
+            
+        }else
+        {
+            
+            NSLog(@"发表评论失败 ----  %@",[allDic objectForKey:@"errinfo"]);
+        }
+        
+    }];
+    
+    [request setFailedBlock:^{
+        NSLog(@"发表评论失败");
+    }];
+    
+    [request startAsynchronous];
+    
+    
+    /*
     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[SzkAPI getAuthkey],model.comment_tid,model.comment_uid,[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSLog(@"发表评论接口 ----   %@",fullUrl);
@@ -273,7 +342,7 @@
     
     [requestOpration start];
     
-    
+    */
     
 }
 
@@ -427,8 +496,6 @@
 {
     
     NSString* fullURL = [NSString stringWithFormat:PUBLISH_IMAGE,model.fb_authkey];
-    //  NSString * fullURL = [NSString stringWithFormat:@"http://t.fblife.com/openapi/index.php?mod=doweibo&code=addpicmuliti&fromtype=b5eeec0b&authkey=UmZaPlcyXj8AMQRoDHcDvQehBcBYxgfbtype=json"];
-    
     
     NSLog(@"上传图片的url  ——--  %@",fullURL);
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
@@ -436,17 +503,11 @@
     request.tag = 1;
     
     [request setRequestMethod:@"POST"];
-    
     request.timeOutSeconds = 30;
-    
     request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
-    
     request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
-    
     [request setPostFormat:ASIMultipartFormDataPostFormat];
-    
     NSLog(@"imagearray -----  %@",_allImageArray);
-    
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
         
@@ -524,40 +585,31 @@
 {
     NSLog(@"发送微博url ----  %@",urlString);
     
-    //    SzkLoadData *_loaddata=[[SzkLoadData alloc]init];
-    //    [_loaddata SeturlStr:urlString block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
-    //
-    //
-    //        if (errcode==0)
-    //        {
-    //            //张少南  这个地方需要一个tid
-    //
-    //            model.fb_tid = @"111";
-    //
-    //            NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:model,@"fbcirclemodel",nil];
-    //
-    //            int delete_result = [FBCircleModel deleteBlogByDateLine:model.fb_deteline];
-    //
-    //            NSLog(@"删除数据结果----%d",delete_result);
-    //
-    //            [[NSNotificationCenter defaultCenter]postNotificationName:SUCCESSUPDATA object:model userInfo:dic];
-    //
-    //            NSLog(@"发送成功");
-    //
-    //
-    //        }else
-    //        {
-    //           int result = [FBCircleModel addWeiBoContentWithInfo:model];
-    //
-    //            NSLog(@"添加到数据库--%d==code==%d==%@",result,errcode,errorindo);
-    //        }
-    //    }];
-    //
-    //
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://quan.fblife.com/index.php?c=interface&a=topicpost&fbtype=json"]];
+    [request setPostValue:model.fb_content forKey:@"content"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
     
+    __weak typeof(request)arequest = request;
+    [request setCompletionBlock:^{
+        NSLog(@"request -----  %@",[arequest.responseString objectFromJSONString]);
+        
+        model.fb_tid = @"111";
+        NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:model,@"fbcirclemodel",nil];
+        int delete_result = [FBCircleModel deleteBlogByDateLine:model.fb_deteline];
+        NSLog(@"删除数据结果----%d",delete_result);
+        [[NSNotificationCenter defaultCenter]postNotificationName:SUCCESSUPDATA object:model userInfo:dic];
+        NSLog(@"发送成功");
+    }];
     
+    [request setFailedBlock:^{
+        int result = [FBCircleModel addWeiBoContentWithInfo:model];
+        NSLog(@"添加到数据库--%d==code====",result);
+    }];
     
-    
+    [request startAsynchronous];
+   
+
+    /*
     AFHTTPRequestOperation * operation = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
     
     __block AFHTTPRequestOperation * request = operation;
@@ -592,6 +644,8 @@
      }];
     
     [operation start];
+     */
+   
 }
 
 
@@ -630,28 +684,6 @@
     [self sendBlogWithUrl:fullUrl With:model];
 }
 
-//-(void)sendBlogWithUrl:(NSString *)urlString
-//{
-//
-//    SzkLoadData *_loaddata=[[SzkLoadData alloc]init];
-//    [_loaddata SeturlStr:urlString block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
-//        if (errcode==0)
-//        {
-//            NSLog(@"发表成功");
-//
-//            int delete_result = [FBCircleModel deleteBlogByDateLine:_myModel.fb_deteline];
-//
-//            NSLog(@"删除数据结果----%d",delete_result);
-//
-//        }else
-//        {
-//            int result = [FBCircleModel addWeiBoContentWithInfo:_myModel];
-//
-//            NSLog(@"添加到数据库----%d",result);
-//        }
-//    }];
-//}
-
 //发送失败的提示框
 -(void)sendErrorWith:(NSString *)error
 {
@@ -659,8 +691,6 @@
     
     NSLog(@"添加到数据库----%d -- error ---  %@",result,error);
 }
-
-
 
 
 #pragma mark - 联网时上传未上传成功的banner face

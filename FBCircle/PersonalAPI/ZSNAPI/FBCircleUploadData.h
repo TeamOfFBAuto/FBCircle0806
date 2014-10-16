@@ -5,6 +5,9 @@
 //  Created by soulnear on 14-6-8.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
+/*
+ **后台上传类
+ */
 
 #import <Foundation/Foundation.h>
 #import "FBCircleModel.h"

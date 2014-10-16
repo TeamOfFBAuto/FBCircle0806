@@ -335,6 +335,58 @@
 
 -(void)uploadNewBBSPostsHaveImages:(BOOL)haveImage WithImageID:(NSString *)images
 {
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:BBS_UPLOAD_POSTS_URL]];
+    [request setPostValue:self.fid forKey:@"fid"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:[_title_textView.text stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"title"];
+    [request setPostValue:[_content_textView.text stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
+    [request setPostValue:images forKey:@"imgid"];
+    [request setPostValue:_location_string forKey:@"address"];
+    
+    __weak typeof(request)arequest = request;
+    __weak typeof(self)bself = self;
+    __weak typeof(hud)bhud = hud;
+    [request setCompletionBlock:^{
+        
+        @try {
+            NSDictionary * allDic = [arequest.responseString objectFromJSONString];
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0)
+            {
+                bhud.labelText = @"发送成功";
+                [bhud hide:YES afterDelay:1.5];
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_TOPICLIST object:nil];
+                
+                [bself performSelector:@selector(comeBack) withObject:nil afterDelay:1.5];
+                
+                
+            }else
+            {
+                NSLog(@"error ---  %@",[allDic objectForKey:@"errinfo"]);
+                bhud.labelText = [allDic objectForKey:@"errinfo"];
+                [bhud hide:YES afterDelay:1.5];
+            }
+            
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+    }];
+    
+    [request setFailedBlock:^{
+        bhud.labelText = @"发送失败,请重试";
+        [bhud hide:YES afterDelay:1.5];
+    }];
+    
+    [request startAsynchronous];
+    
+    
+    
+    /*
     NSString * fullUrl = [NSString stringWithFormat:BBS_UPLOAD_POSTS_URL,[SzkAPI getAuthkey],self.fid,_title_textView.text,_content_textView.text,images,_location_string];
     NSLog(@"发表帖子接口 -- %@",fullUrl);
     
@@ -384,6 +436,7 @@
     }];
     
     [posts_request start];
+     */
 }
 
 -(void)comeBack

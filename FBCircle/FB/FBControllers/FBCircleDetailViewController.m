@@ -356,7 +356,7 @@
     
     
     if (indexPath.row == 0) {
-        
+    
         FBCirlcleContentView * contentView1 = [[FBCirlcleContentView alloc] initWithFrame:CGRectMake(0,0,320,0)];
         contentView1.delegate = self;
         
@@ -885,9 +885,6 @@
     [self.myTableView reloadData];
     
     
-    
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],_theModel.fb_tid,_theModel.fb_uid,[[content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
-    
     [UIView animateWithDuration:0.4 animations:^{
         self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44,320,44);
         
@@ -897,6 +894,48 @@
     } completion:^(BOOL finished) {
         
     }];
+    
+    
+    ASIFormDataRequest * comment_request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:FBCIRCLE_COMMENT_URL]];
+    [comment_request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [comment_request setPostValue:_theModel.fb_tid forKey:@"tid"];
+    [comment_request setPostValue:_theModel.fb_uid forKey:@"touid"];
+    [comment_request setPostValue:[[content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding] forKey:@"content"];
+    __weak typeof(comment_request)brequest = comment_request;
+    
+    [brequest setCompletionBlock:^{
+        @try {
+            NSDictionary * allDic = [comment_request.responseString objectFromJSONString];
+            
+            [self loadCommentsWithPage:1];
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
+                
+            }else
+            {
+                //             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[allDic objectForKey:@"errinfo"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                //             [alertView show];
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+    }];
+    
+    [brequest setFailedBlock:^{
+        
+    }];
+    
+    [comment_request startAsynchronous];
+    
+    
+    
+    /*
+     
+     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_COMMENT_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],_theModel.fb_tid,_theModel.fb_uid,[[content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
     
     NSLog(@"发表评论接口 ----   %@",fullUrl);
     
@@ -926,6 +965,8 @@
      }];
     
     [requestOpration start];
+     
+     */
 }
 
 

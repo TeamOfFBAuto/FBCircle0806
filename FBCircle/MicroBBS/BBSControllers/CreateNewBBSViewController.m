@@ -180,6 +180,60 @@
     MBProgressHUD * hud = [ZSNApi showMBProgressWithText:@"正在创建" addToView:self.navigationController.view];
     hud.mode = MBProgressHUDModeAnnularDeterminate;
     
+    
+    
+//    &authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:CREATE_MICRO_BBS_URL]];
+    [request setPostValue:[name_tf.text stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"name"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:[introduction_tf.text stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"intro"];
+    [request setPostValue:[NSString stringWithFormat:@"%d",icon_num] forKey:@"headpic"];
+    [request setPostValue:[NSString stringWithFormat:@"%d",type_num] forKey:@"forumclass"];
+    
+    __weak typeof(request)arequest = request;
+    __weak typeof(self)bself = self;
+    [request setCompletionBlock:^{
+        
+        @try {
+            
+            hud.mode = MBProgressHUDModeText;
+            
+            NSDictionary * allDic = [arequest.responseString objectFromJSONString];
+            
+            NSLog(@"创建微论坛 ---  %@ ----  %@",allDic,[allDic objectForKey:@"errinfo"]);
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0)//创建成功返回
+            {
+                hud.labelText = @"创建成功";
+                [hud hide:YES afterDelay:1.5];
+                
+                [bself performSelector:@selector(comeBack) withObject:nil afterDelay:1.5];
+            }else
+            {
+                hud.labelText = [allDic objectForKey:@"errinfo"];
+                [hud hide:YES afterDelay:1.5];
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+    }];
+    
+    [request setFailedBlock:^{
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"创建失败,请重试";
+        [hud hide:YES afterDelay:1.5];
+    }];
+    
+    [request startAsynchronous];
+
+    
+    
+    /*
     NSString * fullUrl = [NSString stringWithFormat:CREATE_MICRO_BBS_URL,[SzkAPI getAuthkey],name_tf.text,introduction_tf.text,icon_num,type_num];
     NSLog(@"创建微论坛接口 ---  %@",fullUrl);
     NSURL * url = [NSURL URLWithString:[fullUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -218,6 +272,7 @@
     }];
     
     [create_request start];
+     */
 }
 -(void)comeBack
 {

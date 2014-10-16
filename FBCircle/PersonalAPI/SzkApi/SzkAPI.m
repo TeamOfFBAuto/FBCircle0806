@@ -11,11 +11,11 @@
 #include <dirent.h>
 #import "FriendAttribute.h"
 #import <AddressBookUI/AddressBookUI.h>
-
+#include "sys/stat.h"
 @implementation SzkAPI
 
 #define NORESAULT @"noresault"
-#include "sys/stat.h"
+
 
 #pragma mark--获取通讯录放到一个数组里面，包含名字和号码
 +(NSMutableArray *)AccesstoAddressBookAndGetDetail{

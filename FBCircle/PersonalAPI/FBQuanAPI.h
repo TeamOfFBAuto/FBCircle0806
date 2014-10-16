@@ -147,9 +147,11 @@ alpha:(a)]
 
 #define FBCIRCLE_PRAISE_URL @"http://quan.fblife.com/index.php?c=interface&a=dopraise&authkey=%@&tid=%@&fbtype=json"
 
-#define FBCIRCLE_COMMENT_URL @"http://quan.fblife.com/index.php?c=interface&a=doreply&authkey=%@&tid=%@&touid=%@&content=%@&fbtype=json"//发表评论的接口
+//#define FBCIRCLE_COMMENT_URL @"http://quan.fblife.com/index.php?c=interface&a=doreply&authkey=%@&tid=%@&touid=%@&content=%@&fbtype=json"//发表评论的接口
+#define FBCIRCLE_COMMENT_URL @"http://quan.fblife.com/index.php?c=interface&a=doreply&fbtype=json"//发表评论的接口
 
-#define FBCIRCLE_FORWARD_URL @"http://quan.fblife.com/index.php?c=interface&a=doforward&authkey=%@&tid=%@&touid=%@&content=%@&fbtype=json"
+//#define FBCIRCLE_FORWARD_URL @"http://quan.fblife.com/index.php?c=interface&a=doforward&authkey=%@&tid=%@&touid=%@&content=%@&fbtype=json"
+#define FBCIRCLE_FORWARD_URL @"http://quan.fblife.com/index.php?c=interface&a=doforward&fbtype=json"
 
 #define FBCIRCLE_GET_COMMENTS_URL @"http://quan.fblife.com/index.php?c=interface&a=getreplys&tid=%@&page=%d&ps=10&fbtype=json"
 
@@ -211,8 +213,9 @@ alpha:(a)]
 
 
 #pragma mark - 创建论坛接口
+//#define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum&authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d"
+#define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum"
 
-#define CREATE_MICRO_BBS_URL @"http://quan.fblife.com/index.php?c=forum&a=createforum&authkey=%@&name=%@&intro=%@&headpic=%d&forumclass=%d"
 
 #pragma mark - 微论坛添加成员接口
 
@@ -224,8 +227,8 @@ alpha:(a)]
 
 #pragma mark - 发帖子接口
 
-#define BBS_UPLOAD_POSTS_URL @"http://quan.fblife.com/index.php?c=forum&a=addthread&authkey=%@&fid=%@&title=%@&content=%@&imgid=%@&address=%@"
-
+//#define BBS_UPLOAD_POSTS_URL @"http://quan.fblife.com/index.php?c=forum&a=addthread&authkey=%@&fid=%@&title=%@&content=%@&imgid=%@&address=%@"
+#define BBS_UPLOAD_POSTS_URL @"http://quan.fblife.com/index.php?c=forum&a=addthread"
 
 #pragma - mark 发现部分的接口
 
