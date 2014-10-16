@@ -303,7 +303,14 @@
     NSLog(@"%s",__FUNCTION__);
     [self dismissViewControllerAnimated:YES completion:^{
         
-        [self.delegate pushMyerweimaVc];
+        
+        if (self.delegate) {
+            [self.delegate pushMyerweimaVc];
+        }else if (self.delegate2){
+            [self.delegate2 pushMyerweimaVc];
+        }
+        
+        
     }];
     
     

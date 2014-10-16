@@ -79,6 +79,7 @@
 
 #pragma mark - 加载控件
 -(void)loadCustomView{
+    self.imaCount = 0;
     
     //头像 名字 的背景view==========================================================
     UIView *nameView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 66)];
@@ -259,6 +260,9 @@
 
 
 -(void)bttnClick:(UIButton*)sender{
+    
+    
+    
     if (sender.tag == 10) {
         
     }else if (sender.tag == 11){
@@ -397,14 +401,21 @@
         
         @try {
             NSString *str = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=checkbuddy&authkey=%@&uid=%@",[SzkAPI getAuthkey],self.passUserid];
+            
+            
+            
             NSLog(@"%@",str);
             
             
             
             NSURL *url = [NSURL URLWithString:str];
             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                
                 if (data.length>0) {
                     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    
+                    
+                    
                     if ([dic isKindOfClass:[NSDictionary class]]) {
                     
                         NSLog(@"%@",dic);

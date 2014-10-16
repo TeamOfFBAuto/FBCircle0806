@@ -253,6 +253,7 @@
     
     GmyErweimaViewController *erweima = [[GmyErweimaViewController alloc]init];
     erweima.tabBarController.hidesBottomBarWhenPushed = YES;
+    
     [self PushToViewController:erweima WithAnimation:YES];
 
 }
