@@ -265,7 +265,12 @@
         
         titel.frame = CGRectMake(17, 10, 60, 30);
         titel.text = @"用户名";
-        contentLabel.text = theModel.person_username;
+        if (theModel.person_username.length != 0) {
+            contentLabel.text = theModel.person_username;
+        }else{
+            contentLabel.text = @"未填写";
+        }
+        
         contentLabel.frame = CGRectMake(95, 10, 200, 30);
         
     }else if (theIndexPath.row == 2){//性别

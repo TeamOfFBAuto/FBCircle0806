@@ -14,6 +14,7 @@
 @interface GQianmingViewController : MyViewController
 {
     GHolderTextView *_gholderTextView;
+    MBProgressHUD *_hud;
 }
 
 @property(nonatomic,assign)GRXX4ViewController *delegate;

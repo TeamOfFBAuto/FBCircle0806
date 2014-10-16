@@ -10,7 +10,7 @@
 
 #import "GRXX4ViewController.h"
 
-@interface GQianmingViewController ()
+@interface GQianmingViewController ()<MBProgressHUDDelegate>
 
 @end
 
@@ -74,7 +74,10 @@
 -(void)submitData:(UIButton *)sender
 {
     NSLog(@"保存  设置用户上传个性签名");
+    __weak typeof (self)bself = self;
     
+    _hud = [ZSNApi showMBProgressWithText:@"正在提交" addToView:self.view];
+    _hud.delegate = self;
     
     SzkLoadData *_test=[[SzkLoadData alloc]init];
     
@@ -90,12 +93,15 @@
         
         if (errcode==0) {
             NSLog(@"成功");
-            
+            [bself hudWasHidden:_hud];
             //发通知
             [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
-            
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
-            NSLog(@"xxssx===%@",arrayinfo);
+            [bself hudWasHidden:_hud];
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"修改失败" message:errorindo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            
+            [al show];
         }
         
     }];
@@ -103,11 +109,15 @@
     
     
     
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 
-
+-(void)hudWasHidden:(MBProgressHUD *)hud{
+    [hud removeFromSuperview];
+    hud.delegate = nil;
+    hud = nil;
+}
 
 
 @end

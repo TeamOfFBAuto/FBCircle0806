@@ -25,6 +25,7 @@
 {
     GcustomActionSheet *_gactionsheet;
     MBProgressHUD *_hud;
+    MBProgressHUD *_hud1;
     
 }
 @end
@@ -164,6 +165,9 @@
     
     _hud = [ZSNApi showMBProgressWithText:@"正在加载" addToView:self.view];
     _hud.delegate = self;
+    
+    
+    
     
 //    //常用的设置
 //    //小矩形的背景色
@@ -708,9 +712,12 @@
             
             NSLog(@"%@",self.gender);
             //判断是否修改过性别
+            
             if ([self.gender isEqualToString:@"0"]) {//没修改过
+                
                 UIAlertView *gender = [[UIAlertView alloc]initWithTitle:@"选择性别" message:@"只能选择一次,下次不能修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"男",@"女", nil];
                 [gender show];
+                
             }else{//修改过
                 
             }
@@ -876,8 +883,9 @@
             bself.personModel = model;
             bself.userName = model.person_username;
             
-            NSLog(@"%@",model.person_gender);
+            NSLog(@"用户性别-------%@",model.person_gender);
             
+            bself.gender = model.person_gender;//性别
             bself.yuanlaiQianming = model.person_words;//签名
             
             isLoadUserInfoSuccess = YES;
@@ -1037,12 +1045,19 @@
             NSLog(@"男");
             self.gender = @"1";
             
+            _hud1 = [ZSNApi showMBProgressWithText:@"正在提交" addToView:self.view];
+            _hud1.delegate = self;
+            
             [self testGender];//上传
             break;
             
         case 2://女
             NSLog(@"女");
             self.gender = @"2";
+            
+            _hud1 = [ZSNApi showMBProgressWithText:@"正在提交" addToView:self.view];
+            _hud1.delegate = self;
+            
             [self testGender];//上传
             
         default:
@@ -1086,6 +1101,9 @@
         NSLog(@"未选择省或市");
         
     }else{
+        
+        _hud1 = [ZSNApi showMBProgressWithText:@"正在提交" addToView:self.view];
+        _hud1.delegate = self;
         
         [self testdiqu];
         
@@ -1246,7 +1264,7 @@
         
         NSString* fullURL = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=updatehead&authkey=%@",[SzkAPI getAuthkey]];
         
-        NSLog(@"上传头像请求的地址===%@ %s",fullURL,__FUNCTION__);
+        NSLog(@"上传头像请求的地址===%@     ----%s",fullURL,__FUNCTION__);
         
         //设置标志位
         NSString *str = @"yes";
@@ -1287,7 +1305,7 @@
 #pragma mark - 上传地区信息(文本)
 -(void)testdiqu{
     
-    
+    __weak typeof (self)bself = self;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         SzkLoadData *_test=[[SzkLoadData alloc]init];
@@ -1299,11 +1317,15 @@
             if (errcode==0) {
                 NSLog(@"成功");
                 //发通知
-                
+                [bself hudWasHidden:_hud1];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
                 
                 
             }else{
+                [bself hudWasHidden:_hud1];
+                
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"更改失败" message:errorindo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [al show];
                 NSLog(@"xxssx===%@",arrayinfo);
             }
             
@@ -1322,6 +1344,9 @@
 
 #pragma mark - 上传性别信息
 -(void)testGender{
+    
+    
+    __weak typeof (self)bself = self;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         SzkLoadData *_test = [[SzkLoadData alloc]init];
@@ -1352,6 +1377,8 @@
                 
                 NSLog(@"成功");
                 
+                [bself hudWasHidden:_hud1];
+                
                 //发通知
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
                 [self prepareNetData];
@@ -1361,6 +1388,11 @@
                 
                 
             }else{
+                
+                [bself hudWasHidden:_hud1];
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"设置失败" message:errorindo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [al show];
+                
                 NSLog(@"errinfo = %@",arrayinfo);
             }
         }];
