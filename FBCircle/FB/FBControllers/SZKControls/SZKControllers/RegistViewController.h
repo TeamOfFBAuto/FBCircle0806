@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RegistViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
+@interface RegistViewController : MyViewController<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     
     
     

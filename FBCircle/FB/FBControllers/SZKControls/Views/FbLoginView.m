@@ -104,7 +104,7 @@
         
         
         _regeistbutton=[[UIButton alloc]init];
-       // [self addSubview:_regeistbutton];
+        [self addSubview:_regeistbutton];
         _regeistbutton.tag=103;
         
        // [_regeistbutton setBackgroundImage:[UIImage imageNamed:@"FBQuanRegist640_87.png"] forState:UIControlStateNormal];

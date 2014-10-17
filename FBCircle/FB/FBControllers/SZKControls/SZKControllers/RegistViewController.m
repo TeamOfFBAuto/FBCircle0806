@@ -29,10 +29,14 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:NO];
+    
+    self.edgesForExtendedLayout=UIRectEdgeAll;
     self.navigationController.navigationBarHidden=NO;
     
     
 }
+
+
 
 - (void)viewDidLoad
 {
@@ -41,6 +45,14 @@
     /**
      *  五个属性
      */
+    
+    
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    
+ 
+    
     
     _userNameStr=[NSString string];
     _passWordStr=[NSString string];
@@ -51,19 +63,21 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
-    _mmainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 64+44*5)];//一共五个cell
+    _mmainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320,44*5)];//一共五个cell
     _mmainTabV.separatorColor=RGBCOLOR(211, 211, 211);
     _mmainTabV.dataSource=self;
     _mmainTabV.delegate=self;
     _mmainTabV.contentOffset=CGPointMake(0, 0);
     _mmainTabV.scrollEnabled=NO;
+    
+    _mmainTabV.tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0,0,320,0)];
     [self.view addSubview:_mmainTabV];
     
     _imgArr=[NSArray arrayWithObjects:@"yonghuming-icon-32_30.png",@"mima-icon-30_34.png",@"youxiang-34-34.png",@"shouji-26_38.png",@"xinfeng36_24.png" ,nil];
     
     _placHolderTextArr=[NSArray arrayWithObjects:@"请输入您的用户名",@"请输入密码",@"请输入邮箱",@"请输入您的手机号",@"请输入验证码", nil];
     
-    _bigNextButton=[[UIButton alloc]initWithFrame:CGRectMake((320-250)/2, 64+44*5+20, 250, 44)];
+    _bigNextButton=[[UIButton alloc]initWithFrame:CGRectMake((320-250)/2, 44*5+20, 250, 44)];
     [self.view addSubview:_bigNextButton];
 //    _bigNextButton.backgroundColor=[UIColor blueColor];
     [_bigNextButton setTitle:@"提交" forState:UIControlStateNormal];
