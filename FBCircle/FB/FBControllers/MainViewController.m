@@ -1674,6 +1674,79 @@
     [self.myTableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationLeft];
     
     
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:FBCIRCLE_FORWARD_URL]];
+    [request setPostValue:[string stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:isForward?model.rfb_tid:model.fb_tid forKey:@"tid"];
+    [request setPostValue:isForward?model.rfb_uid:model.fb_uid forKey:@"touid"];
+    
+    __weak typeof(request)arequest = request;
+    __weak typeof(self) bself = self;
+    [request setCompletionBlock:^{
+        @try {
+            NSDictionary * allDic = [arequest.responseString objectFromJSONString];
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
+                
+                bself.inputToolBarView.myTextView.text = @"";
+                
+                [bself refreshBecauserUpdatasuccess:nil];
+                
+            }else
+            {
+                NSLog(@"转发失败");
+                
+                if (myAlertView)
+                {
+                    [myAlertView removeFromSuperview];
+                    myAlertView = nil;
+                }
+                
+                
+                myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
+                myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-50);
+                [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:[allDic objectForKey:@"errinfo"]];
+                [self.view addSubview:myAlertView];
+                [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1.5];
+                
+                for (int i = 0;i < self.data_array.count;i++)
+                {
+                    FBCircleModel * aModel = [self.data_array objectAtIndex:i];
+                    
+                    if ([aModel isEqual:forward_model])
+                    {
+                        [self.data_array removeObject:forward_model];
+                        
+                        [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationRight];
+                    }
+                }
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+    }];
+    
+    [request setFailedBlock:^{
+        FBCircleCommentModel * commentModel = [[FBCircleCommentModel alloc] init];
+        commentModel.comment_tid = isForward?model.rfb_tid:model.fb_tid;
+        commentModel.comment_uid = isForward?model.rfb_uid:model.fb_uid;
+        commentModel.comment_content = string;
+        commentModel.comment_dateline = [ZSNApi timechangeToDateline];
+        int result = [FBCircleModel addNOSendForwardWith:commentModel];
+        NSLog(@"添加转发到数据库 ---  %d",result);
+    }];
+    
+    [request startAsynchronous];
+    
+    
+ 
+    
+    /*
     
     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],isForward?model.rfb_tid:model.fb_tid,isForward?model.rfb_uid:model.fb_uid,[[string stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
     
@@ -1750,6 +1823,7 @@
      }];
     
     [requestOpration start];
+     */
 }
 
 #pragma mark- 消失提示框
@@ -2315,7 +2389,7 @@
     [comment_request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
     [comment_request setPostValue:model.fb_tid forKey:@"tid"];
     [comment_request setPostValue:model.fb_uid forKey:@"touid"];
-    [comment_request setPostValue:[[theContent stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding] forKey:@"content"];
+    [comment_request setPostValue:[theContent stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
     __weak typeof(comment_request)brequest = comment_request;
     
     [brequest setCompletionBlock:^{

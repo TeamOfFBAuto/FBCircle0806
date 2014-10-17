@@ -811,6 +811,53 @@
     
     [alert show];
     
+    
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:FBCIRCLE_FORWARD_URL]];
+    [request setPostValue:[string stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
+    [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:isForward?model.rfb_tid:model.fb_tid forKey:@"tid"];
+    [request setPostValue:isForward?model.rfb_uid:model.fb_uid forKey:@"touid"];
+    
+    __weak typeof(request)arequest = request;
+    __weak typeof(self) bself = self;
+    [request setCompletionBlock:^{
+        @try {
+            [alert dismissWithClickedButtonIndex:0 animated:YES];
+            
+            NSDictionary * allDic = [arequest.responseString objectFromJSONString];
+            
+            if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"转发成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [alertView show];
+                
+                bself.inputToolBarView.myTextView.text = @"";
+            }else
+            {
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"转发失败" message:[allDic objectForKey:@"errinfo"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [alertView show];
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+    }];
+    
+    [request setFailedBlock:^{
+        
+    }];
+    
+    [request startAsynchronous];
+    
+    
+    
+    
+    /*
+    
+    
     NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],isForward?model.rfb_tid:model.fb_tid,isForward?model.rfb_uid:model.fb_uid,[[string stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
     
     NSLog(@"转发文章-------%@",fullUrl);
@@ -843,6 +890,7 @@
      }];
     
     [requestOpration start];
+     */
 }
 
 
@@ -856,13 +904,9 @@
     if (myTextString.length == 0)
     {
         myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
-        
         myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-20);
-        
         [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"发送内容不能为空"];
-        
         [self.view addSubview:myAlertView];
-        
         [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1];
         
         return;
@@ -900,7 +944,7 @@
     [comment_request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
     [comment_request setPostValue:_theModel.fb_tid forKey:@"tid"];
     [comment_request setPostValue:_theModel.fb_uid forKey:@"touid"];
-    [comment_request setPostValue:[[content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding] forKey:@"content"];
+    [comment_request setPostValue:[content stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
     __weak typeof(comment_request)brequest = comment_request;
     
     [brequest setCompletionBlock:^{

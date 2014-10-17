@@ -196,7 +196,7 @@
     
     
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:FBCIRCLE_FORWARD_URL]];
-    [request setPostValue:[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"content"];
+    [request setPostValue:[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
     [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
     [request setPostValue:model.comment_tid forKey:@"tid"];
     [request setPostValue:model.comment_uid forKey:@"touid"];
@@ -271,9 +271,8 @@
     FBCircleCommentModel * model = (FBCircleCommentModel *)data;
     
     
-//    authkey=%@&tid=%@&touid=%@&content=%@&
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:FBCIRCLE_COMMENT_URL]];
-    [request setPostValue:[[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"content"];
+    [request setPostValue:[model.comment_content stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
     [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
     [request setPostValue:model.comment_tid forKey:@"tid"];
     [request setPostValue:model.comment_uid forKey:@"touid"];
