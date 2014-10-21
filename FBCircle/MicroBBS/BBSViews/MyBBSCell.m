@@ -26,6 +26,10 @@
 -(void)setCellWithModel:(BBSInfoModel *)aModel
 {
     self.aImageView.image = [LTools imageForBBSId:aModel.headpic];
+    
+    NSMutableString *name = [NSMutableString stringWithString:aModel.name];
+    aModel.name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
     self.nameLabel.text = aModel.name;
     
     if ([aModel.newthread_num isKindOfClass:[NSString class]]) {
