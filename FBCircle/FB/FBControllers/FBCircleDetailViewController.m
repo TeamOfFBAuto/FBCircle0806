@@ -372,7 +372,6 @@
         thePraiseView.delegate = self;
         [thePraiseView loadAllUserImagesWith:_theModel.fb_praise_array];
         [cell.contentView addSubview:thePraiseView];
-        
     }else
     {
         
@@ -612,6 +611,7 @@
 -(void)expressionClickWith:(NewFaceView *)faceView faceName:(NSString *)name
 {
     self.inputToolBarView.myTextView.text = [self.inputToolBarView.myTextView.text stringByAppendingString:name];
+    [self textViewDidChange:self.inputToolBarView.myTextView];
 }
 
 

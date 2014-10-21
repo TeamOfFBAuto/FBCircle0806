@@ -483,7 +483,7 @@
             fullUrl = [NSString stringWithFormat:PUBLISH_TEXT,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }
         
-        [self sendBlogWithUrl:fullUrl With:model];
+        [self sendBlogWithUrl:fullUrl With:model WithImages:@"" WithLng:model.fb_lng WithLat:model.fb_lat WithArea:model.fb_area];
     }
 }
 
@@ -520,19 +520,10 @@
         for (int i = 0;i < _allImageArray.count; i++)
         {
             UIImage *image=[_allImageArray objectAtIndex:i];
-//            NSLog(@"张少南 -----   %f ----   %f ---  %@",image.size.width,image.size.height,image);
-            //  UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
-            
             data = UIImageJPEGRepresentation(image,0.5);
-            
             [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [myRequestData length]]];
-            
             //设置http body
-            
             [request addData:data withFileName:[NSString stringWithFormat:@"quan_img[%d].png",i] andContentType:@"image/PNG" forKey:@"quan_img[]"];
-            
-            //  [request addData:myRequestData forKey:[NSString stringWithFormat:@"boris%d",i]];
-            
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -580,13 +571,19 @@
 }
 
 
--(void)sendBlogWithUrl:(NSString *)urlString With:(FBCircleModel *)model
+-(void)sendBlogWithUrl:(NSString *)urlString With:(FBCircleModel *)model WithImages:(NSString *)authod WithLng:(NSString *)lng WithLat:(NSString *)lat WithArea:(NSString *)area
 {
     NSLog(@"发送微博url ----  %@",urlString);
     
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://quan.fblife.com/index.php?c=interface&a=topicpost&fbtype=json"]];
-    [request setPostValue:model.fb_content forKey:@"content"];
+    [request setPostValue:[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] forKey:@"content"];
     [request setPostValue:[SzkAPI getAuthkey] forKey:@"authkey"];
+    [request setPostValue:authod forKey:@"imageid"];
+    [request setPostValue:lng forKey:@"lng"];
+    [request setPostValue:lat forKey:@"lat"];
+    [request setPostValue:area forKey:@"area"];
+
+    
     
     __weak typeof(request)arequest = request;
     [request setCompletionBlock:^{
@@ -665,22 +662,21 @@
         }
     }
     
-    NSString * fullUrl = @"";
-    if (model.fb_area.length > 0)
-    {
-        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT_LOCATION,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                   ,authod,[model.fb_lng floatValue],[model.fb_lat floatValue],[model.fb_area stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
-    }else
-    {
-        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSString stringWithFormat:@"%@",authod] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
-        
-    }
+//    NSString * fullUrl = @"";
+//    if (model.fb_area.length > 0)
+//    {
+//        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT_LOCATION,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+//                   ,authod,[model.fb_lng floatValue],[model.fb_lat floatValue],[model.fb_area stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//    }else
+//    {
+//        fullUrl = [NSString stringWithFormat:PUBLISH_IMAGE_TEXT,model.fb_authkey,[[model.fb_content stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[NSString stringWithFormat:@"%@",authod] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
+//        
+//    }
     
-    NSLog(@"发表缓存微博接口 ----   %@",fullUrl);
+//    NSLog(@"发表缓存微博接口 ----   %@",fullUrl);
     
     
-    [self sendBlogWithUrl:fullUrl With:model];
+    [self sendBlogWithUrl:@"" With:model WithImages:authod WithLng:@"" WithLat:@"" WithArea:@""];
 }
 
 //发送失败的提示框

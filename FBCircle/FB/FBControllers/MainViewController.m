@@ -24,6 +24,7 @@
 #import "GupData.h"
 #import "NSString+Emoji.h"
 #import "ZActionSheet.h"
+#import "SuggestFriendViewController.h"
 
 
 #define INPUT_HEIGHT 44.0f
@@ -66,6 +67,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    if (MY_MACRO_NAME) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
+    
     [self.inputToolBarView.myTextView resignFirstResponder];
     NSString *string_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:AUTHERKEY]];
     //判断登录条件
@@ -386,6 +393,8 @@
     
     isHaveNewMessage = YES;
     
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     notificationNum++;
     
     notificationDic=[NSDictionary dictionary];
@@ -412,6 +421,12 @@
             [notification_dictionary setObject:@"new" forKey:@"friend"];
         }
         
+        [self loadTableHeaderView];
+        
+        self.myTableView.tableHeaderView = headerView;
+        
+        [self.myTableView reloadData];
+        
     }else if ([MessageType intValue] == 6)
     {
         tixing_imageView.hidden = NO;
@@ -419,6 +434,11 @@
         if (![[notification_dictionary allKeys] containsObject:@"message"]) {
             [notification_dictionary setObject:@"new" forKey:@"message"];
         }
+        [self loadTableHeaderView];
+        
+        self.myTableView.tableHeaderView = headerView;
+        
+        [self.myTableView reloadData];
     }
 }
 
@@ -1258,15 +1278,32 @@
                 
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"systemMessageRemind"];
                 
-                GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
-                [self PushToViewController:gMessage WithAnimation:YES];
+                NSString * MessageType = [[notificationDic objectForKey:@"aps"] objectForKey:@"type"];
+                
+                if ([MessageType intValue] == 3 || [MessageType intValue] == 4 || [MessageType intValue] == 5)///系统通知（评论赞转发）
+                {
+                    GmyMessageViewController * gMessage = [[GmyMessageViewController alloc] init];
+                    [self PushToViewController:gMessage WithAnimation:YES];
+                    
+                }else if ([MessageType intValue] == 1 || [MessageType intValue] == 2)///添加好友
+                {
+                    SuggestFriendViewController * friend = [[SuggestFriendViewController alloc] init];
+                    [self PushToViewController:friend WithAnimation:YES];
+                    
+                }else if ([MessageType intValue] == 6)///私信
+                {
+                    MessageViewController * messageVC = [[MessageViewController alloc] init];
+                    [self.navigationController pushViewController:messageVC animated:YES];
+                }
                 
                 notificationDic = nil;
                 
                 [self loadTableHeaderView];
                 
                 self.myTableView.tableHeaderView = headerView;
-//                [self.myTableView reloadData];
+    
+                
+               
             }
             @catch (NSException *exception) {
                 
@@ -2291,6 +2328,7 @@
 -(void)expressionClickWith:(NewFaceView *)faceView faceName:(NSString *)name
 {
     self.inputToolBarView.myTextView.text = [self.inputToolBarView.myTextView.text stringByAppendingString:name];
+    [self textViewDidChange:self.inputToolBarView.myTextView];
 }
 
 

@@ -230,8 +230,14 @@
     
     float cellHeight = 30;
     
-    [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
-    NSLog(@"_headerImageView ----  %@",theInfo.fb_face);
+    if ([theInfo.fb_uid isEqualToString:[SzkAPI getUid]])
+    {
+        [_headerImageView loadImageFromURL:[SzkAPI getUserFace] withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
+    }else
+    {
+        [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
+    }
+    
     _userName_label.text = theInfo.fb_username;
  
     

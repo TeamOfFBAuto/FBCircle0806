@@ -109,7 +109,16 @@
                     FBCirclePraiseModel * model = [array objectAtIndex:i];
                     
                     AsyncImageView * imageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(44 + 40*i,8 + j*40,35,35)];
-                    [imageView loadImageFromURL:model.praise_image_url withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
+                    
+                    if ([model.praise_uid isEqualToString:[SzkAPI getUid]])
+                    {
+                        [imageView loadImageFromURL:[SzkAPI getUserFace] withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
+                    }else
+                    {
+                        [imageView loadImageFromURL:model.praise_image_url withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
+                    }
+                    
+                    
                     imageView.userInteractionEnabled = YES;
                     
                     imageView.layer.masksToBounds = YES;

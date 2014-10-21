@@ -169,6 +169,7 @@
 -(void)expressionClickWith:(NewFaceView *)faceView faceName:(NSString *)name
 {
     _myTextView.text = [_myTextView.text stringByAppendingString:name];
+    [self textViewDidChange:_myTextView];
 }
 
 
