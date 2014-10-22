@@ -77,13 +77,6 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    
-    //    NSLog(@"system ---   %@",_system_notification_dictionary);
-    //    if ([[_system_notification_dictionary allKeys] containsObject:@"message"])
-    //    {
-    //        isnewfbnotification = YES;
-    //    }
-    
     self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)-20-44-49) style:UITableViewStylePlain];
     self.myTableView.delegate = self;
     self.myTableView.dataSource = self;

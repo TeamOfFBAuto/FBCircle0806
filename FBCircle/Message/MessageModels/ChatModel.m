@@ -48,7 +48,7 @@
         
         self.is_del = [NSString stringWithFormat:@"%@",[dic objectForKey:@"is_del"]];
         
-        self.msg_message = [NSString stringWithFormat:@"%@",[dic objectForKey:@"msg_message"]];
+        self.msg_message = [ZSNApi ddecodeSpecialCharactersStringWith:[NSString stringWithFormat:@"%@",[dic objectForKey:@"msg_message"]]];
     }
     
     return self;
@@ -95,8 +95,6 @@
             {
                 ChatModel * model = [[ChatModel alloc] initWithDic:dic];
                 
-//                [tempArray addObject:model];
-                
                 [bself.data_array insertObject:model atIndex:0];
             }
             
@@ -126,20 +124,66 @@
 -(void)sendMessageWith:(ChatModel *)model WithCompletionBlock:(SendMessageCompletionBlock)theCompletionBlock WithFaildBlock:(SendMessageFailBlock)theFaildBlock
 {
     sendMessageFaildBlock = theFaildBlock;
-    
     sendMessageCompletionBlock = theCompletionBlock;
     
     
-    NSString * fullUrl = [NSString stringWithFormat:MESSAGE_CHAT_SEND_MESSAGE_URL,[model.to_username stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding],[[model.msg_message stringByReplacingEmojiUnicodeWithCheatCodes]stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"]];
+//    NSString * fullUrl = [NSString stringWithFormat:MESSAGE_CHAT_SEND_MESSAGE_URL,[model.to_username stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding],[[model.msg_message stringByReplacingEmojiUnicodeWithCheatCodes]stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding],[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"]];
     
+    
+    NSString * fullUrl = @"http://msg.fblife.com/api.php?c=send&isfbring=1";
     
     NSLog(@"发送消息接口---%@",fullUrl);
     
+    sendRequest = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
+    [sendRequest setPostValue:model.to_username forKey:@"toname"];
+    [sendRequest setPostValue:model.msg_message forKey:@"content"];
+    [sendRequest setPostValue:[SzkAPI getAuthkey] forKey:@"authcode"];
+    
+    __weak typeof(sendRequest)wrequest = sendRequest;
+    
+    [wrequest setCompletionBlock:^{
+        
+        @try {
+            NSDictionary * allDic = [sendRequest.responseString objectFromJSONString];
+            
+            NSLog(@"发送消息----%@",allDic);
+            
+            if ([[allDic objectForKey:@"errcode"] intValue]==0)
+            {
+                if (sendMessageCompletionBlock) {
+                    sendMessageCompletionBlock(sendRequest);
+                }
+            }else
+            {
+                if (sendMessageFaildBlock) {
+                    sendMessageFaildBlock(sendRequest,[allDic objectForKey:@"bbsinfo"]);
+                }
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+        
+        
+        
+    }];
+    
+    [wrequest setFailedBlock:^{
+        if (sendMessageFaildBlock) {
+            sendMessageFaildBlock(sendRequest,@"发送失败，请检查当前网络");
+        }
+    }];
+    
+    [sendRequest startAsynchronous];
+    
+    
+    /*
+    
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]];
-    
-    
     sendRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    
     __block AFHTTPRequestOperation * request = sendRequest;
     
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -168,6 +212,7 @@
     
     
     [sendRequest start];
+     */
 }
 
 

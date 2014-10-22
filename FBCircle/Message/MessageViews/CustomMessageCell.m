@@ -34,15 +34,10 @@
     if (!_headImageView)
     {
         _headImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(10,10,40,40)];
-        
         _headImageView.layer.masksToBounds = YES;
-        
         _headImageView.image = PERSONAL_DEFAULTS_IMAGE;
-        
         _headImageView.layer.cornerRadius = 2;
-        
         [self.contentView addSubview:_headImageView];
-        
     }
     
     
@@ -51,13 +46,9 @@
         if (!_NameLabel)
         {
             _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60,6,170,20)];
-            
             _NameLabel.font = [UIFont boldSystemFontOfSize:15];
-            
             _NameLabel.backgroundColor = [UIColor clearColor];
-            
             _NameLabel.textAlignment = NSTextAlignmentLeft;
-            
             [self.contentView addSubview:_NameLabel];
         }else
         {
@@ -68,15 +59,10 @@
         if (!_timeLabel)
         {
             _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220,6,90,20)];
-            
             _timeLabel.textAlignment = NSTextAlignmentRight;
-            
             _timeLabel.backgroundColor = [UIColor clearColor];
-            
             _timeLabel.font = [UIFont systemFontOfSize:11];
-            
             _timeLabel.textColor = RGBCOLOR(166,166,166);
-            
             [self.contentView addSubview:_timeLabel];
         }else
         {
@@ -87,15 +73,10 @@
         if (!_contentLabel1)
         {
             _contentLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(60,30,240,20)];
-            
             _contentLabel1.textColor = RGBCOLOR(79,79,79);
-            
             _contentLabel1.backgroundColor = [UIColor clearColor];
-            
             _contentLabel1.font = [UIFont systemFontOfSize:14];
-            
             _contentLabel1.textAlignment = NSTextAlignmentLeft;
-            
             [self.contentView addSubview:_contentLabel1];
         }else
         {
@@ -105,17 +86,10 @@
         if (!_tixing_label)
         {
             _tixing_label = [[UIImageView alloc] initWithFrame:CGRectMake(230,8,7,7)];
-            
             _tixing_label.hidden = YES;
-            
             _tixing_label.backgroundColor = [UIColor redColor];
-            
             _tixing_label.layer.cornerRadius = 7/2;
-            
-//            _tixing_label.image = [personal getImageWithName:@"newlabel@2x"];
-            
             _tixing_label.center = CGPointMake(50,10);
-            
             [self.contentView addSubview:_tixing_label];
         }
     }else
@@ -123,15 +97,10 @@
         if (!_contentLabel)
         {
             _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(60,15,260,30)];
-            
             _contentLabel.textColor = RGBCOLOR(79,79,79);
-            
             _contentLabel.backgroundColor = [UIColor clearColor];
-            
             _contentLabel.font = [UIFont boldSystemFontOfSize:15];
-            
             _contentLabel.textAlignment = NSTextAlignmentLeft;
-            
             [self.contentView addSubview:_contentLabel];
         }else
         {
@@ -150,15 +119,11 @@
         
         if ([info.from_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:USERID]])
         {
-            
             to_uid = info.to_uid;
-            
             _NameLabel.text = info.to_username;
-            
         }else
         {
             to_uid = info.from_uid;
-            
             _NameLabel.text = info.from_username;
         }
         
@@ -173,7 +138,7 @@
         
         _timeLabel.text = [ZSNApi timechange:info.date_now];
         
-        _contentLabel1.text = [[self eidtMessageContent:[ZSNApi decodeSpecialCharactersString:info.from_message]] stringByReplacingEmojiCheatCodesWithUnicode];
+        _contentLabel1.text = [[self eidtMessageContent:info.from_message] stringByReplacingEmojiCheatCodesWithUnicode];
         
         
         NSString * user = USERID;
@@ -187,9 +152,6 @@
         {
             userName = info.from_username;
         }
-        
-        
-        NSLog(@"selfunread -----   %@",info.selfunread);
         
         if ([info.selfunread intValue] !=0)
         {

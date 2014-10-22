@@ -10,9 +10,9 @@
 
 typedef void(^ChatModelBlock)(NSMutableArray * array,int count);
 
-typedef void(^SendMessageCompletionBlock)(AFHTTPRequestOperation * operation);
+typedef void(^SendMessageCompletionBlock)(ASIFormDataRequest * operation);
 
-typedef void(^SendMessageFailBlock)(AFHTTPRequestOperation * operation,NSString * error);
+typedef void(^SendMessageFailBlock)(ASIFormDataRequest * operation,NSString * error);
 
 
 
@@ -26,7 +26,7 @@ typedef void(^SendMessageFailBlock)(AFHTTPRequestOperation * operation,NSString 
     
     AFHTTPRequestOperation * chatRequest;
     
-    AFHTTPRequestOperation * sendRequest;
+    ASIFormDataRequest * sendRequest;
 }
 
 

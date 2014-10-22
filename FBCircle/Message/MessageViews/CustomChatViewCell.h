@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ChatModel.h"
 #import "RTLabel.h"
+#import "OHAttributedLabel.h"
 
 
 typedef enum {
@@ -17,7 +18,7 @@ typedef enum {
 } MyChatViewCellType;
 
 
-@interface CustomChatViewCell : UITableViewCell<AsyncImageDelegate>
+@interface CustomChatViewCell : UITableViewCell<AsyncImageDelegate,OHAttributedLabelDelegate>
 {
     
 }

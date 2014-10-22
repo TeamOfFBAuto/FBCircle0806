@@ -9,6 +9,7 @@
 #import "CustomChatViewCell.h"
 
 
+
 #define kMarginTop 8.0f
 #define kMarginBottom 4.0f
 #define kPaddingTop 4.0f
@@ -46,26 +47,17 @@
     UIImage * image = [UIImage imageNamed:theType == MyChatViewCellTypeOutgoing ?@"duihua2-66_82.png":@"duihua1-66_82.png"];
     
     _background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(theType == MyChatViewCellTypeOutgoing?(320 - point.x - 75):55,34,point.x+20,point.y+8)];
-    
     _background_imageView.userInteractionEnabled = YES;
-    
     _background_imageView.image = [image stretchableImageWithLeftCapWidth:20.f topCapHeight:30.f];
-    
     [self.contentView addSubview:_background_imageView];
     
     
     self.timestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(105,5,110,16)];
-    
     self.timestampLabel.textAlignment = NSTextAlignmentCenter;
-    
     self.timestampLabel.backgroundColor = [UIColor clearColor];
-    
     self.timestampLabel.layer.cornerRadius = 8;
-    
     self.timestampLabel.backgroundColor = [RGBCOLOR(245,245,245) colorWithAlphaComponent:0.8];
-    
     self.timestampLabel.textAlignment = NSTextAlignmentCenter;
-    
     self.timestampLabel.textColor = RGBCOLOR(125,123,124);
     
     
@@ -77,15 +69,10 @@
         self.timestampLabel.text = [ZSNApi timechange1:theModel.date_now];
         
     }
-    
-    
     self.timestampLabel.font = [UIFont systemFontOfSize:12];
-    
     [self.contentView addSubview:self.timestampLabel];
     
-    
     [self loadHeadImageViewWithUrl:theType==MyChatViewCellTypeIncoming?theImage:[SzkAPI getUserFace] Style:theType];
-    
     [self loadContentViewWithArray:[ZSNApi stringExchange:theModel.msg_message] WithType:theType];
 }
 
@@ -106,19 +93,10 @@
     
     
     self.avatarImageView.layer.cornerRadius = 5;
-    
     self.avatarImageView.layer.borderColor = (__bridge  CGColorRef)([UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1]);
-    
     self.avatarImageView.layer.borderWidth =1.0;
-    
     self.avatarImageView.layer.masksToBounds = YES;
-    
-    
-    //    self.avatarImageView.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin
-    //                                             | UIViewAutoresizingFlexibleLeftMargin
-    //                                             | UIViewAutoresizingFlexibleRightMargin);
     [self.contentView addSubview:self.avatarImageView];
-    
     
     [self.avatarImageView loadImageFromURL:url withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
 }
@@ -161,6 +139,8 @@
                 
             }else
             {
+                
+            /*
                 NSString * clean_string = string;
                 
                 while ([clean_string rangeOfString:@"[url]"].length && [clean_string rangeOfString:@"[/url]"].length)
@@ -176,7 +156,7 @@
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
-                content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
+                content_label.text = @"不错<>&";//[[ZSNApi FBImageChange:clean_string] stringByReplacingEmojiCheatCodesWithUnicode];
                 
                 content_label.textColor = theType==MyChatViewCellTypeIncoming?[UIColor whiteColor]:RGBCOLOR(3,3,3);
                 
@@ -186,16 +166,22 @@
                 
                 
                 CGSize optimumSize = [content_label optimumSize];
-                
                 content_frame.size.height = optimumSize.height + 10;
-                
                 content_label.frame = content_frame;
-                
                 content_label.backgroundColor = [UIColor clearColor];
+                [_background_imageView addSubview:content_label];
+                theHeight = theHeight + optimumSize.height;
+             */
                 
+                CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?12:7,theHeight?theHeight:6,200,50);
+                OHAttributedLabel * content_label = [[OHAttributedLabel alloc] initWithFrame:content_frame];
+                content_label.textColor = theType==MyChatViewCellTypeIncoming?[UIColor whiteColor]:RGBCOLOR(3,3,3);
+                content_label.font = [UIFont systemFontOfSize:14];
                 [_background_imageView addSubview:content_label];
                 
-                theHeight = theHeight + optimumSize.height;
+                [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self WithWidht:16 WithHeight:18 WithLineBreak:NO];
+                
+                theHeight = theHeight + content_label.frame.size.height;
             }
         }
     }
@@ -223,6 +209,8 @@
                 theHeight = theHeight + image_height+5;
             }else
             {
+                
+                /*
                 NSString * clean_string = string;
                 
                 while ([clean_string rangeOfString:@"[url]"].length && [clean_string rangeOfString:@"[/url]"].length)
@@ -239,7 +227,7 @@
                 
                 RTLabel * content_label = [[RTLabel alloc] initWithFrame:content_frame];
                 
-                content_label.text = [[ZSNApi FBImageChange:[ZSNApi decodeSpecialCharactersString:clean_string]] stringByReplacingEmojiCheatCodesWithUnicode];
+                content_label.text = [[ZSNApi FBImageChange:clean_string] stringByReplacingEmojiCheatCodesWithUnicode];
                                 
                 content_label.font = [UIFont systemFontOfSize:14];
                 
@@ -256,6 +244,22 @@
                 theWidth = optimumSize.width>theWidth?optimumSize.width:theWidth;
                 if (optimumSize.width >= 190 || optimumSize.width == 0)
                 {
+                    theWidth = 200;
+                }
+                 */
+                
+                
+                CGRect content_frame = CGRectMake(theType ==MyChatViewCellTypeIncoming?10:5,theHeight?theHeight:6,200,50);
+                OHAttributedLabel * content_label = [[OHAttributedLabel alloc] initWithFrame:content_frame];
+                content_label.textColor = theType==MyChatViewCellTypeIncoming?[UIColor whiteColor]:RGBCOLOR(3,3,3);
+                content_label.font = [UIFont systemFontOfSize:14];
+                
+                [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self WithWidht:16 WithHeight:18 WithLineBreak:NO];
+                
+                theHeight = theHeight + content_label.frame.size.height;
+                
+                theWidth = content_label.frame.size.width>theWidth?content_label.frame.size.width:theWidth;
+                if (content_label.frame.size.width >= 190 || content_label.frame.size.width == 0) {
                     theWidth = 200;
                 }
             }

@@ -94,6 +94,8 @@
 +(NSString *)decodeSpecialCharactersString:(NSString *)input;
 ///特殊字符编码
 +(NSString *)encodeSpecialCharactersString:(NSString *)input;
+///特殊字符解码（例：&lt;转化成<）
++(NSString *)ddecodeSpecialCharactersStringWith:(NSString *)input;
 @end
 
 

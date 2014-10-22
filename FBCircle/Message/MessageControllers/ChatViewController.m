@@ -137,9 +137,7 @@
 -(void)setupWith:(NSMutableArray *)array WithCount:(int)count
 {
     self.data_array = [NSMutableArray arrayWithArray:array];
-    
-//    self.data_array = array;
-    
+
     self.isLoading = NO;
     
     self.allCount = count;
@@ -667,20 +665,14 @@
     if (![self.messageInfo.to_uid isEqualToString:myUid])
     {
         info.to_uid = self.messageInfo.to_uid;
-        
         info.to_username = self.messageInfo.to_username;
-        
         info.from_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-        
         info.from_uid = myUid;
     }else
     {
         info.to_uid = myUid;
-        
         info.to_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-        
         info.from_username = self.messageInfo.to_username;
-        
         info.from_uid = self.messageInfo.to_uid;
     }
     /**
@@ -695,7 +687,7 @@
     __weak typeof(self) bself = self;
     
     info.to_username=self.title;
-    [_theModel sendMessageWith:info WithCompletionBlock:^(AFHTTPRequestOperation *operation) {
+    [_theModel sendMessageWith:info WithCompletionBlock:^(ASIFormDataRequest *operation) {
         
         [bself.data_array addObject:info];
         
@@ -703,7 +695,7 @@
         
         bself.inputToolBarView.sendButton.enabled = YES;
         
-    } WithFaildBlock:^(AFHTTPRequestOperation *operation, NSString *error) {
+    } WithFaildBlock:^(ASIFormDataRequest *operation, NSString *error) {
         bself.inputToolBarView.sendButton.enabled = YES;
         
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:@"" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];

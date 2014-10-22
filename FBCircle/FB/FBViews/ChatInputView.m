@@ -25,48 +25,29 @@
         isFace = NO;
         
         self.backgroundColor = RGBCOLOR(241,241,241);
-        
         self.layer.masksToBounds = YES;
-        
         self.layer.borderColor = RGBCOLOR(225,225,225).CGColor;
-        
         self.layer.borderWidth = 0.5;
         
         
-        
         _myTextView = [[UITextView alloc] initWithFrame:CGRectMake(17,6,248,32)];
-        
         _myTextView.backgroundColor = [UIColor whiteColor];
-        
         _myTextView.delegate = self;
-        
         _myTextView.contentMode = UIViewContentModeCenter;
-        
         _myTextView.returnKeyType = UIReturnKeySend;
-        
         _myTextView.font = [UIFont systemFontOfSize:15];
-        
         _myTextView.layer.borderColor = RGBCOLOR(216,216,216).CGColor;
-        
         _myTextView.textColor = RGBCOLOR(153,153,153);
-        
         _myTextView.layer.borderWidth = 0.5;
-        
         _myTextView.layer.cornerRadius = 5;
-                
         [self addSubview:_myTextView];
         
         
         _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
         _sendButton.frame = CGRectMake(270,2,40,40);
-        
         [_sendButton setImage:[UIImage imageNamed:!isFace?@"biaoqing-icon-56_56.png":@"jianpan-icon-56_56.png"] forState:UIControlStateNormal];
-        
         [_sendButton setTitleColor:RGBCOLOR(91,138,59) forState:UIControlStateNormal];
-        
         [_sendButton addTarget:self action:@selector(sendMessageTap:) forControlEvents:UIControlEventTouchUpInside];
-        
         [self addSubview:_sendButton];
         
         
@@ -88,13 +69,9 @@
         
         
         pageControl = [[GrayPageControl alloc] initWithFrame:CGRectMake(0,0,320,9)];
-        
         pageControl.center = CGPointMake(160,215-20);
-        
         pageControl.numberOfPages = 3;
-        
         pageControl.currentPage = 0;
-        
      //   [_face_back_view addSubview:pageControl];
     }
     return self;
@@ -169,7 +146,7 @@
 -(void)expressionClickWith:(NewFaceView *)faceView faceName:(NSString *)name
 {
     _myTextView.text = [_myTextView.text stringByAppendingString:name];
-    [self textViewDidChange:_myTextView];
+    [_myTextView.delegate textViewDidChange:_myTextView];
 }
 
 
