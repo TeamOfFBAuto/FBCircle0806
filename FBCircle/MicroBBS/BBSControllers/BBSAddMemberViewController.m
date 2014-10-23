@@ -740,7 +740,7 @@
     
     name_content_label.center = CGPointMake(name_content_label.center.x,22);
     
-    myScrollView.contentSize = CGSizeMake(name_content_label.frame.size.width,0);
+    myScrollView.contentSize = CGSizeMake(name_content_label.frame.size.width+50,0);
 }
 
 
