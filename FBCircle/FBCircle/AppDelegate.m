@@ -256,13 +256,20 @@
         NSLog(@"tupiandic==%@",dic);
         
         
-        
-        
         if ([[dic objectForKey:@"errcode"]intValue] == 0) {
             request.delegate = nil;
             NSString *str = @"no";
             [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
             [ZSNApi deleteFileWithUrl:[SzkAPI getUserFace]];
+            
+            NSArray * array = [dic objectForKey:@"datainfo"];
+            if ([array isKindOfClass:[NSArray class]]) {
+                if (array.count > 0) {
+                    [[NSUserDefaults standardUserDefaults] setObject:[[array objectAtIndex:0] objectForKey:@"small"] forKey:USERFACE];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+            }
+            
         }else{
             NSString *str = @"yes";
             [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];

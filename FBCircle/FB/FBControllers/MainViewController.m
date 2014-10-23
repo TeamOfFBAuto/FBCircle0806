@@ -2149,9 +2149,10 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _theTouchView.hidden = YES;
-    
     [self.inputToolBarView.myTextView resignFirstResponder];
-    
+    self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44,320,44);
+    self.inputToolBarView.myTextView.frame = CGRectMake(17,6,248,32);
+    self.inputToolBarView.myTextView.text = @"";
     isMyTextView = NO;
 }
 
@@ -2195,11 +2196,8 @@
     if (!_theTouchView)
     {
         _theTouchView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,self.inputToolBarView.frame.origin.y)];
-        
         _theTouchView.backgroundColor = [UIColor clearColor];
-        
         [self.view bringSubviewToFront:_theTouchView];
-        
         [self.view addSubview:_theTouchView];
     }else
     {
@@ -2228,7 +2226,7 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    
+    textView.text = @"";
     [textView resignFirstResponder];
     
     isMyTextView = NO;
@@ -2373,16 +2371,10 @@
     if (myTextString.length == 0)
     {
         myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
-        
         myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-20);
-        
         [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"发送内容不能为空"];
-        
         [self.view addSubview:myAlertView];
-        
         [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1];
-        
-        
         return;
     }
     

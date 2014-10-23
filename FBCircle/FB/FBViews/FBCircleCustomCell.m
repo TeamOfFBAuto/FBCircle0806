@@ -300,7 +300,7 @@
             _headerImageView.image = headerImage;
         }else
         {
-            [_headerImageView loadImageFromURL:theInfo.fb_face withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
+            [_headerImageView loadImageFromURL:[SzkAPI getUserFace] withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
         }
     }else
     {
