@@ -74,6 +74,8 @@
     self.userId = [dic objectForKeyedSubscript:@"uid"];
     //头像
     [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"face"]]];
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"face"]] placeholderImage:[UIImage imageNamed:@"headimg150_150.png"]];
+                                         
     //姓名
     self.userNameLabel.text = [dic objectForKey:@"username"];
     //距离和时间

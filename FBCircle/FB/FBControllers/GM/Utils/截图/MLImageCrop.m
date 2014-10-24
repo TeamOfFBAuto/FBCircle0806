@@ -145,12 +145,24 @@
 }
 
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //关闭滑动返回
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     //self.view.layer.opacity = 0.5;
+    
+    
+    
+    
     
     //设置frame,这里需要设置下，这样其会在最下层
     self.scrollView.frame = self.view.bounds;
