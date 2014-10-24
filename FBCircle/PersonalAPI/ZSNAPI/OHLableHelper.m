@@ -103,7 +103,6 @@
 + (void)creatAttributedText:(NSString *)o_text Label:(OHAttributedLabel *)label OHDelegate:(id<OHAttributedLabelDelegate>)delegate WithWidht:(float)image_widht WithHeight:(float)image_height WithLineBreak:(BOOL)isBreak
 {
     label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
-    
     NSMutableArray *httpArr = [OHLableHelper addHttpArr:o_text];
     NSString *text = [OHLableHelper transformString:o_text WithImageWidth:image_widht WithHeight:image_height];
     text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
@@ -124,7 +123,7 @@
     }
     label.delegate = delegate;
     CGRect labelRect = label.frame;
-    labelRect.size.width = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
+//    labelRect.size.width = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
     labelRect.size.height = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
     label.frame = labelRect;
     label.onlyCatchTouchesOnLinks = NO;

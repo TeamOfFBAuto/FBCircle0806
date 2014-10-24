@@ -992,19 +992,13 @@
              
              [picker dismissViewControllerAnimated:YES completion:^{
                  WriteBlogViewController * WriteBlog = [[WriteBlogViewController alloc] init];
-                 
                  WriteBlog.TempAllImageArray = allImageArray;
-                 
                  WriteBlog.TempAllAssesters = allAssesters;
-                 
                  WriteBlog.delegate = self;
-                 
                  WriteBlog.theType = WriteBlogWithImagesAndContent;
                  
                  UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:WriteBlog];
-                 
                  [self presentViewController:nav animated:YES completion:^{
-                     
                  }];
              }];
              
