@@ -1,6 +1,6 @@
 //
 //  UIView+Frame.h
-//
+//xx
 //  Created by sho yakushiji on 2013/05/15.
 //  Copyright (c) 2013年 CALACULU. All rights reserved.
 //
