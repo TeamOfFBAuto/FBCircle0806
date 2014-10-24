@@ -48,7 +48,6 @@ typedef enum{
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
     
-    
     _mapView.delegate = nil; // 不用时，置nil
     
     _poisearch.delegate = nil; // 不用时，置nil
