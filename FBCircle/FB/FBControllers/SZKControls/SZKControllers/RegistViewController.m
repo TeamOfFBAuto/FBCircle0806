@@ -244,6 +244,36 @@
     
     __weak typeof(self) weakself=self;
     SzkLoadData *_loadRegist=[[SzkLoadData alloc]init];
+    UIAlertView *theAlertV;
+
+    if (_userNameStr.length==0) {
+        theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [theAlertV show];
+        return;
+    }else if (_passWordStr.length==0){
+        theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"密码不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [theAlertV show];
+        return;
+
+    }else if (_emailStr.length==0){
+        theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"邮箱不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [theAlertV show];
+        return;
+        
+    }
+    else if (_phoneNumberStr.length==0){
+        theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"手机号码不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [theAlertV show];
+        return;
+        
+    }else if (_vertificatinNumberStr.length==0){
+        theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"验证码不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [theAlertV show];
+        return;
+        
+    }
+    
+    
     
     [_loadRegist SeturlStr:[NSString stringWithFormat:REGISTAPI,[_userNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],_passWordStr,_phoneNumberStr,_vertificatinNumberStr,_emailStr,@"token"] block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
         
