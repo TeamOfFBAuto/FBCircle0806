@@ -105,6 +105,8 @@
 
 -(float)setInfomationWith:(FBCircleCommentModel *)model isFirst:(BOOL)isfirst
 {
+    _content_label.frame = CGRectMake(89,31,212,0);
+    
     myModel = model;
     
     float height = isfirst?0:0;

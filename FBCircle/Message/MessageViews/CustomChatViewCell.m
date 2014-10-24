@@ -179,10 +179,7 @@
                 content_label.font = [UIFont systemFontOfSize:14];
                 [_background_imageView addSubview:content_label];
                 
-                
-                [FBHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self];
-                
-//                [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self WithWidht:16 WithHeight:18 WithLineBreak:NO];
+                [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self WithWidht:16 WithHeight:18 WithLineBreak:NO];
                 
                 theHeight = theHeight + content_label.frame.size.height;
             }
@@ -257,8 +254,7 @@
                 content_label.textColor = theType==MyChatViewCellTypeIncoming?[UIColor whiteColor]:RGBCOLOR(3,3,3);
                 content_label.font = [UIFont systemFontOfSize:14];
                 
-//                [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self WithWidht:16 WithHeight:18 WithLineBreak:NO];
-                [FBHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self];
+                [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:string] stringByReplacingEmojiCheatCodesWithUnicode] Label:content_label OHDelegate:self WithWidht:16 WithHeight:18 WithLineBreak:NO];
                 
                 theHeight = theHeight + content_label.frame.size.height;
                 

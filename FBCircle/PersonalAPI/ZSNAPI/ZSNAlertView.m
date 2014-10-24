@@ -144,7 +144,6 @@
         }
         
         [[UIApplication sharedApplication].keyWindow addSubview:self];
-//        self.window.windowLevel = UIWindowLevelAlert;
         
     }
     return self;
@@ -154,13 +153,9 @@
 -(void)setInformationWithUrl:(NSString *)url WithUserName:(NSString *)userName WithContent:(NSString *)content WithBlock:(ZSNAlertViewBlock)theBlock
 {
     zsnAlertViewBlock = theBlock;
-    
+    _content_label.frame = CGRectMake(75,72.5,180,20);
     [_imageView loadImageFromURL:url withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
-    
     _userName_label.text = userName;
-    
-//    _content_label.text = [[ZSNApi FBEximgreplace:[ZSNApi decodeSpecialCharactersString:content]] stringByReplacingEmojiCheatCodesWithUnicode];
-    
     [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT WithLineBreak:YES];
     
 }

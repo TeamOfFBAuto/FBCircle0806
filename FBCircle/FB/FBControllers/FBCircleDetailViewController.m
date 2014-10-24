@@ -304,7 +304,6 @@
     {
         if (!contentView) {
             contentView = [[FBCirlcleContentView alloc] initWithFrame:CGRectMake(0,0,320,0)];
-            //            contentView.delegate = self;
         }
         
         height = [contentView setInfoWith:_theModel]-6;
