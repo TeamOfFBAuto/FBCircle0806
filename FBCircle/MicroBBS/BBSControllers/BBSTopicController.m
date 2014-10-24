@@ -357,6 +357,7 @@ typedef enum{
     aModel.content = text;
     aModel.time = [LTools timechangeToDateline];
     aModel.userface = [SzkAPI getUserFace];
+    aModel.uid = [SzkAPI getUid];
     
     [self createRichLabelWithMessage:text isInsert:YES];
     [_dataArray insertObject:aModel atIndex:0];
@@ -1003,7 +1004,9 @@ typedef enum{
         cell.aImageView.image = (UIImage *)aModel.userface;
     }else
     {
-       [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.userface] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    
+        [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.userface] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+        
     }
     
     cell.nameLabel.text = aModel.username;

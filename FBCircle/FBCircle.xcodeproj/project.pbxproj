@@ -117,6 +117,8 @@
 		13B85B14199A1A14000072FB /* BBS-kuang-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B85B13199A1A14000072FB /* BBS-kuang-up@2x.png */; };
 		13CCD73A1999B45B00E38ECC /* BBSInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CCD7391999B45B00E38ECC /* BBSInfoModel.m */; };
 		13CCD73D1999C12E00E38ECC /* BBSMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CCD73C1999C12E00E38ECC /* BBSMemberModel.m */; };
+		13E8EE0F19F60520006FA5CE /* SearchTieziCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E8EE0D19F60520006FA5CE /* SearchTieziCell.m */; };
+		13E8EE1019F60520006FA5CE /* SearchTieziCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13E8EE0E19F60520006FA5CE /* SearchTieziCell.xib */; };
 		190F3A121992547400D54140 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A0D1992547400D54140 /* MineViewController.m */; };
 		190F3A131992547400D54140 /* mineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A111992547400D54140 /* mineTableViewCell.m */; };
 		190F3A211992571300D54140 /* icon1024_1024@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1D1992571300D54140 /* icon1024_1024@2x.png */; };
@@ -1157,6 +1159,9 @@
 		13CCD7391999B45B00E38ECC /* BBSInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSInfoModel.m; sourceTree = "<group>"; };
 		13CCD73B1999C12E00E38ECC /* BBSMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSMemberModel.h; sourceTree = "<group>"; };
 		13CCD73C1999C12E00E38ECC /* BBSMemberModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSMemberModel.m; sourceTree = "<group>"; };
+		13E8EE0C19F60520006FA5CE /* SearchTieziCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTieziCell.h; sourceTree = "<group>"; };
+		13E8EE0D19F60520006FA5CE /* SearchTieziCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTieziCell.m; sourceTree = "<group>"; };
+		13E8EE0E19F60520006FA5CE /* SearchTieziCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTieziCell.xib; sourceTree = "<group>"; };
 		190F3A0C1992547400D54140 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		190F3A0D1992547400D54140 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
 		190F3A101992547400D54140 /* mineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mineTableViewCell.h; sourceTree = "<group>"; };
@@ -2189,6 +2194,9 @@
 				1320A7D1199AFCFB00EB955B /* SearchBBSCell.h */,
 				1320A7D2199AFCFB00EB955B /* SearchBBSCell.m */,
 				1320A7D3199AFCFB00EB955B /* SearchBBSCell.xib */,
+				13E8EE0C19F60520006FA5CE /* SearchTieziCell.h */,
+				13E8EE0D19F60520006FA5CE /* SearchTieziCell.m */,
+				13E8EE0E19F60520006FA5CE /* SearchTieziCell.xib */,
 			);
 			path = BBSViews;
 			sourceTree = "<group>";
@@ -3899,6 +3907,7 @@
 				56A64D3C198F72E900451413 /* Expression_12@2x.png in Resources */,
 				56A64ACA198F6AD800451413 /* geren_morentouxiang126_126@2x.png in Resources */,
 				56A64BDE198F6CA200451413 /* messages_toolbar_background.png in Resources */,
+				13E8EE1019F60520006FA5CE /* SearchTieziCell.xib in Resources */,
 				5617145919A1D71E002DB2C7 /* BBSClassify.plist in Resources */,
 				1937B14E19AF0A3500B74144 /* qsaoyisao@2x.png in Resources */,
 				138EBEB41992512F005DB531 /* JoinBBSCell.xib in Resources */,
@@ -4674,6 +4683,7 @@
 				56A64B82198F6BD400451413 /* AboutFBQuanViewController.m in Sources */,
 				56A64AAE198F6AD800451413 /* GfeiHaoyouFootViewController.m in Sources */,
 				1368544B19921170004BBB20 /* LButtonView.m in Sources */,
+				13E8EE0F19F60520006FA5CE /* SearchTieziCell.m in Sources */,
 				56A64888198F502700451413 /* GrayPageControl.m in Sources */,
 				56A648E4198F512A00451413 /* FMDatabaseAdditions.m in Sources */,
 				13877F781998CC1B0058DED6 /* LBBSCellView.m in Sources */,
@@ -4975,7 +4985,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d1936a7a-b4c4-4732-a427-8086d0dcd29d";
+				PROVISIONING_PROFILE = "601ce7f8-7659-4916-b50d-892c29f5ee62";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -5001,7 +5011,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d1936a7a-b4c4-4732-a427-8086d0dcd29d";
+				PROVISIONING_PROFILE = "601ce7f8-7659-4916-b50d-892c29f5ee62";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;

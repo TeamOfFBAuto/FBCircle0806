@@ -712,6 +712,11 @@
 + (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor
 {
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:content];
+    
+    if (content.length <= aKeyword.length) {
+        return string;
+    }
+    
     for (int i = 0; i <= content.length - aKeyword.length; i ++) {
         
         NSRange tmp = NSMakeRange(i, aKeyword.length);

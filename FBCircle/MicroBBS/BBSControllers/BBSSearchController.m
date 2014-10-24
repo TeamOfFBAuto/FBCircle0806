@@ -548,11 +548,10 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 43, 320, 0.5)];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 74, 320, 0.5)];
             line.backgroundColor = [UIColor colorWithHexString:@"d7d7d7"];
             line.tag = 100;
             
-            line.hidden = YES;
             [cell.contentView addSubview:line];
         }
         
@@ -568,10 +567,6 @@
         NSString *content = aModel.content;        
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
         cell.detailTextLabel.attributedText = [LTools attributedString:content keyword:keyword color:[UIColor colorWithHexString:@"637cbc"]];
-        
-        UIView *line = [cell viewWithTag:100];
-        line.top = cell.height - 1;
-        line.hidden = NO;
         
         return cell;
     }

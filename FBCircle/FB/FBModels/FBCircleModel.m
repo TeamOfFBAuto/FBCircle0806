@@ -379,6 +379,7 @@
             if (data == nil || data.length == 0)
             {
                 fbCircleFailedBlock(@"");
+                return ;
             }
             
             
