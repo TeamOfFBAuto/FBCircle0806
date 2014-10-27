@@ -76,11 +76,7 @@
              loadview.normalLabel.text = @"";
          }
          
-        
-        
-         
         bself.data_array = [NSMutableArray arrayWithArray:array];
-         
         [bself.myTableView reloadData];
          
     } WithFailedBlock:^(AFHTTPRequestOperation *opration) {
@@ -221,15 +217,10 @@
                  return;
              }
              
-             
              NSArray *dataInfoArray = [dataDic objectForKey:@"datainfo"];
-             
              NSDictionary *wenzhangDic = dataInfoArray[0];
-             
              bself.theModel = [[FBCircleModel alloc]initWithDictionary:wenzhangDic];
-             
              [bself loadCommentsWithPage:_currentPage];
-             
          }
          @catch (NSException *exception) {
              
@@ -461,6 +452,11 @@
             break;
         case FBCircleMenuZhuanFa:
         {
+            if ([_theModel.fb_uid isEqualToString:[SzkAPI getUid]])
+            {
+                [ZSNApi showAutoHiddenMBProgressWithText:@"不能转发自己的文章" addToView:self.view];
+                return;
+            }
             
             if ((_theModel.rfb_tid.length == 0 || [_theModel.rfb_tid isEqualToString:@"(null)"] || [_theModel.rfb_tid isKindOfClass:[NSNull class]]) && [_theModel.rfb_content isEqualToString:@"此内容已删除"])
             {
@@ -468,9 +464,7 @@
                 myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
                 [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"此内容已删除"];
                 [self.view addSubview:myAlertView];
-                
                 [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1];
-                
                 return;
             }
             
@@ -487,9 +481,7 @@
             
             
             [alertView setInformationWithUrl:isForward?_theModel.rfb_face:_theModel.fb_face WithUserName:isForward?_theModel.rfb_username:_theModel.fb_username WithContent:isForward?_theModel.rfb_content:_theModel.fb_content WithBlock:^(NSString *theString) {
-                
                 [bself ForwardBlogRequestWith:isForward WithMode:_theModel WithContent:theString];
-                
             }];
             
             [alertView show];
@@ -523,15 +515,10 @@
         if ([praiseModel.praise_username isEqualToString:[SzkAPI getUsername]])
         {
             myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
-            
             myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
-            
             [myAlertView setType:FBQuanAlertViewTypeNoJuhua thetext:@"您已经赞过了"];
-            
             [self.view addSubview:myAlertView];
-            
             [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:0.7];
-            
             return;
         }
     }
