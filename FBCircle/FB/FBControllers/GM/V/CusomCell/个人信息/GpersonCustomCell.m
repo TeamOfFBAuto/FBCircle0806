@@ -269,6 +269,7 @@
         titel.frame = CGRectMake(17, 10, 60, 30);
         titel.text = @"用户名";
         
+        NSLog(@"用户名 ： %@",theModel.person_username);
         
         if (theModel.person_username.length != 0) {
             
@@ -276,7 +277,8 @@
             
             
         }
-        if (theModel.person_username.length != 0 || [theModel.person_username isEqualToString:@"<null>"]){
+        
+        if (theModel.person_username.length == 0 || [theModel.person_username isEqualToString:@"<null>"]){
             
             contentLabel.text = @"未填写";
             
