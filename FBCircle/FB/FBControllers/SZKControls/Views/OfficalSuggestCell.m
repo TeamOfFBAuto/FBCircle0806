@@ -41,7 +41,7 @@
         
         _model=[[FriendAttribute alloc]init];
         
-        self.selectionStyle=UITableViewCellSelectionStyleNone;
+//        self.selectionStyle=UITableViewCellSelectionStyleNone;
         
     }
     return self;

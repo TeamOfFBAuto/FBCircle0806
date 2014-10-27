@@ -8,8 +8,6 @@
 
 #import "SuggestFriendViewController.h"
 
-
-
 @interface SuggestFriendViewController (){
     
     NSString *str_phonenumber;
@@ -178,7 +176,6 @@
         }
         
     }
-    
 }
 
 #pragma mark-将联系人上传，获取到匹配消息
@@ -186,7 +183,6 @@
 -(void)matchingAddressBookWithstrnumber:(NSString *)thenumber strname:(NSString *)thename{
     /**
      http://quan.fblife.com/index.php?c=interface&a=getphonemember&authkey=UGQBZgNgB2MDPFA8AnkKZFIgUSwPMVVpB2VTcVprAG9SPQ==&phone=18601901680,15552499996&rname=etsfs,sdfafa
-     
      */
     __weak typeof(self) _weaself=self;
     
@@ -372,6 +368,39 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    /**
+     *  这个是直接刷新cell
+     */
+    FriendAttribute *_model=[_arrayInfo objectAtIndex:indexPath.row];
+    _model.optype=[NSString stringWithFormat:@"5"];
+    
+    [_arrayInfo replaceObjectAtIndex:indexPath.row withObject:_model];
+    
+    NSIndexPath *indexPathss=[NSIndexPath indexPathForRow:indexPath.row inSection:0];
+    [_mainTabV reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPathss,nil] withRowAnimation:UITableViewRowAnimationNone];
+    
+    
+    
+    
+    SzkLoadData *_loadRegist=[[SzkLoadData alloc]init];
+    NSString *str_url=[NSString stringWithFormat:ACCEPTAPI,[SzkAPI getAuthkey],_model.uid];
+    
+    [_loadRegist SeturlStr:str_url block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
+        
+        NSLog(@"errinfo==%@===code==%d===indo===%@",errorindo,errcode,arrayinfo);
+        if (errcode==0) {
+            
+            //  [_weakself dotheMatchingAndPostAddressBook];
+            //接受成功，通知到
+            [[NSNotificationCenter defaultCenter] postNotificationName:GETFRIENDLIST object:nil];
+            
+        }
+    }];
+    
+    NSLog(@"接受的接口==%@",str_url);
+    
+    
     
 }
 
