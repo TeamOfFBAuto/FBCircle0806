@@ -58,7 +58,13 @@
 
 -(void)setFbRegistCellType:(FbRegistCellType)_type placeHolderText:(NSString *)_plcaeText str_img:(NSString *)_str_img fbregistbloc:(FbRegistCellBloc)_bloc row:(NSInteger )alarow
 {
+    if (alarow==3||alarow==4) {
+        _inputField.keyboardType=UIKeyboardTypeDecimalPad;
+    }else{
+        _inputField.keyboardType=UIKeyboardTypeDefault;
 
+    }
+    
     _rowofindexpath=alarow;
     switch (_type) {
         case 0:

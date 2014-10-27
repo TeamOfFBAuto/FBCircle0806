@@ -51,7 +51,6 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     
- 
     
     
     _userNameStr=[NSString string];
@@ -141,12 +140,14 @@
         
     }
     __weak typeof(self) _weakself=self;
-    
-    
+
+    __weak typeof(_mmainTabV)weaktabv=_mmainTabV;
+
     if (indexPath.row==3) {
         
         [cell setFbRegistCellType:FbRegistCellTypeofButton placeHolderText:[_placHolderTextArr objectAtIndex:indexPath.row] str_img:[_imgArr objectAtIndex:indexPath.row]  fbregistbloc:^(int tag, NSInteger indexpathofrow, NSString *stringtext) {
-            
+            weaktabv.frame=CGRectMake(0, 0, 320,44*5);
+
             NSLog(@"phonenumber==%@",stringtext);
             if (tag==101) {
                 //发送验证码的按钮
@@ -163,15 +164,23 @@
        [cell setFbRegistCellType:FbRegistCellTypePassWord placeHolderText:[_placHolderTextArr objectAtIndex:indexPath.row] str_img:[_imgArr objectAtIndex:indexPath.row]  fbregistbloc:^(int tag, NSInteger indexpathofrow, NSString *stringtext) {
             
             [_weakself changewordwithstr:stringtext indexpathrow:indexpathofrow];
-            
-            
+           weaktabv.frame=CGRectMake(0, 0, 320,44*5);
+
+           
         } row:indexPath.row];
         
         
     }else{
+        
         [cell setFbRegistCellType:FbRegistCellTypeNormal placeHolderText:[_placHolderTextArr objectAtIndex:indexPath.row] str_img:[_imgArr objectAtIndex:indexPath.row]  fbregistbloc:^(int tag, NSInteger indexpathofrow, NSString *stringtext) {
             
             [_weakself changewordwithstr:stringtext indexpathrow:indexpathofrow];
+            if (indexpathofrow==4) {
+                weaktabv.frame=CGRectMake(0, -80, 320,44*5);
+            }else{
+                weaktabv.frame=CGRectMake(0, 0, 320,44*5);
+
+            }
             
             
         } row:indexPath.row];
@@ -245,9 +254,13 @@
     __weak typeof(self) weakself=self;
     SzkLoadData *_loadRegist=[[SzkLoadData alloc]init];
     UIAlertView *theAlertV;
+    
+    
+    
 
     if (_userNameStr.length==0) {
-        theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        
+          theAlertV=[[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [theAlertV show];
         return;
     }else if (_passWordStr.length==0){
@@ -273,6 +286,34 @@
         
     }
     
+    if ([_userNameStr rangeOfString:@" "].length) {
+        
+        _userNameStr=[_userNameStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+    
+    if ([_passWordStr rangeOfString:@" "].length) {
+        
+        _passWordStr=[_passWordStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+    if ([_emailStr rangeOfString:@" "].length) {
+        
+        _emailStr=[_emailStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+    if ([_phoneNumberStr rangeOfString:@" "].length) {
+        
+        _phoneNumberStr=[_phoneNumberStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+    if ([_vertificatinNumberStr rangeOfString:@" "].length) {
+        
+        _vertificatinNumberStr=[_vertificatinNumberStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+   
+
     
     
     [_loadRegist SeturlStr:[NSString stringWithFormat:REGISTAPI,[_userNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],_passWordStr,_phoneNumberStr,_vertificatinNumberStr,_emailStr,@"token"] block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
@@ -303,6 +344,8 @@
         
         
     }];
+    
+    
     
     NSString *str_url=[NSString stringWithFormat:REGISTAPI,_userNameStr,_passWordStr,_phoneNumberStr,_vertificatinNumberStr,_emailStr,@"token"];
     
@@ -360,7 +403,6 @@
             [_alertV show];
         
         }
-  
         
     }];
     
