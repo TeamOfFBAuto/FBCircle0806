@@ -669,11 +669,10 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _theTouchView.hidden = YES;
-    
-    [self.inputToolBarView.myTextView resignFirstResponder];
-    
+    self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44-44,320,44);
+    temp_count = 1;
+    [self.inputToolBarView resetInputView];
     isMyTextView = NO;
-    
 }
 
 
@@ -774,6 +773,7 @@
                                                                       inputViewFrame.size.height + theheight);
                              
                              [self.inputToolBarView adjustTextViewHeightBy:count WihtHeight:theheight];
+                             _theTouchView.frame = CGRectMake(0,0,320,self.inputToolBarView.frame.origin.y);
                          }
                      }
                      completion:^(BOOL finished) {
@@ -851,45 +851,6 @@
     
     [request startAsynchronous];
     
-    
-    
-    
-    /*
-    
-    
-    NSString * fullUrl = [NSString stringWithFormat:FBCIRCLE_FORWARD_URL,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"],isForward?model.rfb_tid:model.fb_tid,isForward?model.rfb_uid:model.fb_uid,[[string stringByReplacingEmojiUnicodeWithCheatCodes] stringByAddingPercentEscapesUsingEncoding:  NSUTF8StringEncoding]];
-    
-    NSLog(@"转发文章-------%@",fullUrl);
-    
-    NSURLRequest * urlRequest = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
-    
-    AFHTTPRequestOperation * requestOpration = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    
-    __block AFHTTPRequestOperation * request = requestOpration;
-    
-    [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         [alert dismissWithClickedButtonIndex:0 animated:YES];
-         
-         NSDictionary * allDic = [operation.responseString objectFromJSONString];
-         
-         if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
-             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"转发成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-             [alertView show];
-             
-             self.inputToolBarView.myTextView.text = @"";
-         }else
-         {
-             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"转发失败" message:[allDic objectForKey:@"errinfo"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-             [alertView show];
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         
-     }];
-    
-    [requestOpration start];
-     */
 }
 
 
@@ -927,13 +888,13 @@
     
     [self.myTableView reloadData];
     
-    
+    __weak typeof(self) bself = self;
     [UIView animateWithDuration:0.4 animations:^{
-        self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44,320,44);
-        
-        self.inputToolBarView.myTextView.frame = CGRectMake(17,6,248,32);
-        
-        self.inputToolBarView.myTextView.text = @"";
+        _theTouchView.hidden = YES;
+        bself.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44-44,320,44);
+        temp_count = 1;
+        [bself.inputToolBarView resetInputView];
+        isMyTextView = NO;
     } completion:^(BOOL finished) {
         
     }];
@@ -950,7 +911,7 @@
         @try {
             NSDictionary * allDic = [comment_request.responseString objectFromJSONString];
             
-            [self loadCommentsWithPage:1];
+            [bself loadCommentsWithPage:1];
             
             if ([[allDic objectForKey:@"errcode"] intValue] == 0) {
                 

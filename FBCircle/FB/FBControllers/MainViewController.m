@@ -2106,7 +2106,6 @@
 
 - (void)keyboardWillShowHide:(NSNotification *)notification
 {
-    
     if (!isMyTextView) {
         return;
     }
@@ -2143,10 +2142,10 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _theTouchView.hidden = YES;
-    [self.inputToolBarView.myTextView resignFirstResponder];
     self.inputToolBarView.frame = CGRectMake(0,(iPhone5?568:480)-20-44,320,44);
-    self.inputToolBarView.myTextView.frame = CGRectMake(17,6,248,32);
-    self.inputToolBarView.myTextView.text = @"";
+//    self.inputToolBarView.myTextView.frame = CGRectMake(17,6,248,32);
+    temp_count = 1;
+    [self.inputToolBarView resetInputView];
     isMyTextView = NO;
 }
 
@@ -2220,7 +2219,6 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    textView.text = @"";
     [textView resignFirstResponder];
     
     isMyTextView = NO;
@@ -2229,11 +2227,9 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    
     if (!temp_textView)
     {
         temp_textView = [[UITextView alloc] initWithFrame:CGRectMake(0,0,textView.frame.size.width,textView.frame.size.height)];
-        
         temp_textView.font = [UIFont systemFontOfSize:15];
     }
     
@@ -2248,9 +2244,7 @@
         count = ((height-34)/18)+1;
     }
     
-    
     float theheight = (count-temp_count)*18;
-    
     
     [UIView animateWithDuration:0.25f
                      animations:^{
@@ -2275,6 +2269,7 @@
                                                                       inputViewFrame.size.height + theheight);
                              
                              [self.inputToolBarView adjustTextViewHeightBy:count WihtHeight:theheight];
+                             _theTouchView.frame = CGRectMake(0,0,320,self.inputToolBarView.frame.origin.y);
                          }
                      }
                      completion:^(BOOL finished) {

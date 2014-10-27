@@ -96,16 +96,13 @@
     
     _allAssesters = [NSMutableArray arrayWithArray:_TempAllAssesters];
     
+    [self loadChoosePictures];
+    
     self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,6.5,320,(iPhone5?568:480)-20-44-6.5) style:UITableViewStylePlain];
-    
     self.myTableView.delegate = self;
-    
     self.myTableView.dataSource = self;
-    
     self.myTableView.separatorInset = UIEdgeInsetsZero;
-    
     self.myTableView.backgroundColor = _theType==WriteBlogWithContent?RGBCOLOR(242,242,242):[UIColor whiteColor];
-    
     [self.view addSubview:self.myTableView];
     
     
@@ -252,7 +249,6 @@
                 theHeight = 157.0/2;
                 break;
             case 1:
-                [self loadChoosePictures];
                 theHeight = picturesView.frame.size.height;
                 break;
             case 2:
@@ -281,7 +277,6 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    
     if (_theType == WriteBlogWithContent) {
         cell.backgroundColor = RGBCOLOR(251,251,251);
         
@@ -293,36 +288,21 @@
         {
             if (!_myTextView) {
                 _myTextView = [[UITextView alloc] initWithFrame:CGRectMake(12,5,296,157.0/2-10)];
-                
                 _myTextView.font = [UIFont systemFontOfSize:14];
-                
                 _myTextView.delegate = self;
-                
                 _myTextView.showsHorizontalScrollIndicator = NO;
-                
                 _myTextView.showsVerticalScrollIndicator = NO;
-                
                 _myTextView.returnKeyType = UIReturnKeyDefault;
-                
                 _myTextView.backgroundColor = [UIColor clearColor];
-                
                 [cell.contentView addSubview:_myTextView];
                 
-                
                 placeHolderLable = [[UILabel alloc] initWithFrame:CGRectMake(5,7,200,15)];
-                
                 placeHolderLable.text = @"心情记录...";
-                
                 placeHolderLable.backgroundColor = [UIColor clearColor];
-                
                 placeHolderLable.textColor = RGBCOLOR(153,153,153);
-                
                 placeHolderLable.textAlignment = NSTextAlignmentLeft;
-                
                 placeHolderLable.font = [UIFont systemFontOfSize:14];
-                
                 placeHolderLable.userInteractionEnabled = NO;
-                
                 [_myTextView addSubview:placeHolderLable];
             }
         }
@@ -558,6 +538,7 @@
         });
     }
     
+    [self loadChoosePictures];
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0],nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
@@ -597,6 +578,7 @@
          
      }];
     
+    [self loadChoosePictures];
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0],nil] withRowAnimation:UITableViewRowAnimationNone];
     
 }
@@ -607,19 +589,30 @@
 
 -(void)loadChoosePictures
 {
-    
-    if (!picturesView) {
+    if (!picturesView)
+    {
         picturesView = [[UIView alloc] init];
     }else
     {
-        for (int i = 0;i < picturesView.subviews.count;i++) {
-            UIButton * button = [picturesView.subviews objectAtIndex:i];
+//        NSLog(@"-=-=-=-=-=-  %d",picturesView.subviews.count);
+//        int ii = picturesView.subviews.count;
+//        for (int i = 0;i < ii;i++)
+//        {
+//            NSLog(@"malegebazide-----%d",i);
+//            UIButton * button = (UIButton *)[picturesView.subviews objectAtIndex:i];
+//            [button setImage:nil forState:UIControlStateNormal];
+//            [button removeFromSuperview];
+//            button = nil;
+//        }
+        
+        
+        for (UIButton * button in picturesView.subviews) {
+            NSLog(@"malegebazide-----");
             [button setImage:nil forState:UIControlStateNormal];
             [button removeFromSuperview];
-            button = nil;
         }
+        
     }
-    
     
     float theHeight = 28;
     
@@ -631,11 +624,8 @@
         button.layer.masksToBounds = YES;
         button.layer.cornerRadius = 5;
         [button setImage:[UIImage imageNamed:@"WriteChoosePictures.png"] forState:UIControlStateNormal];
-        
         [button addTarget:self action:@selector(ChooseMorePictures:) forControlEvents:UIControlEventTouchUpInside];
-        
         [picturesView addSubview:button];
-        
         theHeight += 65;
         
     }else
@@ -645,46 +635,40 @@
         
         int row = (count%4?1:0) + (count/4);
         
-        if (count < 9) {
+        if (count < 9)
+        {
             row = ((count+1)%4?1:0) + ((count+1)/4);
         }else
         {
             row = 3;
         }
         
-        
         for (int i = 0;i < row;i++)
         {
             for (int j = 0;j < 4;j++) {
                 
                 if (j+4*i < count) {
+                    NSLog(@"papapap ----  %d",j+4*i);
                     UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-                    
                     button.frame = CGRectMake(16 + 74*j,14 + 74*i,65,65);
-                    
                     button.imageView.clipsToBounds = YES;
                     button.layer.masksToBounds = YES;
                     button.layer.cornerRadius = 5;
                     button.tag = 1000+ j + 4*i;
-                    
                     button.imageView.contentMode = UIViewContentModeScaleAspectFill;
-                    
                     [button setImage:[ZSNApi scaleToSizeWithImage:[self.allImageArray objectAtIndex:j+4*i] size:CGSizeMake(130,130)] forState:UIControlStateNormal];
-                    
                     [button addTarget:self action:@selector(RemoveSelfTap:) forControlEvents:UIControlEventTouchUpInside];
-                    
                     [picturesView addSubview:button];
                 }else
                 {
-                    if (j + 4*i == count && count != 9) {
+                    if (j + 4*i == count && count != 9)
+                    {
+                        NSLog(@"piapiapia ----  %d",j+4*i);
                         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-                        
                         button.frame = CGRectMake(16 + 74*j,14 + 74*i,65,65);
-                        
+                        button.tag = 1000+ j + 4*i;
                         [button setImage:[UIImage imageNamed:@"WriteChoosePictures.png"] forState:UIControlStateNormal];
-                        
                         [button addTarget:self action:@selector(ChooseMorePictures:) forControlEvents:UIControlEventTouchUpInside];
-                        
                         [picturesView addSubview:button];
                     }
                 }
@@ -701,15 +685,10 @@
 -(void)RemoveSelfTap:(UIButton *)sender
 {
     WritePreviewDeleteViewController * PreviewDelete = [[WritePreviewDeleteViewController alloc] init];
-    
     PreviewDelete.AllImagesArray = self.allImageArray;
-    
     PreviewDelete.currentPage = sender.tag-1000;
-    
     __weak typeof(self) bself = self;
-    
     [PreviewDelete deleteSomeImagesWithBlock:^(int currentPage) {
-        
         [bself.allImageArray removeObjectAtIndex:currentPage];
         [bself.allAssesters removeObjectAtIndex:currentPage];
         [bself reloadImagesView];
@@ -723,12 +702,14 @@
 
 -(void)reloadImagesView
 {
+    [self loadChoosePictures];
     [self.myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0],nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 
 -(void)ChooseMorePictures:(UIButton *)sender
 {
+    NSLog(@"sender.tag --------   %d",sender.tag);
     if (self.allAssesters.count == 9)
     {
         myAlertView=[[FBQuanAlertView alloc]initWithFrame:CGRectMake(0,0,140,100)];

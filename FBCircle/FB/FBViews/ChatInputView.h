@@ -41,6 +41,6 @@
 @property(nonatomic,assign)id<ChatInputViewDelegate>delegate;
 
 - (void)adjustTextViewHeightBy:(CGFloat)changeInHeight WihtHeight:(float)theHeight;
-
-
+///恢复输入框状态
+-(void)resetInputView;
 @end

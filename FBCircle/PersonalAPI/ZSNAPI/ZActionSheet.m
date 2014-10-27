@@ -132,7 +132,6 @@
 
 
 #pragma mark - 弹出视图
-
 -(void)showInView:(UIView *)view WithAnimation:(BOOL)animation
 {
 //    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];

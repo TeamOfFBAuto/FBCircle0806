@@ -520,9 +520,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _theTouchView.hidden = YES;
-    
     [self.inputToolBarView.myTextView resignFirstResponder];
-    
 }
 
 

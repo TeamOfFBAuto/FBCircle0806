@@ -55,11 +55,11 @@
     [navImageView addSubview:daohangView];
     
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(10,8,12,21.5)];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,20,44,44)];
     
     [button_back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
-    [button_back setBackgroundImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
+    [button_back setImage:FBCIRCLE_BACK_IMAGE forState:UIControlStateNormal];
     
     button_back.center = CGPointMake(20,42);
     
@@ -141,16 +141,16 @@
 
 -(void)loadAllViews
 {
+    for (UIView * view in _myScrollView.subviews) {
+        [view removeFromSuperview];
+    }
+    
     for (int i = 0;i < self.AllImagesArray.count;i++)
     {
         QBShowImagesScrollView * ScrollView = [[QBShowImagesScrollView alloc] initWithFrame:CGRectMake(340*i,0,320,_myScrollView.frame.size.height) WithLocation:[self.AllImagesArray objectAtIndex:i]];
-        
         ScrollView.aDelegate = self;
-        
         ScrollView.tag = 1000+i;
-        
         ScrollView.backgroundColor = RGBCOLOR(242,242,242);
-        
         [_myScrollView addSubview:ScrollView];
     }
 }
@@ -238,11 +238,10 @@
                 _currentPage--;
             }
             
-            [self loadAllViews];
-            
             title_label.text = [NSString stringWithFormat:@"选中%d张中的%d张",self.AllImagesArray.count,_currentPage+1];
-            
+            _myScrollView.contentSize = CGSizeMake(340*_AllImagesArray.count,0);
             _myScrollView.contentOffset = CGPointMake(340*_currentPage,0);
+            [self loadAllViews];
         }
             break;
         case 1:

@@ -153,10 +153,10 @@
 -(void)setInformationWithUrl:(NSString *)url WithUserName:(NSString *)userName WithContent:(NSString *)content WithBlock:(ZSNAlertViewBlock)theBlock
 {
     zsnAlertViewBlock = theBlock;
-    _content_label.frame = CGRectMake(75,72.5,180,20);
+    _content_label.frame = CGRectMake(75,72.5,180,22);
     [_imageView loadImageFromURL:url withPlaceholdImage:PERSONAL_DEFAULTS_IMAGE];
     _userName_label.text = userName;
-    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_MIDDLE_WIDTH WithHeight:IMAGE_MIDDLE_HEIGHT WithLineBreak:YES];
+    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:nil WithWidht:IMAGE_SMALL_WIDTH WithHeight:IMAGE_SMALL_HEIGHT WithLineBreak:YES];
     
 }
 

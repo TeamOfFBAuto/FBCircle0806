@@ -167,7 +167,15 @@
 }
 
 
-
+#pragma mark - 恢复到初始状态
+-(void)resetInputView
+{
+    [_myTextView resignFirstResponder];
+    _myTextView.text = @"";
+    _myTextView.inputView = nil;
+    _myTextView.frame = CGRectMake(17,6,248,32);
+    line_view.frame = CGRectMake(0,43.5,320,0.5);
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

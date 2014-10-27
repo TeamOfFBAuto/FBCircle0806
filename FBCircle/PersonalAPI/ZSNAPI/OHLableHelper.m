@@ -123,7 +123,7 @@
     }
     label.delegate = delegate;
     CGRect labelRect = label.frame;
-    labelRect.size.width = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
+    labelRect.size.width = isBreak?labelRect.size.width:[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
     labelRect.size.height = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
     label.frame = labelRect;
     label.onlyCatchTouchesOnLinks = NO;
