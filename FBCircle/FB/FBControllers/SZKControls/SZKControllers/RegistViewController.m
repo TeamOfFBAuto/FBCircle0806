@@ -142,6 +142,8 @@
     __weak typeof(self) _weakself=self;
 
     __weak typeof(_mmainTabV)weaktabv=_mmainTabV;
+    
+    __weak typeof (_bigNextButton)weakbigbutton=_bigNextButton;
 
     if (indexPath.row==3) {
         
@@ -165,10 +167,9 @@
             
             [_weakself changewordwithstr:stringtext indexpathrow:indexpathofrow];
            weaktabv.frame=CGRectMake(0, 0, 320,44*5);
-
+           weakbigbutton.frame=CGRectMake((320-250)/2, 44*5+20, 250, 44);
            
         } row:indexPath.row];
-        
         
     }else{
         
@@ -177,8 +178,11 @@
             [_weakself changewordwithstr:stringtext indexpathrow:indexpathofrow];
             if (indexpathofrow==4) {
                 weaktabv.frame=CGRectMake(0, -80, 320,44*5);
+                weakbigbutton.frame=CGRectMake((320-250)/2, 44*5-60, 250, 44);
+
             }else{
                 weaktabv.frame=CGRectMake(0, 0, 320,44*5);
+                weakbigbutton.frame=CGRectMake((320-250)/2, 44*5+20, 250, 44);
 
             }
             
