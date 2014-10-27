@@ -262,6 +262,9 @@
 -(void)bttnClick:(UIButton*)sender{
     
     
+    NSLog(@"----- %d",sender.tag);
+    
+    
     
     if (sender.tag == 10) {
         
@@ -271,6 +274,11 @@
             for (UIView *view in self.view.subviews) {
                 [view removeFromSuperview];
             }
+            
+            //加好友
+            
+            [self jiahaoyouBlockMethod];
+            
             [self loadCustomView];
         }
         
@@ -296,6 +304,57 @@
         }
     }
 }
+
+
+
+//加好友
+-(void)jiahaoyouBlockMethod{
+    
+        @try {
+            SzkLoadData *_test=[[SzkLoadData alloc]init];
+            
+            NSString * userName = [self.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            NSString *userId = [self.passUserid stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            NSString *str = [NSString stringWithFormat:ADDFRIENDAPI,[SzkAPI getAuthkey],userId,userName];
+            
+            NSLog(@"添加好友接口:%@",str);
+            
+            
+            if (self.userName == nil) {
+            }else{
+                //get
+                [_test SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
+                    
+                    if (errcode==0) {
+                        NSLog(@"成功");
+                        self.cellType = GRXX4;//添加中
+                        
+                    }else{
+                        UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"添加失败" message:errorindo delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                        [aler show];
+                        NSLog(@"xxssx===%@",arrayinfo);
+                    }
+                    
+                }];
+            }
+            
+            
+        }
+        @catch (NSException *exception) {
+            
+        }
+        @finally {
+            
+        }
+}
+    
+
+
+
+
+
 
 //跳转到足迹
 -(void)pushToFoot{
