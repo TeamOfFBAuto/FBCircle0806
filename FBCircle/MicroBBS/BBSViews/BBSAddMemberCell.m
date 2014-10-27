@@ -38,11 +38,15 @@
 //        [l setCornerRadius:3.0f];
         
         // _headImageV.backgroundColor=[UIColor redColor];
-        [self addSubview:_headImageV];
+        [self.contentView addSubview:_headImageV];
         _nameLabel=[[UILabel alloc]init];
         _nameLabel.font=[UIFont systemFontOfSize:15];
         _nameLabel.textColor=[UIColor blackColor];
-        [self addSubview:_nameLabel];
+        [self.contentView addSubview:_nameLabel];
+        
+        _line_view = [[UIView alloc] initWithFrame:CGRectMake(0,54.5,self.frame.size.width,0.5)];
+        _line_view.backgroundColor = RGBCOLOR(225,225,225);
+        [self.contentView addSubview:_line_view];
         
     }
     return self;

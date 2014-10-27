@@ -130,56 +130,44 @@
     self.my_right_button.userInteractionEnabled = NO;
     
     myfirendListArr=[NSMutableArray array];
-    
     name_array = [NSMutableArray array];
     
     myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,320,44)];
-    
     myScrollView.showsHorizontalScrollIndicator = NO;
-    
     myScrollView.showsVerticalScrollIndicator = NO;
-    
     myScrollView.backgroundColor = [UIColor whiteColor];
-    
     [self.view addSubview:myScrollView];
     
     name_content_label = [[UILabel alloc] initWithFrame:CGRectMake(15,0,300,44)];
-    
     name_content_label.textAlignment = NSTextAlignmentLeft;
-    
     name_content_label.font = [UIFont systemFontOfSize:14];
-    
     name_content_label.textColor = RGBCOLOR(31,31,31);
-    
     name_content_label.backgroundColor = [UIColor clearColor];
-    
     [myScrollView addSubview:name_content_label];
     
-    
-    
     mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0,0,320,44)];
-    
     mySearchBar.placeholder = @"搜索";
-    
     mySearchBar.delegate = self;
-    
     [self.view addSubview:mySearchBar];
     
     
     //1
-    _mainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0,44,320,(iPhone5?568:480)-64-44)];
+    _mainTabV=[[UITableView alloc]initWithFrame:CGRectMake(0,44,320,(iPhone5?568:480)-64-44) style:UITableViewStylePlain];
     [self.view addSubview:_mainTabV];
     [_mainTabV registerClass:[BBSAddMemberCell class] forCellReuseIdentifier:@"identifier"];
-    
     _mainTabV.delegate=self;
     _mainTabV.separatorColor=RGBCOLOR(225, 225, 225);
+    _mainTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _mainTabV.rowHeight = 55;
+    _mainTabV.separatorInset = UIEdgeInsetsZero;
     _mainTabV.dataSource=self;
     
     //2
-    _searchTabV=[[UITableView alloc]initWithFrame:_mainTabV.frame];
+    _searchTabV=[[UITableView alloc]initWithFrame:_mainTabV.frame style:UITableViewStylePlain];
     [self.view addSubview:_searchTabV];
     _searchTabV.delegate=self;
     _searchTabV.separatorColor=RGBCOLOR(225, 225, 225);
+    _searchTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _searchTabV.dataSource=self;
     
     _searchTabV.hidden=YES;
@@ -190,23 +178,17 @@
     _halfBlackV.hidden=YES;
     [self.view addSubview:_halfBlackV];
     
-    
     __weak typeof(self) _weakself=self;
     __weak typeof(_mainTabV) _weakmaintabv=_mainTabV;
-    
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         [_weakself getFriendlistFromDocument];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             [_weakmaintabv reloadData];
-            
             [_weakself getmyFriendList];
-            
         });
-        
     });
     //
     
@@ -224,7 +206,6 @@
      */
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getmyFriendList) name:GETFRIENDLIST object:nil];
-    
 }
 
 #pragma mark-搜索好友
@@ -377,7 +358,6 @@
         cell=[[BBSAddMemberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stridentifier];
     }
     cell.delegate = self;
-    
     if (tableView==_mainTabV) {
         
         FriendAttribute *_model=[[arrayinfoaddress objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
@@ -438,18 +418,14 @@
     
     if (tableView==_mainTabV)
     {
+        
+        if ([[arrayinfoaddress objectAtIndex:section] count]==0) {
+            return nil;
+        }
+        
         aview.backgroundColor=[UIColor whiteColor];
         
         aview.image = [UIImage imageNamed:@"bbs_add_member_tiao"];
-        
-//        UIView *lingV=[[UIView alloc]initWithFrame:CGRectMake(12, 24.5, 320-24, 0.5)];
-//        lingV.backgroundColor=RGBCOLOR(225, 225, 225);
-//        [aview addSubview:lingV];
-//        
-//        
-//        UIView *lingV2=[[UIView alloc]initWithFrame:CGRectMake(12,0, 320-24, 0.5)];
-//        lingV2.backgroundColor=RGBCOLOR(225, 225, 225);
-//        [aview addSubview:lingV2];
         
         UILabel *_label=[[UILabel alloc]initWithFrame:CGRectMake(10, 0.5, 320-24, 24)];
         
@@ -468,15 +444,11 @@
     return aview;
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    if (tableView==_mainTabV) {
-//        return 0;
-//
-//    }else{
-//        return 0;
-//
-//    }
-//}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.0f;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {

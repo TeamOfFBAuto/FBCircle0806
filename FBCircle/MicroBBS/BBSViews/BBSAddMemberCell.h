@@ -32,6 +32,8 @@
 
 ///名字
 @property (nonatomic,strong)UILabel  *nameLabel;
+///分割线
+@property(nonatomic,strong)UIView * line_view;
 
 -(void)setFriendAttribute:(FriendAttribute *)FriendAttributemodel;
 
