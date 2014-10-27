@@ -5,8 +5,6 @@
 //  Created by 史忠坤 on 14-5-8.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //errcode 0代表没有错误，1代表网络连接错误，2代表数据格式错误
-
-
 #import "SzkLoadData.h"
 
 
@@ -70,7 +68,7 @@
     
     
     
-    _testBlocksbl([NSArray array],@"网络不稳定，请稍后再试",1);
+    _testBlocksbl([NSArray array],@"用户名或者邮箱不符合规则，请重新填写",1);
     
 }
 

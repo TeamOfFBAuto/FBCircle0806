@@ -177,8 +177,8 @@
             
             [_weakself changewordwithstr:stringtext indexpathrow:indexpathofrow];
             if (indexpathofrow==4) {
-                weaktabv.frame=CGRectMake(0, -80, 320,44*5);
-                weakbigbutton.frame=CGRectMake((320-250)/2, 44*5-60, 250, 44);
+//                weaktabv.frame=CGRectMake(0, -80, 320,44*5);
+//                weakbigbutton.frame=CGRectMake((320-250)/2, 44*5-60, 250, 44);
 
             }else{
                 weaktabv.frame=CGRectMake(0, 0, 320,44*5);
@@ -255,6 +255,15 @@
      
      */
     
+    _userNameStr=[_userNameStr  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    _passWordStr=[_passWordStr  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    _emailStr=[_emailStr  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    _phoneNumberStr=[_phoneNumberStr  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    _vertificatinNumberStr=[_vertificatinNumberStr  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    
+
+    
     __weak typeof(self) weakself=self;
     SzkLoadData *_loadRegist=[[SzkLoadData alloc]init];
     UIAlertView *theAlertV;
@@ -290,37 +299,10 @@
         
     }
     
-    if ([_userNameStr rangeOfString:@" "].length) {
-        
-        _userNameStr=[_userNameStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-    }
-    
-    if ([_passWordStr rangeOfString:@" "].length) {
-        
-        _passWordStr=[_passWordStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-    }
-    if ([_emailStr rangeOfString:@" "].length) {
-        
-        _emailStr=[_emailStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-    }
-    if ([_phoneNumberStr rangeOfString:@" "].length) {
-        
-        _phoneNumberStr=[_phoneNumberStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-    }
-    if ([_vertificatinNumberStr rangeOfString:@" "].length) {
-        
-        _vertificatinNumberStr=[_vertificatinNumberStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-    }
-   
-
     
     
-    [_loadRegist SeturlStr:[NSString stringWithFormat:REGISTAPI,[_userNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],_passWordStr,_phoneNumberStr,_vertificatinNumberStr,_emailStr,@"token"] block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
+    
+    [_loadRegist SeturlStr:[NSString stringWithFormat:REGISTAPI,[_userNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],_passWordStr,_phoneNumberStr,_vertificatinNumberStr,[_emailStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"token"] block:^(NSArray *arrayinfo, NSString *errorindo, int errcode) {
         
         if (errcode==0) {
             
@@ -351,12 +333,11 @@
     
     
     
-    NSString *str_url=[NSString stringWithFormat:REGISTAPI,_userNameStr,_passWordStr,_phoneNumberStr,_vertificatinNumberStr,_emailStr,@"token"];
+    NSString *str_url=[NSString stringWithFormat:REGISTAPI,[_userNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],_passWordStr,_phoneNumberStr,_vertificatinNumberStr,[_emailStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"token"] ;
     
     NSLog(@"注册的接口为==%@",str_url);
     
     
-    NSLog(@"phoneNumber====%@===username==%@==password===%@==email==%@==vertification==%@",_phoneNumberStr,_userNameStr,_passWordStr,_emailStr,_vertificatinNumberStr);
     
 }
 
