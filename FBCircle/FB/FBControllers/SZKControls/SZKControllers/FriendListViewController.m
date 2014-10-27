@@ -84,7 +84,8 @@
    [_mainTabV registerClass:[FriendListCell class] forCellReuseIdentifier:@"identifier"];
 
     _mainTabV.delegate=self;
-    _mainTabV.separatorColor=RGBCOLOR(225, 225, 225);
+    _mainTabV.separatorColor=[UIColor clearColor];
+//    _mainTabV.separatorColor=RGBCOLOR(225, 225, 225);
     _mainTabV.dataSource=self;
     
     //2
@@ -292,7 +293,6 @@
             
         }
             break;
-            
             
         default:
             break;
