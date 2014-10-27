@@ -410,7 +410,7 @@
         NSString * city = placemark.subLocality;
         
         _locationLabel.text = country;
-        
+        area_string = country;
     }
 }
 

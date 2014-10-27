@@ -51,7 +51,7 @@
 @property(nonatomic,strong)UILabel * userName_label;
 
 @property(nonatomic,strong)OHAttributedLabel * content_label;
-
+///时间
 @property(nonatomic,strong)UILabel * date_label;
 
 @property(nonatomic,strong)UIButton * menu_button;

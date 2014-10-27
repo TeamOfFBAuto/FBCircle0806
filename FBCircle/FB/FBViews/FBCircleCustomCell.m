@@ -174,7 +174,6 @@
         _date_label.text = @"";
     }
     
-    
     if (!_deleteButton) {
         _deleteButton = [[UILabel alloc] initWithFrame:CGRectMake(0,0,40,20)];
         _deleteButton.text = @"删除";
@@ -450,7 +449,8 @@
     
     //张少南 地理位置
     
-    if (theInfo.fb_area.length == 0) {
+    if (theInfo.fb_area.length == 0)
+    {
         _date_label.text = [ZSNApi timestamp:theInfo.fb_deteline];
     }else
     {
