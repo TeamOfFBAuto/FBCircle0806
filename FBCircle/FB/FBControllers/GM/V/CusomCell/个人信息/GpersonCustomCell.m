@@ -160,7 +160,7 @@
         }else{
             
             
-            if (theModel.person_words.length == 0) {
+            if (theModel.person_words.length == 0 || [theModel.person_words isEqualToString:@"<null>"]) {
                 contentLabel.text = @"未填写";
                 contentLabel.font = [UIFont systemFontOfSize:14];
                 
@@ -268,10 +268,19 @@
         
         titel.frame = CGRectMake(17, 10, 60, 30);
         titel.text = @"用户名";
+        
+        
         if (theModel.person_username.length != 0) {
+            
             contentLabel.text = theModel.person_username;
-        }else{
+            
+            
+        }
+        if (theModel.person_username.length != 0 || [theModel.person_username isEqualToString:@"<null>"]){
+            
             contentLabel.text = @"未填写";
+            
+            
         }
         
         contentLabel.frame = CGRectMake(95, 10, 200, 30);
@@ -293,7 +302,7 @@
                 contentLabel.text = @"男";
             }else if([theModel.person_gender isEqualToString:@"2"]){
                 contentLabel.text = @"女";
-            }else{
+            }else if ([contentLabel.text isEqualToString:@"<null>"] || contentLabel.text.length == 0){
                 contentLabel.text = @"未填写";
             }
             
@@ -312,9 +321,13 @@
             NSString *area = [NSString stringWithFormat:@"%@ %@",p,c];
             contentLabel.text = area;
             
-        }else{
+        }
+        if ([p isEqualToString:@"<null>"] && [c isEqualToString:@"<null>"]){
             contentLabel.text = @"未填写";
             
+        }
+        if (p.length == 0 && c.length == 0){
+            contentLabel.text = @"未填写";
         }
         contentLabel.frame = CGRectMake(95, 10, 200, 30);
         contentLabel.font = [UIFont systemFontOfSize:14];

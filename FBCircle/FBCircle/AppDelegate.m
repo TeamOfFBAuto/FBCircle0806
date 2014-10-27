@@ -36,6 +36,12 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)) {
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager requestAlwaysAuthorization];
+        [_locationManager startUpdatingLocation];
+    }
+    
         
     _uploadData = [[FBCircleUploadData alloc] init];
     
