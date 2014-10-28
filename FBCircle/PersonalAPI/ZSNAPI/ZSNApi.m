@@ -695,6 +695,23 @@
 }
 
 
+#pragma mark - 设置label行间距
++(NSMutableAttributedString *)setLabelLineSpace:(NSMutableAttributedString *)string WithLineSpace:(CGFloat)lineSpace
+{
+    CGFloat lineSpacing = 2.0f;
+    NSRange range = NSMakeRange(0,[string length]);
+    CTParagraphStyleSetting paraStyles[1] = {
+        {.spec = kCTParagraphStyleSpecifierLineSpacing, .valueSize = sizeof(CGFloat), .value = (const void *)&lineSpacing},
+    };
+
+    CTParagraphStyleRef aStyle = CTParagraphStyleCreate(paraStyles,1);
+    [string removeAttribute:(NSString*)kCTParagraphStyleAttributeName range:range]; // Work around for Apple leak
+    [string addAttribute:(NSString*)kCTParagraphStyleAttributeName value:(__bridge id)aStyle range:range];
+    CFRelease(aStyle);
+    return string;
+}
+
+
 @end
 
 

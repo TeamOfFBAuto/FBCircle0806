@@ -96,6 +96,8 @@
 +(NSString *)encodeSpecialCharactersString:(NSString *)input;
 ///特殊字符解码（例：&lt;转化成<）
 +(NSString *)ddecodeSpecialCharactersStringWith:(NSString *)input;
+///设置label行间距
++(NSMutableAttributedString*)setLabelLineSpace:(NSMutableAttributedString*)string WithLineSpace:(CGFloat)lineSpace;
 @end
 
 

@@ -18,6 +18,7 @@
     UIView * contentView;
     UIView * _face_back_view;
     WeiBoFaceScrollView * faceScrollView;
+    UISwitch * locationSwitch;
 }
 
 @end
@@ -349,7 +350,7 @@
         
         _locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(45,0,200,43)];
         
-        _locationLabel.text = @"所在位置";
+        _locationLabel.text = @"正在获取位置信息...";
         
         _locationLabel.textAlignment = NSTextAlignmentLeft;
         _locationLabel.font = [UIFont systemFontOfSize:14];
@@ -360,7 +361,7 @@
         [cell.contentView addSubview:_locationLabel];
         
         
-        UISwitch * locationSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0,0,38,19)];
+        locationSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0,0,38,19)];
         
         locationSwitch.center = CGPointMake(280,43/2);
         
@@ -387,6 +388,7 @@
     isShowLocation = sender.on;
     
     if (sender.on) {
+        _locationLabel.text = @"正在获取位置信息...";
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -1138,7 +1140,7 @@
     NSLog(@"图片id -----   %@",authod);
     
     NSString * fullUrl = @"";
-    if (isShowLocation && ![_locationLabel.text isEqualToString:@"所在位置"]) {
+    if (isShowLocation && ![_locationLabel.text isEqualToString:@"正在获取位置信息..."]) {
         
         
         NSLog(@"xxx===%@",_myTextView.text);

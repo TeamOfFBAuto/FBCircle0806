@@ -83,8 +83,8 @@
     
     
     if (!_content_label) {
-        _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(64,36,247,0)];
-        _content_label.font = [UIFont systemFontOfSize:14];
+        _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(64,36,245,0)];
+        _content_label.font = [UIFont fontWithName:@"Helvetica" size:13.0f];
         [self.contentView addSubview:_content_label];
     }else
     {
@@ -140,14 +140,14 @@
     
     
     if (!_rContent_label) {
-        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,10)];
+        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,18)];
         _rContent_label.textAlignment = NSTextAlignmentLeft;
         _rContent_label.textColor = RGBCOLOR(3,3,3);
         _rContent_label.font = [UIFont systemFontOfSize:13];
         [_forwardBackGroundImageView addSubview:_rContent_label];
     }else
     {
-        
+        _rContent_label.frame = CGRectMake(54,28,235,18);
     }
     
     
@@ -310,6 +310,15 @@
    
     [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
     
+    if (_content_label.frame.size.height > 120)
+    {
+        CGRect aFrame = _content_label.frame;
+        aFrame.size.height = 120;
+        _content_label.frame = aFrame;
+        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
+    }
+    
+    
     cellHeight += _content_label.frame.size.height;
     
     if (theInfo.fb_imageid.length > 0)
@@ -410,15 +419,11 @@
             
             _forwardBackGroundImageView.frame = CGRectMake(64,cellHeight + 8,245,51);
             
-            
             if (theInfo.rfb_image.count > 0)
             {
                 _rUserName_label.frame = CGRectMake(54,5,180,20);
-                
                 _rContent_label.frame = CGRectMake(54,28,180,_rContent_label.frame.size.height);
-                
                 NSDictionary *dicimgurl=[theInfo.rfb_image objectAtIndex:0];
-                
                 NSString * urlImage = [dicimgurl objectForKey:@"link"];
                 [_rContentImageView loadImageFromURL:urlImage withPlaceholdImage:FBCIRCLE_DEFAULT_IMAGE];
             }else
@@ -624,10 +629,14 @@
 -(float)returnCellHeightWith:(FBCircleModel *)theInfo
 {
     float cellHeight = 30;
-//    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
 
     [OHLableHelper returnHeightAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
-    
+    if (_content_label.frame.size.height > 120)
+    {
+        CGRect aFrame = _content_label.frame;
+        aFrame.size.height = 120;
+        _content_label.frame = aFrame;
+    }
     
     cellHeight += _content_label.frame.size.height;
     

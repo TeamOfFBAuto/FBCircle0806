@@ -111,20 +111,23 @@
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
     [attString setFont:label.font];
     [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:isBreak?kCTLineBreakByTruncatingTail:kCTLineBreakByCharWrapping];
+    [ZSNApi setLabelLineSpace:attString WithLineSpace:2.0f];
     label.backgroundColor = [UIColor clearColor];
     [label setAttString:attString withImages:p.images];
-    
+
     NSString *string = attString.string;
     
-    if ([httpArr count]) {
-        for (NSString *httpStr in httpArr) {
+    if ([httpArr count])
+    {
+        for (NSString *httpStr in httpArr)
+        {
             [label addCustomLink:[NSURL URLWithString:httpStr] inRange:[string rangeOfString:httpStr]];
         }
     }
     label.delegate = delegate;
     CGRect labelRect = label.frame;
     labelRect.size.width = isBreak?labelRect.size.width:[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
-    labelRect.size.height = [label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
+    labelRect.size.height = isBreak?label.frame.size.height:[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
     label.frame = labelRect;
     label.onlyCatchTouchesOnLinks = NO;
     label.underlineLinks = YES;//链接是否带下划线
@@ -147,8 +150,9 @@
     
     MarkupParser* p = [[MarkupParser alloc] init];
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
-    [attString setFont:[UIFont systemFontOfSize:14]];
+    [attString setFont:label.font];
     [attString setTextAlignment:kCTTextAlignmentJustified lineBreakMode:kCTLineBreakByCharWrapping];
+    [ZSNApi setLabelLineSpace:attString WithLineSpace:2.0f];
     [label setAttString:attString withImages:p.images];
     
     CGRect labelRect = label.frame;
