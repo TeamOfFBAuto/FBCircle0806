@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *numLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *arrowImage;
 
 -(void)setCellWithModel:(BBSInfoModel *)aModel;
 

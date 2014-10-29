@@ -13,6 +13,7 @@
 #import "MyBBSCell.h"
 #import "LTools.h"
 #import "BBSInfoModel.h"
+#import "ClassifyBBSController.h"
 
 @interface MyBBSViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -24,6 +25,9 @@
     BOOL _needRefresh;
     
     LTools *tool_tmp;
+    
+    UIButton *btn_create;//创建论坛
+    UIButton *btn_join;//加入论坛
 }
 
 @end
@@ -110,6 +114,14 @@
     [self PushToViewController:sendPostVC WithAnimation:YES];
 }
 
+/**
+ *  进入分类论坛
+ */
+- (void)clickToClassifyBBS
+{
+    ClassifyBBSController *classify = [[ClassifyBBSController alloc]init];
+    [self PushToViewController:classify WithAnimation:YES];
+}
 
 #pragma mark - 网络请求
 
@@ -172,12 +184,20 @@
         [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         
         [weakTable loadFail];
+        
+        int errcode = [[failDic objectForKey:@"errcode"]integerValue];
+        
+        if (errcode) {
+            
+            [weakSelf reloadDataWithCreateArr:nil joinArr:nil total:0];
+        }
     }];
 }
 
 //成功加载
 - (void)reloadDataWithCreateArr:(NSArray *)arr_create joinArr:(NSArray *)arr_join total:(int)totalPage
 {
+    
     if (_table.pageNum < totalPage) {
         
         _table.isHaveMoreData = YES;
@@ -210,6 +230,13 @@
 
 #pragma mark - 视图创建
 
+- (UIButton *)createNewButtonWithTitle:(NSString *)title action:(SEL)selector
+{
+    UIButton *btn = [LTools createButtonWithType:UIButtonTypeRoundedRect frame:CGRectMake(0, 0, self.view.width, 40) normalTitle:title image:nil backgroudImage:nil superView:nil target:self action:selector];
+    [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    return btn;
+}
 
 #pragma mark - delegate
 
@@ -292,13 +319,55 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
+        
+        if (!_table.isReloadData &&createArray.count == 0) {
+            return 1;
+        }
+        
         return createArray.count;
+    }
+    
+    if (!_table.isReloadData && joinArray.count == 0) {
+        return 1;
     }
     return joinArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (indexPath.section == 0) {
+        if (!_table.isReloadData && createArray.count == 0) {
+            
+            
+            static NSString *btn_create_identify = @"create";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btn_create_identify];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:btn_create_identify];
+               btn_create = [self createNewButtonWithTitle:@"还未创建论坛,我来创建一个" action:@selector(clickToAddBBS)];
+                [cell addSubview:btn_create];
+            }
+            
+            return cell;
+        }
+    }else
+    {
+        if (!_table.isReloadData && joinArray.count == 0) {
+            
+            
+            static NSString *btn_join_identify = @"join";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btn_join_identify];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:btn_join_identify];
+                btn_join = [self createNewButtonWithTitle:@"您还未加入论坛,点击加入一个" action:@selector(clickToClassifyBBS)];
+                [cell addSubview:btn_join];
+            }
+            
+            return cell;
+        }
+    }
+    
+    
     static NSString * identifier = @"MyBBSCell";
     
     MyBBSCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -310,14 +379,43 @@
     BBSInfoModel *aModel;
     if (indexPath.section == 0) {
         
-        aModel = [createArray objectAtIndex:indexPath.row];
+        if (!_table.isReloadData && createArray.count == 0) {
+//            btn_create = [self createNewButtonWithTitle:@"您还未创建论坛,点击创建一个" action:@selector(clickToAddBBS)];
+//            [cell addSubview:btn_create];
+//            cell.arrowImage.hidden = YES;
+        }else
+        {
+            aModel = [createArray objectAtIndex:indexPath.row];
+            cell.arrowImage.hidden = NO;
+            
+//            if (btn_create) {
+//                [btn_create removeFromSuperview];
+//                btn_create = nil;
+//            }
+        }
         
     }else
     {
-        aModel = [joinArray objectAtIndex:indexPath.row];
+        
+        if (!_table.isReloadData && joinArray.count == 0) {
+//            btn_join = [self createNewButtonWithTitle:@"您还未加入论坛,点击加入一个" action:@selector(clickToClassifyBBS)];
+//            [cell addSubview:btn_join];
+//            cell.arrowImage.hidden = YES;
+        }else
+        {
+            aModel = [joinArray objectAtIndex:indexPath.row];
+            
+//            cell.arrowImage.hidden = NO;
+//            if (btn_join) {
+//                [btn_join removeFromSuperview];
+//                btn_join = nil;
+//            }
+        }
     }
     
-    [cell setCellWithModel:aModel];
+    if (aModel) {
+        [cell setCellWithModel:aModel];
+    }
     
     return cell;
     

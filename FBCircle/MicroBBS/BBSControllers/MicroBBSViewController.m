@@ -413,9 +413,19 @@
             
             NSDictionary *datainfo = [result objectForKey:@"datainfo"];
             
+            if ([datainfo isKindOfClass:[NSDictionary class]]) {
+                
+                NSArray *data = [datainfo objectForKey:@"data"];
+                
+                if (![data isKindOfClass:[NSArray class]]) {
+                    
+                    datainfo = nil;
+                }
+            }
                 @try{
                     
                     [LTools cache:datainfo ForKey:CACHE_CONCERN_HOT];
+                    
                     
                     _concern_hot_array = [self parseTopic:datainfo dataStyle:dataStyle];
 
@@ -557,10 +567,19 @@
         }
     }
     
+    if (_myBBSArray.count == 0) {
+        
+        UIButton *btn = [LTools createButtonWithType:UIButtonTypeRoundedRect frame:CGRectMake(0, 0, secondBgView.width, secondBgView.height) normalTitle:@"您还未添加或创建论坛，点击创建一个" image:nil backgroudImage:nil superView:secondBgView target:self action:@selector(clickToAddBBS)];
+        [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+
+    }
+    
     headerView.frame = CGRectMake(0, 0, 320, _mybbsView.bottom + 15);
     
     return headerView;
 }
+
 
 /**
  *  创建热门推荐部分
