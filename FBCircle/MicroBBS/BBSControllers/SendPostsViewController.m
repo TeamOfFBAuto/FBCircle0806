@@ -21,7 +21,7 @@
 #define MAX_SHARE_WORD_NUMBER 30
 
 
-@interface SendPostsViewController ()
+@interface SendPostsViewController ()<UIScrollViewDelegate>
 {
     UILabel * title_place_label;//标题框默认文字
     
@@ -46,6 +46,8 @@
     
     ///提示
     MBProgressHUD * hud;
+    
+    UIScrollView * myScrollView;
 }
 
 @end
@@ -106,8 +108,13 @@
     
     allAssesters = [NSMutableArray array];
     
-    
     [self ShowLocation];
+    
+    
+    
+    myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64-40.5)];
+    myScrollView.delegate = self;
+    [self.view addSubview:myScrollView];
     
     
     _title_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,5,300,35)];
@@ -118,7 +125,7 @@
     _title_textView.returnKeyType = UIReturnKeyDone;
     _title_textView.delegate = self;
     _title_textView.font = [UIFont systemFontOfSize:15];
-    [self.view addSubview:_title_textView];
+    [myScrollView addSubview:_title_textView];
 
     
     title_place_label = [[UILabel alloc] initWithFrame:CGRectMake(10,0,300,33)];
@@ -132,20 +139,19 @@
     
     
     UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15.5,43,320,0.5)];
-    
     lineView.backgroundColor = RGBCOLOR(188,191,195);
-    
-    [self.view addSubview:lineView];
+    [myScrollView addSubview:lineView];
     
     _content_textView = [[UITextView alloc] initWithFrame:CGRectMake(10,50.5,300,65)];
     _content_textView.textAlignment = NSTextAlignmentLeft;
     _content_textView.textColor = RGBCOLOR(3,3,3);
     _content_textView.delegate = self;
+    _content_textView.scrollEnabled = NO;
     _content_textView.returnKeyType = UIReturnKeyDone;
     _content_textView.backgroundColor = [UIColor clearColor];
     _content_textView.delegate = self;
     _content_textView.font = [UIFont systemFontOfSize:15];
-    [self.view addSubview:_content_textView];
+    [myScrollView addSubview:_content_textView];
     
     content_place_label = [[UILabel alloc] initWithFrame:CGRectMake(10,0,300,33)];
     content_place_label.font = [UIFont systemFontOfSize:15];
@@ -160,7 +166,7 @@
     imageScrollView.showsHorizontalScrollIndicator = NO;
     imageScrollView.showsVerticalScrollIndicator = NO;
     
-    [self.view addSubview:imageScrollView];
+    [myScrollView addSubview:imageScrollView];
     
     __weak typeof(self) bself = self;
     
@@ -819,9 +825,11 @@
         if (textView.text.length == 0)
         {
             content_place_label.text = @"输入正文";
-        }else{
+        }else
+        {
             content_place_label.text = @"";
         }
+        [self resetViews];
     }
 }
 
@@ -846,6 +854,37 @@
 {
     [super didReceiveMemoryWarning];
     
+}
+
+
+#pragma mark - 计算帖子内容高度
+-(void)resetViews
+{
+    ///初始化为40，标题占位
+    float height = 40;
+    
+    float content_height = [ZSNApi returnLabelHeightForIos7:_content_textView.text WIthFont:15 WithWidth:_content_textView.frame.size.width];
+    CGRect contentF = _content_textView.frame;
+    contentF.size.height = content_height+20;
+    _content_textView.frame = contentF;
+    
+    
+    height += content_height + 10;
+    
+    CGRect imageF = imageScrollView.frame;
+    imageF.origin.y = height;
+    imageScrollView.frame = imageF;
+    
+    height+=imageScrollView.frame.size.height;
+    
+    myScrollView.contentSize = CGSizeMake(0,height);
+}
+
+
+#pragma mark - UIScrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
 }
 
 

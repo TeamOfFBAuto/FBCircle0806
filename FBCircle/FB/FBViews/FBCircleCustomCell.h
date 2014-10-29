@@ -96,7 +96,8 @@
 
 @property(nonatomic,strong)AsyncImageView * rContentImageView;
 
-
+///如果内容过长，显示部分并提示显示全文
+@property(nonatomic,strong)UIButton * show_detail_content_button;
 
 
 -(void)setAllViews;

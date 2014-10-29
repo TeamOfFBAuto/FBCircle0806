@@ -712,6 +712,13 @@
 }
 
 
+#pragma mark - ios7计算字符串高度
++(float)returnLabelHeightForIos7:(NSString *)content WIthFont:(float)aFont WithWidth:(float)aWidth
+{
+   CGRect rectr = [content boundingRectWithSize:CGSizeMake(aWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:aFont]} context:nil];
+    return rectr.size.height;
+}
+
 @end
 
 

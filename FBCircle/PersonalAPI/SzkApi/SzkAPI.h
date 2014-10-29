@@ -18,6 +18,9 @@
 
 //获取authkey
 +(NSString *)getAuthkey;
+///获取gbk格式authkey，私信界面调用
++(NSString *)getAuthkeyGBK;
+
 //获取用户id
 +(NSString *)getUid;
 //获取用户的devicetoken

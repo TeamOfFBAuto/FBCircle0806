@@ -676,7 +676,7 @@
 //    NSLog(@"发表缓存微博接口 ----   %@",fullUrl);
     
     
-    [self sendBlogWithUrl:@"" With:model WithImages:authod WithLng:@"" WithLat:@"" WithArea:@""];
+    [self sendBlogWithUrl:@"" With:model WithImages:authod WithLng:model.fb_lng WithLat:model.fb_lat WithArea:model.fb_area];
 }
 
 //发送失败的提示框

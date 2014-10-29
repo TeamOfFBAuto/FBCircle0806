@@ -128,7 +128,7 @@
             NSDictionary *dic=(NSDictionary *)arrayinfo;
             NSString *authkey=[dic objectForKey:@"authkey"];
             NSString *uid=[dic objectForKey:@"uid"];
-            
+            NSString * authkey_gbk = [dic objectForKey:@"authkey_gbk"];
             
             NSLog(@"skjaflk===%@",dic);
             NSString *strcomeName=[NSString stringWithFormat:@"%@",[dic objectForKey:@"username"]];
@@ -139,6 +139,7 @@
             NSUserDefaults *standUDef=[NSUserDefaults standardUserDefaults];
             [standUDef setObject:authkey forKey:AUTHERKEY];
             [standUDef setObject:uid forKey:USERID];
+            [standUDef setObject:authkey_gbk forKey:AUTHERKEY_GBK];
            [standUDef setObject:strcomeName forKey:USERNAME];
             
             [standUDef synchronize];

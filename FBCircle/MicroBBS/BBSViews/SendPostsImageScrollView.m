@@ -51,18 +51,14 @@
         imageView.tag = 100 + i;
         
         imageView.userInteractionEnabled = YES;
-        
         imageView.contentMode = UIViewContentModeScaleToFill;
         
         [self addSubview:imageView];
         
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preViewTap:)];
-        
         [imageView addGestureRecognizer:tap];
-        
-        
-        
+            
         
         UIButton * close_button = [UIButton buttonWithType:UIButtonTypeCustom];
         

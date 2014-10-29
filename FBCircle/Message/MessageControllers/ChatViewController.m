@@ -16,6 +16,8 @@
 @interface ChatViewController ()
 {
     CustomChatViewCell * test_cell;
+    
+    BOOL isUpDate;
 }
 
 @end
@@ -70,6 +72,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isUpDate = NO;
     
     self.titleLabel.text = self.messageInfo.othername;
     
@@ -643,12 +646,20 @@
 
 -(void)sendMessageToSomeBodyWith:(NSString *)content
 {
-    if (self.inputToolBarView.myTextView.text.length == 0) {
+    if (self.inputToolBarView.myTextView.text.length == 0)
+    {
+        return;
+    }
+    
+    if (isUpDate)
+    {
         return;
     }
     
     
-    self.inputToolBarView.sendButton.enabled = NO;
+    isUpDate = YES;
+    
+    self.inputToolBarView.sendButton.userInteractionEnabled = NO;
     
     ChatModel * info = [[ChatModel alloc] init];
     
@@ -658,9 +669,9 @@
     
     info.date_now =string_date___ ;
     
-    NSString * myUid = [SzkAPI getUid];
+    NSString * myUid = [NSString stringWithFormat:@"%@",[SzkAPI getUid]];
     
-    if (![self.messageInfo.to_uid isEqualToString:myUid])
+    if (![[NSString stringWithFormat:@"%@",self.messageInfo.to_uid] isEqualToString:myUid])
     {
         info.to_uid = self.messageInfo.to_uid;
         info.to_username = self.messageInfo.to_username;
@@ -668,10 +679,10 @@
         info.from_uid = myUid;
     }else
     {
-        info.to_uid = myUid;
-        info.to_username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME];
-        info.from_username = self.messageInfo.to_username;
-        info.from_uid = self.messageInfo.to_uid;
+        info.to_uid = self.messageInfo.from_uid;
+        info.to_username = self.messageInfo.from_username;
+        info.from_uid = myUid;
+        info.from_username = [SzkAPI getUsername];
     }
     /**
      *  在这里改
@@ -691,14 +702,16 @@
         
         [bself finnishendsend2];
         
-        bself.inputToolBarView.sendButton.enabled = YES;
+        bself.inputToolBarView.sendButton.userInteractionEnabled = YES;
+        
+        isUpDate = NO;
         
     } WithFaildBlock:^(ASIFormDataRequest *operation, NSString *error) {
-        bself.inputToolBarView.sendButton.enabled = YES;
-        
+        bself.inputToolBarView.sendButton.userInteractionEnabled = YES;
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:@"" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        
         [alertView show];
+        
+        isUpDate = NO;
     }];
 }
 
