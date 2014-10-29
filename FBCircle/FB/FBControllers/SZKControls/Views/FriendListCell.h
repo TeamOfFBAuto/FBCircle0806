@@ -16,6 +16,8 @@
 
 @property (nonatomic,strong)UILabel  *nameLabel;
 
+@property(nonatomic,strong)UIView *lineView;
+
 -(void)setFriendAttribute:(FriendAttribute *)FriendAttributemodel;
 
 

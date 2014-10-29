@@ -1,6 +1,6 @@
 //
 //  FriendListCell.m
-//  FBCircle
+//  FBCircles
 //
 //  Created by 史忠坤 on 14-5-13.
 //  Copyright (c) 2014年 szk. All rights reserved.
@@ -23,11 +23,17 @@
 //        [l setCornerRadius:3.0f];
         
        // _headImageV.backgroundColor=[UIColor redColor];
+        
         [self addSubview:_headImageV];
         _nameLabel=[[UILabel alloc]init];
         _nameLabel.font=[UIFont systemFontOfSize:15];
         _nameLabel.textColor=[UIColor blackColor];
         [self addSubview:_nameLabel];
+        
+        _lineView=[[UIView alloc]init];
+        _lineView.backgroundColor=RGBCOLOR(233, 233, 233);
+        [self addSubview:_lineView];
+        
         
 //        _nameLabel.userInteractionEnabled=YES;
 //        self.userInteractionEnabled=YES;
@@ -64,6 +70,9 @@
     _headImageV.frame=CGRectMake(12, 12, 36, 36);
 
     _nameLabel.frame=CGRectMake(65, 0, 150, self.frame.size.height);
+    
+    _lineView.frame=CGRectMake(12, self.frame.size.height-0.5, [[UIScreen mainScreen]bounds].size.width-24, 0.5);
+    
 
 }
 
