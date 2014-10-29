@@ -230,7 +230,7 @@
         [self stopLoading:2];
     }
     
-    self.userInteractionEnabled = YES;
+//    self.userInteractionEnabled = YES;
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view

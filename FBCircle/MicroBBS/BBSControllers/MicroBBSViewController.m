@@ -109,6 +109,7 @@
     footer_view.backgroundColor = [UIColor clearColor];
     _table.tableFooterView = footer_view;
     
+    
     //缓存数据
     
     NSDictionary *dataInfo = [LTools cacheForKey:CACHE_MY_BBS];
