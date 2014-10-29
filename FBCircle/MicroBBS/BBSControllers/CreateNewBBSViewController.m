@@ -96,7 +96,7 @@
     
     [self.view addSubview:inputView];
     
-    NSArray * contentArray = [NSArray arrayWithObjects:@"微论坛的图标",@"微论坛分类",nil];
+    NSArray * contentArray = [NSArray arrayWithObjects:@"微论坛分类",@"微论坛的图标",nil];
     
     for (int i = 0;i < 2;i++)
     {
@@ -382,7 +382,7 @@
     [inputView addSubview:content_label];
     
     
-    if (theType == 0)///加载图片icon
+    if (theType == 1)///加载图片icon
     {
         iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(280,9.5,25,25)];
 //        iconImage.image = [UIImage imageNamed:@"defaultPlaceHolder.png"];//张少南  这里需要修改下默认图片
@@ -390,9 +390,9 @@
         
     }else
     {
-        sub_label = [[UILabel alloc] initWithFrame:CGRectMake(256,0,40,frame.size.height)];
+        sub_label = [[UILabel alloc] initWithFrame:CGRectMake(150,0,140,frame.size.height)];
         sub_label.text = @"必选";
-        sub_label.textAlignment = NSTextAlignmentLeft;
+        sub_label.textAlignment = NSTextAlignmentRight;
         sub_label.backgroundColor = [UIColor clearColor];
         sub_label.font = [UIFont systemFontOfSize:17];
         sub_label.textColor = RGBCOLOR(31,31,31);
@@ -417,7 +417,7 @@
     
     switch (sender.view.tag-100)
     {
-        case 0://跳转到选择图标界面
+        case 1://跳转到选择图标界面
         {
             NSLog(@"跳转到选择图标界面");
             
@@ -429,7 +429,7 @@
             
         }
             break;
-        case 1://跳转到选择分类界面
+        case 0://跳转到选择分类界面
         {
             CreateBBSChooseTypeViewController * chooseType = [[CreateBBSChooseTypeViewController alloc] init];
             

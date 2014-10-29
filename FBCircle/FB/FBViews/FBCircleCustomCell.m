@@ -74,7 +74,7 @@
         _userName_label = [[UILabel alloc] initWithFrame:CGRectMake(64,13,200,20)];
         _userName_label.textAlignment = NSTextAlignmentLeft;
         _userName_label.textColor = RGBCOLOR(3,3,3);
-        _userName_label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+        _userName_label.font = [UIFont boldSystemFontOfSize:15];
         [self.contentView addSubview:_userName_label];
     }else
     {
@@ -84,7 +84,7 @@
     
     if (!_content_label) {
         _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(64,36,245,0)];
-        _content_label.font = [UIFont fontWithName:@"Helvetica" size:13.0f];
+        _content_label.font = [UIFont fontWithName:@"Helvetica" size:14.0f];
         [self.contentView addSubview:_content_label];
     }else
     {
@@ -313,7 +313,7 @@
     if (_content_label.frame.size.height > 120)
     {
         CGRect aFrame = _content_label.frame;
-        aFrame.size.height = 120;
+        aFrame.size.height = 110;
         _content_label.frame = aFrame;
         [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
     }
@@ -634,7 +634,7 @@
     if (_content_label.frame.size.height > 120)
     {
         CGRect aFrame = _content_label.frame;
-        aFrame.size.height = 120;
+        aFrame.size.height = 110;
         _content_label.frame = aFrame;
     }
     

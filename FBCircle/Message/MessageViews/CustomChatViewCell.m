@@ -48,7 +48,7 @@
     
     _background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(theType == MyChatViewCellTypeOutgoing?(320 - point.x - 75):55,34,point.x+20,point.y+8)];
     _background_imageView.userInteractionEnabled = YES;
-    _background_imageView.image = [image stretchableImageWithLeftCapWidth:20.f topCapHeight:30.f];
+    _background_imageView.image = [image stretchableImageWithLeftCapWidth:30.f topCapHeight:30.f];
     [self.contentView addSubview:_background_imageView];
     
     
