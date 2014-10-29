@@ -132,7 +132,6 @@
             
             NSLog(@"skjaflk===%@",dic);
             NSString *strcomeName=[NSString stringWithFormat:@"%@",[dic objectForKey:@"username"]];
-
             
             NSLog(@"strCOMname===%@",strcomeName);
             

@@ -124,7 +124,7 @@
 {
     _isReloadData = YES;
     
-    self.userInteractionEnabled = NO;
+//    self.userInteractionEnabled = NO;
     
     _reloading = YES;
         

@@ -91,7 +91,6 @@
     
     
     
-    
     [self.contentView addSubview:self.topImageView];
     
     
@@ -305,6 +304,8 @@
         RTLabel *fb_content = [[RTLabel alloc]init];
         fb_content.text = [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
         CGRect contentFrame = fb_content.frame;
+        
+        
         CGSize optimumsSize = [fb_content optimumSize];
         contentFrame.size.height = optimumsSize.height+3;
         fb_content.frame = contentFrame;
