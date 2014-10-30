@@ -26,7 +26,9 @@
 
 - (IBAction)clickToJoin:(id)sender {
     
-    cellBlock(topicId);
+    if (cellBlock) {
+        cellBlock(topicId);
+    }
 }
 
 

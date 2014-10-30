@@ -142,13 +142,13 @@
  *
  *  @param bbsId 论坛id
  */
-- (void)JoinBBSId:(NSString *)bbsId cell:(JoinBBSCell *)sender
+- (void)JoinBBSId:(BBSInfoModel *)aModel cell:(JoinBBSCell *)sender
 {
-    __weak typeof(self)weakSelf = self;
-//    __weak typeof(UIButton *)weakBtn = sender;
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
+    //    __weak typeof(self)weakSelf = self;
+    //    __weak typeof(UIButton *)weakBtn = sender;
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],aModel.id];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-        
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         
@@ -158,9 +158,12 @@
             if (erroCode == 0) {
                 //加入论坛通知
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:nil];
-//                weakBtn.selected = YES;
+                //                weakBtn.selected = YES;
                 sender.joinButton.selected = YES;
                 sender.memeberLabel.text = [NSString stringWithFormat:@"%d",[sender.memeberLabel.text integerValue] + 1];
+                aModel.inForum = 1;
+                aModel.inforum = 1;
+                aModel.member_num = sender.memeberLabel.text;
             }
         }
         
@@ -259,10 +262,13 @@
     
     __weak typeof(self)weakSelf = self;
     __weak typeof(JoinBBSCell *)weakCell = cell;
+    
     BBSInfoModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    
+    __weak typeof(BBSInfoModel *)weakModel = aModel;
     [cell setCellDataWithModel:aModel cellBlock:^(NSString *topicId) {
         NSLog(@"join topic id %@",topicId);
-        [weakSelf JoinBBSId:topicId cell:weakCell];
+        [weakSelf JoinBBSId:weakModel cell:weakCell];
         
 //        weakCell.joinButton.selected = YES;
     }];
