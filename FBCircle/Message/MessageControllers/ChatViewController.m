@@ -235,7 +235,7 @@
 
 -(CGPoint)returnHeightWithArray:(NSArray *)array WithType:(MyChatViewCellType)theType
 {
-    float theWidth;
+    float theWidth = 0;
     float theHeight = 0;
     for (NSString * string in array)
     {
@@ -390,36 +390,7 @@
     }else
     {
         return [self returnCellHeightWith:indexPath.row];
-    }
-    
-    
-    
-    
-    
-    //    if (self.data_array.count<self.allCount)
-    //    {
-    //        ChatModel * info = [self.data_array objectAtIndex:indexPath.row];
-    //
-    //        MyChatViewCellType theType;
-    //        //张少南
-    //        if ([info.from_username isEqualToString:@"soulnear"])
-    //        {
-    //            theType = MyChatViewCellTypeOutgoing;
-    //        }else
-    //        {
-    //            theType = MyChatViewCellTypeIncoming;
-    //        }
-    //
-    //        if (!test_cell)
-    //        {
-    //            test_cell = [[CustomChatViewCell alloc] init];
-    //        }
-    //
-    //
-    //        CGPoint point = [test_cell returnHeightWithArray:[ZSNApi stringExchange:info.msg_message] WithType:theType];
-    //
-    //        return point.y < 40? 50+25:point.y + 50;
-    //    }
+    }    
 }
 
 

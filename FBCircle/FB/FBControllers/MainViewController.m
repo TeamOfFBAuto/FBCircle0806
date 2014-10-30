@@ -194,8 +194,11 @@
 
             self.data_array = [FBCircleModel findAll];
             
-            if (delete_array.count != 0) {
-                for (int i = 0;i < bself.data_array.count;i++)
+            if (delete_array.count != 0)
+            {
+                /*
+                NSMutableArray * temp = [NSMutableArray arrayWithArray:bself.data_array];
+                for (int i = 0;i < temp.count;i++)
                 {
                     FBCircleModel * model = [bself.data_array objectAtIndex:i];
                     //找到没删除成功的微博，然后不显示
@@ -207,6 +210,26 @@
                         }
                     }
                 }
+                */
+                
+                [self.data_array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    
+                    //找到没删除成功的微博，然后不显示
+                    for (FBCirclePraiseModel * praise_model in delete_array)
+                    {
+                        if ([((FBCircleModel*)obj).fb_tid isEqualToString:praise_model.praise_tid])
+                        {
+                            *stop = YES;
+                            if (*stop == YES)
+                            {
+                                [self.data_array removeObjectAtIndex:idx];
+                            }
+                        }
+                    }
+                    if (*stop) {
+                        NSLog(@"array is %@",bself.data_array);
+                    }
+                }];
             }
             
 //            dispatch_async(dispatch_get_main_queue(), ^{
@@ -1740,7 +1763,29 @@
                 [self.view addSubview:myAlertView];
                 [self performSelector:@selector(dismissPromptView) withObject:nil afterDelay:1.5];
                 
-                for (int i = 0;i < self.data_array.count;i++)
+                
+                [self.data_array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    
+                    if ([(FBCircleModel*)obj isEqual:forward_model])
+                    {
+                        *stop = YES;
+                        if (*stop == YES)
+                        {
+                            [self.data_array removeObject:forward_model];
+                            
+                            [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationRight];
+                        }
+                    }
+                    
+                    if (*stop) {
+                        NSLog(@"array is %@",bself.data_array);
+                    }
+                    
+                }];
+                
+              /*
+                NSMutableArray *  temp = [NSMutableArray arrayWithArray:self.data_array];
+                for (int i = 0;i < temp.count;i++)
                 {
                     FBCircleModel * aModel = [self.data_array objectAtIndex:i];
                     
@@ -1751,6 +1796,7 @@
                         [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationRight];
                     }
                 }
+               */
             }
         }
         @catch (NSException *exception) {

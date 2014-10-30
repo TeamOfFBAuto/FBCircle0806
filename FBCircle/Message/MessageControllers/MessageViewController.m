@@ -173,7 +173,6 @@
         cell.contentLabel.text = @"系统通知";
         cell.headImageView.image = [UIImage imageNamed:@"xiaoxi_80_80.png"];
         cell.tixing_label.hidden=YES;
-//        @"geren-jiantou.png"
         UIImageView * accessView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,7,13)];
         accessView.image = [UIImage imageNamed:@"geren-jiantou.png"];
         cell.accessoryView = accessView;
