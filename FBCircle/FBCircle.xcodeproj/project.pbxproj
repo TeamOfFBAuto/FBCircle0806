@@ -119,6 +119,7 @@
 		13CCD73D1999C12E00E38ECC /* BBSMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CCD73C1999C12E00E38ECC /* BBSMemberModel.m */; };
 		13E8EE0F19F60520006FA5CE /* SearchTieziCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E8EE0D19F60520006FA5CE /* SearchTieziCell.m */; };
 		13E8EE1019F60520006FA5CE /* SearchTieziCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13E8EE0E19F60520006FA5CE /* SearchTieziCell.xib */; };
+		13ED5D731A024D430057B9C3 /* RecommendBBSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ED5D721A024D430057B9C3 /* RecommendBBSView.m */; };
 		190F3A121992547400D54140 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A0D1992547400D54140 /* MineViewController.m */; };
 		190F3A131992547400D54140 /* mineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F3A111992547400D54140 /* mineTableViewCell.m */; };
 		190F3A211992571300D54140 /* icon1024_1024@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190F3A1D1992571300D54140 /* icon1024_1024@2x.png */; };
@@ -1162,6 +1163,8 @@
 		13E8EE0C19F60520006FA5CE /* SearchTieziCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTieziCell.h; sourceTree = "<group>"; };
 		13E8EE0D19F60520006FA5CE /* SearchTieziCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTieziCell.m; sourceTree = "<group>"; };
 		13E8EE0E19F60520006FA5CE /* SearchTieziCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTieziCell.xib; sourceTree = "<group>"; };
+		13ED5D711A024D430057B9C3 /* RecommendBBSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendBBSView.h; sourceTree = "<group>"; };
+		13ED5D721A024D430057B9C3 /* RecommendBBSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendBBSView.m; sourceTree = "<group>"; };
 		190F3A0C1992547400D54140 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		190F3A0D1992547400D54140 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
 		190F3A101992547400D54140 /* mineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mineTableViewCell.h; sourceTree = "<group>"; };
@@ -2197,6 +2200,8 @@
 				13E8EE0C19F60520006FA5CE /* SearchTieziCell.h */,
 				13E8EE0D19F60520006FA5CE /* SearchTieziCell.m */,
 				13E8EE0E19F60520006FA5CE /* SearchTieziCell.xib */,
+				13ED5D711A024D430057B9C3 /* RecommendBBSView.h */,
+				13ED5D721A024D430057B9C3 /* RecommendBBSView.m */,
 			);
 			path = BBSViews;
 			sourceTree = "<group>";
@@ -4666,6 +4671,7 @@
 				56A6491B198F55A500451413 /* FBCircleModel.m in Sources */,
 				56A64B90198F6BD400451413 /* MessageInvitationViewController.m in Sources */,
 				561DF808199C49D700CDB330 /* CreateBBSChooseTypeViewController.m in Sources */,
+				13ED5D731A024D430057B9C3 /* RecommendBBSView.m in Sources */,
 				5617321919926004001B8574 /* QBImagePickerFooterView.m in Sources */,
 				56A648E8198F512A00451413 /* EGORefreshTableHeaderView.m in Sources */,
 				5617321119926004001B8574 /* QBImagePickerAssetCell.m in Sources */,

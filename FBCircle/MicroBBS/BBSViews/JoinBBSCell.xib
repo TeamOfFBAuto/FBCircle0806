@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,12 +15,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="h8W-cX-fau">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="75.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="eMY-Lq-xhn">
-                                <rect key="frame" x="12" y="12" width="52" height="52"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <rect key="frame" x="12" y="12" width="52" height="52.5"/>
                             </imageView>
                             <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wz4-qa-Vyk">
                                 <rect key="frame" x="76" y="17" width="200" height="21"/>
@@ -62,8 +62,8 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MdW-yn-aVh">
-                                <rect key="frame" x="265" y="23" width="43" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="265.00000044911405" y="23" width="43" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="join.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -80,6 +80,7 @@
             <connections>
                 <outlet property="aImageView" destination="eMY-Lq-xhn" id="bPD-z1-4fG"/>
                 <outlet property="aTitleLabel" destination="Wz4-qa-Vyk" id="pPu-ih-fmd"/>
+                <outlet property="bgView" destination="h8W-cX-fau" id="bne-SM-agt"/>
                 <outlet property="joinButton" destination="MdW-yn-aVh" id="Q6u-BJ-7MU"/>
                 <outlet property="line" destination="r66-4Y-f7w" id="OHv-s9-eaD"/>
                 <outlet property="memberTitle" destination="s08-bX-Pya" id="r2e-H9-aQE"/>
@@ -87,10 +88,16 @@
                 <outlet property="topicLabel" destination="QEW-1G-Ozw" id="xLP-jH-Rat"/>
                 <outlet property="topicTitle" destination="L9a-eG-oCQ" id="OGx-60-w3e"/>
             </connections>
+            <point key="canvasLocation" x="286" y="295.5"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="add_yijiaru.png" width="43" height="29"/>
         <image name="join.png" width="43" height="29"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

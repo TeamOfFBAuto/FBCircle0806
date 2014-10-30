@@ -29,7 +29,7 @@
     if ([aModel.img count] > 0) {
         imageUrl = [aModel.img objectAtIndex:0];
     }
-    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:FBCIRCLE_DEFAULT_IMAGE];
     
     aModel.title = aModel.title.length == 0 ? @"" : aModel.title;
     NSMutableString *title = [NSMutableString stringWithString:aModel.title];

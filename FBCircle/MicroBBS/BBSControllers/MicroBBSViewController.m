@@ -22,6 +22,8 @@
 #import "BBSInfoModel.h"
 #import "TopicModel.h"
 
+#import "JoinBBSCell.h"
+
 #define CACHE_MY_BBS @"mybbs" //我的论坛
 #define CACHE_HOT_TOPIC @"hotTopic" //热门推荐
 #define CACHE_CONCERN_HOT @"concern_hot" //关注热门
@@ -29,8 +31,7 @@
 #define TITLE_MY_CONCERN_HOT @"我的论坛热帖"
 #define TITLE_MY_HOT_RECOMMEND @"热门推荐"
 #define TITLE_MY_MY_BBS @"我的论坛"
-
-#define TITLE_MY_RECOMMEND_BBS @"推荐的微论坛"
+#define TITLE_RECOMMEND_BBS @"推荐的微论坛"
 
 @interface MicroBBSViewController ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
@@ -38,7 +39,7 @@
     NSArray *_myBBSArray;//我的论坛
     NSArray *_concern_hot_array;//关注热门
     NSArray *_hot_array;//热门
-    
+    NSArray *_recommend_bbs_array;//热门推荐论坛
     
     BOOL my_bbs_success;//我的论坛
     BOOL hot_recommend;//热门推荐
@@ -46,7 +47,6 @@
     UIView *headerView;
     UIView *_mybbsView;
     UIView *_recommendView;
-    UIView *_recommend_BBS_View;//推荐论坛view
     
     BOOL _needRefresh;
 }
@@ -85,7 +85,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    self.view.backgroundColor = [UIColor redColor];
+    //    self.view.backgroundColor = [UIColor redColor];
     
     self.title = @"微论坛";
     self.titleLabel.text = @"微论坛";
@@ -113,32 +113,34 @@
     _table.tableFooterView = footer_view;
     
     
-    //缓存数据
-    
-    NSDictionary *dataInfo = [LTools cacheForKey:CACHE_MY_BBS];
-    
-    if (dataInfo) {
-        
-        _myBBSArray = [self parseForMyBBS:dataInfo];
-        _table.tableHeaderView = [self createTableHeaderView];
-        
-        
-        dataInfo = [LTools cacheForKey:CACHE_HOT_TOPIC];
-        
-        if (dataInfo) {
-            _hot_array = [self parseTopic:dataInfo dataStyle:0];
-        }
-        
-        [self createSecond];
-    }
-    
-    dataInfo = [LTools cacheForKey:CACHE_CONCERN_HOT];
-    if (dataInfo) {
-        _concern_hot_array = [self parseTopic:dataInfo dataStyle:1];
-        [_table reloadData];
-    }
+    //    //缓存数据
+    //
+    //    NSDictionary *dataInfo = [LTools cacheForKey:CACHE_MY_BBS];
+    //
+    //    if (dataInfo) {
+    //
+    //        _myBBSArray = [self parseForMyBBS:dataInfo];
+    //        _table.tableHeaderView = [self createTableHeaderView];
+    //
+    //
+    //        dataInfo = [LTools cacheForKey:CACHE_HOT_TOPIC];
+    //
+    //        if (dataInfo) {
+    //            _hot_array = [self parseTopic:dataInfo dataStyle:0];
+    //        }
+    //
+    ////        [self createSecond];
+    //    }
+    //
+    //    dataInfo = [LTools cacheForKey:CACHE_CONCERN_HOT];
+    //    if (dataInfo) {
+    //        _concern_hot_array = [self parseTopic:dataInfo dataStyle:1];
+    //        [_table reloadData];
+    //    }
     
     [self loadNewData];
+    
+    
     
     //更新数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateBBS:) name:NOTIFICATION_UPDATE_TOPICLIST object:nil];
@@ -238,7 +240,7 @@
     for (NSDictionary *aDic in create) {
         
         //status:论坛状态（0:正常   1:删除    2:审核中）
-            
+        
         int status = [[aDic objectForKey:@"forum_status"]integerValue];
         if (status == 0) {
             
@@ -304,26 +306,37 @@
 }
 
 #pragma mark - 网络请求
+
 /**
  *  推荐论坛
  */
-- (void)getRecommendBBS
+- (void)getRecommenedBBS
 {
     //先读取缓存数据
     
     __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView *)weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],1,3];
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_RECOMMENTED_BBS,[SzkAPI getUid]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
-        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         
-        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSArray class]]) {
             
+            NSMutableArray *bbs_arr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            for (NSDictionary *aDic in dataInfo) {
+                
+                BBSInfoModel *aBBS = [[BBSInfoModel alloc]initWithDictionary:aDic];
+                [bbs_arr addObject:aBBS];
+            }
             
+            _recommend_bbs_array = [NSArray arrayWithArray:bbs_arr];
+            
+            [weakTable reloadData];
         }
         
         
@@ -333,8 +346,9 @@
         [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         
     }];
-
 }
+
+
 
 /**
  *  我创建和加入的论坛
@@ -355,39 +369,24 @@
         
         if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-//            NSDictionary *oldDataInfo = [LTools cacheForKey:CACHE_MY_BBS];
+            NSLog(@"CACHE_MY_BBS 有更新");
             
-            my_bbs_success = YES;
+            [LTools cache:dataInfo ForKey:CACHE_MY_BBS];
             
-//            if ([dataInfo JSONString].length != [oldDataInfo JSONString].length) {
+            //一共需要三个,优先“创建的论坛”,不够再用“加入的论坛”
             
-                NSLog(@"CACHE_MY_BBS 有更新");
-                
-                [LTools cache:dataInfo ForKey:CACHE_MY_BBS];
-                
-                //一共需要三个,优先“创建的论坛”,不够再用“加入的论坛”
-                
-                _myBBSArray = [weakSelf parseForMyBBS:dataInfo];
-                
-                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-                
-                if (hot_recommend) {
-                    [weakSelf createSecond];
-                }
-//            }
+            _myBBSArray = [weakSelf parseForMyBBS:dataInfo];
+            
+            weakTable.tableHeaderView = [weakSelf createTableHeaderView];
         }
-     
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
         
         [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         _myBBSArray = nil;
-        
         weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-        if (hot_recommend) {
-            [weakSelf createSecond];
-        }
     }];
 }
 
@@ -413,38 +412,27 @@
     }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-        
+    
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         
         if (dataStyle == 0) {
             //热门帖子
             
-            hot_recommend = YES;
-
-//            NSDictionary *oldDataInfo = [LTools cacheForKey:CACHE_HOT_TOPIC];
+            NSLog(@"CACHE_HOT_TOPIC 有更新");
             
-//            if ([result JSONString].length != [oldDataInfo JSONString].length)
-//            {
-                NSLog(@"CACHE_HOT_TOPIC 有更新");
-                
-                [LTools cache:result ForKey:CACHE_HOT_TOPIC];
-                
-                _hot_array = [self parseTopic:result dataStyle:dataStyle];
-                
-                if (my_bbs_success) {
-                    [weakSelf createSecond];
-                }
-//            }
+            [LTools cache:result ForKey:CACHE_HOT_TOPIC];
+            
+            _hot_array = [self parseTopic:result dataStyle:dataStyle];
+            
+            [weakTable reloadData];
+            
             
         }else if (dataStyle == 1)
         {
             //关注帖子
-//            NSDictionary *oldDataInfo = [LTools cacheForKey:CACHE_CONCERN_HOT];
-//            
-//            if ([result JSONString].length != [oldDataInfo JSONString].length)
-//            {
-                NSLog(@"CACHE_CONCERN_HOT 有更新");
+            
+            NSLog(@"CACHE_CONCERN_HOT 有更新");
             
             NSDictionary *datainfo = [result objectForKey:@"datainfo"];
             
@@ -457,23 +445,20 @@
                     datainfo = nil;
                 }
             }
-                @try{
-                    
-                    [LTools cache:datainfo ForKey:CACHE_CONCERN_HOT];
-                    
-                    
-                    _concern_hot_array = [self parseTopic:datainfo dataStyle:dataStyle];
-
-                }
-                @catch(NSException *exception) {
-                    NSLog(@"异常错误是:%@", exception);
-                }  
-                @finally {  
-                    
-                }
+            @try{
+                
+                [LTools cache:datainfo ForKey:CACHE_CONCERN_HOT];
                 
                 
-//            }
+                _concern_hot_array = [self parseTopic:datainfo dataStyle:dataStyle];
+                
+            }
+            @catch(NSException *exception) {
+                NSLog(@"异常错误是:%@", exception);
+            }
+            @finally {
+                
+            }
             
             [weakTable reloadData:nil total:0];
         }
@@ -485,7 +470,7 @@
         
         if (dataStyle == 1)
         {
-//            [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+            //            [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
             int errcode = [[failDic objectForKey:@"errcode"]integerValue];
             if (errcode == 2) {
                 
@@ -501,19 +486,44 @@
     }];
 }
 
+/**
+ *  加入论坛
+ *
+ *  @param bbsId 论坛id
+ */
+- (void)JoinBBSId:(NSString *)bbsId cell:(JoinBBSCell *)sender
+{
+    __weak typeof(self)weakSelf = self;
+    //    __weak typeof(UIButton *)weakBtn = sender;
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MEMBER_JOIN,[SzkAPI getAuthkey],bbsId];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]integerValue];
+            if (erroCode == 0) {
+                //加入论坛通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATE_BBS_JOINSTATE object:nil userInfo:nil];
+                //                weakBtn.selected = YES;
+                sender.joinButton.selected = YES;
+                sender.memeberLabel.text = [NSString stringWithFormat:@"%d",[sender.memeberLabel.text integerValue] + 1];
+            }
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:self.view];
+    }];
+    
+}
 
 
 #pragma mark - 视图创建
-
-//- (void)createRecommendBBSView
-//{
-//    _recommend_BBS_View = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 75 * 3 + 40)];
-//    
-//    
-//    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_RECOMMEND_BBS target:self action:nil];
-//    section2.rightBtn.hidden = YES;
-//    [_recommendView addSubview:section2];
-//}
 
 /**
  *  搜索view
@@ -521,11 +531,11 @@
 - (UIView *)createSearchView
 {
     UIView *search_bgview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
-//    search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
+    //    search_bgview.backgroundColor = [UIColor colorWithHexString:@"cac9ce"];
     
-//    search_bgview.backgroundColor = [UIColor redColor];
+    //    search_bgview.backgroundColor = [UIColor redColor];
     [self.view addSubview:search_bgview];
-
+    
     UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
     bar.placeholder = @"搜索";
     bar.delegate = self;
@@ -617,10 +627,10 @@
         UIButton *btn = [LTools createButtonWithType:UIButtonTypeRoundedRect frame:CGRectMake(0, 0, secondBgView.width, secondBgView.height) normalTitle:@"您还未添加或创建论坛，点击创建一个" image:nil backgroudImage:nil superView:secondBgView target:self action:@selector(clickToAddBBS)];
         [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-
+        
     }
     
-    headerView.frame = CGRectMake(0, 0, 320, _mybbsView.bottom + 15);
+    headerView.frame = CGRectMake(0, 0, 320, _mybbsView.bottom);
     
     return headerView;
 }
@@ -629,23 +639,18 @@
 /**
  *  创建热门推荐部分
  */
-- (void)createSecond
+- (UIView *)createRecommenView
 {
     //热门推荐
     
-    if (_recommendView) {
-        [_recommendView removeFromSuperview];
-        _recommendView = nil;
-    }
-    
-    _recommendView = [[UIView alloc]init];
-    _recommendView.layer.cornerRadius = 3.f;
-    _recommendView.clipsToBounds = YES;
-    [headerView addSubview:_recommendView];
+    UIView * recommendView = [[UIView alloc]init];
+    recommendView.layer.cornerRadius = 3.f;
+    recommendView.clipsToBounds = YES;
+    //    [headerView addSubview:recommendView];
     
     LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_HOT_RECOMMEND target:self action:@selector(clickToMore:)];
     section2.rightBtn.tag = 100;
-    [_recommendView addSubview:section2];
+    [recommendView addSubview:section2];
     
     
     //推荐列表
@@ -667,12 +672,15 @@
         }
     }
     
-    _recommendView.frame = CGRectMake(8, _mybbsView.bottom + 15, 304, section2.height + 75 * _hot_array.count);
+    recommendView.frame = CGRectMake(8, 0, 304, section2.height + 75 * _hot_array.count);
     
-    headerView.frame = CGRectMake(0, 0, 320, _recommendView.bottom + 15);
+    //    headerView.frame = CGRectMake(0, 0, 320, _recommendView.bottom + 15);
+    //
+    //    _table.tableHeaderView = headerView;
     
-    _table.tableHeaderView = headerView;
+    return recommendView;
 }
+
 
 
 #pragma mark - delegate
@@ -697,6 +705,8 @@
     
     [self getTopic:0];
     
+    [self getRecommenedBBS];
+    
     //我的关注热门
     
     [self getTopic:1];
@@ -709,51 +719,83 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row >= 1) {
-        TopicModel *aModel = [_concern_hot_array objectAtIndex:indexPath.row - 1];
-        BBSTopicController *topic = [[BBSTopicController alloc]init];
+    if (indexPath.section == 0 || indexPath.section == 2) {
         
-        topic.fid = aModel.fid;
-        topic.tid = aModel.tid;
-        
-        [self PushToViewController:topic WithAnimation:YES];
+        if (indexPath.row >= 1) {
+            
+            NSArray *arr = (indexPath.section == 0) ? _hot_array : _concern_hot_array;
+            
+            TopicModel *aModel = [arr objectAtIndex:indexPath.row - 1];
+            BBSTopicController *topic = [[BBSTopicController alloc]init];
+            
+            topic.fid = aModel.fid;
+            topic.tid = aModel.tid;
+            
+            [self PushToViewController:topic WithAnimation:YES];
+        }
+    }else
+    {
+        BBSInfoModel *aModel = [_recommend_bbs_array objectAtIndex:indexPath.row - 1];
+        BBSListViewController *list = [[BBSListViewController alloc]init];
+        list.bbsId = aModel.id;
+        [self PushToViewController:list WithAnimation:YES];
     }
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+   if (indexPath.section == 1){ //推荐的论坛
         
-        return 40;
+        if (_recommend_bbs_array == 0) {
+            return 0.f;
+        }
+        
+        if (indexPath.row == 0) {
+            return 40 + 15;
+        }
+        
+        return 75.f;
+        
+    }
+    
+    if (indexPath.row == 0) { //论坛热帖
+        
+        return 40+ 15;//15的空格透明
     }
     return 75;
 }
 
 #pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        
-        return 40;
-    }
-    return 75;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_concern_hot_array.count > 0) {
+    if (section == 0) { //推荐帖子
+        
+        if (_hot_array.count == 0) {
+            
+            return 0;
+        }
+        
+        return _hot_array.count + 1;
+        
+    }else if (section == 1){ //推荐论坛
+        
+        if (_recommend_bbs_array.count == 0) {
+            return 0.f;
+        }
+        
+        return _recommend_bbs_array.count + 1;
+    }
+    
+    if (_concern_hot_array.count > 0) { //论坛热帖
+        
         return _concern_hot_array.count + 1;
     }
     return _concern_hot_array.count;
@@ -761,8 +803,60 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier1= @"cell1";
-    static NSString * identifier3 = @"BBSTableCell";
+    static NSString * identifier1= @"hot_topic";
+    
+     static NSString * identifier3 = @"BBSTableCell";
+    
+    if (indexPath.section == 1){ //推荐论坛
+        
+        
+        if (indexPath.row == 0) {
+            
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier1];
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.backgroundColor = [UIColor clearColor];
+            
+            //透明空格
+            UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+            clearView.backgroundColor = [UIColor clearColor];
+            [cell addSubview:clearView];
+            
+            LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, clearView.bottom, 304, 40) title:TITLE_RECOMMEND_BBS target:self action:@selector(clickToMore:)];
+            section.rightBtn.hidden = YES;
+            [cell addSubview:section];
+            section.layer.cornerRadius = 3.f;
+            
+            return cell;
+        }
+        
+        static NSString * identifier2 = @"JoinBBSCell";
+        
+        JoinBBSCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+        if (cell == nil) {
+            cell = [[[NSBundle mainBundle]loadNibNamed:@"JoinBBSCell" owner:self options:nil]objectAtIndex:0];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor clearColor];
+        cell.bgView.width = 304;
+        cell.bgView.left = 8.f;
+        __weak typeof(self)weakSelf = self;
+        __weak typeof(JoinBBSCell *)weakCell = cell;
+        BBSInfoModel *aModel = [_recommend_bbs_array objectAtIndex:indexPath.row - 1];
+        [cell setCellDataWithModel:aModel cellBlock:^(NSString *topicId) {
+            NSLog(@"join topic id %@",topicId);
+            [weakSelf JoinBBSId:topicId cell:weakCell];
+            
+        }];
+        
+        return cell;
+    }
+    
+    //========== 我的论坛热帖 和 热门推荐
     
     if (indexPath.row == 0) {
         
@@ -772,12 +866,19 @@
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         
-        LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 0, 304, 40) title:TITLE_MY_CONCERN_HOT target:self action:@selector(clickToMore:)];
-        section.rightBtn.tag = 101;
+        
+        //透明空格
+        UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+        clearView.backgroundColor = [UIColor clearColor];
+        [cell addSubview:clearView];
+        
+        NSString *title = (indexPath.section == 0) ? TITLE_MY_HOT_RECOMMEND : TITLE_MY_CONCERN_HOT;
+        int tag = (indexPath.section == 0) ? 100 : 101;
+        
+        LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, clearView.bottom, 304, 40) title:title target:self action:@selector(clickToMore:)];
+        section.rightBtn.tag = tag;
         [cell addSubview:section];
         
         section.layer.cornerRadius = 3.f;
@@ -791,16 +892,18 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (indexPath.row == _concern_hot_array.count) {
+    
+    NSArray *arr = (indexPath.section == 0) ? _hot_array : _concern_hot_array;
+    
+    if (indexPath.row == arr.count) {
         
         cell.bgView.layer.cornerRadius = 3.f;
     }else
     {
         cell.bgView.layer.cornerRadius = 0.f;
     }
-    TopicModel *aModel = [_concern_hot_array objectAtIndex:indexPath.row - 1];
+    TopicModel *aModel = [arr objectAtIndex:indexPath.row - 1];
     [cell setCellWithModel:aModel];
-    
     return cell;
     
 }

@@ -34,13 +34,23 @@
 
 -(void)setCellWithModel:(TopicModel *)aModel
 {
-    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:aModel.forumpic] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    NSString *imageUrl;
+    if ([aModel.img count] > 0) {
+        imageUrl = [aModel.img objectAtIndex:0];
+    }
+    
+    imageUrl = aModel.forumpic ? aModel.forumpic : imageUrl;
+    
+    [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:FBCIRCLE_DEFAULT_IMAGE];
     self.aTitleLabel.text = aModel.title;
-    self.subTitleLabel.text = [LTools stringHeadNoSpace:aModel.sub_content];
     self.aTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_MID];
     _aTitleLabel.textColor = [UIColor colorWithHexString:@"1d222b"];
+    
+    NSString *sub = aModel.sub_content ? aModel.sub_content : aModel.content;
+    self.subTitleLabel.text = [LTools stringHeadNoSpace:sub];
     self.subTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_SMALL];
     _subTitleLabel.textColor = [UIColor colorWithHexString:@"9197a3"];
+    
 }
 
 @end
