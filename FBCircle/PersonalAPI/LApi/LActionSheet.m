@@ -57,9 +57,9 @@
                 UIImage *aImage = [images objectAtIndex:i];
                 NSString *title = [titles objectAtIndex:i];
                 CGFloat left = 3.0;
-                if (i != 0) {
-                    left = 0.0;
-                }
+//                if (i != 0) {
+//                    left = 0.0;
+//                }
                 
                 LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(left, 50 * i, 320, 50) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
                 btn.tag = 100 + i;

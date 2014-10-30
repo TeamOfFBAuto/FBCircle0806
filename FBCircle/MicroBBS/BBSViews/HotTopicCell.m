@@ -30,8 +30,21 @@
         imageUrl = [aModel.img objectAtIndex:0];
     }
     [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
-    self.aTitleLabel.text = aModel.title;
-    self.subTitleLabel.text = aModel.sub_content ? aModel.sub_content : aModel.content;
+    
+    aModel.title = aModel.title.length == 0 ? @"" : aModel.title;
+    NSMutableString *title = [NSMutableString stringWithString:aModel.title];
+    [title replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, title.length)];
+    
+    self.aTitleLabel.text = (NSString *)title;
+    
+    NSString *content = aModel.sub_content ? aModel.sub_content : aModel.content;
+    content = content.length == 0 ? @"" : content;
+    
+    NSMutableString *mu_content = [NSMutableString stringWithString:content];
+    
+    [mu_content replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, mu_content.length)];
+    
+    self.subTitleLabel.text = mu_content;
 }
 
 @end

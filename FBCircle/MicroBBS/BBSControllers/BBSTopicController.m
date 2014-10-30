@@ -463,7 +463,7 @@ typedef enum{
                 
                 if (inforum == 0) {
                     
-                    [LTools showMBProgressWithText:@"当前用户不在该论坛" addToView:self.view];
+//                    [LTools showMBProgressWithText:@"当前用户不在该论坛" addToView:self.view];
                     
                     user_Inform = Inforum_Outer;
                     
@@ -704,7 +704,6 @@ typedef enum{
     //帖子数
     NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
     UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 - 8, 40-1 - 0.5) title:title font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
-//    numLabel.backgroundColor= [UIColor redColor];
     [basic_view addSubview:numLabel];
     
     //精 帖
@@ -732,13 +731,22 @@ typedef enum{
     
     //帖子名称
     
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, 40) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+    CGFloat aHeight = [LTools heightForText:aTopicModel.title width:aFrame.size.width font:16];
+    
+    NSLog(@"-->aHeight %f",aHeight);
+    
+    aHeight = aHeight <= 20 ? 40 : (aHeight + 20);
+    
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width + 20, aHeight) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
     [basic_view addSubview:btnV];
+    btnV.titleLabel.numberOfLines = 0;
+    btnV.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    btnV.titleLabel.font = [UIFont systemFontOfSize:16];
     btnV.line_horizon.height = 0.5f;
     
     
     basic_view.backgroundColor = [UIColor whiteColor];
-    aFrame.size.height = 40 + 40;
+    aFrame.size.height = 40 + aHeight;
     basic_view.frame = aFrame;
     return basic_view;
 }
