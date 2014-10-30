@@ -108,8 +108,6 @@
     }
     
     
-    
-    
     myAlertView = [[FBQuanAlertView alloc]  initWithFrame:CGRectMake(0,0,138,50)];
     myAlertView.center = CGPointMake(160,(iPhone5?568:480)/2-70);
     myAlertView.hidden = YES;
@@ -387,7 +385,7 @@
         iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(280,9.5,25,25)];
 //        iconImage.image = [UIImage imageNamed:@"defaultPlaceHolder.png"];//张少南  这里需要修改下默认图片
         [inputView addSubview:iconImage];
-        
+        inputView.hidden = YES;
     }else
     {
         sub_label = [[UILabel alloc] initWithFrame:CGRectMake(150,0,140,frame.size.height)];
@@ -435,6 +433,9 @@
             
             [chooseType chooseTypeBlock:^(BBSModel * model)
             {
+                UIView * input_view = (UIView *)[self.view viewWithTag:101];
+                input_view.hidden = NO;
+                
                 sub_label.text = model.classname;
                 [iconImage sd_setImageWithURL:[NSURL URLWithString:model.classpic] placeholderImage:[UIImage imageNamed:@"defaultPlaceHolder"]];
                 icon_num = [model.id intValue];

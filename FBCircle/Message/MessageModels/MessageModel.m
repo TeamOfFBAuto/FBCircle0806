@@ -67,7 +67,7 @@
 
 -(void)loadInfomationWithBlock:(MessageModelBlock)theBlock
 {
-    NSString * url = [NSString stringWithFormat:MESSAGE_LIST_URL,[SzkAPI getAuthkey]];
+    NSString * url = [NSString stringWithFormat:MESSAGE_LIST_URL,[SzkAPI getAuthkeyGBK]];
     
     NSLog(@"私信首页接口-----%@",url);
     

@@ -91,6 +91,22 @@
         [_content_label setAttString:[[NSAttributedString alloc] initWithString:@""] withImages:nil];
     }
     
+    if (!_show_detail_content_button) {
+        _show_detail_content_button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _show_detail_content_button.frame = CGRectMake(60,0,60,20);
+        _show_detail_content_button.backgroundColor = [UIColor clearColor];
+        _show_detail_content_button.titleLabel.font = [UIFont systemFontOfSize:13];
+        [_show_detail_content_button setTitle:@"查看全文" forState:UIControlStateNormal];
+        _show_detail_content_button.userInteractionEnabled = NO;
+        [_show_detail_content_button setTitleColor:RGBCOLOR(86,100,163) forState:UIControlStateNormal];
+        _show_detail_content_button.hidden = YES;
+        [self.contentView addSubview:_show_detail_content_button];
+    }else
+    {
+        _show_detail_content_button.hidden = YES;
+    }
+    
+    
     if (!_PictureViews) {
         _PictureViews = [[FBCirclePicturesViews alloc]  initWithFrame:CGRectMake(64,0,231,0)];
         [self.contentView addSubview:_PictureViews];
@@ -307,19 +323,28 @@
     }
     
     _userName_label.text = theInfo.fb_username;
-   
-    [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
     
-    if (_content_label.frame.size.height > 120)
+    NSString * content_string = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
+    BOOL isShowButton = NO;
+    if (content_string.length > 100)
     {
-        CGRect aFrame = _content_label.frame;
-        aFrame.size.height = 110;
-        _content_label.frame = aFrame;
-        [OHLableHelper creatAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:YES];
+        content_string = [self getContentWith:content_string];
+        isShowButton = YES;
     }
     
-    
+    [OHLableHelper creatAttributedText:content_string Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
+
     cellHeight += _content_label.frame.size.height;
+    
+    if (isShowButton)
+    {
+        CGRect button_frame = _show_detail_content_button.frame;
+        button_frame.origin.y = cellHeight+10;
+        _show_detail_content_button.frame = button_frame;
+        _show_detail_content_button.hidden = NO;
+        cellHeight += 30;
+    }
+    
     
     if (theInfo.fb_imageid.length > 0)
     {
@@ -629,14 +654,15 @@
 -(float)returnCellHeightWith:(FBCircleModel *)theInfo
 {
     float cellHeight = 30;
-
-    [OHLableHelper returnHeightAttributedText:[[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode] Label:_content_label WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
-    if (_content_label.frame.size.height > 120)
+    
+    NSString * content_string = [[ZSNApi decodeSpecialCharactersString:theInfo.fb_content] stringByReplacingEmojiCheatCodesWithUnicode];
+    if (content_string.length > 100)
     {
-        CGRect aFrame = _content_label.frame;
-        aFrame.size.height = 110;
-        _content_label.frame = aFrame;
+        content_string = [self getContentWith:content_string];
+        cellHeight += 30;
     }
+
+    [OHLableHelper returnHeightAttributedText:content_string Label:_content_label WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT];
     
     cellHeight += _content_label.frame.size.height;
     
@@ -785,6 +811,25 @@
     [VCtest.navigationController pushViewController:friendView animated:YES];
 }
 
+
+#pragma mark - 太长的字符串按字符数截取
+-(NSString *)getContentWith:(NSString *)content_string
+{
+    if (content_string.length > 100)
+    {
+        ///按需要的字符长度截取字符串
+        content_string = [content_string substringToIndex:100];
+        ///读取截取后字符串后5为字符
+        NSString * temp_string = [[content_string substringToIndex:content_string.length] substringFromIndex:content_string.length-5];
+        ///按[符号读取字符串
+        NSArray * array = [temp_string componentsSeparatedByString:@"["];
+        ///第一组数据里面肯定没有表情
+        NSString * first_string = [array objectAtIndex:0];
+        content_string = [content_string stringByReplacingCharactersInRange:NSMakeRange(content_string.length-(5-first_string.length),5-first_string.length) withString:@"..."];
+    }
+    
+    return content_string;
+}
 
 
 - (void)awakeFromNib

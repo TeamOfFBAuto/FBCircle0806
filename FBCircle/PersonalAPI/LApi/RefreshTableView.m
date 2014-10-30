@@ -1,7 +1,7 @@
 //
 //  RefreshTableView.m
 //  TuanProject
-//
+//s
 //  Created by 李朝伟 on 13-9-6.
 //  Copyright (c) 2013年 lanou. All rights reserved.
 //
@@ -230,7 +230,7 @@
         [self stopLoading:2];
     }
     
-//    self.userInteractionEnabled = YES;
+    self.userInteractionEnabled = YES;
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view

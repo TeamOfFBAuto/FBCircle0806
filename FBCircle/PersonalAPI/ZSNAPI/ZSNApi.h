@@ -23,6 +23,13 @@
 #define IMAGE_SMALL_WIDTH 16
 #define IMAGE_SMALL_HEIGHT 16
 
+#pragma mark - 屏幕宽度
+///屏幕宽度
+#define DEVICE_WIDTH  [UIScreen mainScreen].bounds.size.width
+#pragma mark - 屏幕高度
+///屏幕高度
+#define DEVICE_HEIGHT [UIScreen mainScreen].bounds.size.height
+
 
 
 
@@ -98,6 +105,10 @@
 +(NSString *)ddecodeSpecialCharactersStringWith:(NSString *)input;
 ///设置label行间距
 +(NSMutableAttributedString*)setLabelLineSpace:(NSMutableAttributedString*)string WithLineSpace:(CGFloat)lineSpace;
+
+
+///ios7计算字符串高度
++(float)returnLabelHeightForIos7:(NSString *)content WIthFont:(float)aFont WithWidth:(float)aWidth;
 @end
 
 

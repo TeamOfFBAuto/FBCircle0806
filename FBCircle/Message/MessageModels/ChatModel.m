@@ -61,7 +61,7 @@
 {
     chatModelBlock = theBlock;
     
-    NSString * fullUrl = [NSString stringWithFormat:MESSAGE_CHAT_URL,toUid,maxId,page,[[NSUserDefaults standardUserDefaults] objectForKey:@"autherkey"]];
+    NSString * fullUrl = [NSString stringWithFormat:MESSAGE_CHAT_URL,toUid,maxId,page,[SzkAPI getAuthkeyGBK]];
     
     NSLog(@"对话界面接口-----%@",fullUrl);
     
@@ -134,9 +134,9 @@
     NSLog(@"发送消息接口---%@",fullUrl);
     
     sendRequest = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:fullUrl]];
-    [sendRequest setPostValue:model.to_username forKey:@"toname"];
+    [sendRequest setPostValue:model.to_uid forKey:@"touid"];
     [sendRequest setPostValue:model.msg_message forKey:@"content"];
-    [sendRequest setPostValue:[SzkAPI getAuthkey] forKey:@"authcode"];
+    [sendRequest setPostValue:[SzkAPI getAuthkeyGBK] forKey:@"authcode"];
     
     __weak typeof(sendRequest)wrequest = sendRequest;
     

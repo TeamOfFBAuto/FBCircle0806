@@ -185,6 +185,13 @@
     return str_authkey;
 
 }
+//获取authkey_gbk为了私信
++(NSString *)getAuthkeyGBK{
+    
+    NSString *str_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:AUTHERKEY_GBK]];
+    return str_authkey;
+    
+}
 //获取用户id
 +(NSString *)getUid{
 

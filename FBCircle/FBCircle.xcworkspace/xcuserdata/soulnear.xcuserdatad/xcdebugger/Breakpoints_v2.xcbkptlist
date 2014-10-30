@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Message/MessageModels/ChatModel.m"
-            timestampString = "436240555.656958"
+            timestampString = "436261877.495489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "-sendMessageWith:WithCompletionBlock:WithFaildBlock:"
             landmarkType = "5">
          </BreakpointContent>

@@ -37,6 +37,8 @@ alpha:(a)]
 #define ADDRESSBOOK @"addressbook"
 //autherkey
 #define AUTHERKEY @"autherkey"
+///autherkey_gbk
+#define AUTHERKEY_GBK @"authkey_gbk"
 //用户名
 #define USERNAME @"username"
 //用户id
