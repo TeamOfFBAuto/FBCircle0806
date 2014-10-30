@@ -222,7 +222,7 @@
                             *stop = YES;
                             if (*stop == YES)
                             {
-                                [self.data_array removeObjectAtIndex:idx];
+                                [bself.data_array removeObjectAtIndex:idx];
                             }
                         }
                     }
