@@ -57,7 +57,9 @@
     [self.aImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     self.aTitleLabel.text = aModel.title;
     
-    self.subTitleLabel.text = aModel.sub_content ? aModel.sub_content : aModel.content;
+    NSString *sub = aModel.sub_content ? aModel.sub_content : aModel.content;
+    
+    self.subTitleLabel.text = [LTools stringHeadNoSpace:sub];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

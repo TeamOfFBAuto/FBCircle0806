@@ -77,7 +77,7 @@
 //    self.navigationItem.title=@"我";
     self.titleLabel.text=@"我";
 
-    
+    self.view.backgroundColor = COLOR_VIEW_BACKGROUND;
     
     // Do any additional setup after loading the view.
 }
@@ -92,7 +92,9 @@
     mainTab.dataSource=self;
     mainTab.separatorColor=[UIColor clearColor];
 
-    mainTab.backgroundColor=RGBCOLOR(246, 247, 249);
+//    mainTab.backgroundColor=RGBCOLOR(246, 247, 249);
+    
+    mainTab.backgroundColor = COLOR_VIEW_BACKGROUND;
 
     [self.view addSubview:mainTab];
 

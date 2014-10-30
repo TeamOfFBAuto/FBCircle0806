@@ -22,7 +22,9 @@
 #import "NSString+Emoji.h"
 
 
-#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:246/255.F green:247/255.F blue:249/255.F alpha:1.0]//视图背景颜色
+//#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:246/255.F green:247/255.F blue:249/255.F alpha:1.0]//视图背景颜色
+
+#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:236/255.F green:235/255.F blue:243/255.F alpha:1.0]//视图背景颜色
 
 #define COLOR_TABLE_LINE [UIColor colorWithRed:229/255.F green:231/255.F blue:230/255.F alpha:1.0]//teleview分割线颜色
 
@@ -118,6 +120,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 小工具
 
++ (NSString *)stringHeadNoSpace:(NSString *)string;
+
 + (NSString *) md5:(NSString *) text;
 + (void)alertText:(NSString *)text;
 +(NSString *)timechange:(NSString *)placetime;
@@ -143,6 +147,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (NSString *)NSStringNotNull:(NSString *)text;
 
 + (NSString *)NSStringAddComma:(NSString *)string; //添加逗号
+
++ (NSAttributedString *)attributedString:(NSString *)string lineSpaceing:(CGFloat)lineSpage;//行间距string
 
 + (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;//关键词高亮
 

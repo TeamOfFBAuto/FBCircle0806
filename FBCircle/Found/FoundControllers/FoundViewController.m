@@ -42,7 +42,9 @@
     // Do any additional setup after loading the view.
     
     
-    self.view.backgroundColor = RGBCOLOR(246, 247, 249);
+//    self.view.backgroundColor = RGBCOLOR(246, 247, 249);
+    
+    self.view.backgroundColor = COLOR_VIEW_BACKGROUND;
     
     self.titleLabel.text = @"发现";
     
@@ -53,7 +55,9 @@
     _tableView.dataSource = self;
     
     _tableView.separatorColor = [UIColor clearColor];
-    _tableView.backgroundColor = RGBCOLOR(246, 247, 249);
+//    _tableView.backgroundColor = RGBCOLOR(246, 247, 249);
+    
+    _tableView.backgroundColor = COLOR_VIEW_BACKGROUND;
     
     [self.view addSubview:_tableView];
     

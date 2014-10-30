@@ -737,7 +737,7 @@ typedef enum{
     
     aHeight = aHeight <= 20 ? 40 : (aHeight + 20);
     
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width + 20, aHeight) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, aHeight) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
     [basic_view addSubview:btnV];
     btnV.titleLabel.numberOfLines = 0;
     btnV.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
@@ -793,10 +793,17 @@ typedef enum{
     //正文
     
     NSString *text = aTopicModel.content;
-    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aWidth - headImage.right - 20, [LTools heightForText:text width:aWidth - headImage.right - 20 font:14]) title:text font:FONT_SIZE_MID align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
+    UILabel *textLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, nameLabel.bottom + 5, aWidth - headImage.right - 20, [LTools heightForText:text width:aWidth - headImage.right - 20 font:15]) title:nil font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"212226"]];
     textLabel.numberOfLines = 0;
     textLabel.lineBreakMode = NSLineBreakByCharWrapping;
     [recommed_view addSubview:textLabel];
+    
+    NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:text];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:4];
+    [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [text length])];
+    [textLabel setAttributedText:attributedString1];
+    [textLabel sizeToFit];
     
     //图片
     

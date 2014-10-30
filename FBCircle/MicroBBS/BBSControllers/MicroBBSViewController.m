@@ -30,6 +30,8 @@
 #define TITLE_MY_HOT_RECOMMEND @"热门推荐"
 #define TITLE_MY_MY_BBS @"我的论坛"
 
+#define TITLE_MY_RECOMMEND_BBS @"推荐的微论坛"
+
 @interface MicroBBSViewController ()<UISearchBarDelegate,RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
@@ -44,6 +46,7 @@
     UIView *headerView;
     UIView *_mybbsView;
     UIView *_recommendView;
+    UIView *_recommend_BBS_View;//推荐论坛view
     
     BOOL _needRefresh;
 }
@@ -301,6 +304,37 @@
 }
 
 #pragma mark - 网络请求
+/**
+ *  推荐论坛
+ */
+- (void)getRecommendBBS
+{
+    //先读取缓存数据
+    
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(RefreshTableView *)weakTable = _table;
+    
+    NSString *url = [NSString stringWithFormat:FBCIRCLE_BBS_MINE,[SzkAPI getAuthkey],1,3];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
+            
+            
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"result %@",failDic);
+        
+        [LTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+    }];
+
+}
 
 /**
  *  我创建和加入的论坛
@@ -470,6 +504,16 @@
 
 
 #pragma mark - 视图创建
+
+//- (void)createRecommendBBSView
+//{
+//    _recommend_BBS_View = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 75 * 3 + 40)];
+//    
+//    
+//    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_RECOMMEND_BBS target:self action:nil];
+//    section2.rightBtn.hidden = YES;
+//    [_recommendView addSubview:section2];
+//}
 
 /**
  *  搜索view

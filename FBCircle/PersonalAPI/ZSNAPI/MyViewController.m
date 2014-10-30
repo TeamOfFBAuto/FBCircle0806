@@ -73,6 +73,8 @@
     
     self.view.backgroundColor = COLOR_VIEW_BACKGROUND;//浅色
     
+//    self.view.backgroundColor = [UIColor colorWithHexString:@""];
+    
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spaceButton.width = MY_MACRO_NAME?-5:5;

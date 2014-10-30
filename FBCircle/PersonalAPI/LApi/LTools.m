@@ -493,6 +493,17 @@
 
 #pragma - mark 小工具
 
+/**
+ *  去除开头的空格
+ */
++ (NSString *)stringHeadNoSpace:(NSString *)string
+{
+    string = string.length == 0 ? @"" : string;
+    NSMutableString *mu_str = [NSMutableString stringWithString:string];
+    [mu_str replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, mu_str.length)];
+    return mu_str;
+}
+
 +(NSString*)timestamp:(NSString*)myTime{
     
     NSString *timestamp;
@@ -699,6 +710,20 @@
     
     return temp;
     
+}
+
+/**
+ *  行间距string
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string lineSpaceing:(CGFloat)lineSpage
+{
+    NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:string];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:lineSpage];
+    [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
+    
+    return attributedString1;
 }
 
 

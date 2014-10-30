@@ -36,7 +36,9 @@
         self.titleLabel.textAlignment=NSTextAlignmentLeft;
         self.titleLabel.font=[UIFont systemFontOfSize:15];
         self.whitView.backgroundColor=[UIColor whiteColor];
-        self.backgroundColor=RGBCOLOR(246, 247, 249);
+//        self.backgroundColor=RGBCOLOR(246, 247, 249);
+        
+        self.backgroundColor = COLOR_VIEW_BACKGROUND;
         
         
         CALayer *l = [self.iconImageV layer];   //获取ImageView的层

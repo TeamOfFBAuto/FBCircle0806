@@ -115,7 +115,7 @@
             [self addSubview:rightImageV];
         }
         
-        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10,0, self.width - _imageView.width - rightImageV.width - 10 - 20 - 5, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10,0, self.width - _imageView.width - rightImageV.width - 10 - 5, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         [self addSubview:_titleLabel];
         
         if (direction == Line_No) {
