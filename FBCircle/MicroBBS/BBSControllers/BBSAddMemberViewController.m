@@ -148,6 +148,9 @@
     mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0,0,320,44)];
     mySearchBar.placeholder = @"搜索";
     mySearchBar.delegate = self;
+    mySearchBar.layer.borderWidth = 2.f;
+    mySearchBar.layer.borderColor = COLOR_SEARCHBAR.CGColor;
+    mySearchBar.barTintColor = COLOR_SEARCHBAR;
     [self.view addSubview:mySearchBar];
     
     
@@ -156,8 +159,9 @@
     [self.view addSubview:_mainTabV];
     [_mainTabV registerClass:[BBSAddMemberCell class] forCellReuseIdentifier:@"identifier"];
     _mainTabV.delegate=self;
-    _mainTabV.separatorColor=RGBCOLOR(225, 225, 225);
-    _mainTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _mainTabV.sectionIndexColor = RGBCOLOR(105,111,131);
+    _mainTabV.sectionIndexTrackingBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
+    _mainTabV.separatorColor=RGBCOLOR(200,198,204);
     _mainTabV.rowHeight = 55;
     _mainTabV.separatorInset = UIEdgeInsetsZero;
     _mainTabV.dataSource=self;
@@ -166,11 +170,11 @@
     _searchTabV=[[UITableView alloc]initWithFrame:_mainTabV.frame style:UITableViewStylePlain];
     [self.view addSubview:_searchTabV];
     _searchTabV.delegate=self;
-    _searchTabV.separatorColor=RGBCOLOR(225, 225, 225);
-    _searchTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _searchTabV.separatorColor=RGBCOLOR(200,198,204);
     _searchTabV.dataSource=self;
     
     _searchTabV.hidden=YES;
+    _searchTabV.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     //3
     _halfBlackV=[[UIView alloc]initWithFrame:CGRectMake(0,44,320, iPhone5?568-75:480-75)];
@@ -356,13 +360,14 @@
     if (!cell) {
         
         cell=[[BBSAddMemberCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stridentifier];
+        cell.line_view.hidden = YES;
     }
     cell.delegate = self;
     if (tableView==_mainTabV) {
         
         FriendAttribute *_model=[[arrayinfoaddress objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         
-        [cell setFriendAttribute:_model];
+        [cell setFriendAttribute:_model WithType:0];
     
         if ([name_array containsObject:_model])
         {
@@ -377,24 +382,42 @@
             cell.selected_button.selected = YES;
         }
         
-        [cell setFriendAttribute:_model];
+        [cell setFriendAttribute:_model WithType:1];
     }
     
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 -(NSArray*)sectionIndexTitlesForTableView:(UITableView *)tableView{
-    if (tableView==_mainTabV) {
+    if (tableView==_mainTabV)
+    {
+        /*
         NSMutableArray *toBeReturned = [[NSMutableArray alloc]init];
         for(char c = 'A';c<='Z';c++)
             [toBeReturned addObject:[NSString stringWithFormat:@"%c",c]];
         return toBeReturned;
-        
+        */
+        if (tableView == self.searchDisplayController.searchResultsTableView)
+        {
+            return nil;
+        } else
+        {
+            return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:
+                    [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles]];
+        }
     }else{
         return nil;
-        
     }
-    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -430,7 +453,7 @@
         UILabel *_label=[[UILabel alloc]initWithFrame:CGRectMake(10, 0.5, 320-24, 24)];
         
         _label.text=[NSString stringWithFormat:@"%c",'A'+section];
-        _label.textColor = RGBCOLOR(170,178,188);
+        _label.textColor = RGBCOLOR(171,179,188);
         _label.backgroundColor=[UIColor clearColor];
         
 //        _label.backgroundColor=RGBCOLOR(250, 250, 250);
@@ -454,22 +477,31 @@
 {
     if (tableView==_mainTabV) {
         
-        
-        NSInteger count = 0;
-        for(NSString *character in arrayOfCharacters)
+        if (tableView == self.searchDisplayController.searchResultsTableView)
         {
-            if([character isEqualToString:title])
+            return 0;
+        }else
+        {
+            if (title == UITableViewIndexSearch)
             {
+                [tableView scrollRectToVisible:self.searchDisplayController.searchBar.frame animated:NO];
+                return -1;
+            }else
+            {
+                NSInteger count = 0;
+                for(NSString *character in arrayOfCharacters)
+                {
+                    if([character isEqualToString:title])
+                    {
+                        return count;
+                    }
+                    count ++;
+                }
+                
                 return count;
             }
-            count ++;
         }
-        
-        return count;
-        
     }else{
-        
-        
         return 0;
     }
     
@@ -661,13 +693,22 @@
 
 #pragma mark - BBSADDMemberCellDelegate 选中取消选中
 
--(void)selectedButtonTap:(BBSAddMemberCell *)cell isSelected:(BOOL)isSelected
+-(void)selectedButtonTap:(BBSAddMemberCell *)cell isSelected:(BOOL)isSelected WithType:(int)aType
 {
-    NSIndexPath * indexPath = [_mainTabV indexPathForCell:cell];
     
-    FriendAttribute *_model=[[arrayinfoaddress objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    [self setSelectedWith:_model isSelected:isSelected];
+    FriendAttribute * amodel;
+    if (aType == 0)///联系人数据
+    {
+        NSIndexPath * indexPath = [_mainTabV indexPathForCell:cell];
+        amodel=[[arrayinfoaddress objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    }else///搜索到的数据
+    {
+        NSIndexPath * indexPath = [_searchTabV indexPathForCell:cell];
+        amodel = [arrayOfSearchResault objectAtIndex:indexPath.row];
+        [self searchBarCancelButtonClicked:mySearchBar];
+    }
+    [self setSelectedWith:amodel isSelected:isSelected];
+    amodel = nil;
 }
 
 

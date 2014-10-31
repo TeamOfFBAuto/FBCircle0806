@@ -85,7 +85,7 @@
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.backgroundColor = [UIColor clearColor];
-    _titleLabel.font = [UIFont systemFontOfSize:18];
+    _titleLabel.font = [UIFont systemFontOfSize:18];//[UIFont fontWithName:@"Arial Hebrew" size:17];//[UIFont systemFontOfSize:18];
     self.navigationItem.titleView = _titleLabel;
    
 }

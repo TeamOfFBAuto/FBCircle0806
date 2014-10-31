@@ -13,13 +13,14 @@
 @protocol BBSAddMemberCellDelegate <NSObject>
 
 ///选中取消选中用户
--(void)selectedButtonTap:(BBSAddMemberCell *)cell isSelected:(BOOL)isSelected;
+-(void)selectedButtonTap:(BBSAddMemberCell *)cell isSelected:(BOOL)isSelected WithType:(int)aType;
 
 @end
 
 @interface BBSAddMemberCell : UITableViewCell
 {
-    
+    ///0联系人数据类型，1为搜索数据类型
+    int type;
 }
 
 @property(nonatomic,weak)id<BBSAddMemberCellDelegate>delegate;
@@ -35,6 +36,6 @@
 ///分割线
 @property(nonatomic,strong)UIView * line_view;
 
--(void)setFriendAttribute:(FriendAttribute *)FriendAttributemodel;
+-(void)setFriendAttribute:(FriendAttribute *)FriendAttributemodel WithType:(int)atype;
 
 @end

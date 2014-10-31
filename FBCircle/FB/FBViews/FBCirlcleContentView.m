@@ -56,7 +56,7 @@
             _userName_label = [[UILabel alloc] initWithFrame:CGRectMake(64,11,200,18)];
             _userName_label.textAlignment = NSTextAlignmentLeft;
             _userName_label.textColor = RGBCOLOR(3,3,3);
-            _userName_label.font = [UIFont systemFontOfSize:15];
+            _userName_label.font = [UIFont boldSystemFontOfSize:15];
             _userName_label.backgroundColor = [UIColor clearColor];
             [self addSubview:_userName_label];
         }else

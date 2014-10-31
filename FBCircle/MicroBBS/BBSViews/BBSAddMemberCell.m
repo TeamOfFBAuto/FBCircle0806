@@ -45,7 +45,7 @@
         [self.contentView addSubview:_nameLabel];
         
         _line_view = [[UIView alloc] initWithFrame:CGRectMake(0,54.5,self.frame.size.width,0.5)];
-        _line_view.backgroundColor = RGBCOLOR(225,225,225);
+        _line_view.backgroundColor = RGBCOLOR(200,198,204);
         [self.contentView addSubview:_line_view];
         
     }
@@ -53,8 +53,9 @@
 }
 /**
  */
--(void)setFriendAttribute:(FriendAttribute *)FriendAttributemodel{
-    
+-(void)setFriendAttribute:(FriendAttribute *)FriendAttributemodel WithType:(int)atype
+{
+    type = atype;
     /**
      *          face = "http://bbs.fblife.com/ucenter/avatar.php?uid=355696&type=virtual&size=small";
      status = 1;
@@ -94,9 +95,9 @@
 {
     button.selected = !button.selected;
     
-    if (_delegate && [_delegate respondsToSelector:@selector(selectedButtonTap: isSelected:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(selectedButtonTap: isSelected: WithType:)])
     {
-        [_delegate selectedButtonTap:self isSelected:button.selected];
+        [_delegate selectedButtonTap:self isSelected:button.selected WithType:type];
     }
     
 }
