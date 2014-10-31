@@ -33,7 +33,7 @@
     self.titleLabel.text = @"我的二维码";
     
     //底层view
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(20, 57, 320-40, 384)];
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(20, iPhone5?57:15, 320-40, 384)];
     backView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:backView];
     
