@@ -59,6 +59,8 @@
     // Do any additional setup after loading the view.
     self.titleLabel.text = @"我的论坛";
     
+    self.view.backgroundColor = RGBCOLOR(244, 245, 248);
+    
     self.rightImageName = @"+";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeOther];
     [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];

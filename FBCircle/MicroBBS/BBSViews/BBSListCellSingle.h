@@ -1,17 +1,16 @@
 //
-//  BBSListCell.h
+//  BBSListCellSingle.h
 //  FBCircle
 //
-//  Created by lichaowei on 14-8-7.
+//  Created by lichaowei on 14/10/31.
 //  Copyright (c) 2014年 soulnear. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-/**
- *  论坛 帖子列表
- */
+
 @class TopicModel;
-@interface BBSListCell : UITableViewCell
+@interface BBSListCellSingle : UITableViewCell
+
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nameAndAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeAndCommentLabel;
@@ -20,7 +19,5 @@
 @property (strong, nonatomic) IBOutlet UIView *upMask;
 
 - (void)setCellDataWithModel:(TopicModel *)aModel;
-
-+ (CGFloat)heightForText:(NSString *)text;
 
 @end

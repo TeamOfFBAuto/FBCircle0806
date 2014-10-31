@@ -19,11 +19,15 @@
     if (self) {
         // Initialization code
         
-        hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, 0, 304, 75)];
+        hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, 0, 304, 69)];
         hh_view.backgroundColor = [UIColor whiteColor];
         [self addSubview:hh_view];
         
-        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 15, 40, 40)];
+        self.topLine = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 304, 1.f)];
+        _topLine.backgroundColor = COLOR_TABLE_LINE;
+        [hh_view addSubview:_topLine];
+        
+        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 13, 69 - 26, 69 - 26)];
         [_aImageView sd_setImageWithURL:Nil placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
         [hh_view addSubview:_aImageView];
         
@@ -45,13 +49,18 @@
     
     _content_label.userInteractionEnabled = YES;
     
-    _content_label.left = _nameLabel.left + 10;
+    CGFloat aHeight = 30 + _content_label.height + 10;
+    
+    _content_label.left = _nameLabel.left + 10 - 2;
     _content_label.top = _nameLabel.bottom + 5;
     [self addSubview:_content_label];
     
-    CGFloat aHeight = 30 + _content_label.height + 10;
-    aHeight = aHeight > 75 ? aHeight : 75;
-    hh_view.height = aHeight;
+//    CGFloat aHeight = 30 + _content_label.height + 10;
+    aHeight = aHeight > 69 ? aHeight : 69;
+    
+    CGFloat dis = self.content_label.height - 17.f;
+    
+    hh_view.height = aHeight + (dis + dis ? 10 : 0);
 }
 
 

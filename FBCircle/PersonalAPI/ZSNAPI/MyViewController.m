@@ -71,7 +71,7 @@
     
 //    self.view.backgroundColor = RGBCOLOR(214,214,214);//深色
     
-    self.view.backgroundColor = COLOR_VIEW_BACKGROUND;//浅色
+    self.view.backgroundColor = COLOR_VIEW_BACKGROUND_SHEJITU;//设计图颜色
     
 //    self.view.backgroundColor = [UIColor colorWithHexString:@""];
     

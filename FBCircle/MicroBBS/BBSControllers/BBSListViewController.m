@@ -17,6 +17,9 @@
 #import "LTools.h"
 #import "LSecionView.h"
 #import "BBSListCell.h"
+
+#import "BBSListCellSingle.h"
+
 #import "SendPostsViewController.h"
 
 #import "BBSInfoModel.h"
@@ -564,7 +567,15 @@
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    
+    CGFloat aHeight = [LTools heightForText:aModel.title width:280 font:14.f];
+    
+    aHeight = aHeight > 20.f ? 75.f : 56.f;
+    
+    
+    return aHeight;
+
 }
 
 #pragma mark - UITableViewDelegate
@@ -593,6 +604,47 @@
 {
     static NSString * identifier3 = @"BBSListCell";
     
+    static NSString * identifierSingle = @"BBSListCellSingle";
+    
+    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    
+    CGFloat aHeight = [LTools heightForText:aModel.title width:280 font:14.f];
+    
+    if (aHeight < 20.f) {
+        
+        
+        BBSListCellSingle *cell = [tableView dequeueReusableCellWithIdentifier:identifierSingle];
+        if (cell == nil) {
+            cell = [[[NSBundle mainBundle]loadNibNamed:@"BBSListCellSingle" owner:self options:nil]objectAtIndex:0];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor clearColor];
+        if (indexPath.row == 0 || indexPath.row == _table.dataArray.count - 1) {
+            
+            cell.bgView.layer.cornerRadius = 3.f;
+            
+            if (indexPath.row == 0) {
+                cell.upMask.hidden = YES;
+                cell.downMask.hidden = NO;
+            }else
+            {
+                cell.downMask.hidden = YES;
+                cell.upMask.hidden = NO;
+            }
+            
+        }else
+        {
+            cell.bgView.layer.cornerRadius = 0.f;
+        }
+        
+        cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
+        [cell setCellDataWithModel:aModel];
+        
+        
+        return cell;
+    }
+    
+    
     BBSListCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"BBSListCell" owner:self options:nil]objectAtIndex:0];
@@ -618,7 +670,7 @@
     }
     
     cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
-    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+//    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
     
     return cell;

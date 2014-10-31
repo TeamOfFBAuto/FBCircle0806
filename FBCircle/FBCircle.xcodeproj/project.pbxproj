@@ -83,6 +83,8 @@
 		1371C5641991D63E00D937CD /* daohanglan_bg_640_88@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1371C5631991D63E00D937CD /* daohanglan_bg_640_88@2x.png */; };
 		1371C5671991D9EE00D937CD /* MyBBSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1371C5661991D9EE00D937CD /* MyBBSViewController.m */; };
 		1371C56A1991DDAE00D937CD /* HotTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1371C5691991DDAE00D937CD /* HotTopicViewController.m */; };
+		137BF28A1A03806D0005B3D7 /* BBSListCellSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = 137BF2881A03806D0005B3D7 /* BBSListCellSingle.m */; };
+		137BF28B1A03806D0005B3D7 /* BBSListCellSingle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 137BF2891A03806D0005B3D7 /* BBSListCellSingle.xib */; };
 		137DFC7A199DA87000C1E81E /* TopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 137DFC79199DA87000C1E81E /* TopicModel.m */; };
 		13833669199469B200F73194 /* LNineImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13833668199469B200F73194 /* LNineImagesView.m */; };
 		1383366F19947E6F00F73194 /* BBSRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1383366E19947E6F00F73194 /* BBSRecommendCell.m */; };
@@ -1105,6 +1107,9 @@
 		1371C5661991D9EE00D937CD /* MyBBSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBBSViewController.m; sourceTree = "<group>"; };
 		1371C5681991DDAE00D937CD /* HotTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotTopicViewController.h; sourceTree = "<group>"; };
 		1371C5691991DDAE00D937CD /* HotTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotTopicViewController.m; sourceTree = "<group>"; };
+		137BF2871A03806D0005B3D7 /* BBSListCellSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBSListCellSingle.h; sourceTree = "<group>"; };
+		137BF2881A03806D0005B3D7 /* BBSListCellSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBSListCellSingle.m; sourceTree = "<group>"; };
+		137BF2891A03806D0005B3D7 /* BBSListCellSingle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BBSListCellSingle.xib; sourceTree = "<group>"; };
 		137DFC78199DA87000C1E81E /* TopicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicModel.h; sourceTree = "<group>"; };
 		137DFC79199DA87000C1E81E /* TopicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicModel.m; sourceTree = "<group>"; };
 		13833667199469B200F73194 /* LNineImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNineImagesView.h; sourceTree = "<group>"; };
@@ -2182,6 +2187,9 @@
 				134164611993731E00189A46 /* BBSListCell.h */,
 				134164621993731E00189A46 /* BBSListCell.m */,
 				134164631993731E00189A46 /* BBSListCell.xib */,
+				137BF2871A03806D0005B3D7 /* BBSListCellSingle.h */,
+				137BF2881A03806D0005B3D7 /* BBSListCellSingle.m */,
+				137BF2891A03806D0005B3D7 /* BBSListCellSingle.xib */,
 				565820171998605200A5E882 /* CustomSearchView.h */,
 				565820181998605200A5E882 /* CustomSearchView.m */,
 				56AE78D81998905300FE869E /* BBSAddMemberCell.h */,
@@ -4015,6 +4023,7 @@
 				56A64D12198F72E900451413 /* pinglun596_10@2x.png in Resources */,
 				56A64CF6198F72E900451413 /* Picture_default_image@2x.png in Resources */,
 				56A64D58198F72E900451413 /* Expression_2@2x.png in Resources */,
+				137BF28B1A03806D0005B3D7 /* BBSListCellSingle.xib in Resources */,
 				56A64CC4198F72E900451413 /* back7.png in Resources */,
 				13B85B0D1999F376000072FB /* seach@2x.png in Resources */,
 				E3C842A719C1A6B200050770 /* gpin@2x.png in Resources */,
@@ -4635,6 +4644,7 @@
 				56A64AB4198F6AD800451413 /* GmyMessageViewController.m in Sources */,
 				1383367B1994C7DC00F73194 /* MicroBBSInfoController.m in Sources */,
 				138EBEB51992512F005DB531 /* MyBBSCell.m in Sources */,
+				137BF28A1A03806D0005B3D7 /* BBSListCellSingle.m in Sources */,
 				56A64E06198F7B2C00451413 /* CustomMessageCell.m in Sources */,
 				138EBEBC19925B4D005DB531 /* BaseModel.m in Sources */,
 				56A64A3B198F69A800451413 /* FBCircleCustomCell.m in Sources */,
@@ -4991,7 +5001,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "833b4173-a729-4529-aaf9-3226a1e077db";
+				PROVISIONING_PROFILE = "c6daf619-7aea-4f47-8f68-e1499bb185ee";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -5017,7 +5027,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "833b4173-a729-4529-aaf9-3226a1e077db";
+				PROVISIONING_PROFILE = "c6daf619-7aea-4f47-8f68-e1499bb185ee";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;

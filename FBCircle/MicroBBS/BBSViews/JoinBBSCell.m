@@ -40,7 +40,7 @@
     self.aImageView.image = [LTools imageForBBSId:aModel.headpic];
     
     //标题
-    self.aTitleLabel.text = aModel.name;
+    self.aTitleLabel.text = [LTools stringHeadNoSpace:aModel.name];
     _aTitleLabel.font = [UIFont systemFontOfSize:15];
     
     UIColor *color1 = [UIColor colorWithHexString:@"6a7180"];

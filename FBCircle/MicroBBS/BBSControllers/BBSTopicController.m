@@ -101,7 +101,7 @@ typedef enum{
     _table.delegate = self;
     _table.dataSource = self;
     
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.separatorColor = COLOR_TABLE_LINE;
     [self.view addSubview:_table];
     
@@ -709,7 +709,7 @@ typedef enum{
     
     bbs_nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(8, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_No];
     [header addSubview:bbs_nameLabel];
-
+    
     //帖子数
 //    NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
     bbs_numLabel = [LTools createLabelFrame:CGRectMake(bbs_nameLabel.right, 0, header.width - bbs_nameLabel.width - 10 - 8, 40-1 - 0.5) title:nil font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
@@ -733,7 +733,7 @@ typedef enum{
 - (UIView *)createBBSInfoViewFrame:(CGRect)aFrame
 {
     UIView *basic_view = [[UIView alloc]initWithFrame:aFrame];
-//    basic_view.layer.cornerRadius = 3.f;
+    basic_view.layer.cornerRadius = 3.f;
     
 //    //论坛name
 //    
@@ -780,7 +780,7 @@ typedef enum{
     [basic_view addSubview:btnV];
     btnV.titleLabel.numberOfLines = 0;
     btnV.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    btnV.titleLabel.font = [UIFont systemFontOfSize:16];
+    btnV.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     btnV.line_horizon.height = 0.5f;
     
     btnV.layer.cornerRadius = 3.f;
@@ -865,7 +865,7 @@ typedef enum{
     
     //赞 图标、赞数、赞人员
     
-    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth+2, 40)];
+    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth + 1, 40)];
     zan_view.backgroundColor = [UIColor whiteColor];
     zan_view.layer.borderWidth = 1.f;
     zan_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
@@ -875,12 +875,13 @@ typedef enum{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickTOPraiseMember:)];
     [zan_view addGestureRecognizer:tap];
     
-    UIImageView *zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, (40 - 16)/2.0, 16, 16)];
+    UIImageView *zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, (40 - 16)/2.0 - 3, 16, 16)];
     zanImage.image = [UIImage imageNamed:@"add_zan"];
     [zan_view addSubview:zanImage];
     
     NSString *numberSter = [NSString stringWithFormat:@"%@",aTopicModel.zan_num];
     zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
+    zan_num_label.font = [UIFont systemFontOfSize:14.f];
     [zan_view addSubview:zan_num_label];
     
     NSString *names = zan_String;
@@ -931,6 +932,11 @@ typedef enum{
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(8, 15, 304, 0)];
     [headerView addSubview:basic_view];
     
+    UIView *basic_bottom = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom - 3, 304, 2)];
+    basic_bottom.backgroundColor = [UIColor whiteColor];
+    [headerView addSubview:basic_bottom];
+    
+    
     UIView *bgview = [[UIView alloc]initWithFrame:CGRectZero];
     [headerView addSubview:bgview];
     
@@ -944,10 +950,10 @@ typedef enum{
     
     headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15);
     
-//    UIView *hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 10, 304, 10)];
-//    hh_view.backgroundColor = [UIColor whiteColor];
-//    [headerView addSubview:hh_view];
-//    
+    UIView *hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 10, 304, 10)];
+    hh_view.backgroundColor = [UIColor whiteColor];
+    [headerView addSubview:hh_view];
+//
 //    
 //    UIView *line_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 1, 304, 1)];
 //    line_view.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
@@ -1020,13 +1026,17 @@ typedef enum{
         labelHeight = [self createRichLabelWithMessage:text isInsert:NO];
     }
     
+    NSLog(@"rowHeight %f",labelHeight);
     
     CGFloat aHeight = 30 + labelHeight + 10;
     
-    if (aHeight <= 75) {
-        aHeight = 75;
+    if (aHeight <= 69) {
+        aHeight = 69;
     }
-    return aHeight;
+    
+    CGFloat dis = labelHeight - 17.f;
+    
+    return aHeight + (dis + dis ? 10 : 0);
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0)
@@ -1056,6 +1066,7 @@ typedef enum{
     BBSRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
     if (cell == nil) {
         cell = [[BBSRecommendCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier3];
+        
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
@@ -1087,8 +1098,6 @@ typedef enum{
     
     cell.nameLabel.text = aModel.username;
     cell.timeLabel.text = [LTools timechange:aModel.time];
-    
-    cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
     
     return cell;
     

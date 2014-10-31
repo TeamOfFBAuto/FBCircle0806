@@ -29,7 +29,7 @@
                 k = i % 3;
                 
                 UIImageView *aImageView = [[UIImageView alloc]initWithFrame:CGRectMake((aWidth + 3) * k, (aWidth + 3) * line, aWidth, aWidth)];
-                [aImageView sd_setImageWithURL:[NSURL URLWithString:[imageUrls objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+                [aImageView sd_setImageWithURL:[NSURL URLWithString:[imageUrls objectAtIndex:i]] placeholderImage:FBCIRCLE_DEFAULT_IMAGE];
                 aImageView.userInteractionEnabled = YES;
                 [self addSubview:aImageView];
                 

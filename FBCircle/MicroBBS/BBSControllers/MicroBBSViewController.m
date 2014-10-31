@@ -97,15 +97,15 @@
     
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0,0, 320, self.view.height - 44 - 49 - 20) showLoadMore:NO];
-    _table.backgroundColor = [UIColor clearColor];
+    _table.backgroundColor = self.view.backgroundColor;
     _table.refreshDelegate = self;
     _table.dataSource = self;
     
     _table.hiddenLoadMore = YES;
     
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.separatorColor = COLOR_TABLE_LINE;
-    _table.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
+    _table.separatorInset = UIEdgeInsetsZero;
     [self.view addSubview:_table];
     
     UIView *footer_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
@@ -859,13 +859,14 @@
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor clearColor];
+            cell.separatorInset = UIEdgeInsetsZero;
             
             //透明空格
-            UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
-            clearView.backgroundColor = [UIColor clearColor];
-            [cell addSubview:clearView];
+//            UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+//            clearView.backgroundColor = [UIColor clearColor];
+//            [cell addSubview:clearView];
             
-            LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, clearView.bottom, 304, 40) title:TITLE_RECOMMEND_BBS target:self action:@selector(clickToMore:)];
+            LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 15, 304, 40) title:TITLE_RECOMMEND_BBS target:self action:@selector(clickToMore:)];
             section.rightBtn.hidden = YES;
             [cell addSubview:section];
             section.layer.cornerRadius = 3.f;
@@ -882,6 +883,7 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor clearColor];
+//        cell.separatorInset = UIEdgeInsetsZero;
         cell.bgView.width = 304;
         cell.bgView.left = 8.f;
         __weak typeof(self)weakSelf = self;
@@ -897,6 +899,16 @@
             
         }];
         
+        if (indexPath.row == _recommend_bbs_array.count) {
+            cell.bottomLine.hidden = YES;
+            
+            cell.bgView.layer.cornerRadius = 3.f;
+        }else
+        {
+            cell.bottomLine.hidden = NO;
+            cell.bgView.layer.cornerRadius = 0.f;
+        }
+        
         return cell;
     }
     
@@ -911,8 +923,8 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor clearColor];
-        
-        
+
+        cell.separatorInset = UIEdgeInsetsZero;
         //透明空格
         UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
         clearView.backgroundColor = [UIColor clearColor];
@@ -936,6 +948,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.separatorInset = UIEdgeInsetsZero;
     
     NSArray *arr = (indexPath.section == 0) ? _hot_array : _concern_hot_array;
     
@@ -948,6 +961,15 @@
     }
     TopicModel *aModel = [arr objectAtIndex:indexPath.row - 1];
     [cell setCellWithModel:aModel];
+    
+    if (indexPath.row == arr.count) {
+        cell.bottomLine.hidden = YES;
+    }else
+    {
+        cell.bottomLine.hidden = NO;
+    }
+    
+    
     return cell;
     
 }

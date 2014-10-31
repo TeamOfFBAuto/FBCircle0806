@@ -17,6 +17,8 @@
 @property (nonatomic,retain)UILabel *timeLabel;
 @property(nonatomic,retain)UIView * content_label;
 
+@property(nonatomic,retain)UIView *topLine;
+
 - (void)setCellData:(NSString *)aModel OHLabel:(UIView *)OHLabel;
 
 
