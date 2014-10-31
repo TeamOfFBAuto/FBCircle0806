@@ -262,7 +262,7 @@ typedef enum{
                 
                 NSLog(@"删除");
                 
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定删除帖子？" delegate:weakSelf cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除帖子" message:@"确定从FB永久删除该帖子？" delegate:weakSelf cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                 [alert show];
             }
             
@@ -291,7 +291,7 @@ typedef enum{
         {
             NSLog(@"删除");
             
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定删除帖子？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除帖子" message:@"确定从FB永久删除该帖子？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert show];
         }
 
