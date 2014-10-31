@@ -156,7 +156,7 @@
     
     
     if (!_rContent_label) {
-        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,18)];
+        _rContent_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(54,28,235,22)];
         _rContent_label.textAlignment = NSTextAlignmentLeft;
         _rContent_label.textColor = RGBCOLOR(3,3,3);
         _rContent_label.font = [UIFont systemFontOfSize:13];
