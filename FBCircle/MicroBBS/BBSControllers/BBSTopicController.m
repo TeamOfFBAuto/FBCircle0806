@@ -63,6 +63,9 @@ typedef enum{
     USER_INFORUM user_Inform;//用户身份
     
     MBProgressHUD *_loading;
+    
+    LButtonView *bbs_nameLabel;
+    UILabel *bbs_numLabel;
 }
 
 @end
@@ -89,8 +92,11 @@ typedef enum{
     
     [self.my_right_button addTarget:self action:@selector(clickToAddBBS) forControlEvents:UIControlEventTouchUpInside];
     
+    UIView *head = [self createHeadView];
+    [self.view addSubview:head];
+    
     //数据展示table
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20 - 45) style:UITableViewStylePlain];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, head.bottom, 320, self.view.height - 44 - 20 - 45-head.height) style:UITableViewStylePlain];
     _table.backgroundColor = [UIColor clearColor];
     _table.delegate = self;
     _table.dataSource = self;
@@ -98,6 +104,7 @@ typedef enum{
     _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _table.separatorColor = COLOR_TABLE_LINE;
     [self.view addSubview:_table];
+    
     
     [self createInputView];
     
@@ -511,6 +518,8 @@ typedef enum{
                 
                 infoModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
                 
+                [weakSelf updateBBSInfo:infoModel.name bbsNum:infoModel.thread_num];
+                
                 weakTable.tableHeaderView = [weakSelf createTableHeaderView];
                 weakTable.tableFooterView = [weakSelf createTableFooterView];
                 
@@ -618,6 +627,8 @@ typedef enum{
             
             BBSInfoModel *aBBSModel = [[BBSInfoModel alloc]initWithDictionary:dataInfo];
             
+            [weakSelf updateBBSInfo:aBBSModel.name bbsNum:aBBSModel.thread_num];
+            
             weakTable.tableHeaderView = [weakSelf createTableHeaderView];
             
             weakSelf.titleLabel.text = aBBSModel.name;
@@ -688,23 +699,51 @@ typedef enum{
     [self.view addSubview:inputView];
 }
 
+//顶部论坛信息部分
+
+- (UIView *)createHeadView
+{
+    UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
+    header.backgroundColor = [UIColor whiteColor];
+        //论坛name
+    
+    bbs_nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(8, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_No];
+    [header addSubview:bbs_nameLabel];
+
+    //帖子数
+//    NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
+    bbs_numLabel = [LTools createLabelFrame:CGRectMake(bbs_nameLabel.right, 0, header.width - bbs_nameLabel.width - 10 - 8, 40-1 - 0.5) title:nil font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
+    [header addSubview:bbs_numLabel];
+    
+    return header;
+}
+
+//更新论坛信息
+
+- (void)updateBBSInfo:(NSString *)bbsName bbsNum:(NSString *)number
+{
+    bbs_nameLabel.titleLabel.text = bbsName;
+    NSString *title = [NSString stringWithFormat:@"%@帖子",number.length == 0 ? @"" : number];
+    bbs_numLabel.text = title;
+}
+
 /**
  *  论坛基本信息部分
  */
 - (UIView *)createBBSInfoViewFrame:(CGRect)aFrame
 {
     UIView *basic_view = [[UIView alloc]initWithFrame:aFrame];
-    basic_view.layer.cornerRadius = 3.f;
+//    basic_view.layer.cornerRadius = 3.f;
     
-    //论坛name
+//    //论坛name
+//    
+//    LButtonView *nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_No];
+//    [basic_view addSubview:nameLabel];
     
-    LButtonView *nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_No];
-    [basic_view addSubview:nameLabel];
-    
-    //帖子数
-    NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
-    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 - 8, 40-1 - 0.5) title:title font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
-    [basic_view addSubview:numLabel];
+//    //帖子数
+//    NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
+//    UILabel *numLabel = [LTools createLabelFrame:CGRectMake(nameLabel.right, 0, aFrame.size.width - nameLabel.width - 10 - 8, 40-1 - 0.5) title:title font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
+//    [basic_view addSubview:numLabel];
     
     //精 帖
 
@@ -737,17 +776,20 @@ typedef enum{
     
     aHeight = aHeight <= 20 ? 40 : (aHeight + 20);
     
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 40, aFrame.size.width, aHeight) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Up];
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, aHeight) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Down];
     [basic_view addSubview:btnV];
     btnV.titleLabel.numberOfLines = 0;
     btnV.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     btnV.titleLabel.font = [UIFont systemFontOfSize:16];
     btnV.line_horizon.height = 0.5f;
     
+    btnV.layer.cornerRadius = 3.f;
     
     basic_view.backgroundColor = [UIColor whiteColor];
-    aFrame.size.height = 40 + aHeight;
+    aFrame.size.height = aHeight;
     basic_view.frame = aFrame;
+    
+    
     return basic_view;
 }
 
@@ -821,9 +863,9 @@ typedef enum{
     }];
     [recommed_view addSubview:nineView];
     
-    //赞
+    //赞 图标、赞数、赞人员
     
-    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth+1, 40)];
+    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth+2, 40)];
     zan_view.backgroundColor = [UIColor whiteColor];
     zan_view.layer.borderWidth = 1.f;
     zan_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
@@ -845,10 +887,11 @@ typedef enum{
     zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240, zan_view.height) title:names font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
     [zan_view addSubview:zan_names_label];
     
-    //时间
+    //时间view
+    
     UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aWidth + 1, 40)];
     time_view.backgroundColor = [UIColor whiteColor];
-    time_view.layer.borderWidth = 0.5f;
+//    time_view.layer.borderWidth = 0.5f;
     time_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
     [recommed_view addSubview:time_view];
     
@@ -860,6 +903,11 @@ typedef enum{
     [zan_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     zan_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 //    zan_btn.backgroundColor = [UIColor redColor];
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, time_view.height - 1, time_view.width, 1)];
+    line.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+    [time_view addSubview:line];
     
     aFrame.size.height = time_view.bottom;
     recommed_view.frame = aFrame;
@@ -886,19 +934,24 @@ typedef enum{
     UIView *bgview = [[UIView alloc]initWithFrame:CGRectZero];
     [headerView addSubview:bgview];
     
-    UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom + 15, 304 + 8, 0) bgView:bgview];
+    UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom, 304 + 8, 0) bgView:bgview];
     [headerView addSubview:recommed_view];
     
-    headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15 + 15 +1);
-    
-    UIView *hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 10, 304, 10)];
-    hh_view.backgroundColor = [UIColor whiteColor];
-    [headerView addSubview:hh_view];
+    UIView *mask_view = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom, 304, 3)];
+    mask_view.backgroundColor = [UIColor whiteColor];
+    [headerView addSubview:mask_view];
     
     
-    UIView *line_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 1, 304, 1)];
-    line_view.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
-    [headerView addSubview:line_view];
+    headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15);
+    
+//    UIView *hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 10, 304, 10)];
+//    hh_view.backgroundColor = [UIColor whiteColor];
+//    [headerView addSubview:hh_view];
+//    
+//    
+//    UIView *line_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 1, 304, 1)];
+//    line_view.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+//    [headerView addSubview:line_view];
 
     
     return headerView;
@@ -933,6 +986,14 @@ typedef enum{
 
 
 #pragma mark - delegate
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [inputView resignFirstResponder];
+}
 
 #pragma mark - UIAlertViewDelegate
 

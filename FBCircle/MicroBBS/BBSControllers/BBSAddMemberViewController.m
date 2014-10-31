@@ -156,6 +156,8 @@
     [self.view addSubview:_mainTabV];
     [_mainTabV registerClass:[BBSAddMemberCell class] forCellReuseIdentifier:@"identifier"];
     _mainTabV.delegate=self;
+    _mainTabV.sectionIndexColor = RGBCOLOR(105,111,131);
+    _mainTabV.sectionIndexTrackingBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
     _mainTabV.separatorColor=RGBCOLOR(225, 225, 225);
     _mainTabV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _mainTabV.rowHeight = 55;
@@ -384,17 +386,25 @@
 }
 
 -(NSArray*)sectionIndexTitlesForTableView:(UITableView *)tableView{
-    if (tableView==_mainTabV) {
+    if (tableView==_mainTabV)
+    {
+        /*
         NSMutableArray *toBeReturned = [[NSMutableArray alloc]init];
         for(char c = 'A';c<='Z';c++)
             [toBeReturned addObject:[NSString stringWithFormat:@"%c",c]];
         return toBeReturned;
-        
+        */
+        if (tableView == self.searchDisplayController.searchResultsTableView)
+        {
+            return nil;
+        } else
+        {
+            return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:
+                    [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles]];
+        }
     }else{
         return nil;
-        
     }
-    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -430,7 +440,7 @@
         UILabel *_label=[[UILabel alloc]initWithFrame:CGRectMake(10, 0.5, 320-24, 24)];
         
         _label.text=[NSString stringWithFormat:@"%c",'A'+section];
-        _label.textColor = RGBCOLOR(170,178,188);
+        _label.textColor = RGBCOLOR(171,179,188);
         _label.backgroundColor=[UIColor clearColor];
         
 //        _label.backgroundColor=RGBCOLOR(250, 250, 250);
@@ -454,22 +464,31 @@
 {
     if (tableView==_mainTabV) {
         
-        
-        NSInteger count = 0;
-        for(NSString *character in arrayOfCharacters)
+        if (tableView == self.searchDisplayController.searchResultsTableView)
         {
-            if([character isEqualToString:title])
+            return 0;
+        }else
+        {
+            if (title == UITableViewIndexSearch)
             {
+                [tableView scrollRectToVisible:self.searchDisplayController.searchBar.frame animated:NO];
+                return -1;
+            }else
+            {
+                NSInteger count = 0;
+                for(NSString *character in arrayOfCharacters)
+                {
+                    if([character isEqualToString:title])
+                    {
+                        return count;
+                    }
+                    count ++;
+                }
+                
                 return count;
             }
-            count ++;
         }
-        
-        return count;
-        
     }else{
-        
-        
         return 0;
     }
     
