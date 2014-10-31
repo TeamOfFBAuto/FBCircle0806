@@ -70,9 +70,7 @@
     //加入按钮
     
     int inform = aModel.inForum > aModel.inforum ? aModel.inForum : aModel.inforum;
-    
-    NSLog(@"--->%d",inform);
-    
+        
     self.joinButton.selected = (inform >= 1) ? YES : NO;
     self.joinButton.userInteractionEnabled = (inform >= 1) ? NO : YES;
     

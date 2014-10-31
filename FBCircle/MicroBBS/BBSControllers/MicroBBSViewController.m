@@ -408,7 +408,7 @@
     {
         url = [NSString stringWithFormat:FBCIRCLE_TOPIC_LIST_MYJOIN,[SzkAPI getAuthkey],1,5];//关注热门帖子(最多15个)
         
-        NSLog(@"---->concern %@",url);
+        NSLog(@"---->关注热门帖子 %@",url);
     }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
