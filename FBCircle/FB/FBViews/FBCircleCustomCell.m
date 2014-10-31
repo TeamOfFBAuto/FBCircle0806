@@ -333,7 +333,6 @@
     }
     
     [OHLableHelper creatAttributedText:content_string Label:_content_label OHDelegate:self WithWidht:IMAGE_WIDHT WithHeight:IMAGE_HEIGHT WithLineBreak:NO];
-
     cellHeight += _content_label.frame.size.height;
     
     if (isShowButton)

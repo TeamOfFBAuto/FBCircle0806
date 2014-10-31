@@ -30,7 +30,7 @@
         self.backgroundColor =  RGBCOLOR(249,249,249);
         
         if (!_pinglun_logo) {
-            _pinglun_logo = [[UIImageView alloc] initWithFrame:CGRectMake(22.5,20,14,14)];
+            _pinglun_logo = [[UIImageView alloc] initWithFrame:CGRectMake(22.5,25,14,14)];
             
             _pinglun_logo.image = [UIImage imageNamed:@"pinglun_28_28.png"];
             
@@ -40,7 +40,7 @@
         
         if (!_headerImageView)
         {
-            _headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(44,8,35,35)];
+            _headerImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(44,13,35,35)];
             _headerImageView.layer.cornerRadius = 5;
             _headerImageView.layer.masksToBounds = YES;
             _headerImageView.userInteractionEnabled = YES;
@@ -54,16 +54,16 @@
         
         
         if (!_userName_label) {
-            _userName_label = [[UILabel alloc] initWithFrame:CGRectMake(89,8,110,15)];
+            _userName_label = [[UILabel alloc] initWithFrame:CGRectMake(89,11,110,15)];
             _userName_label.textAlignment = NSTextAlignmentLeft;
             _userName_label.textColor = RGBCOLOR(3,3,3);
-            _userName_label.font = [UIFont systemFontOfSize:14];
+            _userName_label.font = [UIFont boldSystemFontOfSize:14];
             _userName_label.backgroundColor = [UIColor clearColor];
             [self addSubview:_userName_label];
         }
         
         if (!_dateLine_label) {
-            _dateLine_label = [[UILabel alloc] initWithFrame:CGRectMake(201,8,100,14)];
+            _dateLine_label = [[UILabel alloc] initWithFrame:CGRectMake(201,11,100,14)];
             _dateLine_label.textAlignment = NSTextAlignmentRight;
             _dateLine_label.textColor = RGBCOLOR(120,120,120);
             _dateLine_label.font = [UIFont systemFontOfSize:12];
@@ -72,7 +72,7 @@
         }
         
         if (!_content_label) {
-            _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(89,31,212,0)];
+            _content_label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(89,33,212,0)];
             _content_label.textAlignment = NSTextAlignmentLeft;
             _content_label.lineBreakMode = NSLineBreakByCharWrapping;
             _content_label.font = [UIFont systemFontOfSize:14];
@@ -105,7 +105,7 @@
 
 -(float)setInfomationWith:(FBCircleCommentModel *)model isFirst:(BOOL)isfirst
 {
-    _content_label.frame = CGRectMake(89,31,212,0);
+    _content_label.frame = CGRectMake(89,33,212,0);
     
     myModel = model;
     
@@ -125,9 +125,9 @@
     
     _upLine_view.frame = CGRectMake(isfirst?0:_upLine_view.frame.origin.x,_upLine_view.frame.origin.y,isfirst?self.frame.size.width:_upLine_view.frame.size.width,isfirst?height:0.5);
     
-    _bottomLine_view.frame = CGRectMake(_bottomLine_view.frame.origin.x,_content_label.frame.size.height + 31 + 10 + height - 0.5,_bottomLine_view.frame.size.width,_bottomLine_view.frame.size.height);
+    _bottomLine_view.frame = CGRectMake(_bottomLine_view.frame.origin.x,_content_label.frame.size.height + 33 + 10 + height - 0.5,_bottomLine_view.frame.size.width,_bottomLine_view.frame.size.height);
     
-    return _content_label.frame.size.height + 31 + 10 + height;
+    return _content_label.frame.size.height + 33 + 10 + height;
     
 }
 
