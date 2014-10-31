@@ -115,7 +115,7 @@
             
             [_cancel_button setTitle:@"取消" forState:UIControlStateNormal];
             
-            [_cancel_button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [_cancel_button setTitleColor:RGBCOLOR(18,107,255) forState:UIControlStateNormal];
             
             [_cancel_button addTarget:self action:@selector(cancelButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -138,7 +138,7 @@
             
             [_done_button setTitle:@"确认" forState:UIControlStateNormal];
             
-            [_done_button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [_done_button setTitleColor:RGBCOLOR(18,107,255) forState:UIControlStateNormal];
             
             [_backgroundImageView addSubview:_done_button];
         }
