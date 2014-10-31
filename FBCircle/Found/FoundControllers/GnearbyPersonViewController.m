@@ -101,6 +101,7 @@
         _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5 ? (568-64):(480-64))];
         _tableView.refreshDelegate = self;
         _tableView.dataSource = self;
+//        _tableView.separatorInset = UIEdgeInsetsZero;
         [self.view addSubview:_tableView];
         [_tableView showRefreshHeader:YES];
     }
@@ -127,9 +128,10 @@
         [view removeFromSuperview];
     }
     
-    cell.separatorInset = UIEdgeInsetsZero;
+    
     [cell loadCustomViewWithIndexPath:indexPath];//加载控件
     [cell configNetDataWithIndexPath:indexPath dataArray:_dataArray distanceDic:_distanceDic];//填充数据
+    
     
     __weak typeof (self)bself = self;
     __block NSString *celluserid = cell.userId;
@@ -138,7 +140,14 @@
         gp.passUserid = celluserid;
         [bself.navigationController pushViewController:gp  animated:YES];
     }];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.separatorInset = UIEdgeInsetsZero;
+    
+
+    
+    
+    
     return cell;
     
 }

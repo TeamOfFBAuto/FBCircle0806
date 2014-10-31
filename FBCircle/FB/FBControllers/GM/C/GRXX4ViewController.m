@@ -197,18 +197,33 @@
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+    
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+    }
+    
     [self.view addSubview:_tableView];
 //    [_tableView reloadData];
     
     
     
     //pickerview后面的view
-    _backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
+    _backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 250)];
     _backPickView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_backPickView];
     
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"确定" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    btn.backgroundColor = [UIColor redColor];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(areaQueDing) forControlEvents:UIControlEventTouchUpInside];
+    [btn setFrame:CGRectMake(270, 0, 35, 35)];
+    [_backPickView addSubview:btn];
+    
     //地区pickview
-    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, 320, 216)];
+    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 30, 320, 250)];
     _pickeView.delegate = self;
     _pickeView.dataSource = self;
     [_backPickView addSubview:_pickeView];
@@ -217,6 +232,11 @@
     
 }
 
+
+-(void)areaQueDing{
+    _isChooseArea = !_isChooseArea;
+    [self areaHidden];
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -648,6 +668,25 @@
     }
     
     
+    
+    
+    
+    
+    return cell;
+    
+}
+
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
     if (indexPath.row == 0 || indexPath.row == 5) {
         cell.separatorInset = UIEdgeInsetsZero;
     }else{
@@ -655,10 +694,10 @@
     }
     
     
-    
-    return cell;
-    
 }
+
+
+
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -1071,9 +1110,9 @@
     NSLog(@"_backPickView");
     [UIView animateWithDuration:0.3 animations:^{
         if (iPhone5) {
-            _backPickView.frame = CGRectMake(-5, 280, 320, 216);
+            _backPickView.frame = CGRectMake(0, 280, 320, 250);
         }else{
-            _backPickView.frame = CGRectMake(-5, 218, 320, 216);
+            _backPickView.frame = CGRectMake(0, 218, 320, 250);
         }
         
     }];

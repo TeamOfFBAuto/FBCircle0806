@@ -42,7 +42,7 @@
 //    self.userFaceImv.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.userFaceImv];
     //姓名
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+11, 12, 191, 17)];
+    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+11, 12, 191, 20)];
 //    self.userNameLabel.backgroundColor = [UIColor orangeColor];
     [self.contentView addSubview:self.userNameLabel];
     //距离和时间
@@ -61,6 +61,10 @@
     self.btn.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame), 17, 51, 29);
     [self.contentView addSubview:self.btn];
     [self.btn addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *fengeLine = [[UIView alloc]initWithFrame:CGRectMake(0, 64.5, 320, 0.5)];
+    fengeLine.backgroundColor = RGBCOLOR(204, 204, 204);
+    [self addSubview:fengeLine];
     
 }
 
