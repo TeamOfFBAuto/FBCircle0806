@@ -387,7 +387,7 @@
 //            NSLog(@"%@ %@",fb_content.text,NSStringFromCGRect(fb_content.frame));
             
             fb_content.font = [UIFont boldSystemFontOfSize:13];
-            fb_content.frame = CGRectMake(5, 5, 192, 16);
+            fb_content.frame = CGRectMake(5, 5, 192, 18);//原来是高度是16但是g这个字符显示不全所以加了两个像素高度
             fb_content.backgroundColor = [UIColor clearColor];
             
             
@@ -417,6 +417,7 @@
             CGSize optimumsSize1 = [rfb_content optimumSize];
             contentFrame1.size.height = optimumsSize1.height+6;
             rfb_content.frame = contentFrame1;
+//            rfb_content.backgroundColor = [UIColor purpleColor];
             
             //根据有没图片判断文字的宽度
             if (wenzhang.rfb_image.count>0) {
@@ -446,6 +447,7 @@
             UIView *view = [[UIView alloc]initWithFrame:CGRectZero];
             [self.contentView addSubview:view];
             view.backgroundColor=RGBCOLOR(248, 248, 248);
+//            view.backgroundColor = [UIColor whiteColor];
             
             //图片View
             UIView *picsView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -475,8 +477,10 @@
                     countNum.hidden = YES;
                 }
                 
+                view.backgroundColor = [UIColor whiteColor];
                 
             }else{
+                view.backgroundColor = [UIColor whiteColor];
                 picsView.frame = CGRectZero;
             }
             
@@ -484,6 +488,7 @@
             //xxxxxxxxxx
             RTLabel *fb_content = [[RTLabel alloc]init];
             fb_content.font = [UIFont systemFontOfSize:14];
+//            fb_content.backgroundColor = [UIColor redColor];
             fb_content.text =  [ZSNApi FBImageChange:[wenzhang.fb_content stringByReplacingEmojiCheatCodesWithUnicode]];
             //xxxxxxxxx
             
@@ -492,7 +497,7 @@
             
             //根据有没有图片判断文字宽度
             if (wenzhang.fb_image.count > 0) {//有图片
-                fb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+5, 0, 145, 0);
+                fb_content.frame = CGRectMake(CGRectGetMaxX(picsView.frame)+5, -3, 145, 0);
                 CGRect contentFrame = fb_content.frame;
                 CGSize optimumsSize = [fb_content optimumSize];
                 contentFrame.size.height = optimumsSize.height+3;
@@ -519,7 +524,7 @@
                 float height1 = 0.0f;
                 
                 if (height<68) {//小于4行
-                    height1 = fb_content.frame.size.height+5;
+                    height1 = fb_content.frame.size.height+3;
                     
                     NSLog(@"%f",height1);
                     
