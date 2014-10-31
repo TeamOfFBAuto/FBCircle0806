@@ -811,7 +811,7 @@ typedef enum{
     
     __weak typeof(self)weakSelf = self;
     
-    LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 10, textLabel.width, 0) images:imageUrls imageIndex:^(int index) {
+    LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 10, aWidth - headImage.right - 20, 0) images:imageUrls imageIndex:^(int index) {
         NSLog(@"slectIndex %d",index);
         
         ShowImagesViewController *showBigVC=[[ShowImagesViewController alloc]init];
