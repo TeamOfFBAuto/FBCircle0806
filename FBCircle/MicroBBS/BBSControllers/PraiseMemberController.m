@@ -38,15 +38,16 @@
     self.titleLabel.text = @"称赞者";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
-
+    
     //数据展示table
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
     _table.backgroundColor = [UIColor clearColor];
     _table.refreshDelegate = self;
     _table.dataSource = self;
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0);
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.view addSubview:_table];
+    
     
     //获取称赞者
     
@@ -184,6 +185,14 @@
     [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:[aZan objectForKey:@"head"]] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     
     cell.aTitleLabel.text = [aZan objectForKey:@"username"];
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 10, 0, 0)];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsMake(0, 10, 0, 0)];
+    }
     
     return cell;
     

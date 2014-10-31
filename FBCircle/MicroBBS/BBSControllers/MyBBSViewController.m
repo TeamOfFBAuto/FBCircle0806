@@ -295,8 +295,8 @@
     UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 32)];
     header.backgroundColor = [UIColor colorWithHexString:@"f6f7f9"];
     
-    NSString *title1 = [NSString stringWithFormat:@"%@(%d)",@"我创建的论坛",createNum];
-    NSString *title2 = [NSString stringWithFormat:@"%@(%d)",@"我加入的论坛",joinNum];
+    NSString *title1 = [NSString stringWithFormat:@"%@ (%d)",@"我创建的论坛",createNum];
+    NSString *title2 = [NSString stringWithFormat:@"%@ (%d)",@"我加入的论坛",joinNum];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 0, 150, header.height)];
     titleLabel.text = (section == 0) ? title1 : title2;
