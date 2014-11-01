@@ -9,10 +9,11 @@
 
 //附近的人
 #import <UIKit/UIKit.h>
+#import "GMRefreshTableView.h"
 
 @interface GnearbyPersonViewController : MyViewController<RefreshDelegate,UITableViewDataSource,BMKLocationServiceDelegate>
 {
-    RefreshTableView *_tableView;//主tableview
+    GMRefreshTableView *_tableView;//主tableview
     
     //定位相关
     BMKUserLocation *_guserLocation;//用户当前位置

@@ -103,7 +103,7 @@
     if (section == 0) {
         num = 1;
     }else if (section == 1){
-        num = 2;
+        num = 1;
     }else if (section == 2){
         num = 1;
     }else if (section == 3){

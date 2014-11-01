@@ -98,7 +98,7 @@
     if ([CLLocationManager locationServicesEnabled]==NO) {
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"无法获取您的位置信息，若要使用该功能，请到手机系统的设置-隐私-定位服务中打开定位服务，并允许fb使用定位服务。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil] show];
     }else{
-        _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5 ? (568-64):(480-64))];
+        _tableView = [[GMRefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5 ? (568-64):(480-64))];
         _tableView.refreshDelegate = self;
         _tableView.dataSource = self;
 //        _tableView.separatorInset = UIEdgeInsetsZero;
@@ -322,6 +322,9 @@
     if (lat != 0 && lonn != 0) {
         [_locService stopUserLocationService];
         NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],_guserLocation.location.coordinate.latitude,_guserLocation.location.coordinate.longitude];
+        
+        //测试没有附近的人
+//        NSString *api = [NSString stringWithFormat:FBFOUND_UPDATAUSERLOCAL,[SzkAPI getAuthkey],0.0];
         
         NSLog(@"不是delegate上传自己的位置%@",api);
         

@@ -960,6 +960,7 @@
 		E32F369C19A6D58700FB0F84 /* fgeren@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E32F369B19A6D58700FB0F84 /* fgeren@2x.png */; };
 		E337AC6C19B96CD200869214 /* ext@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E337AC6B19B96CD200869214 /* ext@2x.png */; };
 		E33BAC9119A490BC00401587 /* GBMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */; };
+		E351506B1A04CB5700DC2CF5 /* GMRefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E351506A1A04CB5700DC2CF5 /* GMRefreshTableView.m */; };
 		E384CB6C19925DCF002E7D71 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */; };
 		E384CBAA19925E08002E7D71 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E384CBA919925E08002E7D71 /* mapapi.bundle */; };
 		E3A62B63199CA2FE00C300A3 /* fcar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3A62B5E199CA2FE00C300A3 /* fcar@2x.png */; };
@@ -1769,6 +1770,8 @@
 		E337AC6B19B96CD200869214 /* ext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ext@2x.png"; sourceTree = "<group>"; };
 		E33BAC8F19A490BC00401587 /* GBMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMKPointAnnotation.h; sourceTree = "<group>"; };
 		E33BAC9019A490BC00401587 /* GBMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMKPointAnnotation.m; sourceTree = "<group>"; };
+		E35150691A04CB5700DC2CF5 /* GMRefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMRefreshTableView.h; sourceTree = "<group>"; };
+		E351506A1A04CB5700DC2CF5 /* GMRefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMRefreshTableView.m; sourceTree = "<group>"; };
 		E384CB6B19925DCF002E7D71 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E384CB6E19925E07002E7D71 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		E384CB6F19925E07002E7D71 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
@@ -3052,6 +3055,8 @@
 				56A64A99198F6AD800451413 /* UILabel+GautoMatchedText.m */,
 				56A64A9A198F6AD800451413 /* 带placeholder的textView */,
 				56A64A9D198F6AD800451413 /* 截图 */,
+				E35150691A04CB5700DC2CF5 /* GMRefreshTableView.h */,
+				E351506A1A04CB5700DC2CF5 /* GMRefreshTableView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4609,6 +4614,7 @@
 				56A6488A198F502700451413 /* MyViewController.m in Sources */,
 				190F3A121992547400D54140 /* MineViewController.m in Sources */,
 				56A64B51198F6BC700451413 /* FbFriendListHeaderView.m in Sources */,
+				E351506B1A04CB5700DC2CF5 /* GMRefreshTableView.m in Sources */,
 				56A648DA198F512A00451413 /* ChooseCountryViewController.m in Sources */,
 				138336751994BFED00F73194 /* PraiseMemberController.m in Sources */,
 				13877F7119986A5E0058DED6 /* LActionSheet.m in Sources */,
@@ -4991,11 +4997,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE = "f2794893-6f40-4d34-b2ae-54d0f5e6cf98";
-
-				PROVISIONING_PROFILE = "4d09d2dd-2940-4eb4-aec5-372a03029734";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -5021,11 +5023,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE = "f2794893-6f40-4d34-b2ae-54d0f5e6cf98";
-
-				PROVISIONING_PROFILE = "4d09d2dd-2940-4eb4-aec5-372a03029734";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
