@@ -46,11 +46,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oDV-ek-Jxu">
+                        <rect key="frame" x="8" y="74" width="304" height="1"/>
+                        <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="aTitleLabel" destination="3K5-hJ-p3e" id="YjB-N7-Me7"/>
                 <outlet property="bgView" destination="bYd-hE-kyV" id="R1J-KH-7Re"/>
+                <outlet property="bottomLine" destination="oDV-ek-Jxu" id="is0-j6-Jaf"/>
                 <outlet property="downMask" destination="IdM-gk-AOw" id="9kR-RX-091"/>
                 <outlet property="nameAndAddressLabel" destination="qhT-yH-WUg" id="vbd-o9-tbt"/>
                 <outlet property="timeAndCommentLabel" destination="FTV-aZ-NrB" id="phY-7H-O4h"/>

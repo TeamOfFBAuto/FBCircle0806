@@ -79,7 +79,7 @@
     _table.refreshDelegate = self;
     _table.dataSource = self;
     
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
     _loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
@@ -461,6 +461,12 @@
         [recommed_view addSubview:btnV];
         btnV.tag = 10 + i;
         btnV.titleLabel.font = [UIFont systemFontOfSize:14];
+        btnV.line_horizon.backgroundColor = COLOR_TABLE_LINE;
+        btnV.line_horizon.height = 1.f;
+        
+        if (i == top_array.count - 1) {
+            btnV.line_horizon.hidden = YES;
+        }
     }
     
     aFrame.size.height = 40 * top_array.count;
@@ -567,7 +573,15 @@
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
+    
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    
+    if (indexPath.row % 2 == 0) {
+        aModel.title = @"刷卡即可就分开进阿飞说看见阿拉克水煎服科技开发健康多了几分基督教福克斯的积分卡京东方金士顿";
+    }else
+    {
+        aModel.title = @"耍酷卡接口是基督";
+    }
     
     CGFloat aHeight = [LTools heightForText:aModel.title width:280 font:14.f];
     
@@ -608,6 +622,14 @@
     
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     
+    
+    if (indexPath.row % 2 == 0) {
+        aModel.title = @"刷卡即可就分开进阿飞说看见阿拉克水煎服科技开发健康多了几分基督教福克斯的积分卡京东方金士顿";
+    }else
+    {
+        aModel.title = @"耍酷卡接口是基督";
+    }
+    
     CGFloat aHeight = [LTools heightForText:aModel.title width:280 font:14.f];
     
     if (aHeight < 20.f) {
@@ -626,20 +648,31 @@
             if (indexPath.row == 0) {
                 cell.upMask.hidden = YES;
                 cell.downMask.hidden = NO;
+                
+                cell.bottomLine.hidden = NO;
+                
             }else
             {
                 cell.downMask.hidden = YES;
                 cell.upMask.hidden = NO;
+                cell.bottomLine.hidden = YES;
             }
+            
+            
+            
             
         }else
         {
             cell.bgView.layer.cornerRadius = 0.f;
+            cell.bottomLine.hidden = NO;
+            
         }
         
-        cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
+//        cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
         [cell setCellDataWithModel:aModel];
         
+        cell.bottomLine.backgroundColor = COLOR_TABLE_LINE;
+        cell.bottomLine.width = self.view.width - 16;
         
         return cell;
     }
@@ -658,20 +691,25 @@
         if (indexPath.row == 0) {
             cell.upMask.hidden = YES;
             cell.downMask.hidden = NO;
+            cell.bottomLine.hidden = NO;
         }else
         {
             cell.downMask.hidden = YES;
             cell.upMask.hidden = NO;
+            cell.bottomLine.hidden = YES;
         }
         
     }else
     {
         cell.bgView.layer.cornerRadius = 0.f;
+        cell.bottomLine.hidden = NO;
     }
     
-    cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
+//    cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
 //    TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     [cell setCellDataWithModel:aModel];
+    
+    cell.bottomLine.backgroundColor = COLOR_TABLE_LINE;
     
     return cell;
     

@@ -31,9 +31,10 @@
         _aTitleLabel.font = [UIFont systemFontOfSize:15];
         [self addSubview:_aTitleLabel];
         
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(10, 54, 310, 1.f)];
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(12, 54, 320-24, 1.f)];
         line.backgroundColor = COLOR_TABLE_LINE;
         [self addSubview:line];
+        self.bottomLine = line;
         
     }
     return self;

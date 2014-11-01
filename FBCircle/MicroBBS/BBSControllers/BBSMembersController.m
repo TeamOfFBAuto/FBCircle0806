@@ -57,8 +57,8 @@
     _table.backgroundColor = [UIColor clearColor];
     _table.refreshDelegate = self;
     _table.dataSource = (id)self;
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _table.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     [self.view addSubview:_table];
     
     _table.tableHeaderView = [self createTableHeaderView];
@@ -257,6 +257,7 @@
     cell.aTitleLabel.text = aMember.username;
     
     [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:aMember.userface] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
+    
     
     return cell;
     

@@ -185,14 +185,8 @@
     [cell.aImageView sd_setImageWithURL:[NSURL URLWithString:[aZan objectForKey:@"head"]] placeholderImage:[UIImage imageNamed:@"Picture_default_image"]];
     
     cell.aTitleLabel.text = [aZan objectForKey:@"username"];
-    
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsMake(0, 10, 0, 0)];
-    }
-    
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsMake(0, 10, 0, 0)];
-    }
+    cell.bottomLine.left = cell.aImageView.left;
+    cell.bottomLine.width = 320.f;
     
     return cell;
     

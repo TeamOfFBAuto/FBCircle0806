@@ -795,18 +795,13 @@ typedef enum{
     
     NSString *title = [NSString stringWithString:aTopicModel.title];
     
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 0) leftImage:aImage rightImage:rightImage title:title target:self action:@selector(clickToRecommend:) lineDirection:Line_Down];
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 0) leftImage:aImage rightImage:rightImage title:title target:self action:@selector(clickToRecommend:) lineDirection:Line_No];
     [basic_view addSubview:btnV];
-    
     
     btnV.titleLabel.numberOfLines = 0;
     btnV.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     btnV.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-    btnV.line_horizon.height = 0.5f;
-//    btnV.backgroundColor = [UIColor redColor];
-//    btnV.titleLabel.backgroundColor = [UIColor orangeColor];
-//    
-//    NSLog(@"rightImagev %@",btnV.rightImageView);
+
     
     //调整高度
     
@@ -826,7 +821,7 @@ typedef enum{
     btnV.titleLabel.height = aHeight;
     btnV.imageView.top = 12.f;
     btnV.rightImageView.top = 15.f;
-    btnV.line_horizon.top = aHeight - 0.5f;
+
     
     btnV.layer.cornerRadius = 3.f;
     
@@ -913,7 +908,7 @@ typedef enum{
     UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth + 1, 40)];
     zan_view.backgroundColor = [UIColor whiteColor];
     zan_view.layer.borderWidth = 1.f;
-    zan_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
+    zan_view.layer.borderColor = COLOR_TABLE_LINE.CGColor;
     zan_view.backgroundColor = [UIColor colorWithHexString:@"fafafa"];
     [recommed_view addSubview:zan_view];
     
@@ -978,9 +973,13 @@ typedef enum{
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(8, 15, 304, 0)];
     [headerView addSubview:basic_view];
     
-    UIView *basic_bottom = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom - 3, 304, 2)];
+    UIView *basic_bottom = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom - 3, 304, 3)];
     basic_bottom.backgroundColor = [UIColor whiteColor];
     [headerView addSubview:basic_bottom];
+    
+    UIView *basic_line = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom - 1, 304, 1)];
+    basic_line.backgroundColor = COLOR_TABLE_LINE;
+    [headerView addSubview:basic_line];
     
     
     UIView *bgview = [[UIView alloc]initWithFrame:CGRectZero];
@@ -1024,7 +1023,7 @@ typedef enum{
     [footer_view addSubview:hh_view];
     
     UIView *line_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 304, 1)];
-    line_view.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+    line_view.backgroundColor = COLOR_TABLE_LINE;
     [footer_view addSubview:line_view];
 
     

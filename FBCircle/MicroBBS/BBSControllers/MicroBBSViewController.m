@@ -911,6 +911,8 @@
             cell.bgView.layer.cornerRadius = 0.f;
         }
         
+        cell.bottomLine.backgroundColor = COLOR_TABLE_LINE;
+        
         return cell;
     }
     
@@ -970,7 +972,7 @@
     {
         cell.bottomLine.hidden = NO;
     }
-    
+    cell.bottomLine.backgroundColor = COLOR_TABLE_LINE;
     
     return cell;
     

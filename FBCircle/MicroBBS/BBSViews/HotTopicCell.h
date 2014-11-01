@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *aImageView;
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subTitleLabel;
+@property (strong, nonatomic) IBOutlet UIView *bottomLine;
 
 -(void)setCellWithModel:(TopicModel *)aModel;
 

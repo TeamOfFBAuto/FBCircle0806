@@ -60,8 +60,8 @@
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
     _table.refreshDelegate = self;
     _table.dataSource = self;
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 1, 0, 0);
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _table.separatorInset = UIEdgeInsetsMake(0, 1, 0, 0);
     [self.view addSubview:_table];
     
     [_table showRefreshHeader:YES];
@@ -231,6 +231,8 @@
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     
     [cell setCellWithModel:aModel];
+    
+    cell.bottomLine.backgroundColor = COLOR_TABLE_LINE;
     
     return cell;
     

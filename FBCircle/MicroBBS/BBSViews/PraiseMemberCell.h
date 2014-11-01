@@ -16,4 +16,6 @@
 
 @property(nonatomic,retain)UIView *upMask;
 
+@property(nonatomic,retain)UIView *bottomLine;
+
 @end

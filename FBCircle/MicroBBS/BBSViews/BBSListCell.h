@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) IBOutlet UIView *downMask;
 @property (strong, nonatomic) IBOutlet UIView *upMask;
+@property (strong, nonatomic) IBOutlet UIView *bottomLine;
 
 - (void)setCellDataWithModel:(TopicModel *)aModel;
 

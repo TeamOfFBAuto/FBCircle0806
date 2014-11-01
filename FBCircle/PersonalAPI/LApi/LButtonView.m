@@ -76,6 +76,8 @@
         line_h.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
         [self addSubview:line_h];
         
+        self.line_horizon = line_h;
+        
     }
     return self;
 }
