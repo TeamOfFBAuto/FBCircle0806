@@ -775,10 +775,12 @@
         }
     }else
     {
-        BBSInfoModel *aModel = [_recommend_bbs_array objectAtIndex:indexPath.row - 1];
-        BBSListViewController *list = [[BBSListViewController alloc]init];
-        list.bbsId = aModel.id;
-        [self PushToViewController:list WithAnimation:YES];
+        if (_recommend_bbs_array.count > 0 || indexPath.row <= _recommend_bbs_array.count) {
+            BBSInfoModel *aModel = [_recommend_bbs_array objectAtIndex:indexPath.row - 1];
+            BBSListViewController *list = [[BBSListViewController alloc]init];
+            list.bbsId = aModel.id;
+            [self PushToViewController:list WithAnimation:YES];
+        }
     }
     
 }

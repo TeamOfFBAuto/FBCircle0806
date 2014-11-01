@@ -22,6 +22,8 @@
 #import "BBSInfoModel.h"
 #import "TopicModel.h"
 
+#define LL_LEFT_X 13
+
 typedef enum{
     Action_Topic_Info = 0,//帖子基本信息
     Action_Topic_Zan,//赞帖
@@ -66,6 +68,8 @@ typedef enum{
     
     LButtonView *bbs_nameLabel;
     UILabel *bbs_numLabel;
+    
+    BBSRecommendCell *temp_Cell;
 }
 
 @end
@@ -579,6 +583,18 @@ typedef enum{
         
         [_loading hide:YES];
         
+        if (action == Action_Topic_Top) {
+            
+            int errcode = [[failDic objectForKey:@"errcode"]intValue];
+            if (errcode == 2) {
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"置顶帖子过多" message:@"你只能最多置顶2个帖子,若想置顶本帖,请先取消其他已置顶帖子。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+        }
+        
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
     }];
 }
@@ -648,6 +664,8 @@ typedef enum{
 {
     OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
 
+//    label.backgroundColor = [UIColor redColor];
+    
     label.lineBreakMode = NSLineBreakByCharWrapping;
     
     text = [text stringByReplacingEmojiCheatCodesWithUnicode];
@@ -705,15 +723,20 @@ typedef enum{
 {
     UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
     header.backgroundColor = [UIColor whiteColor];
-        //论坛name
+    
+    //论坛name
     
     bbs_nameLabel = [[LButtonView alloc]initWithFrame:CGRectMake(8, 0, 220, 40) leftImage:nil rightImage:nil title:infoModel.name target:self action:@selector(clickToBBSList:) lineDirection:Line_No];
     [header addSubview:bbs_nameLabel];
     
     //帖子数
 //    NSString *title = [NSString stringWithFormat:@"%@帖子",infoModel.thread_num];
-    bbs_numLabel = [LTools createLabelFrame:CGRectMake(bbs_nameLabel.right, 0, header.width - bbs_nameLabel.width - 10 - 8, 40-1 - 0.5) title:nil font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
+    bbs_numLabel = [LTools createLabelFrame:CGRectMake(bbs_nameLabel.right, 0, header.width - bbs_nameLabel.width - 13 - 8 - 8, 40-1 - 0.5) title:nil font:FONT_SIZE_SMALL align:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"627cbd"]];
     [header addSubview:bbs_numLabel];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 40 - 0.5f, self.view.width,0.5f)];
+    line.backgroundColor = RGBACOLOR(173.f, 176.f, 182.f,0.5);
+    [header addSubview:line];
     
     return header;
 }
@@ -734,6 +757,8 @@ typedef enum{
 {
     UIView *basic_view = [[UIView alloc]initWithFrame:aFrame];
     basic_view.layer.cornerRadius = 3.f;
+//    basic_view.layer.borderWidth = 0.5f;
+//    basic_view.layer.borderColor = RGBCOLOR(182, 183, 189).CGColor;
     
 //    //论坛name
 //    
@@ -752,7 +777,6 @@ typedef enum{
         rightImage = nil;
     }
     
-    
     UIImage *aImage = nil;
     
     if ([aTopicModel.status integerValue] == 1) { //精
@@ -767,21 +791,42 @@ typedef enum{
     {
         
     }
-    
     //帖子名称
     
-    CGFloat aHeight = [LTools heightForText:aTopicModel.title width:aFrame.size.width font:16];
+    NSString *title = [NSString stringWithString:aTopicModel.title];
     
-    NSLog(@"-->aHeight %f",aHeight);
-    
-    aHeight = aHeight <= 20 ? 40 : (aHeight + 20);
-    
-    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, aHeight) leftImage:aImage rightImage:rightImage title:aTopicModel.title target:self action:@selector(clickToRecommend:) lineDirection:Line_Down];
+    LButtonView *btnV = [[LButtonView alloc]initWithFrame:CGRectMake(0, 0, aFrame.size.width, 0) leftImage:aImage rightImage:rightImage title:title target:self action:@selector(clickToRecommend:) lineDirection:Line_Down];
     [basic_view addSubview:btnV];
+    
+    
     btnV.titleLabel.numberOfLines = 0;
     btnV.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     btnV.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     btnV.line_horizon.height = 0.5f;
+//    btnV.backgroundColor = [UIColor redColor];
+//    btnV.titleLabel.backgroundColor = [UIColor orangeColor];
+//    
+//    NSLog(@"rightImagev %@",btnV.rightImageView);
+    
+    //调整高度
+    
+    CGFloat aWidth = btnV.titleLabel.width;
+    
+    if (rightImage && aImage) {
+        
+        aWidth = btnV.width - (btnV.imageView.right + 13) * 2;
+        btnV.titleLabel.width = aWidth;
+    }
+    
+    CGFloat aHeight = [LTools heightForText:title width:aWidth Boldfont:16];
+    
+    aHeight += 20.f;
+    
+    btnV.height = aHeight;
+    btnV.titleLabel.height = aHeight;
+    btnV.imageView.top = 12.f;
+    btnV.rightImageView.top = 15.f;
+    btnV.line_horizon.top = aHeight - 0.5f;
     
     btnV.layer.cornerRadius = 3.f;
     
@@ -829,7 +874,7 @@ typedef enum{
     
     //时间
     NSString *time = [LTools timechange:aTopicModel.time];
-    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aWidth - 10 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(aWidth - 13 - [LTools widthForText:time font:12], nameLabel.top, [LTools widthForText:time font:FONT_SIZE_SMALL], nameLabel.height) title:time font:12 align:NSTextAlignmentRight textColor:[UIColor lightGrayColor]];
     [recommed_view addSubview:timeLabel];
     
     //正文
@@ -853,7 +898,7 @@ typedef enum{
     
     __weak typeof(self)weakSelf = self;
     
-    LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 10, aWidth - headImage.right - 20, 0) images:imageUrls imageIndex:^(int index) {
+    LNineImagesView *nineView = [[LNineImagesView alloc]initWithFrame:CGRectMake(textLabel.left, textLabel.bottom + 10, aWidth - headImage.right - 20 - 5, 0) images:imageUrls imageIndex:^(int index) {
         NSLog(@"slectIndex %d",index);
         
         ShowImagesViewController *showBigVC=[[ShowImagesViewController alloc]init];
@@ -897,10 +942,11 @@ typedef enum{
     [recommed_view addSubview:time_view];
     
     NSString *time_str = [LTools timestamp:aTopicModel.time];
-    UILabel *time_Label = [LTools createLabelFrame:CGRectMake(10, 0, 100, time_view.height) title:time_str font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *time_Label = [LTools createLabelFrame:CGRectMake(13, 0, 100, time_view.height) title:time_str font:15 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [time_view addSubview:time_Label];
+    time_Label.font = [UIFont boldSystemFontOfSize:15];
     
-    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30 - 10 - 5, zan_view.bottom + 5, 30 + 20 + 10, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:recommed_view target:self action:@selector(clickToZan:)];
+    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30 - 10 - 5 + 1, zan_view.bottom + 5, 30 + 20 + 10, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:recommed_view target:self action:@selector(clickToZan:)];
     [zan_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     zan_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 //    zan_btn.backgroundColor = [UIColor redColor];
@@ -983,10 +1029,10 @@ typedef enum{
 
     
     
-    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(10, 0, 150, footer_view.height - 15) normalTitle:@"查看更多评论..." image:nil backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
+    moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(12, 0, 150, footer_view.height - 15) normalTitle:@"查看更多评论..." image:nil backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
     [moreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    moreBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    moreBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     return footer_view;
 }
 
@@ -1026,17 +1072,15 @@ typedef enum{
         labelHeight = [self createRichLabelWithMessage:text isInsert:NO];
     }
     
-    NSLog(@"rowHeight %f",labelHeight);
+//    NSLog(@"rowHeight %f",labelHeight);
     
-    CGFloat aHeight = 30 + labelHeight + 10;
-    
-    if (aHeight <= 69) {
-        aHeight = 69;
+    if (!temp_Cell) {
+        temp_Cell = [[BBSRecommendCell alloc]init];
     }
+    UIView *label = (UIView *)[labelArr objectAtIndex:indexPath.row];
     
-    CGFloat dis = labelHeight - 17.f;
+    return [temp_Cell heightForCellData:text OHLabel:label];
     
-    return aHeight + (dis + dis ? 10 : 0);
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0)

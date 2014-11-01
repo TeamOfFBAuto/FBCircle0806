@@ -41,7 +41,7 @@
             bgView.autoresizesSubviews = YES;
             bgView.clipsToBounds = YES;
             
-            UIImageView *arrow = [[UIImageView alloc]initWithFrame:CGRectMake(572/2.f + 4, 0, 11, 5)];
+            UIImageView *arrow = [[UIImageView alloc]initWithFrame:CGRectMake(572/2.f + 2, 0, 11, 5)];
             arrow.image = [UIImage imageNamed:@"zhankaijiantou22_10"];
             [bgView addSubview:arrow];
             
@@ -56,12 +56,8 @@
             for (int i = 0; i < titles.count; i ++) {
                 UIImage *aImage = [images objectAtIndex:i];
                 NSString *title = [titles objectAtIndex:i];
-                CGFloat left = 3.0;
-//                if (i != 0) {
-//                    left = 0.0;
-//                }
                 
-                LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(left, 50 * i, 320, 50) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
+                LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(0, 50 * i, 320, 50) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
                 btn.tag = 100 + i;
                 [section_bgview addSubview:btn];
                 
@@ -92,22 +88,25 @@
                 UIImage *aImage = [images objectAtIndex:i];
                 NSString *title = [titles objectAtIndex:i];
                 
-                LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(5 + 60 * i, 0, 80+5+5, 75/2.f) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
+                LButtonView *btn = [[LButtonView alloc]initWithFrame:CGRectMake(5 + 70 * i, 0, 72, 75/2.f) leftImage:aImage rightImage:nil title:title target:self action:@selector(actionToDo:) lineDirection:Line_No];
                 btn.backgroundColor = [UIColor colorWithHexString:@"575757"];
                 btn.tag = 100 + i;
                 btn.titleLabel.textColor = [UIColor whiteColor];
                 [bgView addSubview:btn];
-                
-                if (i < titles.count - 1) {
-                    UIImageView *line_h = [[UIImageView alloc]initWithFrame:CGRectMake(btn.right - 1, 13, 1, 13)];
-                    line_h.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
-                    [bgView addSubview:line_h];
-                }
+                btn.imageView.left += 3.f;
             }
+            
+                UIImageView *line_h = [[UIImageView alloc]initWithFrame:CGRectMake(0, 13, 1, 13)];
+//                line_h.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+            line_h.backgroundColor = [UIColor lightGrayColor];
+                [bgView addSubview:line_h];
+        
             
             bgView.frame = CGRectMake(0, 0, 0, 75/2.f);
             
-            _sumHeight = 10 + 60 * titles.count + 10;
+            _sumHeight = 10 + 70 * titles.count + 10;
+            
+            line_h.center = CGPointMake(_sumHeight / 2.f - 3, line_h.center.y);
             
         }else if (style == Style_Bottom)
         {
@@ -168,7 +167,7 @@
         
     }else if (aStyle == Style_SideBySide){
         
-        bgView.top = newFrame.origin.y - 5;
+        bgView.top = newFrame.origin.y - 5 + 1;
         bgView.left = newFrame.origin.x - 5;
 //
 //        aFrame = bgView.frame;
@@ -191,7 +190,7 @@
         
         if (aStyle == Style_SideBySide) {
             
-            bgView.frame = CGRectMake(_sumHeight - 5, newFrame.origin.y - 5, _sumHeight - 5, bgView.height);
+            bgView.frame = CGRectMake(_sumHeight - 5 - 10 - 30, newFrame.origin.y - 5 + 1, _sumHeight - 5, bgView.height);
             
         }else
         {
@@ -207,7 +206,7 @@
                 [UIView animateWithDuration:0.1 animations:^{
 //                    bgView.left -= 5;
                     
-                    bgView.frame = CGRectMake(_sumHeight, newFrame.origin.y - 5, _sumHeight - 5, bgView.height);
+                    bgView.frame = CGRectMake(_sumHeight - 5 - 10 - 30, newFrame.origin.y - 5 + 1, _sumHeight - 5, bgView.height);
 
                 }];
                 

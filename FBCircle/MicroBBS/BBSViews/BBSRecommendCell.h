@@ -21,5 +21,6 @@
 
 - (void)setCellData:(NSString *)aModel OHLabel:(UIView *)OHLabel;
 
+- (CGFloat)heightForCellData:(NSString *)aModel OHLabel:(UIView *)OHLabel;//计算高度
 
 @end

@@ -400,6 +400,13 @@
     return aSize.height;
 }
 
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width Boldfont:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:size]};
+    CGSize aSize = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
+    return aSize.height;
+}
+
 
 #pragma - mark 验证邮箱、电话等有效性
 

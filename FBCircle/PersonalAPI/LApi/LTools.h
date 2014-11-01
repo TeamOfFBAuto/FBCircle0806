@@ -119,6 +119,7 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (CGFloat)widthForText:(NSString *)text font:(CGFloat)size;
 + (CGFloat)widthForText:(NSString *)text boldFont:(CGFloat)size;
 + (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size;
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width Boldfont:(CGFloat)size;//加粗
 
 #pragma mark - 小工具
 

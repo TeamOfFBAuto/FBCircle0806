@@ -19,6 +19,9 @@ typedef enum {
 @interface LButtonView : UIView
 
 @property(nonatomic,retain)UIImageView *imageView;
+
+@property(nonatomic,retain)UIImageView *rightImageView;
+
 @property(nonatomic,retain)UILabel *titleLabel;
 @property(nonatomic,assign)BOOL selected;
 @property(nonatomic,retain)UIColor *selcted_TitleColor;

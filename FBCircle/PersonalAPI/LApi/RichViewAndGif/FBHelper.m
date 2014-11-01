@@ -111,8 +111,8 @@
     }
     label.delegate = delegate;
     CGRect labelRect = label.frame;
-    labelRect.size.width = [label sizeThatFits:CGSizeMake(225, CGFLOAT_MAX)].width;
-    labelRect.size.height = [label sizeThatFits:CGSizeMake(225, CGFLOAT_MAX)].height;
+    labelRect.size.width = [label sizeThatFits:CGSizeMake(225 - 3, CGFLOAT_MAX)].width;
+    labelRect.size.height = [label sizeThatFits:CGSizeMake(225 - 3, CGFLOAT_MAX)].height;
     label.frame = labelRect;
     label.onlyCatchTouchesOnLinks = NO;
     label.underlineLinks = YES;//链接是否带下划线

@@ -103,19 +103,21 @@
         _action = action;
         
         if (leftImage) {
-            self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, (self.height-leftImage.size.height)/2.f, leftImage.size.width, leftImage.size.height)];
+            self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(13, (self.height-leftImage.size.height)/2.f, leftImage.size.width, leftImage.size.height)];
             [_imageView setImage:leftImage];
             [self addSubview:_imageView];
         }
         
         UIImageView *rightImageV;
         if (rightImage) {
-            rightImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.width - 10 - rightImage.size.width, (self.height-rightImage.size.height)/2.f, rightImage.size.width, rightImage.size.height)];
+            rightImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.width - 13 - rightImage.size.width, (self.height-rightImage.size.height)/2.f, rightImage.size.width, rightImage.size.height)];
             [rightImageV setImage:rightImage];
             [self addSubview:rightImageV];
+            
+            self.rightImageView = rightImageV;
         }
         
-        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 10,0, self.width - _imageView.width - rightImageV.width - 10 - 5, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.titleLabel = [LTools createLabelFrame:CGRectMake(_imageView.right + 13,0, self.width - _imageView.width - rightImageV.width - 13 - 13, self.height) title:title font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         [self addSubview:_titleLabel];
         
         if (direction == Line_No) {
