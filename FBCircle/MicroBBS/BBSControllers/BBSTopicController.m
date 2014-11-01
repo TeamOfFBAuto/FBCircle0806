@@ -905,7 +905,7 @@ typedef enum{
     
     //赞 图标、赞数、赞人员
     
-    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-1, nineView.bottom + 10, aWidth + 1, 40)];
+    UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-0.5, nineView.bottom + 10, aWidth+0.7, 40)];
     zan_view.backgroundColor = [UIColor whiteColor];
     zan_view.layer.borderWidth = 1.f;
     zan_view.layer.borderColor = COLOR_TABLE_LINE.CGColor;

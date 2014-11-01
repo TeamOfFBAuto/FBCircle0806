@@ -576,12 +576,12 @@
     
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     
-    if (indexPath.row % 2 == 0) {
-        aModel.title = @"刷卡即可就分开进阿飞说看见阿拉克水煎服科技开发健康多了几分基督教福克斯的积分卡京东方金士顿";
-    }else
-    {
-        aModel.title = @"耍酷卡接口是基督";
-    }
+//    if (indexPath.row % 2 == 0) {
+//        aModel.title = @"刷卡即可就分开进阿飞说看见阿拉克水煎服科技开发健康多了几分基督教福克斯的积分卡京东方金士顿";
+//    }else
+//    {
+//        aModel.title = @"耍酷卡接口是基督";
+//    }
     
     CGFloat aHeight = [LTools heightForText:aModel.title width:280 font:14.f];
     
@@ -623,12 +623,12 @@
     TopicModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     
     
-    if (indexPath.row % 2 == 0) {
-        aModel.title = @"刷卡即可就分开进阿飞说看见阿拉克水煎服科技开发健康多了几分基督教福克斯的积分卡京东方金士顿";
-    }else
-    {
-        aModel.title = @"耍酷卡接口是基督";
-    }
+//    if (indexPath.row % 2 == 0) {
+//        aModel.title = @"刷卡即可就分开进阿飞说看见阿拉克水煎服科技开发健康多了几分基督教福克斯的积分卡京东方金士顿";
+//    }else
+//    {
+//        aModel.title = @"耍酷卡接口是基督";
+//    }
     
     CGFloat aHeight = [LTools heightForText:aModel.title width:280 font:14.f];
     
