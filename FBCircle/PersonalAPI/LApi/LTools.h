@@ -22,9 +22,11 @@
 #import "NSString+Emoji.h"
 
 
-//#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:246/255.F green:247/255.F blue:249/255.F alpha:1.0]//视图背景颜色
+#define COLOR_VIEW_BACKGROUND_SHEJITU [UIColor colorWithRed:201/255.F green:204/255.F blue:211/255.F alpha:1.0]//视图背景颜色
 
-#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:236/255.F green:235/255.F blue:243/255.F alpha:1.0]//视图背景颜色
+#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:246/255.F green:247/255.F blue:249/255.F alpha:1.0]//视图背景颜色
+
+//#define COLOR_VIEW_BACKGROUND [UIColor colorWithRed:236/255.F green:235/255.F blue:243/255.F alpha:1.0]//视图背景颜色
 
 #define COLOR_TABLE_LINE [UIColor colorWithRed:229/255.F green:231/255.F blue:230/255.F alpha:1.0]//teleview分割线颜色
 

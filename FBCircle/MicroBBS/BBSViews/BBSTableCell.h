@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 @class TopicModel;
 @interface BBSTableCell : UITableViewCell
+
+@property (strong, nonatomic) IBOutlet UIView *bottomLine;
+
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) IBOutlet UIImageView *aImageView;
 @property (strong, nonatomic) IBOutlet UILabel *aTitleLabel;

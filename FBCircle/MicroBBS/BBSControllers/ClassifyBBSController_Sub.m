@@ -51,6 +51,8 @@
     
     self.titleLabel.text = self.navigationTitle;
     
+    self.view.backgroundColor = RGBCOLOR(236, 237, 240);
+    
     //搜索
     [self createSearchView];
     
@@ -60,8 +62,8 @@
     _table.refreshDelegate = self;
     _table.dataSource = self;
     
-    _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _table.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _table.separatorInset = UIEdgeInsetsZero;
     [self.view addSubview:_table];
     
     [_table showRefreshHeader:YES];
@@ -272,6 +274,14 @@
         
 //        weakCell.joinButton.selected = YES;
     }];
+    
+    cell.backgroundColor = RGBCOLOR(236, 237, 240);
+    cell.bgView.backgroundColor = RGBCOLOR(236, 237, 240);
+    
+    cell.bottomLine.backgroundColor = [UIColor colorWithHexString:@"bbbec3"];
+    cell.bottomLine.left = 0.f;
+    cell.bottomLine.width = self.view.width;
+    cell.bottomLine.height = 0.5f;
     
     return cell;
     

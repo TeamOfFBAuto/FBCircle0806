@@ -40,7 +40,7 @@
     self.aImageView.image = [LTools imageForBBSId:aModel.headpic];
     
     //标题
-    self.aTitleLabel.text = aModel.name;
+    self.aTitleLabel.text = [LTools stringHeadNoSpace:aModel.name];
     _aTitleLabel.font = [UIFont systemFontOfSize:15];
     
     UIColor *color1 = [UIColor colorWithHexString:@"6a7180"];
@@ -70,9 +70,7 @@
     //加入按钮
     
     int inform = aModel.inForum > aModel.inforum ? aModel.inForum : aModel.inforum;
-    
-    NSLog(@"--->%d",inform);
-    
+        
     self.joinButton.selected = (inform >= 1) ? YES : NO;
     self.joinButton.userInteractionEnabled = (inform >= 1) ? NO : YES;
     

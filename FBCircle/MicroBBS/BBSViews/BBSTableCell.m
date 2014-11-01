@@ -48,6 +48,8 @@
     
     NSString *sub = aModel.sub_content ? aModel.sub_content : aModel.content;
     self.subTitleLabel.text = [LTools stringHeadNoSpace:sub];
+    
+    
     self.subTitleLabel.font = [UIFont systemFontOfSize:FONT_SIZE_SMALL];
     _subTitleLabel.textColor = [UIColor colorWithHexString:@"9197a3"];
     

@@ -71,7 +71,7 @@
     
 //    self.view.backgroundColor = RGBCOLOR(214,214,214);//深色
     
-    self.view.backgroundColor = COLOR_VIEW_BACKGROUND;//浅色
+    self.view.backgroundColor = COLOR_VIEW_BACKGROUND_SHEJITU;//设计图颜色
     
 //    self.view.backgroundColor = [UIColor colorWithHexString:@""];
     
@@ -85,7 +85,7 @@
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.backgroundColor = [UIColor clearColor];
-    _titleLabel.font = [UIFont systemFontOfSize:18];
+    _titleLabel.font = [UIFont systemFontOfSize:18];//[UIFont fontWithName:@"Arial Hebrew" size:17];//[UIFont systemFontOfSize:18];
     self.navigationItem.titleView = _titleLabel;
    
 }
