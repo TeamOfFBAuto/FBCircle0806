@@ -162,7 +162,7 @@
     content_place_label.userInteractionEnabled = NO;
     [_content_textView addSubview:content_place_label];
     
-    imageScrollView = [[SendPostsImageScrollView alloc] initWithFrame:CGRectMake(0,125,320,150)];
+    imageScrollView = [[SendPostsImageScrollView alloc] initWithFrame:CGRectMake(0,content_place_label.bottom + 30 + 25,320,150)];//lcw
     imageScrollView.showsHorizontalScrollIndicator = NO;
     imageScrollView.showsVerticalScrollIndicator = NO;
     
@@ -529,27 +529,27 @@
     
 //    __weak typeof(self) bself = self;
     
-    TakePhotoView * view = [[TakePhotoView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)) WithBlock:^(int index) {
-        
-        switch (index) {
-            case 0://拍照
-            {
-                [pickerC takePicture];
-            }
-                break;
-            case 1://关闭相机
-            {
-                [pickerC dismissViewControllerAnimated:YES completion:NULL];
-            }
-                break;
-                
-            default:
-                break;
-        }
-        
-    }];
+//    TakePhotoView * view = [[TakePhotoView alloc] initWithFrame:CGRectMake(0,0,320,(iPhone5?568:480)) WithBlock:^(int index) {
+//        
+//        switch (index) {
+//            case 0://拍照
+//            {
+//                [pickerC takePicture];
+//            }
+//                break;
+//            case 1://关闭相机
+//            {
+//                [pickerC dismissViewControllerAnimated:YES completion:NULL];
+//            }
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//        
+//    }];
     
-    view.backgroundColor = [UIColor clearColor];
+//    view.backgroundColor = [UIColor clearColor];
     
     
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -559,8 +559,8 @@
         pickerC.delegate = self;
         pickerC.allowsEditing = YES;
         pickerC.sourceType = sourceType;
-        pickerC.showsCameraControls = NO;
-        pickerC.cameraOverlayView = view;
+//        pickerC.showsCameraControls = NO;
+//        pickerC.cameraOverlayView = view;
         
         [self presentViewController:pickerC animated:YES completion:nil];
     }
@@ -869,7 +869,7 @@
     _content_textView.frame = contentF;
     
     
-    height += content_height + 10;
+    height += content_height + 10 + 10 + 10;//lcw 修改
     
     CGRect imageF = imageScrollView.frame;
     imageF.origin.y = height;

@@ -406,7 +406,7 @@
     UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,220, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:memberLabel];
     memberLabel.textColor = [UIColor colorWithHexString:@"6b7180"];
-        
+    
     NSString *str__ = [NSString stringWithFormat:@"版主 %@ | 成员 %@ | 帖子 %@",_aBBSModel.username,_aBBSModel.member_num,_aBBSModel.thread_num];
     
     UIColor *textColor = [UIColor colorWithHexString:@"627bb9"];
