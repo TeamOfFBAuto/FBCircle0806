@@ -17,7 +17,7 @@
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31k-9F-8jK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="geren_morentouxiang126_126.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="kUZ-wA-vzS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kUZ-wA-vzS">
                                 <rect key="frame" x="12" y="11" width="53" height="55"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGr-Cp-Ph9">
@@ -54,7 +54,6 @@
     </objects>
     <resources>
         <image name="geren-jiantou.png" width="14" height="26"/>
-        <image name="geren_morentouxiang126_126.jpg" width="14" height="26"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

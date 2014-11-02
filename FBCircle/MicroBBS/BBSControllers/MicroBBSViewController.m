@@ -170,9 +170,17 @@
 
 - (void)clickToMore:(UIButton *)sender
 {
-    HotTopicViewController *hotTopic = [[HotTopicViewController alloc]init];
-    hotTopic.data_Style = sender.tag - 100;
-    [self PushToViewController:hotTopic WithAnimation:YES];
+    if (sender.tag == 999) {
+        NSLog(@"进入论坛分类");
+        
+        [self clickToClassifyBBS];
+        
+    }else
+    {
+        HotTopicViewController *hotTopic = [[HotTopicViewController alloc]init];
+        hotTopic.data_Style = sender.tag - 100;
+        [self PushToViewController:hotTopic WithAnimation:YES];
+    }
 }
 /**
  *  进入分类论坛
@@ -679,47 +687,47 @@
 /**
  *  创建热门推荐部分
  */
-- (UIView *)createRecommenView
-{
-    //热门推荐
-    
-    UIView * recommendView = [[UIView alloc]init];
-    recommendView.layer.cornerRadius = 3.f;
-    recommendView.clipsToBounds = YES;
-    //    [headerView addSubview:recommendView];
-    
-    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_HOT_RECOMMEND target:self action:@selector(clickToMore:)];
-    section2.rightBtn.tag = 100;
-    [recommendView addSubview:section2];
-    
-    
-    //推荐列表
-    for (int i = 0; i < _hot_array.count; i ++) {
-        
-        TopicModel *aModel = [_hot_array objectAtIndex:i];
-        
-        LBBSCellView *cell_view = [[LBBSCellView alloc]initWithFrame:CGRectMake(0, section2.bottom + 75 * i, 320, 75) target:self action:@selector(clickToTopicInfo:)];
-        cell_view.backgroundColor = [UIColor whiteColor];
-        [_recommendView addSubview:cell_view];
-        cell_view.tag = 1000 + i;
-        
-        [cell_view setCellWithModel:aModel];
-        
-        if (i < 1) {
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 0.5)];
-            line.backgroundColor = COLOR_TABLE_LINE;
-            [_recommendView addSubview:line];
-        }
-    }
-    
-    recommendView.frame = CGRectMake(8, 0, 304, section2.height + 75 * _hot_array.count);
-    
-    //    headerView.frame = CGRectMake(0, 0, 320, _recommendView.bottom + 15);
-    //
-    //    _table.tableHeaderView = headerView;
-    
-    return recommendView;
-}
+//- (UIView *)createRecommenView
+//{
+//    //热门推荐
+//    
+//    UIView * recommendView = [[UIView alloc]init];
+//    recommendView.layer.cornerRadius = 3.f;
+//    recommendView.clipsToBounds = YES;
+//    //    [headerView addSubview:recommendView];
+//    
+//    LSecionView *section2 = [[LSecionView alloc]initWithFrame:CGRectMake(0, 0, 304, 40) title:TITLE_MY_HOT_RECOMMEND target:self action:@selector(clickToMore:)];
+//    section2.rightBtn.tag = 100;
+//    [recommendView addSubview:section2];
+//    
+//    
+//    //推荐列表
+//    for (int i = 0; i < _hot_array.count; i ++) {
+//        
+//        TopicModel *aModel = [_hot_array objectAtIndex:i];
+//        
+//        LBBSCellView *cell_view = [[LBBSCellView alloc]initWithFrame:CGRectMake(0, section2.bottom + 75 * i, 320, 75) target:self action:@selector(clickToTopicInfo:)];
+//        cell_view.backgroundColor = [UIColor whiteColor];
+//        [_recommendView addSubview:cell_view];
+//        cell_view.tag = 1000 + i;
+//        
+//        [cell_view setCellWithModel:aModel];
+//        
+//        if (i < 1) {
+//            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, cell_view.bottom - 1, 304, 0.5)];
+//            line.backgroundColor = COLOR_TABLE_LINE;
+//            [_recommendView addSubview:line];
+//        }
+//    }
+//    
+//    recommendView.frame = CGRectMake(8, 0, 304, section2.height + 75 * _hot_array.count);
+//    
+//    //    headerView.frame = CGRectMake(0, 0, 320, _recommendView.bottom + 15);
+//    //
+//    //    _table.tableHeaderView = headerView;
+//    
+//    return recommendView;
+//}
 
 
 
@@ -873,7 +881,8 @@
 //            [cell addSubview:clearView];
             
             LSecionView *section = [[LSecionView alloc]initWithFrame:CGRectMake(8, 15, 304, 40) title:TITLE_RECOMMEND_BBS target:self action:@selector(clickToMore:)];
-            section.rightBtn.hidden = YES;
+//            section.rightBtn.hidden = YES;
+            section.rightBtn.tag = 999;
             [cell addSubview:section];
             section.layer.cornerRadius = 3.f;
             

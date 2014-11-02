@@ -106,7 +106,7 @@ typedef enum{
     _table.dataSource = self;
     
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _table.separatorColor = COLOR_TABLE_LINE;
+//    _table.separatorColor = COLOR_TABLE_LINE;
     [self.view addSubview:_table];
     
     
@@ -152,6 +152,8 @@ typedef enum{
     emojiDic = nil;//所有表情
     
     aTopicModel = nil;
+    
+    temp_Cell = nil;
 }
 
 #pragma mark - 事件处理
@@ -350,8 +352,10 @@ typedef enum{
             
         }else
         {
-            [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
-            moreBtn.userInteractionEnabled = NO;
+//            [moreBtn setTitle:@"" forState:UIControlStateNormal];
+//            moreBtn.userInteractionEnabled = NO;
+            
+            _table.tableFooterView = [self noMoreCommentFooter];
         }
     }
 
@@ -404,14 +408,14 @@ typedef enum{
                 [weakSelf sendComment:text];
             }else
             {
-                [LTools showMBProgressWithText:[dataInfo objectForKey:@"errinfo"] addToView:self.view];
+                [LTools showMBProgressWithText:[dataInfo objectForKey:@"errinfo"] addToView:weakSelf.view];
             }
             
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"result %@",failDic);
-        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:self.view];
+        [LTools showMBProgressWithText:[failDic objectForKey:@"errinfo"] addToView:weakSelf.view];
     }];
 }
 
@@ -605,7 +609,7 @@ typedef enum{
  */
 - (void)getCommentList
 {
-//    __weak typeof(UITableView *)weakTable = _table;
+    __weak typeof(UITableView *)weakTable = _table;
     __weak typeof(self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:FBCIRCLE_COMMENT_LIST,self.tid,_pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -621,8 +625,10 @@ typedef enum{
         [LTools showMBProgressWithText:[failDic objectForKey:@"ERRO_INFO"] addToView:weakSelf.view];
         int erroCode = [[failDic objectForKey:@"errcode"]integerValue];
         if (erroCode == 2) {
-            [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
-            moreBtn.userInteractionEnabled = NO;
+//            [moreBtn setTitle:@"没有更多评论" forState:UIControlStateNormal];
+//            moreBtn.userInteractionEnabled = NO;
+            
+            weakTable.tableFooterView = [weakSelf noMoreCommentFooter];
         }
     }];
 }
@@ -707,7 +713,7 @@ typedef enum{
             
         }else
         {
-            [LTools showMBProgressWithText:@"评论内容不可以为空" addToView:self.view];
+            [LTools showMBProgressWithText:@"评论内容不可以为空" addToView:weakSelf.view];
         }
         
     }];
@@ -841,13 +847,10 @@ typedef enum{
     CGFloat aWidth = aFrame.size.width - 8;
     
     UIView *recommed_view = [[UIView alloc]init];
-    recommed_view.backgroundColor = [UIColor clearColor];
-    recommed_view.layer.cornerRadius = 3.f;
     recommed_view.clipsToBounds = YES;
     
     
     bgview.backgroundColor = [UIColor whiteColor];
-    bgview.layer.cornerRadius = 3.f;
     bgview.clipsToBounds = YES;
     
     //头像
@@ -906,9 +909,9 @@ typedef enum{
     //赞 图标、赞数、赞人员
     
     UIView *zan_view = [[UIView alloc]initWithFrame:CGRectMake(-0.5, nineView.bottom + 10, aWidth+0.7, 40)];
-    zan_view.backgroundColor = [UIColor whiteColor];
-    zan_view.layer.borderWidth = 1.f;
-    zan_view.layer.borderColor = COLOR_TABLE_LINE.CGColor;
+    zan_view.backgroundColor = [UIColor orangeColor];
+//    zan_view.layer.borderWidth = 1.f;
+//    zan_view.layer.borderColor = COLOR_TABLE_LINE.CGColor;
     zan_view.backgroundColor = [UIColor colorWithHexString:@"fafafa"];
     [recommed_view addSubview:zan_view];
     
@@ -925,33 +928,48 @@ typedef enum{
     [zan_view addSubview:zan_num_label];
     
     NSString *names = zan_String;
-    zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240, zan_view.height) title:names font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
+    zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240 - 30, zan_view.height) title:names font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
     [zan_view addSubview:zan_names_label];
     
-    //时间view
+//    zan_names_label.backgroundColor = [UIColor orangeColor];
     
-    UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aWidth + 1, 40)];
-    time_view.backgroundColor = [UIColor whiteColor];
-//    time_view.layer.borderWidth = 0.5f;
-    time_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
-    [recommed_view addSubview:time_view];
+    //赞、评论按钮 上提到赞人员后面
     
-    NSString *time_str = [LTools timestamp:aTopicModel.time];
-    UILabel *time_Label = [LTools createLabelFrame:CGRectMake(13, 0, 100, time_view.height) title:time_str font:15 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-    [time_view addSubview:time_Label];
-    time_Label.font = [UIFont boldSystemFontOfSize:15];
-    
-    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30 - 10 - 5 + 1, zan_view.bottom + 5, 30 + 20 + 10, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:recommed_view target:self action:@selector(clickToZan:)];
+    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(zan_view.width - 10 - 30 - 10 - 5 + 1, 5, 30 + 20 + 10, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
     [zan_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     zan_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 //    zan_btn.backgroundColor = [UIColor redColor];
     
+    [zan_view addSubview:zan_btn];
     
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, time_view.height - 1, time_view.width, 1)];
-    line.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
-    [time_view addSubview:line];
+    //zan_view上边线
     
-    aFrame.size.height = time_view.bottom;
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, zan_view.width, 1)];
+    line.backgroundColor = COLOR_TABLE_LINE;
+    [zan_view addSubview:line];
+    
+    //时间view
+    
+//    UIView *time_view = [[UIView alloc]initWithFrame:CGRectMake(-1, zan_view.bottom, aWidth + 1, 40)];
+//    time_view.backgroundColor = [UIColor whiteColor];
+////    time_view.layer.borderWidth = 0.5f;
+//    time_view.layer.borderColor = [UIColor colorWithHexString:@"f0f0f0"].CGColor;
+//    [recommed_view addSubview:time_view];
+//    
+//    NSString *time_str = [LTools timestamp:aTopicModel.time];
+//    UILabel *time_Label = [LTools createLabelFrame:CGRectMake(13, 0, 100, time_view.height) title:time_str font:15 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+//    [time_view addSubview:time_Label];
+//    time_Label.font = [UIFont boldSystemFontOfSize:15];
+    
+//    UIButton *zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(time_view.width - 10 - 30 - 10 - 5 + 1, zan_view.bottom + 5, 30 + 20 + 10, 30) normalTitle:nil image:[UIImage imageNamed:@"add_fenlei"] backgroudImage:nil superView:recommed_view target:self action:@selector(clickToZan:)];
+//    [zan_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    zan_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//    zan_btn.backgroundColor = [UIColor redColor];
+    
+    
+
+    
+    aFrame.size.height = zan_view.bottom;
     recommed_view.frame = aFrame;
     
     //b背景view
@@ -973,6 +991,7 @@ typedef enum{
     UIView *basic_view = [self createBBSInfoViewFrame:CGRectMake(8, 15, 304, 0)];
     [headerView addSubview:basic_view];
     
+    //遮盖圆角
     UIView *basic_bottom = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom - 3, 304, 3)];
     basic_bottom.backgroundColor = [UIColor whiteColor];
     [headerView addSubview:basic_bottom];
@@ -988,18 +1007,18 @@ typedef enum{
     UIView *recommed_view = [self createRecommendViewFrame:CGRectMake(8, basic_view.bottom, 304 + 8, 0) bgView:bgview];
     [headerView addSubview:recommed_view];
     
-    UIView *mask_view = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom, 304, 3)];
-    mask_view.backgroundColor = [UIColor whiteColor];
-    [headerView addSubview:mask_view];
+//    UIView *mask_view = [[UIView alloc]initWithFrame:CGRectMake(8, basic_view.bottom, 304, 3)];
+//    mask_view.backgroundColor = [UIColor whiteColor];
+//    [headerView addSubview:mask_view];
     
     
     headerView.frame = CGRectMake(0, 0, 320, basic_view.height + recommed_view.height + 15);
     
-    UIView *hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 10, 304, 10)];
-    hh_view.backgroundColor = [UIColor whiteColor];
-    [headerView addSubview:hh_view];
+//    UIView *hh_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 10, 304, 10)];
+//    hh_view.backgroundColor = [UIColor whiteColor];
+//    [headerView addSubview:hh_view];
 //
-//    
+    
 //    UIView *line_view = [[UIView alloc]initWithFrame:CGRectMake(8, headerView.height - 1, 304, 1)];
 //    line_view.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
 //    [headerView addSubview:line_view];
@@ -1025,13 +1044,19 @@ typedef enum{
     UIView *line_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 304, 1)];
     line_view.backgroundColor = COLOR_TABLE_LINE;
     [footer_view addSubview:line_view];
-
-    
     
     moreBtn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(12, 0, 150, footer_view.height - 15) normalTitle:@"查看更多评论..." image:nil backgroudImage:nil superView:footer_view target:self action:@selector(clickToMore:)];
     [moreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     moreBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    return footer_view;
+}
+
+//没有更多评论时的 footerView
+- (UIView *)noMoreCommentFooter
+{
+    UIView *footer_view = [[UIView alloc]initWithFrame:CGRectMake(8, 0, 304, 15)];
+    footer_view.backgroundColor = [UIColor clearColor];
     return footer_view;
 }
 

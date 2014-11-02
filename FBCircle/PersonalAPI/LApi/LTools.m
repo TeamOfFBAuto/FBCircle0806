@@ -777,6 +777,11 @@
     if (attibutedString == nil) {
         attibutedString = [[NSMutableAttributedString alloc]initWithString:string];
     }
+    
+    if (keyword.length == 0) {
+        keyword = @"";
+    }
+    
     NSRange range = [string rangeOfString:keyword options:NSCaseInsensitiveSearch range:NSMakeRange(0, string.length)];
     
     [attibutedString addAttribute:NSForegroundColorAttributeName value:color range:range];

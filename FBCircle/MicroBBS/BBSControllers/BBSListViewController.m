@@ -305,15 +305,15 @@
             
             if ([foruminfo isKindOfClass:[NSDictionary class]]) {
                 
-                _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
-                
-                if (weakTable.tableHeaderView) {
-                    [weakTable.tableHeaderView removeFromSuperview];
-                    weakTable.tableHeaderView = nil;
-                }
-                
-                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
-                weakSelf.titleLabel.text = _aBBSModel.name;
+//                _aBBSModel = [[BBSInfoModel alloc]initWithDictionary:foruminfo];
+//                
+//                if (weakTable.tableHeaderView) {
+//                    [weakTable.tableHeaderView removeFromSuperview];
+//                    weakTable.tableHeaderView = nil;
+//                }
+//                
+//                weakTable.tableHeaderView = [weakSelf createTableHeaderView];
+//                weakSelf.titleLabel.text = _aBBSModel.name;
                 
             }
            
@@ -387,6 +387,7 @@
 /**
  *  论坛基本信息部分
  */
+
 - (UIView *)createBBSInfoViewFrame:(CGRect)aFrame
 {
     //论坛
@@ -402,11 +403,11 @@
     [basic_view addSubview:titleLabel];
     titleLabel.font = [UIFont systemFontOfSize:14];
     
-    UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,125, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+    UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,220, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
     [basic_view addSubview:memberLabel];
     memberLabel.textColor = [UIColor colorWithHexString:@"6b7180"];
-    
-    NSString *str__ = [NSString stringWithFormat:@"成员 %@ | 帖子 %@",_aBBSModel.member_num,_aBBSModel.thread_num];
+        
+    NSString *str__ = [NSString stringWithFormat:@"版主 %@ | 成员 %@ | 帖子 %@",_aBBSModel.username,_aBBSModel.member_num,_aBBSModel.thread_num];
     
     UIColor *textColor = [UIColor colorWithHexString:@"627bb9"];
     NSAttributedString *contentText;
@@ -418,24 +419,12 @@
         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:textColor]];
         
         contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:textColor];
+        
+        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.username color:textColor];
     }
     
     memberLabel.attributedText = contentText;
     
-//    UILabel *memberLabel_num = [LTools createLabelFrame:CGRectMake(memberLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.member_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
-//    [basic_view addSubview:memberLabel_num];
-//    
-//    
-//    UIImageView *line_h = [[UIImageView alloc]initWithFrame:CGRectMake(memberLabel_num.right + 5, memberLabel_num.top + memberLabel_num.height / 4.f, 1, memberLabel_num.height / 2.f)];
-//    line_h.backgroundColor = [UIColor lightGrayColor];
-//    [basic_view addSubview:line_h];
-//    
-//    
-//    UILabel *topicLabel = [LTools createLabelFrame:CGRectMake(line_h.right + 5, titleLabel.bottom,25, 25) title:@"帖子" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
-//    [basic_view addSubview:topicLabel];
-//    
-//    UILabel *topicLabel_num = [LTools createLabelFrame:CGRectMake(topicLabel.right, titleLabel.bottom,50, 25) title:_aBBSModel.thread_num font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"91a2ce"]];
-//    [basic_view addSubview:topicLabel_num];
     
     UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(320 - 12 - 8, basic_view.height/2.f - 13/2.f, 8, 13)];
     arrow_image.image = [UIImage imageNamed:@"jiantou"];
@@ -443,6 +432,49 @@
     
     return basic_view;
 }
+
+//- (UIView *)createBBSInfoViewFrame:(CGRect)aFrame
+//{
+//    //论坛
+//    UIView *basic_view = [[UIView alloc]initWithFrame:aFrame];
+//    basic_view.backgroundColor = [UIColor whiteColor];
+//    
+//    
+//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 53, 53)];
+//    imageView.image = [LTools imageForBBSId:_aBBSModel.headpic];
+//    [basic_view addSubview:imageView];
+//    
+//    UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(imageView.right + 10, imageView.top,150, 25) title:_aBBSModel.name font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+//    [basic_view addSubview:titleLabel];
+//    titleLabel.font = [UIFont systemFontOfSize:14];
+//    
+//    UILabel *memberLabel = [LTools createLabelFrame:CGRectMake(titleLabel.left, titleLabel.bottom,125, 25) title:@"成员" font:12 align:NSTextAlignmentLeft textColor:[UIColor lightGrayColor]];
+//    [basic_view addSubview:memberLabel];
+//    memberLabel.textColor = [UIColor colorWithHexString:@"6b7180"];
+//    
+//    NSString *str__ = [NSString stringWithFormat:@"成员 %@ | 帖子 %@",_aBBSModel.member_num,_aBBSModel.thread_num];
+//    
+//    UIColor *textColor = [UIColor colorWithHexString:@"627bb9"];
+//    NSAttributedString *contentText;
+//    if ([_aBBSModel.member_num isEqualToString:_aBBSModel.thread_num]) {
+//        
+//        contentText = [LTools attributedString:str__ keyword:_aBBSModel.member_num color:textColor];
+//    }else
+//    {
+//        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithAttributedString:[LTools attributedString:nil originalString:str__ AddKeyword:_aBBSModel.member_num color:textColor]];
+//        
+//        contentText = [LTools attributedString:attr originalString:str__ AddKeyword:_aBBSModel.thread_num color:textColor];
+//    }
+//    
+//    memberLabel.attributedText = contentText;
+//
+//    
+//    UIImageView *arrow_image = [[UIImageView alloc]initWithFrame:CGRectMake(320 - 12 - 8, basic_view.height/2.f - 13/2.f, 8, 13)];
+//    arrow_image.image = [UIImage imageNamed:@"jiantou"];
+//    [basic_view addSubview:arrow_image];
+//    
+//    return basic_view;
+//}
 
 /**
  *  置顶帖子部分
@@ -658,15 +690,19 @@
                 cell.bottomLine.hidden = YES;
             }
             
-            
-            
-            
         }else
         {
             cell.bgView.layer.cornerRadius = 0.f;
             cell.bottomLine.hidden = NO;
             
         }
+        
+        if (_table.dataArray.count == 1) {
+            
+            cell.bottomLine.hidden = YES;
+            cell.downMask.hidden = YES;
+        }
+        
         
 //        cell.separatorInset = UIEdgeInsetsMake(0, 8, 0, 8);
         [cell setCellDataWithModel:aModel];
