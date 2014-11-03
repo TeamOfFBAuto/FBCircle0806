@@ -265,7 +265,7 @@
         
         
         //用户名
-        self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImageView.frame)+12, 10, 188, 18)];
+        self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImageView.frame)+12, 10 + 3, 188, 18)];
         //self.userNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
         
         
@@ -273,7 +273,7 @@
         
         
         //个性签名
-        self.userWordsLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+3, 169, 40)];
+        self.userWordsLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame) - 2, 169, 40)];
         self.userWordsLabel.font = [UIFont systemFontOfSize:12];
         self.userWordsLabel.textColor = [UIColor grayColor];
         self.userWordsLabel.numberOfLines = 2;
