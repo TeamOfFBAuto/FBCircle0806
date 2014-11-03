@@ -234,7 +234,7 @@
         
         //头像图片
         
-        UIView *backFaceView = [[UIView alloc]initWithFrame:CGRectMake(12, 9.5, 46, 46)];
+        UIView *backFaceView = [[UIView alloc]initWithFrame:CGRectMake(12, 9.5 + 3, 46, 46)];
         backFaceView.backgroundColor = [UIColor whiteColor];
         backFaceView.layer.cornerRadius = 5;
         backFaceView.layer.borderColor = [RGBCOLOR(211, 211, 211)CGColor];
@@ -242,7 +242,7 @@
         backFaceView.layer.masksToBounds = YES;
         
         
-        self.userFaceImageView = [[GavatarView alloc]initWithFrame:CGRectMake(12.5, 10, 45, 45)];
+        self.userFaceImageView = [[GavatarView alloc]initWithFrame:CGRectMake(12.5, 10 + 3, 45, 45)];
         self.userFaceImageView.layer.cornerRadius = 5;
         self.userFaceImageView.layer.borderWidth = 0;//设置边框的宽度，当然可以不要
         self.userFaceImageView.layer.borderColor = [[UIColor whiteColor] CGColor];//设置边框的颜色
