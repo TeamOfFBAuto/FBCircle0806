@@ -61,6 +61,7 @@ typedef enum{
     NSString *zan_String;//赞人员
     UILabel *zan_names_label;//称赞人员label
     UILabel *zan_num_label;//赞个数
+    UIImageView *zanImage;//赞 小图标(没有赞的时候 不限赞图标及赞数)
     
     USER_INFORUM user_Inform;//用户身份
     
@@ -70,6 +71,7 @@ typedef enum{
     UILabel *bbs_numLabel;
     
     BBSRecommendCell *temp_Cell;
+    
 }
 
 @end
@@ -561,6 +563,15 @@ typedef enum{
                 
                 zan_names_label.text = zan;
                 zan_num_label.text = [NSString stringWithFormat:@"%d",[zan componentsSeparatedByString:@"、"].count];
+                
+                if ([zan_num_label.text intValue] > 0) {
+                    
+                        
+                        zanImage.hidden = NO;
+                        zan_num_label.hidden = NO;
+                
+                }
+                
             }
             
             if (action == Action_Topic_Del)
@@ -918,7 +929,7 @@ typedef enum{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickTOPraiseMember:)];
     [zan_view addGestureRecognizer:tap];
     
-    UIImageView *zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, (40 - 16)/2.0 - 3, 16, 16)];
+    zanImage = [[UIImageView alloc]initWithFrame:CGRectMake(13, (40 - 16)/2.0 - 3, 16, 16)];
     zanImage.image = [UIImage imageNamed:@"add_zan"];
     [zan_view addSubview:zanImage];
     
@@ -926,6 +937,14 @@ typedef enum{
     zan_num_label = [LTools createLabelFrame:CGRectMake(zanImage.right + 5, 0, [LTools widthForText:numberSter font:12], zan_view.height) title:numberSter font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
     zan_num_label.font = [UIFont systemFontOfSize:14.f];
     [zan_view addSubview:zan_num_label];
+    
+    
+    if ([aTopicModel.zan_num intValue] == 0) {
+        
+        zanImage.hidden = YES;
+        zan_num_label.hidden = YES;
+    }
+    
     
     NSString *names = zan_String;
     zan_names_label = [LTools createLabelFrame:CGRectMake(zan_num_label.right + 5, 0, 240 - 30, zan_view.height) title:names font:FONT_SIZE_SMALL align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"596d96"]];
