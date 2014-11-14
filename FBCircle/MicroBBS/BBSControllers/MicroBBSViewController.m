@@ -274,6 +274,8 @@
             
         }
         
+        //之前只需要显示3个,现在有多少显示多少
+        
         if (arr_mine.count == 3) {
             return arr_mine;
         }
