@@ -123,6 +123,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 小工具
 
++(NSString *)numberToString:(long)number;//千分位
+
 + (NSString *)stringHeadNoSpace:(NSString *)string;
 
 + (NSString *) md5:(NSString *) text;

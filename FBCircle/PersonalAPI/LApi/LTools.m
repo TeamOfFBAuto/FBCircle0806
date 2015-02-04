@@ -501,6 +501,22 @@
 #pragma - mark 小工具
 
 /**
+ *  数字转字符串 千位划分
+ *
+ *  @param number 12345678
+ *
+ *  @return 12，345，678
+ */
++(NSString *)numberToString:(long)number
+{
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+    NSString *numberString = [numberFormatter stringFromNumber: [NSNumber numberWithInteger: number]];
+    return numberString;
+}
+
+/**
  *  去除开头的空格
  */
 + (NSString *)stringHeadNoSpace:(NSString *)string
